@@ -44,6 +44,13 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \PDOException) {
+            return response()->json(['error' => 'PDOException','details' => $exception], 500);
+        }
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
+            return response()->json(['error' => 'Not Found','details' => $exception], 404);
+        }
+
         return parent::render($request, $exception);
     }
 
