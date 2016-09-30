@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
 class RolesTablesSeeder extends Seeder {
     public function run() {
         DB::table('roles')->delete();
+        DB::table('roles_user')->delete();
 
         // Admin
         $admin = Role::create([
