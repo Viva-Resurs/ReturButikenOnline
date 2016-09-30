@@ -71,15 +71,21 @@ class User extends Authenticatable
      */
     public function assignRole($role) {
         
-        if (is_string($role)) {
-            $role_model = Role::where('name', $role)->first();
+        return $this->role()->save(
+            Role::whereName($role)->firstOrFail()
+        );
+
+        //if (is_string($role)) {
+            //$role_model = Role::where('name', $role)->first();
             
-            $role_model->users()->save($this);
+            //$role_model->users()->save($this);
 
             //var_dump($role_model);
             //$this->role()->save($role_model);
-            return $this->role()->save($role_model);
-        }
+            //return $this->role()->save(
+            //    Role::whereName($role)->firstOrFail();
+            //);
+        //}
 
         //return $this->role()->save($role);
     }
