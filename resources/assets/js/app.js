@@ -13,8 +13,13 @@ require('./bootstrap');
  * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Create a vue-router with configuration
+const router = new VueRouter( require('./VueRouterConfig') );
 
-const app = new Vue({
-    el: 'body'
-});
+// Build a Vue-constructor using our App-Page
+const App = Vue.extend( require('./pages/App.vue') );
+
+// Create the Vue-App, enable vue-router and mount it on target
+new App({
+  router
+}).$mount('#app');
