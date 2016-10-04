@@ -10,6 +10,9 @@
         <div v-else>
 
             <div v-if="ithems.length > 0">
+
+                <input v-model="search">
+
                 <table class="table">
                     <thead>
                         <tr>
@@ -23,7 +26,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="ithem in ithems">
+                        <tr v-for="ithem in filterIthems">
                             <td>{{ithem.name}}</td>
                             <td>{{ithem.desc}}</td>
                             <td>{{ithem.public}}</td>
@@ -46,13 +49,29 @@
 </template>
 
 <script>
+    import Filters from '../mixins/Filters.vue'
+
     export default {
 
         name: 'Articles',
 
+        mixins: [ Filters ],
+
+        computed: {
+            filterIthems(){
+                return this.ithems
+                    .filter(
+                        (ithem) => this.filterBy(ithem,this.search,this.targets)
+                    )
+            }
+        },
+
         data: function(){
             return {
                 ithems: [],
+                
+                search: '',
+                targets: ['name','updated_at']
             }
         },
 
