@@ -66,6 +66,7 @@
                     .sort(
                         (a, b) => a[this.order] > b[this.order] ? 1*this.desc : -1*this.desc
                     )
+                    .slice(this.offset, this.maxIthems)
             }
         },
 
@@ -77,7 +78,10 @@
                 targets: ['name','updated_at'],
                 
                 order: 'name',
-                desc: -1
+                desc: -1,
+
+                offset: 0,
+                maxIthems: 5
             }
         },
 
