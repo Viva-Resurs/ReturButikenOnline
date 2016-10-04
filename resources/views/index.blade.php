@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Index</title>
+        <title>{{ config('app.name', 'Index') }}</title>
+        
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
+        <!-- Styles -->
         <link rel="stylesheet" href="/css/app.css">
+
+        <!-- Scripts -->
+        <script>
+            window.Laravel = <?php echo json_encode([
+                'csrfToken' => csrf_token(),
+            ]); ?>
+        </script>
+
     </head>
     <body>
         <div id="app"></div>
