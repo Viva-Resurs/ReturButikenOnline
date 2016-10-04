@@ -16,8 +16,8 @@ require('./bootstrap');
 // Create a vue-router with configuration
 const router = new VueRouter( require('./VueRouterConfig') );
 
-// Build a Vue-constructor using our App-Page
-const App = Vue.extend( require('./pages/App.vue') );
+// Build a Vue-constructor using our App
+const App = Vue.extend( require('./App.vue') );
 
 // Create the Vue-App, enable vue-router and mount it on target
 new App({
