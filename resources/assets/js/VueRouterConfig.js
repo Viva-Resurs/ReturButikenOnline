@@ -6,6 +6,10 @@ module.exports = {
             component: require('./pages/Welcome.vue')
         },
         {
+            path: '/articles',
+            component: require('./pages/Articles.vue')
+        },
+        {
             path: '*',
             component: require('./pages/404.vue')
         }

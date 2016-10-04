@@ -6,6 +6,7 @@
         <ul class="navbar">
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/randomLink">'Example Undefined Link'</router-link></li>
+            <li><router-link to="/articles">Articles</router-link></li>
         </ul>
 
         View:
