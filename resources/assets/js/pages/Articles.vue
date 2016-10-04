@@ -16,12 +16,12 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <td>Name</td>
+                            <td>Name <a @click="setOrder('name')">S</a></td>
                             <td>Desc</td>
                             <td>Public</td>
                             <td>Sale</td>
                             <td>Bidding</td>
-                            <td>Updated</td>
+                            <td>Updated <a @click="setOrder('updated_at',1)">S</a></td>
                             <td>Tools</td>
                         </tr>
                     </thead>
@@ -63,6 +63,9 @@
                     .filter(
                         (ithem) => this.filterBy(ithem,this.search,this.targets)
                     )
+                    .sort(
+                        (a, b) => a[this.order] > b[this.order] ? 1*this.desc : -1*this.desc
+                    )
             }
         },
 
@@ -71,7 +74,10 @@
                 ithems: [],
                 
                 search: '',
-                targets: ['name','updated_at']
+                targets: ['name','updated_at'],
+                
+                order: 'name',
+                desc: -1
             }
         },
 
