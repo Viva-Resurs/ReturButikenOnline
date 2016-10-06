@@ -44,7 +44,7 @@
             </div>
 
         </div>
-
+        <router-link to="/articles/create" class="btn btn-primary">Create Article</router-link>
     </div>
 </template>
 
@@ -73,10 +73,10 @@
         data: function(){
             return {
                 ithems: [],
-                
+
                 search: '',
                 targets: ['name','updated_at'],
-                
+
                 order: 'name',
                 desc: -1,
 
