@@ -35,7 +35,7 @@ class RolesTablesSeeder extends Seeder {
 
 class UsersTableSeeder extends Seeder {
     public function run() {
-        DB::table('users')->delete();
+        DB::table('users')->truncate();
 
         $admin = User::create([
             'name'     => config('returbutiken.settings.users.administrator.username'),
