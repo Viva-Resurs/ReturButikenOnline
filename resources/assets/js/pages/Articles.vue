@@ -45,7 +45,6 @@
 
         </div>
         <router-link to="/articles/create" class="btn btn-primary">Create Article</router-link>
-        <button class="btn btn-primary" @click="seedArticles">SEED</button>
 
     </div>
 </template>
@@ -96,22 +95,6 @@
                 this.$http.get('api/articles').then(
                     (response) => {
                         this.ithems = response.data;
-                        this.$root.loading = false;
-                    },
-                    (response) => {
-                        console.error(response.error);
-                        this.$root.loading = false;
-                    }
-                );
-            },
-
-            seedArticles(){
-
-                this.$root.loading = true;
-
-                this.$http.post('api/articles',{name:'test'}).then(
-                    (response) => {
-                        this.ithems.push(response.data);
                         this.$root.loading = false;
                     },
                     (response) => {
