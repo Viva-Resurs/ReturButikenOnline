@@ -27,7 +27,7 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'name' => $faker->name,
         'desc' => $faker->paragraph,
         'public' => $faker->numberBetween($min = 0, $max = 1),
-        'publish_interval' => $faker->date($format = 'Y-m-d', $max = 'now'),
-        'bidding_interval' => $faker->date($format = 'Y-m-d', $max = 'now')
+        'publish_interval' => $faker->date($format = 'Y-m-d h:m:s', $max = 'now'),
+        'bidding_interval' => $faker->date($format = 'Y-m-d h:m:s', $max = 'now')
     ];
 });
