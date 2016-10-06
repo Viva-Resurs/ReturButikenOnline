@@ -21,3 +21,13 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Article::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'desc' => $faker->paragraph,
+        'public' => $faker->numberBetween($min = 0, $max = 1),
+        'publish_interval' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'bidding_interval' => $faker->date($format = 'Y-m-d', $max = 'now')
+    ];
+});
