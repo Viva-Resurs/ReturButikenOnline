@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Foundation\Inspiring;
-//use App\Console\Commands\GenerateArticles;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +20,7 @@ Artisan::command('inspire', function () {
 Artisan::command('generate:articles', function () {
     factory(App\Article::class, 10)->create();
 })->describe('Generate Articles');
+
+Artisan::command('clear:articles', function () {
+    DB::table('articles')->delete();
+})->describe('Clear Articles');
