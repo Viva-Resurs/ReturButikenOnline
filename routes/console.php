@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Foundation\Inspiring;
+//use App\Console\Commands\GenerateArticles;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,7 @@ use Illuminate\Foundation\Inspiring;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+Artisan::command('generate:articles', function () {
+    factory(App\Article::class, 10)->create();
+})->describe('Generate Articles');
