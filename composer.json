@@ -31,7 +31,7 @@
     "scripts": {
         "post-install-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postInstall",
-            "touch storage/database.sqlite",
+            "touch database/database.sqlite",
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
 
             "php artisan optimize",

@@ -29,14 +29,16 @@ class ArticleController extends Controller
     public function store(Request $request){
         
         $article = new Article([
-            'name' => $request->name || '',
-            'desc' => $request->desc || '',
-            'public' => $request->public || 0,
-            'publish_interval' => $request->publish_interval || '',
-            'bidding_interval' => $request->bidding_interval || '',
+            'name' => ($request->has('name')) ? $request['name'] : '',
+            'desc' => ($request->has('desc')) ? $request['desc'] : '',
+            'public' => $request['public'] || false,
+            'publish_interval' => ($request->has('publish_interval')) ? $request['publish_interval'] : '',
+            'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : '',
         ]);
 
         $article->save();
+
+        return $article;
     }
 
     public function update(Request $request, $id){
@@ -52,8 +54,7 @@ class ArticleController extends Controller
         if ($request->has('desc') && $request['desc']!='')
             $article->desc = $request['desc'];
 
-        if ($request->has('public'))
-            $article->public = $request['public'];
+        $article->public = $request['public'] || 0;
 
         if ($request->has('publish_interval') && $request['publish_interval']!='')
             $article->publish_interval = $request['publish_interval'];
