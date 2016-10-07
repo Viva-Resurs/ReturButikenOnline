@@ -20,7 +20,7 @@ window.moment = require('moment');
  * datetimepicker
  * https://eonasdan.github.io/bootstrap-datetimepicker/
  */
-window.datetimepicker = require('./vendor/bootstrap-datetimepicker.js');
+window.datetimepicker = require('./vendor/bootstrap-datetimepicker.4.17.42.js');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces
