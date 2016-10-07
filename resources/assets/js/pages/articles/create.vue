@@ -72,6 +72,12 @@
 
                 <div class="form-group">
                     <div class="row">
+                      <dateinterval date_pub1.sync="date_start" date_pub2.sync="date_end"></dateinterval>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
                         <div class="col-xs-12">
                             <label class="radio-inline">
                                 <input type="radio" name="public" v-model="article.public" value="on">
@@ -124,6 +130,8 @@
 </style>
 
 <script>
+Vue.component('dateinterval', require('./../../components/DateInterval.vue'));
+
 export default {
     name: 'Create',
     data() {
@@ -131,6 +139,9 @@ export default {
             article: {
             },
             myform: []
+            ,
+            date_start: '',
+            date_end: '',
         }
     },
     methods: {
