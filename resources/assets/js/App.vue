@@ -19,6 +19,11 @@
 
 <script>
     /**
+     * Create a event-central
+     */
+    window.bus = new Vue();
+
+    /**
      * Define global components
      */
     Vue.component('loading', require('./components/Loading.vue'));
