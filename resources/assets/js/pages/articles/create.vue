@@ -59,20 +59,26 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="checkbox-inline">
-                                <input type="checkbox" value="" v-model="article.publish_interval">
+                                <input type="checkbox" value="1" v-model="settings.publish_interval">
                                 Publicera inom datumintervall
                             </label>
                             <label class="checkbox-inline">
-                                <input type="checkbox" value="" v-model="article.bidding_interval">
+                                <input type="checkbox" value="1" v-model="settings.bidding_interval">
                                 Aktivera budgivning
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" v-show="settings.publish_interval">
                     <div class="row">
-                      <dateinterval date_pub1.sync="date_start" date_pub2.sync="date_end"></dateinterval>
+                      <dateinterval interval="publish_interval"></dateinterval>
+                    </div>
+                </div>
+
+                <div class="form-group" v-show="settings.bidding_interval">
+                    <div class="row">
+                      <dateinterval interval="bidding_interval"></dateinterval>
                     </div>
                 </div>
 
@@ -130,24 +136,38 @@
 </style>
 
 <script>
-Vue.component('dateinterval', require('./../../components/DateInterval.vue'));
+import dateinterval from '../../components/DateInterval.vue'
 
 export default {
+
     name: 'Create',
-    data() {
+
+    components: { dateinterval },
+
+    data: function() {
         return {
             article: {
+                name: '',
+                desc: '',
+                public: false,
+                publish_interval: '',
+                bidding_interval: '',
+            },
+            settings: {
+                publish_interval: false,
+                bidding_interval: false
             },
             myform: []
-            ,
-            date_start: '',
-            date_end: '',
         }
     },
+
     methods: {
+
         attemptCreate() {
+            // Just create it
             this.createArticle();
         },
+
         createArticle() {
 
             this.$http.post('api/articles',this.article).then(
@@ -162,6 +182,23 @@ export default {
 
         }
 
+    },
+
+    created: function() {
+
+        // Check if using publish_interval
+        if (this.article.publish_interval!='')
+            this.settings.publish_interval = true;
+
+        // Check if using bidding_interval
+        if (this.article.bidding_interval!='')
+            this.settings.bidding_interval = true;
+
+        // Listen for changes in data by components
+        bus.$on('publish_interval_changed', payload => this.article.publish_interval = payload);
+        bus.$on('bidding_interval_changed', payload => this.article.bidding_interval = payload);
+
     }
+
 }
 </script>
