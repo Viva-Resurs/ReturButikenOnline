@@ -1,3 +1,5 @@
+<partial name="pagination"></partial>
+
 <script type="text/ecmascript-6">
 /*
  * @author ToxicTree
@@ -5,6 +7,28 @@
     export default {
 
         methods: {
+
+            // Pagination
+            rangeFilter(ob,index,scope){
+                scope.limitOffBtn = false;
+
+                // Show results in range
+                if (scope.search!=''){
+                    if (!scope.limitOff){
+                        
+                        if (index<scope.limit)
+                            return true;
+                        
+                        scope.limitOffBtn=true;
+                        return false;
+                    }
+                    else
+                        return true;
+                }
+
+                // Show contents in range
+                return (index >= scope.offset && index < scope.offset+scope.limit)
+            },
 
             // Case insensitive filter
             filterBy(ithem,search,targets){

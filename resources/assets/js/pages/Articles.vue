@@ -17,6 +17,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <td></td>
                             <td>Name <a @click="setOrder('name')">S</a></td>
                             <td>Desc</td>
                             <td>Public</td>
@@ -27,7 +28,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="ithem in filterIthems">
+                        <tr v-for="(ithem, index) in filterIthems">
+                            <td>{{(index+1)+offset}}.</td>
                             <td>{{ithem.name}}</td>
                             <td>{{ithem.desc}}</td>
                             <td>{{ithem.public}}</td>
@@ -38,6 +40,18 @@
                         </tr>
                     </tbody>
                 </table>
+
+                <pagination
+                    :total="ithems.length"
+                    :show-pagination="(search=='' && !limitOffBtn)"
+                >
+                    <div slot="replacePagination">
+                        <button v-if="limitOffBtn" class="btn btn-default searchresults_expander" @click="limitOff = true">
+                            Visa alla resultat
+                        </button>
+                    </div>
+                </pagination>
+
             </div>
 
             <div v-else>
@@ -54,12 +68,15 @@
 
 <script>
     import Filters from '../mixins/Filters.vue'
+    import Pagination from '../components/Pagination.vue'
 
     export default {
 
         name: 'Articles',
 
         mixins: [ Filters ],
+
+        components: { Pagination },
 
         computed: {
             filterIthems(){
@@ -70,7 +87,13 @@
                     .sort(
                         (a, b) => a[this.order] > b[this.order] ? 1*this.desc : -1*this.desc
                     )
-                    .slice(this.offset, this.maxIthems)
+                    .splice(this.pagination_position, this.pagination_results)
+            },
+            pagination_position(){
+                return (this.search) ? 0 : this.offset;
+            },
+            pagination_results(){
+                return (this.limitOff) ? this.ithems.length : this.maxIthems;
             }
         },
 
@@ -83,6 +106,9 @@
 
                 order: 'name',
                 desc: -1,
+
+                limitOff: false,
+                limitOffBtn: false,
 
                 offset: 0,
                 maxIthems: 5
@@ -111,7 +137,11 @@
 
         created: function(){
             this.getArticles();
-        }
 
+            // Listen for changes in data by components
+            bus.$on('offset_changed', new_offset => this.offset = new_offset);
+            bus.$on('limit_changed', new_limit => this.maxIthems = new_limit);
+
+        }
     }
 </script>

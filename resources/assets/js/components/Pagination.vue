@@ -1,0 +1,172 @@
+<template>
+    <div class="pagination">
+
+        <div v-if="total>limit" class="pagination_left">
+
+            <template v-if="showPagination">
+
+                <div class="btn-group" role="group">
+
+                    <button class="btn btn-default" @click="firstPage">
+                        <span class="fa fa-btn fa-angle-double-left"></span>
+                    </button>
+
+                    <button class="btn btn-default" @click="prevPage">
+                        <span class="fa fa-btn fa-angle-left"></span>
+                    </button>
+
+                    <button v-for="n in totalPages" :class="'btn btn-'+((n+1==currentPage)?'primary':'default')" @click="toPage(n)">{{n+1}}
+                    </button>
+
+                    <button class="btn btn-default" @click="nextPage">
+                        <span class="fa fa-btn fa-angle-right"></span>
+                    </button>
+
+                    <button class="btn btn-default" @click="lastPage">
+                        <span class="fa fa-btn fa-angle-double-right"></span>
+                    </button>
+                </div>
+
+            </template>
+            <template v-else>
+
+                <slot name="replacePagination">
+
+                </slot>
+
+            </template>
+        </div>
+
+        <div v-else class="pagination_left">
+        </div>
+
+        <div v-show="total>limit && showPagination" class="pagination_right"> 
+            <div class="input-group">
+                <select class="form-control selectpicker show-tick"
+                        v-model="limit"
+                        id="limit"
+                        ref="select-input"
+                >
+                    <option v-for="option in limitOptions" :value="option">{{option}}</option>
+                </select>
+                <span class="input-group-addon">
+                    <span class="fa fa-list"></span>
+                </span>
+
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+    export default {
+
+        name: 'Pagination',
+
+        props: [ 'total', 'showPagination' ],
+
+        data: function(){
+            return {
+                offset: 0,
+                limit: 5,
+                limitOptions: [ 10, 50, 100, 500 ]
+            }
+        },
+
+        computed: {
+
+            currentPage(){
+                var p = 1;
+                for (var i=0, c=0 ; i<this.total ; i++, c++){
+                    if (i==this.offset)
+                        return p;
+                    if (c+1==this.limit && i<this.total-p){
+                        p++; c=0;
+                    }
+                }
+            },
+
+            totalPages(){
+                var p = 1;
+                for (var i=0, c=0 ; i<this.total ; i++, c++){
+                    if (c+1==this.limit && i<this.total-p){
+                        p++; c=0;
+                    }
+                }
+                return p;
+            }
+
+        },
+
+        methods: {
+
+            firstPage(){
+                this.offset = 0;
+            },
+
+            prevPage(){
+                if (this.offset-this.limit<0)
+                    return this.firstPage();
+                this.offset -= this.limit;
+            },
+
+            toPage(p){
+                this.offset = p*this.limit;
+            },
+
+            nextPage(){
+                if (this.offset>this.total-this.limit)
+                    return this.lastPage();
+                this.offset += this.limit;
+            },
+
+            lastPage(){
+                this.offset = this.total-(((this.total-1)%this.limit)+1);
+            }
+
+        },
+
+        watch: {
+            limit: function(val, oldVal){
+                bus.$emit('limit_changed',val);
+            },
+            offset: function(val, oldVal){
+                bus.$emit('offset_changed',val);
+            }
+        },
+
+        created: function(){
+
+            /*
+            this.$nextTick(function() {
+
+                var target = $(this.$els.selectInput);
+
+                let g = target.selectpicker({
+                    size: 4,
+                    iconBase: 'fa',
+                    tickIcon: 'fa-check'
+                });
+
+                target.selectpicker('refresh');
+
+            });
+            */
+           
+            window.onkeyup = (function(e) {
+                var key = e.which || e.keyCode;
+                if (key == 37)
+                    this.prevPage();
+                if (key == 39)
+                    this.nextPage();
+            }).bind(this);
+  
+        },
+
+        beforeDestroy: function () {
+            window.onkey = false;
+        }
+
+    }
+</script>
