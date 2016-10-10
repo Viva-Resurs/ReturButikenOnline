@@ -15,7 +15,7 @@
                         <span class="fa fa-btn fa-angle-left"></span>
                     </button>
 
-                    <button v-for="n in totalPages" :class="'btn btn-'+((n+1==currentPage)?'primary':'default')" @click="toPage(n)">{{n+1}}
+                    <button v-for="n in totalPages" :class="'btn btn-'+((n==currentPage)?'primary':'default')" @click="toPage(n)">{{n}}
                     </button>
 
                     <button class="btn btn-default" @click="nextPage">
@@ -69,7 +69,7 @@
         data: function(){
             return {
                 offset: 0,
-                limit: 5,
+                limit: 10,
                 limitOptions: [ 10, 50, 100, 500 ]
             }
         },
@@ -112,7 +112,7 @@
             },
 
             toPage(p){
-                this.offset = p*this.limit;
+                this.offset = (p-1)*this.limit;
             },
 
             nextPage(){

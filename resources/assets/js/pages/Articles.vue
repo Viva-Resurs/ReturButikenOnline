@@ -85,9 +85,14 @@
                         (ithem) => this.filterBy(ithem,this.search,this.targets)
                     )
                     .sort(
-                        (a, b) => a[this.order] > b[this.order] ? 1*this.desc : -1*this.desc
+                        (a,b) => this.shallowSort(a[this.order],b[this.order],this)
+                        
                     )
-                    .splice(this.pagination_position, this.pagination_results)
+                    //(a, b) => a[this.order] > b[this.order] ? 1*this.desc : -1*this.desc
+                    .filter(
+                        (ithem,index) => this.rangeFilter(ithem,index,this)
+                    )
+                    //.splice(this.pagination_position, this.pagination_results)
             },
             pagination_position(){
                 return (this.search) ? 0 : this.offset;
@@ -111,7 +116,7 @@
                 limitOffBtn: false,
 
                 offset: 0,
-                maxIthems: 5
+                maxIthems: 10
             }
         },
 
@@ -133,6 +138,17 @@
                 );
             }
 
+        },
+
+        watch: {
+            // Reset show all results when editing search
+            search: function(val, oldVal){
+                this.offset = 0;
+                this.limitOff = false;
+            },
+            maxIthems: function(val, oldVal){
+                this.offset = 0;
+            }
         },
 
         created: function(){

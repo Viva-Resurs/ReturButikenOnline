@@ -10,13 +10,14 @@
 
             // Pagination
             rangeFilter(ob,index,scope){
+                
                 scope.limitOffBtn = false;
 
                 // Show results in range
                 if (scope.search!=''){
                     if (!scope.limitOff){
                         
-                        if (index<scope.limit)
+                        if (index<scope.maxIthems)
                             return true;
                         
                         scope.limitOffBtn=true;
@@ -27,7 +28,8 @@
                 }
 
                 // Show contents in range
-                return (index >= scope.offset && index < scope.offset+scope.limit)
+                return (index >= scope.offset && index < scope.offset+scope.maxIthems)
+
             },
 
             // Case insensitive filter
@@ -43,6 +45,44 @@
                         return true;
 
                 return false;
+            },
+
+            // Sort objects case insensitive
+            shallowSort(a, b, scope) {
+                
+                var checkA = a;
+                var checkB = b;
+
+                // Check Arguments
+                if (checkA==undefined || checkB==undefined)
+                    return 0;
+
+                // Not the same type?
+                if (typeof checkA != typeof checkB)
+                    return 0;
+
+                // Compare numbers
+                if (typeof checkA == 'number'){
+                    if (checkA == checkB)
+                        return 0;
+                    return (checkA - checkB) * scope.desc;
+                }
+
+                // Compare strings
+                if (typeof checkA == 'string'){
+                    checkA = checkA.toLowerCase();
+                    checkB = checkB.toLowerCase();
+
+                    // Char by char
+                    for (var i=0 ; i<checkA.length ; i++){
+                        if (checkA[i] < checkB[i])
+                            return -1 * scope.desc;
+                        if (checkA[i] > checkB[i])
+                            return 1 * scope.desc;
+                    }
+                    return 0;
+                }
+
             },
 
             // Sort objects by targeting a deeper property
