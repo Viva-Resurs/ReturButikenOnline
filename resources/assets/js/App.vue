@@ -1,15 +1,10 @@
 <template>
     <div class="container">
         <h1>This is the App.</h1>
-        <ul class="nav nav-tabs">
-            <li><router-link to="/">Home</router-link></li>
-            <li><router-link to="/randomLink">'Example Undefined Link'</router-link></li>
-            <li><router-link to="/articles">Articles</router-link></li>
-        </ul>
 
-        <div class="container">
-            <router-view></router-view>
-        </div>
+        <navigation></navigation>
+
+        <router-view></router-view>
 
     </div>
 </template>
@@ -28,9 +23,12 @@
     /**
      * Export the root-instance options
      */
+    import Navigation from './components/Nav.vue'
     export default {
 
         name: 'App',
+
+        components: { Navigation },
 
         data: function(){
             return {
