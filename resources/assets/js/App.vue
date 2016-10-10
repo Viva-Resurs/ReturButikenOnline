@@ -7,10 +7,9 @@
             <li><router-link to="/articles">Articles</router-link></li>
         </ul>
 
-        View:
-        <container>
+        <div class="container">
             <router-view></router-view>
-        </container>
+        </div>
 
     </div>
 </template>
