@@ -1,8 +1,9 @@
 <template>
-    <div class="container">
-
-        <h2>Articles</h2>
-
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          Articles
+        </div>
+        <div class="panel-body">
         <div v-if="this.$root.loading">
             <loading></loading>
         </div>
@@ -44,8 +45,10 @@
             </div>
 
         </div>
-        <router-link to="/articles/create" class="btn btn-primary">Create Article</router-link>
-
+        </div>
+        <div class="panel-footer">
+          <router-link to="/articles/create" class="btn btn-primary">Create Article</router-link>
+        </div>
     </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-    <div id="articleForm">
+    <div class="panel panel-default" id="articleForm">
 
         <div class="panel-heading">
             Skapa artikel
@@ -130,9 +130,6 @@
 </template>
 
 <style>
-  .panel-body{
-    margin: 10px;
-  }
 </style>
 
 <script>

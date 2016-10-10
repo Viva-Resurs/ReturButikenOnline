@@ -1,18 +1,16 @@
 <template>
     <div class="container">
         <h1>This is the App.</h1>
-
-        Navigation:
-        <ul class="navbar">
+        <ul class="nav nav-tabs">
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/randomLink">'Example Undefined Link'</router-link></li>
             <li><router-link to="/articles">Articles</router-link></li>
         </ul>
 
         View:
-        <div class="panel panel-default">
+        <container>
             <router-view></router-view>
-        </div>
+        </container>
 
     </div>
 </template>
