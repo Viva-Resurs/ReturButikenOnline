@@ -1,0 +1,35 @@
+.nav-tabs {
+
+    border-bottom: 1px solid transparent;
+
+    // Make space for border-radius on panel below
+    li:first-child {
+        margin-left: 4px;
+    }
+    li:last-child {
+        margin-right: 4px;
+    }
+
+    li {
+
+        a.router-link-active {
+            border: 1px solid $laravel-border-color;
+            border-bottom: 1px solid transparent;
+
+            position: relative;
+            bottom: -1px;
+        }
+
+        a.router-link-active,
+        a.router-link-active:hover,
+        a.router-link-active:active {
+            background: $navbar-active-route-bg;
+        }
+
+        a.router-link-active:hover {
+            border-bottom: 1px solid transparent;
+            text-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+        }
+
+    }
+}
