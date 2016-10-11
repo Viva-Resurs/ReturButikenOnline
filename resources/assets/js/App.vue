@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        <h1>This is the App.</h1>
 
         <navigation></navigation>
 
@@ -24,15 +23,22 @@
      * Export the root-instance options
      */
     import Navigation from './components/Nav.vue'
+    import Auth from './mixins/Auth.vue'
     export default {
 
         name: 'App',
 
         components: { Navigation },
 
+        mixins: [ Auth ],
+
         data: function(){
             return {
                 loading: true,
+
+                settings: {
+                    title: 'ReturButikenOnline'
+                }
             }
         },
 
