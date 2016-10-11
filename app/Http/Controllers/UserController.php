@@ -27,4 +27,11 @@ class UserController extends Controller
         return $user;
     }
 
+    /**
+     * Get currently authorized user
+     */
+	public function me(){
+		return Auth::user();
+    }
+
 }
