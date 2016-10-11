@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('index');
 });
+
+Auth::routes();
+
+Route::get('/user', 'UserController@me');
