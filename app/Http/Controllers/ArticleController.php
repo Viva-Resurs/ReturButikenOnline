@@ -13,7 +13,6 @@ use App\Http\Requests;
 class ArticleController extends Controller
 {
     public function index(Request $request){
-        //return $results = DB::select('select * from users where id = :id', ['id' => 1]);
         return Article::all();
     }
 
