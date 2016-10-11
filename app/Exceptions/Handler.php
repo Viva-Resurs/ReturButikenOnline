@@ -50,6 +50,12 @@ class Handler extends ExceptionHandler
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
             return response()->json(['error' => 'Not Found','details' => $exception], 404);
         }
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+
+            if ($exception->getStatusCode() == 401)            
+                return response()->json(['error' => 'Unauthorized','details' => $exception->getMessage()],401);
+            
+        }
 
         return parent::render($request, $exception);
     }
