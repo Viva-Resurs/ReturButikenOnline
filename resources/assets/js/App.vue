@@ -24,13 +24,14 @@
      */
     import Navigation from './components/Nav.vue'
     import Auth from './mixins/Auth.vue'
+    import ErrorHandler from './mixins/ErrorHandler.vue'
     export default {
 
         name: 'App',
 
         components: { Navigation },
 
-        mixins: [ Auth ],
+        mixins: [ Auth, ErrorHandler ],
 
         data: function(){
             return {
