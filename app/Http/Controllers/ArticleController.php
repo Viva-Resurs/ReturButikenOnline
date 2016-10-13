@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Article;
 
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -13,6 +15,12 @@ use App\Http\Requests;
 class ArticleController extends Controller
 {
     public function index(Request $request){
+
+        $user = Auth::user();
+
+        if (!$user)
+            abort(401,'Not allowed to list articles');
+
         return Article::all();
     }
 

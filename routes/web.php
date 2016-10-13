@@ -17,4 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::resource('articles', 'ArticleController');
+
+Route::resource('users', 'UserController');
+
 Route::get('/user', 'UserController@me');
