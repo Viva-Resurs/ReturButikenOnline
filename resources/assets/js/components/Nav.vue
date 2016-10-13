@@ -58,14 +58,18 @@
 
         <ul class="nav nav-tabs hidden-xs">
             <li><router-link to="/" exact>Home</router-link></li>
-            <li><router-link to="/randomLink">'Example Undefined Link'</router-link></li>
-            <li><router-link to="/articles">Articles</router-link></li>
+            <template v-if="$root.user">
+                <li><router-link to="/randomLink">'Example Undefined Link'</router-link></li>
+                <li><router-link to="/articles">Articles</router-link></li>
+            </template>
         </ul>
 
         <ul class="nav visible-xs-block">
             <li><router-link to="/" exact>Home</router-link></li>
-            <li><router-link to="/randomLink">'Example Undefined Link'</router-link></li>
-            <li><router-link to="/articles">Articles</router-link></li>
+            <template v-if="$root.user">
+                <li><router-link to="/randomLink">'Example Undefined Link'</router-link></li>
+                <li><router-link to="/articles">Articles</router-link></li>
+            </template>
         </ul>
         
     </div>
