@@ -5,7 +5,7 @@
             Inloggning
         </div>
 
-        <form class="form-vertical" v-on:submit.prevent="login" role="form" name="myform">
+        <form class="form-vertical" v-on:submit.prevent="attemptLogin" role="form" name="myform">
 
             <div class="panel-body">
 
@@ -16,7 +16,7 @@
                             <input class="form-control"
                                 id="name"
                                 type="email"
-                                v-model="user.email"
+                                v-model="login.email"
                                 placeholder="name@domain.com"
                             >
                         </div>
@@ -30,7 +30,7 @@
                             <input class="form-control"
                                 id="password"
                                 type="password"
-                                v-model="user.password"
+                                v-model="login.password"
                             >
                         </div>
                     </div>
@@ -39,7 +39,7 @@
             </div>
 
             <div class="panel-footer text-right">
-                <button type="submit" class="btn btn-primary" @keydown.enter.prevent="login">
+                <button type="submit" class="btn btn-primary" @keydown.enter.prevent="attemptLogin">
                     Login
                 </button>
             </div>
@@ -59,7 +59,7 @@ export default {
 
     data: function() {
         return {
-            user: {
+            login: {
                 name: '',
                 email: '',
                 password: ''
@@ -70,17 +70,11 @@ export default {
 
     methods: {
 
-        login() {
+        attemptLogin() {
 
-            this.$http.post('login',this.user).then(
-                (response) => {
-                    console.log('ok');
-                    this.$root.setUser(this.user);
-                    this.$router.push({ path: '/' });
-                },
-                (response) => {
-                    console.error(response.error);
-                }
+            this.$http.post('login',this.login).then(
+                (response) => bus.$emit('login_ok'),
+                (response) => bus.$emit('error',response)
             );
 
         }
