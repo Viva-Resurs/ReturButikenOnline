@@ -126,13 +126,13 @@
 
                 this.$root.loading = true;
 
-                this.$http.get('api/articles').then(
+                this.$http.get('articles').then(
                     (response) => {
                         this.ithems = response.data;
                         this.$root.loading = false;
                     },
                     (response) => {
-                        console.error(response.error);
+                        bus.$emit('error',response);
                         this.$root.loading = false;
                     }
                 );

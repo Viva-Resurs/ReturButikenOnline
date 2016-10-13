@@ -167,7 +167,7 @@ export default {
 
         createArticle() {
 
-            this.$http.post('api/articles',this.article).then(
+            this.$http.post('articles',this.article).then(
                 (response) => {
                     console.log('ok');
                     this.$router.push({ path: '/articles' });
