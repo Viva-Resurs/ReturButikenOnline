@@ -22,12 +22,12 @@ module.exports = {
                   component: require('./pages/articles/list.vue')
                 },
                 {
-                  path: ':id',
-                  component: require('./pages/articles/update.vue')
-                },
-                {
                   path: 'create',
                   component: require('./pages/articles/create.vue')
+                },
+                {
+                  path: ':id',
+                  component: require('./pages/articles/update.vue')
                 }
             ]
         },
@@ -37,4 +37,4 @@ module.exports = {
         }
     ]
 
-};
+}
