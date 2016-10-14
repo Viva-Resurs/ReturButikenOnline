@@ -1,10 +1,9 @@
 <template>
-    <div class="container">
-
+    <div>
         <navigation></navigation>
-
-        <router-view></router-view>
-
+        <div class="container">
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
