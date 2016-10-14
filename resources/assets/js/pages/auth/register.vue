@@ -35,7 +35,7 @@
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" v-model="register.password_confirm" required>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" v-model="register.password_confirmation" required>
                             </div>
                         </div>
 
@@ -58,10 +58,10 @@
         data: function() {
           return {
               register: {
-                  name: '',
-                  email: '',
-                  password: '',
-                  password_confirm: ''
+                  name: 'testare2345',
+                  email: 'testare2345@viva.se',
+                  password: 'test1234',
+                  password_confirmation: 'test1234'
               },
               myform: []
           }
@@ -69,20 +69,7 @@
       methods: {
 
           attemptRegister() {
-            //   var userData = {
-            //       name : this.register.name,
-            //       email : this.register.email,
-            //       password : this.register.password,
-            //       password_confirmation : this.register.password_confirm
-            //   }
-            var userData = {
-                name : 'Daniel',
-                email : 'danielogren82@gmail.com',
-                password : 'test123',
-                password_confirmation : 'test123'
-            }
-
-              this.$http.post('/register', userData).then(
+              this.$http.post('/register', this.register).then(
                   (response) => {
                       console.log(response);
                       bus.$emit('register_ok')
@@ -97,6 +84,14 @@
 
           }
 
+      },
+      created: function(){
+              this.$http.get('/register').then(
+                  (response) => {
+                      console.log(response);
+                  },
+                  (response) => bus.$emit('error',response)
+              );
       }
     }
 </script>
