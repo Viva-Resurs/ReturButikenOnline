@@ -73,7 +73,7 @@
 
     export default {
 
-        name: 'Articles',
+        name: 'List',
 
         mixins: [ Filters ],
 
