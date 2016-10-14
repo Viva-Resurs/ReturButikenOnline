@@ -31,7 +31,7 @@
 
         created: function() {
 
-            bus.$on('article_changed', payload => this.createArticle(payload) );
+            bus.$on('article_changed', payload => { this.createArticle(payload); } );
 
         }
 
