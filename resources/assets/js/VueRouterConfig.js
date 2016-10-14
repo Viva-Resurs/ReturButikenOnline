@@ -19,7 +19,11 @@ module.exports = {
             children: [
                 {
                   path: '/',
-                  component: require('./pages/articles/index.vue')
+                  component: require('./pages/articles/list.vue')
+                },
+                {
+                  path: ':id',
+                  component: require('./pages/articles/update.vue')
                 },
                 {
                   path: 'create',

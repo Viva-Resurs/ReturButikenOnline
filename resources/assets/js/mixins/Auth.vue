@@ -36,7 +36,7 @@
                     (response) => {
                         
                         // leave login-page
-                        if (mode!='first_check' && this.user != response.data)
+                        if (mode!='first_check' && this.user && response.data && this.user.name != response.data.name)
                             this.$router.push({ path: '/' });
 
                         this.setUser(response.data);
