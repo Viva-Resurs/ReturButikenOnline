@@ -11,11 +11,17 @@ module.exports = {
         },
         {
             path: '/articles',
-            component: require('./pages/Articles.vue')
-        },
-        {
-            path: '/articles/create',
-            component: require('./pages/articles/create.vue')
+            component: require('./pages/Articles.vue'),
+            children: [
+                {
+                  path: '/',
+                  component: require('./pages/articles/index.vue')
+                },
+                {
+                  path: 'create',
+                  component: require('./pages/articles/create.vue')
+                }
+            ]
         },
         {
             path: '*',
