@@ -39,7 +39,9 @@
                                 <td>{{ithem.publish_interval}}</td>
                                 <td>{{ithem.bidding_interval}}</td>
                                 <td>{{ithem.updated_at}}</td>
-                                <td>X E</td>
+                                <td>
+                                    <router-link :to="'/articles/'+ithem.id">Edit</router-link>
+                                </td>
                             </tr>
                         </tbody>
                     </table>

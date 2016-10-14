@@ -138,6 +138,8 @@ export default {
 
     components: { DateInterval },
 
+    props: [ 'original' ],
+
     data: function() {
         return {
             article: {
@@ -168,6 +170,10 @@ export default {
     },
 
     created: function() {
+
+        // If a original is passed (Update-mode), fill the form
+        if (this.original)
+            this.article = this.original;
 
         // Check if using publish_interval
         if (this.article.publish_interval!='')
