@@ -40,6 +40,7 @@
                                 <td>{{ithem.bidding_interval}}</td>
                                 <td>{{ithem.updated_at}}</td>
                                 <td>
+                                    <a @click="removeArticle(ithem)">Remove</a>
                                     <router-link :to="'/articles/'+ithem.id">Edit</router-link>
                                 </td>
                             </tr>
@@ -124,6 +125,22 @@
         },
 
         methods: {
+
+            attemptRemove(article){
+                // Are you sure?
+                // ... yes
+                this.removeArticle(article);
+            },
+
+            removeArticle(article){
+                this.$http.delete('articles/'+article.id).then(
+                    (response) => {
+                        console.log('ok');
+                        //this.ithems.$remove(article);
+                    },
+                    (response) => bus.$emit('error',response)
+                );
+            },
 
             getArticles(){
 
