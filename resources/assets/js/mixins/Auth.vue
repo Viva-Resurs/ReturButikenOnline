@@ -35,9 +35,9 @@
                 this.$http.get('user').then(
                     (response) => {
                         
-                        // TODO: Redirecting things
-                        //if (mode!='first_check' || this.user != response.data)
-                        //  this.$router.push({ path: '/' });
+                        // leave login-page
+                        if (mode!='first_check' && this.user != response.data)
+                            this.$router.push({ path: '/' });
 
                         this.setUser(response.data);
 
