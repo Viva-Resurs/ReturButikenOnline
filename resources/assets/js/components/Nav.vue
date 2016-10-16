@@ -1,6 +1,6 @@
 <template>
     <div>
-        
+
     <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
@@ -30,6 +30,8 @@
                     <!-- Authentication Links -->
                     <template v-if="!$root.user">
                         <li class="navbar-link"><router-link to="/auth/login" exact>Login</router-link></li>
+                        <li class="divider-vertical"></li>
+                        <li class="navbar-link"><router-link to="/auth/register" exact>Register</router-link></li>
                         <li class="divider-vertical"></li>
                         <li class="navbar-link"><router-link to="/help">Hjälp</router-link></li>
                     </template>
@@ -79,7 +81,7 @@
             </template>
         </ul>
     </template>
-        
+
     </div>
 
 </template>
