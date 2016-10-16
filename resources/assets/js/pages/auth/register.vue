@@ -5,8 +5,8 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Register</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" role="form" method="POST">
-
+                    <form class="form-horizontal" v-on:submit.prevent="attemptRegister" role="form">
+                        <input id="_token" type="hidden" name="_token" v-model="register._token">
                         <div class="form-group">
                             <label for="name" class="col-md-4 control-label">Name</label>
 
@@ -54,44 +54,28 @@
 </div>
 </template>
 <script>
-    export default {
-        data: function() {
-          return {
-              register: {
-                  name: 'testare2345',
-                  email: 'testare2345@viva.se',
-                  password: 'test1234',
-                  password_confirmation: 'test1234'
-              },
-              myform: []
-          }
-      },
-      methods: {
+export default {
+    data: function() {
+        return {
+            register: {
+                name: 'testare2345',
+                email: 'testare2345@viva.se',
+                password: 'test1234',
+                password_confirmation: 'test1234',
+            },
+        }
+    },
+    methods: {
+        attemptRegister() {
 
-          attemptRegister() {
-              this.$http.post('/register', this.register).then(
-                  (response) => {
-                      console.log(response);
-                      bus.$emit('register_ok')
-                      return;
-                      this.$http.post('login',register.name).then(
-                          (response) => bus.$emit('login_ok'),
-                          (response) => bus.$emit('error',response)
-                      );
-                  },
-                  (response) => bus.$emit('error',response)
-              );
-
-          }
-
-      },
-      created: function(){
-              this.$http.get('/register').then(
-                  (response) => {
-                      console.log(response);
-                  },
-                  (response) => bus.$emit('error',response)
-              );
-      }
+            this.$http.post('register', this.register).then(
+                (response) => {
+                    console.log(response);
+                    bus.$emit('register_ok');
+                },
+                (response) => bus.$emit('error', response)
+            );
+            }
+        }
     }
 </script>
