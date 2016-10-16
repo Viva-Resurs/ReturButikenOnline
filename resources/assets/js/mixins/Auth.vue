@@ -34,7 +34,7 @@
 
                 this.$http.get('user').then(
                     (response) => {
-                        
+
                         // leave login-page
                         if (mode!='first_check' && this.user && response.data && this.user.name != response.data.name)
                             this.$router.push({ path: '/' });
@@ -72,7 +72,7 @@
 
                         // Reload page to generate a new Laravel.csrfToken
                         location.reload();
-                        
+
                     },
                     (response) => bus.$emit('error',response)
                 );
@@ -84,8 +84,10 @@
         mounted: function() {
 
             this.getUser('first_check');
-            
+
             bus.$on('login_ok', this.getUser );
+            bus.$on('register_ok', this.getUser );
+
 
         }
 
