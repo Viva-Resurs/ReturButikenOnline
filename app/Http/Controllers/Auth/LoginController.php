@@ -21,6 +21,14 @@ class LoginController extends Controller
     use AuthenticatesUsers;
 
     /**
+     * Overide function in AuthenticatesUsers when login fails
+     */
+    protected function sendFailedLoginResponse()
+    {
+        return abort(401,'Failed to login');
+    }
+
+    /**
      * Where to redirect users after login.
      *
      * @var string
