@@ -35,10 +35,13 @@
                         <li class="navbar-link"><router-link to="/help">Hjälp</router-link></li>
                     </template>
                     <template v-if="$root.user">
-
                         <li class="navbar-link"><router-link to="/articles/create" exact>Publicera</router-link></li>
                         <li class="divider-vertical"></li>
                         <li class="navbar-link"><router-link to="/articles" exact>Arkiv</router-link></li>
+                        <li class="divider-vertical"></li>
+                        <li class="navbar-link"><router-link to="/categories" exact>Kategorier</router-link></li>
+                        <li class="divider-vertical"></li>
+                        <li class="navbar-link"><router-link to="/articles" exact>Användare</router-link></li>
                         <li class="divider-vertical"></li>
 
                         <li class="dropdown">
@@ -47,11 +50,8 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a role="button" @click="$root.exitUser()">
-                                        Logout
-                                    </a>
-                                </li>
+                                <li><a role="button">Profil</a></li>
+                                <li><a role="button" @click="$root.exitUser()">Logout</a></li>
                             </ul>
                         </li>
                     </template>
