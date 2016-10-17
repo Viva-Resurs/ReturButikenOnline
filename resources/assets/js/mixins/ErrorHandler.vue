@@ -7,12 +7,10 @@
 
             handleError(message) {
 
-                console.error(message);
+                this.showError({text:message});
                 
-                if (!this.$root.user){
+                if (!this.$root.user)
                     console.error('Not logged in!');
-                    this.$root.exitUser();
-                }
 
             }
 
