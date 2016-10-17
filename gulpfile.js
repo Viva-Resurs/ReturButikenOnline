@@ -15,22 +15,21 @@ require('laravel-elixir-vue');
 
 elixir(mix => {
 
-    /* Sass */
     mix
-        .sass('app.scss')
+
+    /* Sass */
+    .sass('app.scss')
 
     /* Fonts */
-    mix
-        .copy( 'resources/assets/fonts', 'public/fonts' )
+    //.copy( 'resources/assets/fonts', 'public/fonts' )
 
     /* Application JS */
-    mix
-       .webpack('app.js',false,false,{
-            resolve: {
-              alias: {
+    .webpack('app.js',false,false,{
+        resolve: {
+            alias: {
                 vue: 'vue/dist/vue.js' // To use templates in .vue files
-              }
             }
-       });
+        }
+    });
 
 });
