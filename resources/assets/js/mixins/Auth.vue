@@ -35,10 +35,6 @@
                 this.$http.get('user').then(
                     (response) => {
 
-                        // leave login-page
-                        if (mode!='first_check' && this.user && response.data && this.user.name != response.data.name)
-                            this.$router.push({ path: '/' });
-
                         this.setUser(response.data);
 
                         // Set timer to check login-status
@@ -83,11 +79,17 @@
 
         mounted: function() {
 
-            this.getUser('first_check');
+            this.getUser();
 
-            bus.$on('login_ok', this.getUser );
-            bus.$on('register_ok', this.getUser );
-
+            bus.$on('login_ok', (response) => {
+                this.getUser();
+                this.$router.push({ path: '/' });
+            });
+            
+            bus.$on('register_ok', (response) => {
+                this.getUser();
+                this.$router.push({ path: '/' });
+            });
 
         }
 
