@@ -12,19 +12,25 @@ class UserController extends Controller
 
 		$user = Auth::user();
 
-		if (!$user)
+        if (!$user || !$user->hasRole('admin'))
 			abort(401,'Not allowed to list users');
 
         return User::all();
     }
 
     public function show($id){
-        $user = User::find($id);
 
-        if (!$user)
-            abort(404);
+        $user = Auth::user();
 
-        return $user;
+        if (!$user || !$user->hasRole('admin'))
+            abort(401,'Not allowed to show users');
+
+        $showUser = User::find($id);
+
+        if (!$showUser)
+            abort(404, 'Could not find user');
+
+        return $showUser;
     }
 
     /**

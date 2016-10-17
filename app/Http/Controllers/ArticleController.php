@@ -25,6 +25,12 @@ class ArticleController extends Controller
     }
 
     public function show($id){
+
+        $user = Auth::user();
+
+        if (!$user)
+            abort(401,'Not allowed to show articles');
+
         $article = Article::find($id);
 
         if (!$article)
@@ -35,6 +41,11 @@ class ArticleController extends Controller
 
     public function store(Request $request){
         
+        $user = Auth::user();
+
+        if (!$user)
+            abort(401,'Not allowed to create articles');
+
         $article = new Article([
             'name' => ($request->has('name')) ? $request['name'] : '',
             'desc' => ($request->has('desc')) ? $request['desc'] : '',
@@ -50,6 +61,11 @@ class ArticleController extends Controller
 
     public function update(Request $request, $id){
         
+        $user = Auth::user();
+
+        if (!$user)
+            abort(401,'Not allowed to update articles');
+
         $article = Article::find($id);
 
         if (!$article)
@@ -74,6 +90,11 @@ class ArticleController extends Controller
 
     public function destroy($id){
         
+        $user = Auth::user();
+
+        if (!$user)
+            abort(401,'Not allowed to remove articles');
+
         $article = Article::find($id);
 
         if (!$article)
