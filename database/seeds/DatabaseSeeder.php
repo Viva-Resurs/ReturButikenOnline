@@ -15,8 +15,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
         $this->call(RolesTablesSeeder::class);
         $this->call(UsersTableSeeder::class);
+
     }
 }
 
@@ -39,7 +41,8 @@ class UsersTableSeeder extends Seeder {
 
         $admin = User::create([
             'name'     => config('returbutiken.settings.users.administrator.username'),
-            'password' => config('returbutiken.settings.users.administrator.password')
+            'email'    => config('returbutiken.settings.users.administrator.email'),
+            'password' => Hash::make(config('returbutiken.settings.users.administrator.password'))
         ]);
 
         $admin->assignRole('admin');
