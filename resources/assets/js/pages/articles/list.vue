@@ -32,7 +32,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(ithem, index) in filterIthems">
-                                <td>{{(index+1)+offset}}.</td>
+                                <td>{{(index+1)+offset}}. {{ithem.id}}</td>
                                 <td>{{ithem.name}}</td>
                                 <td>{{ithem.desc}}</td>
                                 <td>{{ithem.public}}</td>
@@ -40,7 +40,7 @@
                                 <td>{{ithem.bidding_interval}}</td>
                                 <td>{{ithem.updated_at}}</td>
                                 <td>
-                                    <a @click="removeArticle(ithem)">Remove</a>
+                                    <a role="button" @click="attemptRemove(ithem)">Remove</a>
                                     <router-link :to="'/articles/'+ithem.id">Edit</router-link>
                                 </td>
                             </tr>
@@ -85,6 +85,9 @@
         computed: {
             filterIthems(){
                 return this.ithems
+                    .filter(
+                        (ithem) => (ithem.removed!=true)
+                    )
                     .filter(
                         (ithem) => this.filterBy(ithem,this.search,this.targets)
                     )
@@ -135,8 +138,9 @@
             removeArticle(article){
                 this.$http.delete('articles/'+article.id).then(
                     (response) => {
-                        console.log('ok');
-                        //this.ithems.$remove(article);
+                        bus.$emit('success','removed_article');
+                        article.removed = true;
+                        this.ithems.reverse();
                     },
                     (response) => bus.$emit('error',response)
                 );
