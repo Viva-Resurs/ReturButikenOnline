@@ -1,6 +1,4 @@
-<partial name="pagination"></partial>
-
-<script type="text/ecmascript-6">
+<script>
 /*
  * @author ToxicTree
  */
