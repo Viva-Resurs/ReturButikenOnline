@@ -5,12 +5,7 @@
 
         data: function() {
             return {
-                user: {
-                    id: 0,
-                    name: '',
-                    email: '',
-                    roles: []
-                }
+                user: false
             }
         },
 
@@ -85,7 +80,7 @@
                 this.getUser();
                 this.$router.push({ path: '/' });
             });
-            
+
             bus.$on('register_ok', (response) => {
                 this.getUser();
                 this.$router.push({ path: '/' });
