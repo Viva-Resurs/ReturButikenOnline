@@ -5,9 +5,9 @@
 
         methods: {
 
-            handleError(error) {
+            handleError(message) {
 
-                console.error(error);
+                console.error(message);
                 
                 if (!this.$root.user){
                     console.error('Not logged in!');

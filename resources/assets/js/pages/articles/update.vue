@@ -55,7 +55,11 @@
 
             bus.$on('article_changed', payload => this.updateArticle(payload) );
 
-        }
+        },
 
+        beforeDestroy: function() {
+            bus.$off('article_changed');
+        }
+        
     }
 </script>

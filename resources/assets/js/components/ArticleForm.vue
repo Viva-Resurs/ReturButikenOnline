@@ -130,64 +130,71 @@
 </template>
 
 <script>
-import DateInterval from './DateInterval.vue'
+    import DateInterval from './DateInterval.vue'
 
-export default {
+    export default {
 
-    name: 'ArticleForm',
+        name: 'ArticleForm',
 
-    components: { DateInterval },
+        components: { DateInterval },
 
-    props: [ 'original' ],
+        props: [ 'original' ],
 
-    data: function() {
-        return {
-            article: {
-                name: '',
-                desc: '',
-                public: false,
-                publish_interval: '',
-                bidding_interval: '',
-            },
-            settings: {
-                publish_interval: false,
-                bidding_interval: false
-            },
-            myform: []
-        }
-    },
+        data: function() {
+            return {
+                article: {
+                    name: '',
+                    desc: '',
+                    public: false,
+                    publish_interval: '',
+                    bidding_interval: '',
+                },
+                settings: {
+                    publish_interval: false,
+                    bidding_interval: false
+                },
+                myform: []
+            }
+        },
 
-    methods: {
+        methods: {
 
-        attemptCreate() {
+            attemptCreate() {
 
-            // TODO: Validation
+                // TODO: Validation
+                
+                bus.$emit( 'article_changed', this.article );
+
+            }
+
+        },
+
+        created: function() {
+
+            // If a original is passed (Update-mode), fill the form
+            if (this.original)
+                this.article = this.original;
+
+            // Check if using publish_interval
+            if (this.article.publish_interval!='')
+                this.settings.publish_interval = true;
+
+            // Check if using bidding_interval
+            if (this.article.bidding_interval!='')
+                this.settings.bidding_interval = true;
+
+            // Listen for changes in DateInterval
+            bus.$on('publish_interval_changed', payload => this.article.publish_interval = payload);
+            bus.$on('bidding_interval_changed', payload => this.article.bidding_interval = payload);
+
+        },
+
+        beforeDestroy: function() {
+
+            bus.$off('publish_interval_changed');
+            bus.$off('bidding_interval_changed');
             
-            bus.$emit( 'article_changed', this.article );
-
         }
-
-    },
-
-    created: function() {
-
-        // If a original is passed (Update-mode), fill the form
-        if (this.original)
-            this.article = this.original;
-
-        // Check if using publish_interval
-        if (this.article.publish_interval!='')
-            this.settings.publish_interval = true;
-
-        // Check if using bidding_interval
-        if (this.article.bidding_interval!='')
-            this.settings.bidding_interval = true;
-
-        // Listen for changes in DateInterval
-        bus.$on('publish_interval_changed', payload => this.article.publish_interval = payload);
-        bus.$on('bidding_interval_changed', payload => this.article.bidding_interval = payload);
 
     }
-
-}
 </script>

@@ -54,7 +54,7 @@
 </div>
 </template>
 <script>
-export default {
+    export default {
     data: function() {
         return {
             register: {
@@ -69,13 +69,11 @@ export default {
         attemptRegister() {
 
             this.$http.post('register', this.register).then(
-                (response) => {
-                    console.log(response);
-                    bus.$emit('register_ok');
-                },
+                (response) => bus.$emit('register_ok', response),
                 (response) => bus.$emit('error', response)
             );
-            }
+
         }
     }
+}
 </script>

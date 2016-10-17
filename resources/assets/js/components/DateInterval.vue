@@ -24,93 +24,96 @@
 </template>
 
 <script>
-export default {
+    export default {
 
-    name: 'DateInterval',
+        name: 'DateInterval',
 
-    props: [ 'interval' ],
+        props: [ 'interval' ],
 
-    data: function(){
-        return {
-            date: {
-                start: '',
-                end: ''
-            },
-            token: '|'
-        }
-    },
-
-    methods: {
-        encodeInterval(){
-
-            bus.$emit(
-                this.interval + '_changed',
-                (this.date.end!='') ? this.date.start +' '+this.token+' ' + this.date.end : this.date.start
-            );
-            
+        data: function(){
+            return {
+                date: {
+                    start: '',
+                    end: ''
+                },
+                token: '|'
+            }
         },
-        decodeInterval(){
-            return;
 
-            if (typeof this.interval == 'undefined')
+        methods: {
+
+            encodeInterval(){
+
+                bus.$emit(
+                    this.interval + '_changed',
+                    (this.date.end!='') ? this.date.start +' '+this.token+' ' + this.date.end : this.date.start
+                );
+                
+            },
+
+            decodeInterval(){
                 return;
 
-            var dates = this.interval.split(this.token);
+                if (typeof this.interval == 'undefined')
+                    return;
 
-            this.start = (dates[0]!='') ? dates[0] : '';
+                var dates = this.interval.split(this.token);
 
-            this.end = (dates[1]!='') ? dates[1] : '';
+                this.start = (dates[0]!='') ? dates[0] : '';
+
+                this.end = (dates[1]!='') ? dates[1] : '';
+
+            }
+
+        },
+
+        mounted: function() {
+
+            this.decodeInterval();
+
+            var options = {
+                showTodayButton: true,
+                toolbarPlacement: 'top',
+                calendarWeeks: true,
+                showClose: true,
+                allowInputToggle: true,
+                minDate: moment().hour(0).minute(0).subtract(1,'d'),
+                maxDate: moment().hour(0).minute(0).add(5,'y'),
+                locale: moment.locale('sv'),
+                icons: {
+                    time: 'fa fa-clock-o',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-chevron-up',
+                    down: 'fa fa-chevron-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-crosshairs',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            };
+
+            $('#'+this.interval+'_start').datetimepicker(options).on('dp.change',
+                (e) => {
+                    this.date.start = e.date.format('YYYY-MM-DD HH:mm:ss');
+                    this.encodeInterval();
+                }
+            );
+
+            $('#'+this.interval+'_end').datetimepicker(options).on('dp.change',
+                (e) => {
+                    this.date.end = e.date.format('YYYY-MM-DD HH:mm:ss');
+                    this.encodeInterval();
+                }
+            );
 
         }
-    },
-
-    mounted: function() {
-
-        this.decodeInterval();
-
-        var options = {
-            showTodayButton: true,
-            toolbarPlacement: 'top',
-            calendarWeeks: true,
-            showClose: true,
-            allowInputToggle: true,
-            minDate: moment().hour(0).minute(0).subtract(1,'d'),
-            maxDate: moment().hour(0).minute(0).add(5,'y'),
-            locale: moment.locale('sv'),
-            icons: {
-                time: 'fa fa-clock-o',
-                date: 'fa fa-calendar',
-                up: 'fa fa-chevron-up',
-                down: 'fa fa-chevron-down',
-                previous: 'fa fa-chevron-left',
-                next: 'fa fa-chevron-right',
-                today: 'fa fa-crosshairs',
-                clear: 'fa fa-trash',
-                close: 'fa fa-times'
-            }
-        };
-
-        $('#'+this.interval+'_start').datetimepicker(options).on('dp.change',
-            (e) => {
-                this.date.start = e.date.format('YYYY-MM-DD HH:mm:ss');
-                this.encodeInterval();
-            }
-        );
-
-        $('#'+this.interval+'_end').datetimepicker(options).on('dp.change',
-            (e) => {
-                this.date.end = e.date.format('YYYY-MM-DD HH:mm:ss');
-                this.encodeInterval();
-            }
-        );
-
 
     }
-}
 </script>
 
 <style lang="css">
-  .form-group {
-    margin: 15px;
-  }
+    .form-group {
+        margin: 15px;
+    }
 </style>

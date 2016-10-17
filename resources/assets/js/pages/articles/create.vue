@@ -20,9 +20,7 @@
                         console.log('ok');
                         this.$router.push({ path: '/articles' });
                     },
-                    (response) => {
-                        console.error(response.error);
-                    }
+                    (response) => bus.$emit('error',response)
                 );
 
             }
@@ -30,9 +28,11 @@
         },
 
         created: function() {
-
             bus.$on('article_changed', payload => { this.createArticle(payload); } );
+        },
 
+        beforeDestroy: function() {
+            bus.$off('article_changed');
         }
 
     }
