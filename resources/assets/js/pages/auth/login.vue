@@ -74,7 +74,7 @@ export default {
 
             this.$http.post('login',this.login).then(
                 (response) => bus.$emit('login_ok'),
-                (response) => bus.$emit('error',response)
+                (response) => bus.$emit('error','Could not login')
             );
 
         }
