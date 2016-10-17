@@ -14,9 +14,8 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="/">
-                    {{ $root.settings.title }}
-                </a>
+                <router-link to="/" class="navbar-brand">{{ $root.settings.title }}</router-link>
+            
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -49,12 +48,9 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a @click="$root.exitUser()">
+                                    <a role="button" @click="$root.exitUser()">
                                         Logout
                                     </a>
-
-                                    <form id="logout-form" action="/logout" method="POST" style="display: none;">
-                                    </form>
                                 </li>
                             </ul>
                         </li>
