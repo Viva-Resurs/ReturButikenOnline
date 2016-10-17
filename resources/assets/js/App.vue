@@ -25,13 +25,14 @@
     import Auth from './mixins/Auth.vue'
     import ErrorHandler from './mixins/ErrorHandler.vue'
     import SuccessHandler from './mixins/SuccessHandler.vue'
+    import SweetAlert from './mixins/SweetAlert.vue'
     export default {
 
         name: 'App',
 
         components: { Navigation },
 
-        mixins: [ Auth, ErrorHandler, SuccessHandler ],
+        mixins: [ Auth, SweetAlert, ErrorHandler, SuccessHandler ],
 
         data: function(){
             return {
