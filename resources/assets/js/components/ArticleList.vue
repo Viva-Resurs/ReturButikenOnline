@@ -39,9 +39,9 @@
                                 <td>{{ithem.publish_interval}}</td>
                                 <td>{{ithem.bidding_interval}}</td>
                                 <td>{{ithem.updated_at}}</td>
-                                <td>
-                                    <a role="button" @click="remove(ithem)">Remove</a>
-                                    <router-link :to="'/articles/'+ithem.id">Edit</router-link>
+                                <td>                                
+                                    <button class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></button>
+                                    <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-btn fa-pencil"></router-link>
                                 </td>
                             </tr>
                         </tbody>
