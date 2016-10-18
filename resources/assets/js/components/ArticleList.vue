@@ -20,14 +20,14 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <td></td>
-                                <td>Name <a @click="setOrder('name')">S</a></td>
-                                <td>Desc</td>
-                                <td>Public</td>
-                                <td>Sale</td>
-                                <td>Bidding</td>
-                                <td>Updated <a @click="setOrder('updated_at',1)">S</a></td>
-                                <td>Tools</td>
+                                <th></th>
+                                <th>Name <button class="btn btn-default btn-sm fa fa-btn fa-sort" @click="setOrder('name')"></button></th>
+                                <th>Desc</th>
+                                <th>Public</th>
+                                <th>Sale</th>
+                                <th>Bidding</th>
+                                <th>Updated <button class="btn btn-default btn-sm fa fa-btn fa-sort" @click="setOrder('updated_at',1)"></th>
+                                <th>Tools</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -39,7 +39,7 @@
                                 <td>{{ithem.publish_interval}}</td>
                                 <td>{{ithem.bidding_interval}}</td>
                                 <td>{{ithem.updated_at}}</td>
-                                <td>                                
+                                <td>
                                     <button class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></button>
                                     <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-btn fa-pencil"></router-link>
                                 </td>
@@ -72,8 +72,8 @@
 </template>
 
 <script>
-    import Filters from '../mixins/Filters.vue'
-    import Pagination from './Pagination.vue'
+    import Filters from '../mixins/Filters.vue';
+    import Pagination from './Pagination.vue';
 
     export default {
 
@@ -89,7 +89,7 @@
             filterIthems(){
                 return this.ithems
                     .filter(
-                        (ithem) => (ithem.removed!=true)
+                        (ithem) => (ithem.removed!==true)
                     )
                     .filter(
                         (ithem) => this.filterBy(ithem,this.search,this.targets)
@@ -99,7 +99,7 @@
                     )
                     .filter(
                         (ithem,index) => this.rangeFilter(ithem,index,this)
-                    )
+                    );
             }
         },
 
@@ -116,7 +116,7 @@
 
                 offset: 0,
                 maxIthems: 10
-            }
+            };
         },
 
         methods: {
@@ -143,5 +143,5 @@
             bus.$on('limit_changed', new_limit => this.maxIthems = new_limit);
 
         }
-    }
+    };
 </script>
