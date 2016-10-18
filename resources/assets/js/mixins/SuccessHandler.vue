@@ -1,7 +1,7 @@
 <script>
     export default {
 
-        name: 'ErrorHandler',
+        name: 'SuccessHandler',
 
         methods: {
 
