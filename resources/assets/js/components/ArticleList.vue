@@ -16,8 +16,8 @@
                 <template v-if="ithems.length > 0">
 
                     <input v-model="search">
-
-                    <table class="table">
+                    <hr>
+                    <table class="table table-responsive table-condensed">
                         <thead>
                             <tr>
                                 <th></th>
@@ -34,7 +34,7 @@
                             <tr v-for="(ithem, index) in filterIthems">
                                 <td>{{(index+1)+offset}}. {{ithem.id}}</td>
                                 <td>{{ithem.name}}</td>
-                                <td>{{ithem.desc}}</td>
+                                <td class="desc">{{ithem.desc}}</td>
                                 <td>{{ithem.public}}</td>
                                 <td>{{ithem.publish_interval}}</td>
                                 <td>{{ithem.bidding_interval}}</td>
@@ -145,3 +145,16 @@
         }
     };
 </script>
+<style>
+    td {
+        word-wrap: break-word;
+        min-width: 80px;
+        max-width: 160px;
+        white-space:normal !important;
+    }
+
+    td.desc {
+            max-width: 250px;
+    }
+
+</style>
