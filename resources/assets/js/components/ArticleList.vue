@@ -20,7 +20,7 @@
                     <table class="table table-responsive table-condensed">
                         <thead>
                             <tr>
-                                <th></th>
+                                <th class="num"></th>
                                 <th>Name <button class="btn btn-default btn-sm fa fa-btn fa-sort" @click="setOrder('name')"></button></th>
                                 <th>Desc</th>
                                 <th>Public</th>
@@ -32,16 +32,18 @@
                         </thead>
                         <tbody>
                             <tr v-for="(ithem, index) in filterIthems">
-                                <td>{{(index+1)+offset}}. {{ithem.id}}</td>
+                                <td class="num"><strong>{{(index+1)+offset}}. </strong></td>
                                 <td>{{ithem.name}}</td>
                                 <td class="desc">{{ithem.desc}}</td>
-                                <td>{{ithem.public}}</td>
-                                <td>{{ithem.publish_interval}}</td>
-                                <td>{{ithem.bidding_interval}}</td>
-                                <td>{{ithem.updated_at}}</td>
-                                <td>
-                                    <button class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></button>
+
+                                <td v-if="ithem.public == 1"><span class="fa fa-btn fa-check"></span></td>
+                                <td v-else><span class="fa fa-btn fa-remove"></span></td>
+                                <td><a class="btn btn-default btn-sm fa fa-btn fa-calendar" data-toggle="tooltip" v-bind:title="ithem.publish_interval"></a></td>
+                                <td><a class="btn btn-default btn-sm fa fa-btn fa-calendar-check-o" data-toggle="tooltip" v-bind:title="ithem.bidding_interval"></a></td>
+                                <td><span class="fa fa-btn fa-clock-o"></span> {{ithem.updated_at}}</td>
+                                <td class="tools">
                                     <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-btn fa-pencil"></router-link>
+                                    <button class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -141,6 +143,9 @@
             // Listen for changes in data by components
             bus.$on('offset_changed', new_offset => this.offset = new_offset);
             bus.$on('limit_changed', new_limit => this.maxIthems = new_limit);
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
 
         }
     };
@@ -154,7 +159,22 @@
     }
 
     td.desc {
-            max-width: 250px;
+        max-width: 250px;
+    }
+
+    td.tools {
+        max-width: 100px;
+        min-width: 100px;
+    }
+
+    td.num, th.num {
+        max-width: 40px;
+        min-width: 40px;
+
+    }
+
+    td.num {
+        background: #f5f8fa;
     }
 
 </style>
