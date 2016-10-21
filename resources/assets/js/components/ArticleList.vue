@@ -34,13 +34,17 @@
                             <tr v-for="(ithem, index) in filterIthems">
                                 <td class="num"><strong>{{(index+1)+offset}}. </strong></td>
                                 <td>{{ithem.name}}</td>
+
                                 <td class="desc">{{ithem.desc}}</td>
 
-                                <td v-if="ithem.public == 1"><span class="fa fa-btn fa-check"></span></td>
-                                <td v-else><span class="fa fa-btn fa-remove"></span></td>
+                                <td><span :class="'fa fa-btn ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
+
                                 <td><a class="btn btn-default btn-sm fa fa-btn fa-calendar" data-toggle="tooltip" v-bind:title="ithem.publish_interval"></a></td>
+
                                 <td><a class="btn btn-default btn-sm fa fa-btn fa-calendar-check-o" data-toggle="tooltip" v-bind:title="ithem.bidding_interval"></a></td>
+
                                 <td><span class="fa fa-btn fa-clock-o"></span> {{ithem.updated_at}}</td>
+
                                 <td class="tools">
                                     <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-btn fa-pencil"></router-link>
                                     <button class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></button>
