@@ -19,6 +19,11 @@
     Vue.component('loading', require('./components/Loading.vue'));
 
     /**
+     * Define global directives
+     */
+    Vue.directive('tooltip', require('./directives/tooltip.vue'));
+    
+    /**
      * Export the root-instance options
      */
     import Navigation from './components/Nav.vue'

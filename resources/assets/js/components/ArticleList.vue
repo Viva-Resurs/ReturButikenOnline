@@ -39,11 +39,27 @@
 
                                 <td><span :class="'fa fa-btn ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
 
-                                <td><a class="btn btn-default btn-sm fa fa-btn fa-calendar" data-toggle="tooltip" v-bind:title="ithem.publish_interval"></a></td>
+                                <td>
+                                    <a class="article_info btn btn-default btn-sm fa fa-btn"
+                                        v-tooltip :data-original-title="displayInterval(ithem.publish_interval)">
+                                        <i class="fa fa-calendar-o fa-stack-table-bg"></i>
+                                        <i class="fa fa-dollar fa-stack-table"></i>
+                                    </a>
+                                </td>
 
-                                <td><a class="btn btn-default btn-sm fa fa-btn fa-calendar-check-o" data-toggle="tooltip" v-bind:title="ithem.bidding_interval"></a></td>
+                                <td>
+                                    <a class="article_info btn btn-default btn-sm fa fa-btn"
+                                        v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)">
+                                        <i class="fa fa-calendar-o fa-stack-table-bg"></i>
+                                        <i class="fa fa-gavel fa-stack-table"></i>
+                                    </a>
+                                </td>
 
-                                <td><span class="fa fa-btn fa-clock-o"></span> {{ithem.updated_at}}</td>
+                                <td>
+                                    <span class="fa fa-btn fa-clock-o"
+                                        v-tooltip :data-original-title="ithem.updated_at">
+                                    </span>
+                                </td>
 
                                 <td class="tools">
                                     <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-btn fa-pencil"></router-link>
@@ -126,6 +142,16 @@
         },
 
         methods: {
+            displayInterval(interval){
+                var dates = interval.split('|');
+
+                var result = "<b>Start:</b><br>" + dates[0] + "<br>";
+
+                if (dates.length > 1)
+                    result += "<br><b>End:</b><br>" + dates[1];
+
+                return result;
+            },
             remove(ithem){
                 bus.$emit('remove',ithem);
             }
@@ -147,11 +173,11 @@
             // Listen for changes in data by components
             bus.$on('offset_changed', new_offset => this.offset = new_offset);
             bus.$on('limit_changed', new_limit => this.maxIthems = new_limit);
-            $(document).ready(function(){
-                $('[data-toggle="tooltip"]').tooltip();
-            });
+
+            $('[data-toggle="tooltip"]').tooltip();
 
         }
+
     };
 </script>
 <style>

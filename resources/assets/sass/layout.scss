@@ -62,6 +62,32 @@
 }
 
 .table {
+
+    /* Tooltip */
+    .article_info + .tooltip > .tooltip-inner {
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .fa-stack-table-bg {
+        color: #ccc;
+        position: relative;
+        margin-left: -16px;
+        right: -16px;
+        top: 0px;
+        z-index: 9;
+    }
+    .fa-stack-table {
+        font-size: 16px;
+        position: relative;
+        z-index: 10;
+        margin: -1.4px -1px;
+        left: -1px;
+        top: 1px;
+    }
+}
+
+.table {
     td:last-child,
     th:last-child {
         text-align: right;
