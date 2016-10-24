@@ -6,7 +6,7 @@
         data: function() {
             return {
                 user: false
-            }
+            };
         },
 
         methods: {
@@ -25,7 +25,7 @@
 
             getUser(mode) {
 
-                console.log('Auth: getUser')
+                console.log('Auth: getUser');
 
                 this.$http.get('user').then(
                     (response) => {
@@ -46,7 +46,7 @@
 
             exitUser() {
 
-                console.log('Auth: exitUser')
+                console.log('Auth: exitUser');
 
                 this.$http.post('logout').then(
                     (response) => {
@@ -88,5 +88,5 @@
 
         }
 
-    }
+    };
 </script>
