@@ -40,7 +40,7 @@
         <div v-else class="pagination_left">
         </div>
 
-        <div v-show="total>limit && showPagination" class="pagination_right"> 
+        <div v-show="total>limit && showPagination" class="pagination_right">
             <div class="input-group">
                 <select class="form-control selectpicker show-tick"
                         v-model="limit"
@@ -71,7 +71,7 @@
                 offset: 0,
                 limit: 10,
                 limitOptions: [ 10, 50, 100, 500 ]
-            }
+            };
         },
 
         computed: {
@@ -153,7 +153,7 @@
 
             });
             */
-           
+
             window.onkeyup = (function(e) {
                 var key = e.which || e.keyCode;
                 if (key == 37)
@@ -161,12 +161,12 @@
                 if (key == 39)
                     this.nextPage();
             }).bind(this);
-  
+
         },
 
         beforeDestroy: function () {
             window.onkey = false;
         }
 
-    }
+    };
 </script>

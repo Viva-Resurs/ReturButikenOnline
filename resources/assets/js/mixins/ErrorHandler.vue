@@ -8,7 +8,7 @@
             handleError(message) {
 
                 this.showError({text:message});
-                
+
                 if (!this.$root.user)
                     console.error('Not logged in!');
 
@@ -23,5 +23,5 @@
 
         }
 
-    }
+    };
 </script>
