@@ -5,6 +5,7 @@
 /public/fonts
 /vendor
 /.idea
+.jshintrc
 Homestead.json
 Homestead.yaml
 .env
