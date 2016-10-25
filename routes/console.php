@@ -20,7 +20,7 @@ Artisan::command('inspire', function () {
 Artisan::command('articles:generate {nr=1}', function ($nr) {
     factory(App\Article::class, (int) $nr)->create();
     echo "Generated $nr articles.";
-})->describe('Generate Articles');
+})->describe('Generate Articles [nr] - you can specify how many by passing nr');
 
 Artisan::command('articles:clear', function () {
     DB::table('articles')->delete();
