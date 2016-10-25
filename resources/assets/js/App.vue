@@ -22,7 +22,8 @@
      * Define global directives
      */
     Vue.directive('tooltip', require('./directives/tooltip.vue'));
-    
+    Vue.directive('daterangepicker', require('./directives/daterangepicker.vue'));
+
     /**
      * Export the root-instance options
      */

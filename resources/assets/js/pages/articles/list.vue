@@ -36,6 +36,18 @@
                 );
             },
 
+            updateArticle(article) {
+
+                this.$http.put('articles/'+article.id,article).then(
+                    (response) => {
+                        console.log('ok');
+                        //this.$router.push({ path: '/articles' });
+                    },
+                    (response) => bus.$emit('error',response)
+                );
+
+            },
+
             getArticles(){
 
                 this.$root.loading = true;
@@ -58,7 +70,8 @@
             this.getArticles();
 
             // Listen for changes in data by components
-            bus.$on('remove', payload => this.attemptRemove(payload) );
+            bus.$on('article_remove', payload => this.attemptRemove(payload) );
+            bus.$on('article_changed', payload => this.updateArticle(payload) );
         }
     }
 </script>

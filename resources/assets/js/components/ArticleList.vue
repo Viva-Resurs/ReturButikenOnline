@@ -41,17 +41,21 @@
 
                                 <td>
                                     <a class="article_info btn btn-default btn-sm fa fa-btn"
-                                        v-tooltip :data-original-title="displayInterval(ithem.publish_interval)">
+                                        v-tooltip :data-original-title="displayInterval(ithem.publish_interval)"
+                                        v-daterangepicker :id="ithem.id" name="publish_interval"
+                                        >
                                         <i class="fa fa-calendar-o fa-stack-table-bg"></i>
-                                        <i class="fa fa-dollar fa-stack-table"></i>
+                                        <i :class="'fa fa-dollar fa-stack-table '+((ithem.publish_interval!='') ? 'text-primary':'')"></i>
                                     </a>
                                 </td>
 
                                 <td>
                                     <a class="article_info btn btn-default btn-sm fa fa-btn"
-                                        v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)">
+                                        v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
+                                        v-daterangepicker :id="ithem.id" name="bidding_interval"
+                                        >
                                         <i class="fa fa-calendar-o fa-stack-table-bg"></i>
-                                        <i class="fa fa-gavel fa-stack-table"></i>
+                                        <i :class="'fa fa-gavel fa-stack-table '+((ithem.bidding_interval!='') ? 'text-primary':'')"></i>
                                     </a>
                                 </td>
 
@@ -153,7 +157,12 @@
                 return result;
             },
             remove(ithem){
-                bus.$emit('remove',ithem);
+                // Validation?
+                bus.$emit('article_remove',ithem);
+            },
+            openInterval(e){
+                $(e.target).closest('td').find('input').trigger('click');
+                console.log( $(e.target).closest('td').find('input') )
             }
         },
 
@@ -169,6 +178,22 @@
         },
 
         created: function(){
+
+            bus.$on('publish_interval_changed', (id,new_value) => {
+                for (var i = 0 ; i<this.ithems.length ; i++ )
+                    if (this.ithems[i].id == id) {
+                        this.ithems[i].publish_interval = new_value;
+                        bus.$emit('article_changed',this.ithems[i]);
+                    }
+            } );
+
+            bus.$on('bidding_interval_changed', (id,new_value) => {
+                for (var i = 0 ; i<this.ithems.length ; i++ )
+                    if (this.ithems[i].id == id) {
+                        this.ithems[i].bidding_interval = new_value;
+                        bus.$emit('article_changed',this.ithems[i]);
+                    }
+            } );
 
             // Listen for changes in data by components
             bus.$on('offset_changed', new_offset => this.offset = new_offset);
@@ -201,7 +226,7 @@
         max-width: 40px;
         min-width: 40px;
 
-    }
+    }    
 
     td.num {
         background: #f5f8fa;
