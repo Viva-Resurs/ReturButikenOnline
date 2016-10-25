@@ -17,10 +17,10 @@ require('bootstrap-sass');
 window.moment = require('moment');
 
 /**
- * datetimepicker
- * https://eonasdan.github.io/bootstrap-datetimepicker/
+ * daterangepicker
+ * https://www.npmjs.com/package/daterangepicker
  */
-window.datetimepicker = require('./vendor/bootstrap-datetimepicker.4.17.42.js');
+window.daterangepicker = require('./vendor/bootstrap.daterangepicker.2.1.24.js');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces

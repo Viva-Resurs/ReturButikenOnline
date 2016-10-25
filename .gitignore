@@ -1,11 +1,16 @@
-/node_modules
-/public/storage
-/public/js
-/public/css
-/public/fonts
+# Composer
 /vendor
-/.idea
-.jshintrc
-Homestead.json
-Homestead.yaml
+composer.lock
+
+# NPM
+/node_modules
+
+# Builds
+/public/css
+/public/js
+/public/fonts
+
+# Application
 .env
+/database/*.sqlite
+.jshintrc

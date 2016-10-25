@@ -72,13 +72,13 @@
 
                 <div class="form-group" v-show="settings.publish_interval">
                     <div class="row">
-                      <date-interval interval="publish_interval"></date-interval>
+                      <date-interval interval="publish_interval" :date="article.publish_interval"></date-interval>
                     </div>
                 </div>
 
                 <div class="form-group" v-show="settings.bidding_interval">
                     <div class="row">
-                      <date-interval interval="bidding_interval"></date-interval>
+                      <date-interval interval="bidding_interval" :date="article.bidding_interval"></date-interval>
                     </div>
                 </div>
 
@@ -162,7 +162,7 @@
             attemptCreate() {
 
                 // TODO: Validation
-                
+
                 bus.$emit( 'article_changed', this.article );
 
             }
@@ -193,7 +193,7 @@
 
             bus.$off('publish_interval_changed');
             bus.$off('bidding_interval_changed');
-            
+
         }
 
     }
