@@ -13,3 +13,4 @@ composer.lock
 # Application
 .env
 /database/*.sqlite
+.jshintrc
