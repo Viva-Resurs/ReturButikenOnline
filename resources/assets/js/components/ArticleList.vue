@@ -21,12 +21,12 @@
                         <thead>
                             <tr>
                                 <th class="num"></th>
-                                <th>Name <button class="btn btn-default btn-sm fa fa-btn fa-sort" @click="setOrder('name')"></button></th>
+                                <th>Name <button :class="[headers.name, headers.name_icon]" @click="setSortBy('name');"></button></th>
                                 <th>Desc</th>
                                 <th>Public</th>
                                 <th>Sale</th>
                                 <th>Bidding</th>
-                                <th>Updated <button class="btn btn-default btn-sm fa fa-btn fa-sort" @click="setOrder('updated_at',1)"></th>
+                                <th>Updated <button :class="[headers.updated_at, headers.updated_at_icon]" @click="setSortBy('updated_at');"></button></th>
                                 <th>Tools</th>
                             </tr>
                         </thead>
@@ -141,7 +141,13 @@
                 limitOffBtn: false,
 
                 offset: 0,
-                maxIthems: 10
+                maxIthems: 10,
+                headers : {
+                    name : "btn btn-default btn-sm fa fa-btn",
+                    name_icon : 'fa-sort',
+                    updated_at : 'btn btn-default btn-sm fa fa-btn',
+                    updated_at_icon : 'fa-sort',
+                },
             };
         },
 
@@ -162,8 +168,41 @@
             },
             openInterval(e){
                 $(e.target).closest('td').find('input').trigger('click');
-                console.log( $(e.target).closest('td').find('input') )
-            }
+                console.log( $(e.target).closest('td').find('input') );
+            },
+
+            setSortBy(headingTitle){
+
+                // Set correct sort icon to the header (ascending, descending)
+                var selectedHeader = '';
+
+                switch (headingTitle) {
+                    case 'name':
+                        this.setOrder('name');
+                        selectedHeader = ((this.desc == 1) ? "fa-sort-alpha-asc"
+                            : "fa-sort-alpha-desc");
+
+                        break;
+
+                    case 'updated_at':
+                        this.setOrder('updated_at',1);
+                        selectedHeader = ((this.desc == 1) ? "fa-sort-numeric-asc"
+                            : "fa-sort-numeric-desc");
+                        break;
+
+                    default:
+                }
+
+                this.headers[headingTitle+'_icon'] = selectedHeader;
+
+                // Change the other (not sorted by) icons to a generic sort icon
+                for (var i = 0;i < this.targets.length ; i++){
+                    if (this.targets[i] != headingTitle){
+                        this.headers[this.targets[i]+'_icon'] = "fa-sort";
+                    }
+                }
+
+            },
         },
 
         watch: {
@@ -226,7 +265,7 @@
         max-width: 40px;
         min-width: 40px;
 
-    }    
+    }
 
     td.num {
         background: #f5f8fa;
