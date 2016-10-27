@@ -1,0 +1,26 @@
+.navbar-nav {
+
+    a.router-link-active {
+        border-bottom: 1px solid $brand-primary;
+    }
+
+    a:hover {
+        text-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+
+    .dropdown.open {
+        .dropdown-toggle,
+        .dropdown-toggle:focus,
+        .dropdown-toggle:hover {
+            background: $navbar-default-bg;
+        }
+    }
+
+    .divider-vertical {
+        height: 30px;
+        margin: 10px 1px;
+        border-left: 1px solid #F2F2F2;
+        border-right: 1px solid #FFF;
+    }
+
+}

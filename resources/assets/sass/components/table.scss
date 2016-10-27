@@ -1,0 +1,83 @@
+.table {
+
+    /* Tooltip */
+    .tooltip-info + .tooltip > .tooltip-inner {
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    /* Table Head */
+    th {
+        white-space: nowrap;
+        .btn, .btn:focus, btn:active {
+            border: 0px;
+            margin-top: -2.5px;
+            margin-bottom: -2.5px;
+            background: transparent;
+            outline: 0 none;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.00) inset, 0 0 8px rgba(0, 0, 0, 0.0);
+        }
+    }
+
+    /* Alignment */
+    td:last-child,
+    th:last-child {
+        text-align: right;
+    }
+
+    /* Row-numbers */
+    td.num {
+        background: #f5f8fa;
+    }
+
+    /* Tools */
+    td.tools {
+        width: 10px;
+        .tool-group {
+            display: inline-block;
+            white-space: nowrap;
+
+            /* Collect buttons */
+            .btn:first-child:not(:last-child) {
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+                margin-left: 0px;
+                margin-right: -5px;
+            }
+            .btn:not(:last-child):not(:first-child){
+                border-radius: 0px;
+                margin-left: 0px;
+                margin-right: -5px;
+            }
+            .btn:last-child:not(:first-child) {
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+                margin-left: 0px;
+                margin-right: 7px;
+            }
+
+            /* Stacked Tools */
+            .btn-stacked {
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
+            .btn-stacked-bg {
+                color: #ccc;
+                position: relative;
+                z-index: 9;
+            }
+            .btn-stacked-fg {
+                font-size: 16px;
+                position: relative;
+                z-index: 10;
+                margin: 0px -10px;
+                left: -8px;
+                width: 16px;
+                top: 1px;
+            }
+        }
+    }
+
+
+
+}

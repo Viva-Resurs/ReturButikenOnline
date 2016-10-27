@@ -45,19 +45,19 @@
 
                                 <td class="tools">
                                     <div class="tool-group">
-                                    <a class="article_info btn btn-default btn-sm fa fa-btn"
+                                    <a class="btn-stacked btn btn-default btn-sm fa fa-btn tooltip-info"
                                         v-tooltip :data-original-title="displayInterval(ithem.publish_interval)"
                                         v-daterangepicker :id="ithem.id" name="publish_interval"
                                         >
-                                        <i class="fa fa-calendar-o fa-stack-table-bg"></i>
-                                        <i :class="'fa fa-dollar fa-stack-table '+((ithem.publish_interval!='') ? 'text-primary':'')"></i>
+                                        <i class="fa fa-calendar-o btn-stacked-bg"></i>
+                                        <i :class="'fa fa-dollar btn-stacked-fg '+((ithem.publish_interval!='') ? 'text-primary':'')"></i>
                                     </a>
-                                    <a class="article_info btn btn-default btn-sm fa fa-btn"
+                                    <a class="btn-stacked btn btn-default btn-sm fa fa-btn tooltip-info"
                                         v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
                                         v-daterangepicker :id="ithem.id" name="bidding_interval"
                                         >
-                                        <i class="fa fa-calendar-o fa-stack-table-bg"></i>
-                                        <i :class="'fa fa-gavel fa-stack-table '+((ithem.bidding_interval!='') ? 'text-primary':'')"></i>
+                                        <i class="fa fa-calendar-o btn-stacked-bg"></i>
+                                        <i :class="'fa fa-gavel btn-stacked-fg '+((ithem.bidding_interval!='') ? 'text-primary':'')"></i>
                                     </a>
                                     <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-btn fa-pencil"></router-link>
                                     <a class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></a>
@@ -243,7 +243,3 @@
 
     };
 </script>
-<style>
-
-
-</style>
