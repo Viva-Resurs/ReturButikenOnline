@@ -75,6 +75,11 @@
                 width: 16px;
                 top: 1px;
             }
+
+            /* Danger Icons */
+            .btn-hover-danger:hover {
+                @extend .btn-danger;
+            }
         }
     }
 
