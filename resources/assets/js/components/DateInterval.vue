@@ -4,7 +4,9 @@
           <div class="col-xs-12">
               <label class="control-label" for="fullname">{{interval}}</label>
               <div class='input-group date'>
-                  <input type='text' :id="interval" class="form-control" :value="date"/>
+                  <input type='text' class="form-control"
+                      v-model="date"
+                      v-daterangepicker :name="interval"/>
                   <span class="input-group-addon">
                       <span class="fa fa-calendar"></span>
                   </span>
@@ -16,34 +18,8 @@
 
 <script>
     export default {
-
         name: 'DateInterval',
-
-        props: [ 'interval', 'date' ],
-
-        mounted: function() {
-
-            $('#'+this.interval).daterangepicker(
-                // Options
-                {
-                    locale: {
-                        format: "YYYY-MM-DD hh:mm:ss",
-                        separator: " | "
-                    },
-                    timePicker: true,
-                    timePicker24Hour: true,
-                    timePickerSeconds: true
-                },
-                // Callback
-                (start,end,label)=>{
-                    bus.$emit(
-                        this.interval + '_changed', start.format('YYYY-MM-DD hh:mm:ss') + ' | ' + end.format('YYYY-MM-DD hh:mm:ss')
-                    );
-                }
-            );
-
-        }
-
+        props: [ 'interval', 'date' ]
     }
 </script>
 

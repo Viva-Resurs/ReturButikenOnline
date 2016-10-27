@@ -53,13 +53,13 @@
 
             this.getArticle(this.$route.params.id);
 
-            bus.$on('article_changed', payload => this.updateArticle(payload) );
+            bus.$on('article_form_update', payload => this.updateArticle(payload) );
 
         },
 
         beforeDestroy: function() {
-            bus.$off('article_changed');
+            bus.$off('article_form_update');
         }
-        
+
     }
 </script>

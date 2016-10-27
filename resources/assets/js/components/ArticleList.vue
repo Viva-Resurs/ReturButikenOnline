@@ -36,31 +36,31 @@
                                 <td class="desc">{{ithem.desc}}</td>
 
                                 <td class="text-center">
-                                    <span class="fa fa-btn fa-clock-o"
+                                    <span class="fa fa-clock-o"
                                         v-tooltip :data-original-title="ithem.updated_at">
                                     </span>
                                 </td>
 
-                                <td class="text-center"><span :class="'fa fa-btn ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
+                                <td class="text-center"><span :class="'fa ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
 
                                 <td class="tools">
                                     <div class="tool-group">
-                                    <a class="btn-stacked btn btn-default btn-sm fa fa-btn tooltip-info"
+                                    <a class="btn-stacked btn btn-default btn-sm fa tooltip-info"
                                         v-tooltip :data-original-title="displayInterval(ithem.publish_interval)"
-                                        v-daterangepicker :id="ithem.id" name="publish_interval"
+                                        v-daterangepicker :id="ithem.id" :data-value="ithem.publish_interval" name="publish_interval"
                                         >
                                         <i class="fa fa-calendar-o btn-stacked-bg"></i>
                                         <i :class="'fa fa-dollar btn-stacked-fg '+((ithem.publish_interval!='') ? 'text-primary':'')"></i>
                                     </a>
-                                    <a class="btn-stacked btn btn-default btn-sm fa fa-btn tooltip-info"
+                                    <a class="btn-stacked btn btn-default btn-sm fa tooltip-info"
                                         v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
-                                        v-daterangepicker :id="ithem.id" name="bidding_interval"
+                                        v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
                                         >
                                         <i class="fa fa-calendar-o btn-stacked-bg"></i>
                                         <i :class="'fa fa-gavel btn-stacked-fg '+((ithem.bidding_interval!='') ? 'text-primary':'')"></i>
                                     </a>
-                                    <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-btn fa-pencil"></router-link>
-                                    <a class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></a>
+                                    <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-pencil"></router-link>
+                                    <a class="btn btn-default btn-sm fa fa-trash btn-hover-danger" @click="remove(ithem)"></a>
                                     </div>
                                 </td>
                             </tr>
@@ -211,8 +211,9 @@
         },
 
         created: function(){
-
+            console.log('about do create list')
             bus.$on('publish_interval_changed', (id,new_value) => {
+                console.log('on')
                 for (var i = 0 ; i<this.ithems.length ; i++ )
                     if (this.ithems[i].id == id) {
                         this.ithems[i].publish_interval = new_value;
@@ -221,6 +222,7 @@
             } );
 
             bus.$on('bidding_interval_changed', (id,new_value) => {
+                console.log('on')
                 for (var i = 0 ; i<this.ithems.length ; i++ )
                     if (this.ithems[i].id == id) {
                         this.ithems[i].bidding_interval = new_value;
@@ -235,6 +237,7 @@
         },
 
         beforeDestroy: function() {
+            console.log('about do destroy list')
             bus.$off('publish_interval_changed');
             bus.$off('bidding_interval_changed');
             bus.$off('offset_changed');

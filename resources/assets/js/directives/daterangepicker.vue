@@ -11,7 +11,7 @@
                         separator: " | "
                     },
                     timePicker: true,
-                    opens: 'center',
+                    opens: 'left',
                     timePicker24Hour: true,
                     timePickerSeconds: true,
                     ranges: {
@@ -35,13 +35,22 @@
                 },
                 // Callback
                 (start,end,label)=>{
+                    console.log('emit')
                     bus.$emit(
                         el.name+'_changed',
                         el.id,
                         start.format('YYYY-MM-DD hh:mm:ss') + ' | ' + end.format('YYYY-MM-DD hh:mm:ss')
                     );
                 }
-            )
+            );
+            // Update interval on init
+            var interval = (typeof $(el).data('value') == 'string') ? $(el).data('value').split('|') : [];
+            if (interval.length == 2) {
+                var startDate = interval[0] || '';
+                var endDate = interval[1] || '';
+                $(el).data('daterangepicker').setStartDate(startDate);
+                $(el).data('daterangepicker').setEndDate(endDate);
+            }
         }
     };
 </script>

@@ -72,6 +72,11 @@
             // Listen for changes in data by components
             bus.$on('article_remove', payload => this.attemptRemove(payload) );
             bus.$on('article_changed', payload => this.updateArticle(payload) );
+        },
+
+        beforeDestroy: function() {
+            bus.$off('article_remove');
+            bus.$off('article_changed');
         }
     }
 </script>

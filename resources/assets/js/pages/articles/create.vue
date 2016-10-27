@@ -28,11 +28,11 @@
         },
 
         created: function() {
-            bus.$on('article_changed', payload => { this.createArticle(payload); } );
+            bus.$on('article_form_update', payload => { this.createArticle(payload); } );
         },
 
         beforeDestroy: function() {
-            bus.$off('article_changed');
+            bus.$off('article_form_update');
         }
 
     }

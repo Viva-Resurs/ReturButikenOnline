@@ -72,13 +72,13 @@
 
                 <div class="form-group" v-show="settings.publish_interval">
                     <div class="row">
-                      <date-interval interval="publish_interval" :date="article.publish_interval"></date-interval>
+                      <date-interval interval="publish_interval_form" :date="article.publish_interval"></date-interval>
                     </div>
                 </div>
 
                 <div class="form-group" v-show="settings.bidding_interval">
                     <div class="row">
-                      <date-interval interval="bidding_interval" :date="article.bidding_interval"></date-interval>
+                      <date-interval interval="bidding_interval_form" :date="article.bidding_interval"></date-interval>
                     </div>
                 </div>
 
@@ -167,14 +167,14 @@
                 if (this.settings.bidding_interval === false)
                     this.article.bidding_interval = '';
 
-                bus.$emit( 'article_changed', this.article );
+                bus.$emit( 'article_form_update', this.article );
 
             }
 
         },
 
         created: function() {
-
+            console.log('about do create form')
             // If a original is passed (Update-mode), fill the form
             if (this.original)
                 this.article = this.original;
@@ -188,15 +188,19 @@
                 this.settings.bidding_interval = true;
 
             // Listen for changes in DateInterval
-            bus.$on('publish_interval_changed', payload => this.article.publish_interval = payload);
-            bus.$on('bidding_interval_changed', payload => this.article.bidding_interval = payload);
+            bus.$on('publish_interval_form_changed', (id,new_value) => {
+                this.article.publish_interval = new_value;
+            } );
+            bus.$on('bidding_interval_form_changed', (id,new_value) => {
+                this.article.bidding_interval = new_value;
+            } );
 
         },
 
         beforeDestroy: function() {
-
-            bus.$off('publish_interval_changed');
-            bus.$off('bidding_interval_changed');
+            console.log('about do destroy form')
+            bus.$off('publish_interval_form_changed');
+            bus.$off('bidding_interval_form_changed');
 
         }
 
