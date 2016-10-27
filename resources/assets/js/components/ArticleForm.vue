@@ -86,11 +86,11 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <label class="radio-inline">
-                                <input type="radio" name="public" v-model="article.public" value="on">
+                                <input type="radio" name="public" v-model="article.public" value="0">
                                 Publicera på kommunens Intranät
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="public" v-model="article.public" value="off"> Publicera för allmänheten
+                                <input type="radio" name="public" v-model="article.public" value="1"> Publicera för allmänheten
                             </label>
                         </div>
                     </div>
@@ -162,6 +162,10 @@
             attemptCreate() {
 
                 // TODO: Validation
+                if (this.settings.publish_interval === false)
+                    this.article.publish_interval = '';
+                if (this.settings.bidding_interval === false)
+                    this.article.bidding_interval = '';
 
                 bus.$emit( 'article_changed', this.article );
 

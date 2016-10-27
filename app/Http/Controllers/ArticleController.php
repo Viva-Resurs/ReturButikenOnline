@@ -40,7 +40,7 @@ class ArticleController extends Controller
     }
 
     public function store(Request $request){
-        
+
         $user = Auth::user();
 
         if (!$user)
@@ -60,7 +60,7 @@ class ArticleController extends Controller
     }
 
     public function update(Request $request, $id){
-        
+
         $user = Auth::user();
 
         if (!$user)
@@ -79,17 +79,15 @@ class ArticleController extends Controller
 
         $article->public = $request['public'] || 0;
 
-        if ($request->has('publish_interval') && $request['publish_interval']!='')
-            $article->publish_interval = $request['publish_interval'];
+        $article->publish_interval = $request['publish_interval'];
 
-        if ($request->has('bidding_interval') && $request['bidding_interval']!='')
-            $article->bidding_interval = $request['bidding_interval'];
+        $article->bidding_interval = $request['bidding_interval'];
 
         $article->save();
     }
 
     public function destroy($id){
-        
+
         $user = Auth::user();
 
         if (!$user)
