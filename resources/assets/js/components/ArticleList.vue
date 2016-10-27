@@ -17,15 +17,15 @@
 
                     <input v-model="search">
                     <hr>
-                    <table class="table table-responsive table-condensed">
+                    <table class="table table-responsive table-condensed table-bordered">
                         <thead>
                             <tr>
-                                <th class="num"></th>
+                                <th class="num">#</th>
                                 <th>Name <button :class="[headers.name, headers.name_icon]" @click="setSortBy('name');"></button></th>
                                 <th>Desc</th>
-                                <th>Public</th>
-                                <th>Sale</th>
-                                <th>Bidding</th>
+                                <th class="text-center">Public</th>
+                                <th class="text-center">Sale</th>
+                                <th class="text-center">Bidding</th>
                                 <th>Updated <button :class="[headers.updated_at, headers.updated_at_icon]" @click="setSortBy('updated_at');"></button></th>
                                 <th>Tools</th>
                             </tr>
@@ -37,19 +37,21 @@
 
                                 <td class="desc">{{ithem.desc}}</td>
 
-                                <td><span :class="'fa fa-btn ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
+                                <td class="text-center"><span :class="'fa fa-btn ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
 
-                                <td>
+                                <td class="text-center">
                                     <a class="article_info btn btn-default btn-sm fa fa-btn"
                                         v-tooltip :data-original-title="displayInterval(ithem.publish_interval)"
                                         v-daterangepicker :id="ithem.id" name="publish_interval"
                                         >
                                         <i class="fa fa-calendar-o fa-stack-table-bg"></i>
                                         <i :class="'fa fa-dollar fa-stack-table '+((ithem.publish_interval!='') ? 'text-primary':'')"></i>
+
                                     </a>
+
                                 </td>
 
-                                <td>
+                                <td class="text-center">
                                     <a class="article_info btn btn-default btn-sm fa fa-btn"
                                         v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
                                         v-daterangepicker :id="ithem.id" name="bidding_interval"
@@ -60,9 +62,8 @@
                                 </td>
 
                                 <td>
-                                    <span class="fa fa-btn fa-clock-o"
-                                        v-tooltip :data-original-title="ithem.updated_at">
-                                    </span>
+
+                                    <p class="help-block">{{ithem.updated_at}}</p>
                                 </td>
 
                                 <td class="tools">
@@ -143,9 +144,9 @@
                 offset: 0,
                 maxIthems: 10,
                 headers : {
-                    name : "btn btn-default btn-sm fa fa-btn",
+                    name : "btn btn-link btn-sm fa fa-btn pull-right",
                     name_icon : 'fa-sort',
-                    updated_at : 'btn btn-default btn-sm fa fa-btn',
+                    updated_at : 'btn btn-link btn-sm fa fa-btn pull-right',
                     updated_at_icon : 'fa-sort',
                 },
             };
