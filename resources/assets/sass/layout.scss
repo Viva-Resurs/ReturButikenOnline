@@ -1,3 +1,6 @@
+
+@import "_variables";
+
 .navbar-nav {
     li.navbar-link:not(:first-child)::before {
         //content: '|';
@@ -69,6 +72,79 @@
         white-space: nowrap;
     }
 
+    th {
+        white-space: nowrap;
+        .btn, .btn:focus, btn:active {
+            border: 0px;
+            margin-top: -2.5px;
+            margin-bottom: -2.5px;
+            background: transparent;
+            outline: 0 none;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.00) inset, 0 0 8px rgba(0, 0, 0, 0.0);
+        }
+    }
+
+    td:last-child,
+    th:last-child {
+        text-align: right;
+    }
+
+    /* Tools */
+    td {
+        //word-wrap: break-word;
+        //min-width: 80px;
+        //max-width: 160px;
+        //white-space:normal !important;
+    }
+
+    td.desc {
+        //max-width: 250px;
+    }
+
+    td.tools {
+
+        .tool-group {
+            display: inline-block;
+            white-space: nowrap;
+            .article_info {
+                padding-top: 4px;
+                padding-bottom: 4px;
+            }
+            .btn:first-child:not(:last-child) {
+                border-bottom-right-radius: 0;
+                border-top-right-radius: 0;
+                margin-left: 5px;
+                margin-right: -5px;
+            }
+            .btn:not(:last-child):not(:first-child){
+                border-radius: 0px;
+                margin-left: 0px;
+                margin-right: -5px;
+            }
+            .btn:last-child:not(:first-child) {
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+                margin-left: 0px;
+                margin-right: 5px;
+            }
+
+        }
+        white-space: nowrap;
+        //max-width: 100px;
+        //min-width: 100px;
+    }
+
+    td.num, th.num {
+        //max-width: 40px;
+        //min-width: 40px;
+    }
+
+    td.num {
+        background: #f5f8fa;
+    }
+
+
+    /* Stacked Tools */
     .fa-stack-table-bg {
         color: #ccc;
         position: relative;
@@ -87,8 +163,5 @@
 }
 
 .table {
-    td:last-child,
-    th:last-child {
-        text-align: right;
-    }
+
 }

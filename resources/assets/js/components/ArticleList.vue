@@ -23,10 +23,8 @@
                                 <th class="num">#</th>
                                 <th>Name <button :class="[headers.name, headers.name_icon]" @click="setSortBy('name');"></button></th>
                                 <th>Desc</th>
+                                <th><span>Updated</span><button :class="[headers.updated_at, headers.updated_at_icon]" @click="setSortBy('updated_at');"></button></th>
                                 <th class="text-center">Public</th>
-                                <th class="text-center">Sale</th>
-                                <th class="text-center">Bidding</th>
-                                <th>Updated <button :class="[headers.updated_at, headers.updated_at_icon]" @click="setSortBy('updated_at');"></button></th>
                                 <th>Tools</th>
                             </tr>
                         </thead>
@@ -37,21 +35,23 @@
 
                                 <td class="desc">{{ithem.desc}}</td>
 
+                                <td class="text-center">
+                                    <span class="fa fa-btn fa-clock-o"
+                                        v-tooltip :data-original-title="ithem.updated_at">
+                                    </span>
+                                </td>
+
                                 <td class="text-center"><span :class="'fa fa-btn ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
 
-                                <td class="text-center">
+                                <td class="tools">
+                                    <div class="tool-group">
                                     <a class="article_info btn btn-default btn-sm fa fa-btn"
                                         v-tooltip :data-original-title="displayInterval(ithem.publish_interval)"
                                         v-daterangepicker :id="ithem.id" name="publish_interval"
                                         >
                                         <i class="fa fa-calendar-o fa-stack-table-bg"></i>
                                         <i :class="'fa fa-dollar fa-stack-table '+((ithem.publish_interval!='') ? 'text-primary':'')"></i>
-
                                     </a>
-
-                                </td>
-
-                                <td class="text-center">
                                     <a class="article_info btn btn-default btn-sm fa fa-btn"
                                         v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
                                         v-daterangepicker :id="ithem.id" name="bidding_interval"
@@ -59,16 +59,9 @@
                                         <i class="fa fa-calendar-o fa-stack-table-bg"></i>
                                         <i :class="'fa fa-gavel fa-stack-table '+((ithem.bidding_interval!='') ? 'text-primary':'')"></i>
                                     </a>
-                                </td>
-
-                                <td>
-
-                                    <p class="help-block">{{ithem.updated_at}}</p>
-                                </td>
-
-                                <td class="tools">
                                     <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-btn fa-pencil"></router-link>
-                                    <button class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></button>
+                                    <a class="btn btn-default btn-sm fa fa-btn fa-trash" @click="remove(ithem)"></a>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -144,9 +137,9 @@
                 offset: 0,
                 maxIthems: 10,
                 headers : {
-                    name : "btn btn-link btn-sm fa fa-btn pull-right",
+                    name : "btn btn-sm fa",
                     name_icon : 'fa-sort',
-                    updated_at : 'btn btn-link btn-sm fa fa-btn pull-right',
+                    updated_at : 'btn btn-sm fa',
                     updated_at_icon : 'fa-sort',
                 },
             };
@@ -246,30 +239,6 @@
     };
 </script>
 <style>
-    td {
-        word-wrap: break-word;
-        min-width: 80px;
-        max-width: 160px;
-        white-space:normal !important;
-    }
 
-    td.desc {
-        max-width: 250px;
-    }
-
-    td.tools {
-        max-width: 100px;
-        min-width: 100px;
-    }
-
-    td.num, th.num {
-        max-width: 40px;
-        min-width: 40px;
-
-    }
-
-    td.num {
-        background: #f5f8fa;
-    }
 
 </style>
