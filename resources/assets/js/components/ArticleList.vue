@@ -232,8 +232,13 @@
             bus.$on('offset_changed', new_offset => this.offset = new_offset);
             bus.$on('limit_changed', new_limit => this.maxIthems = new_limit);
 
-            $('[data-toggle="tooltip"]').tooltip();
+        },
 
+        beforeDestroy: function() {
+            bus.$off('publish_interval_changed');
+            bus.$off('bidding_interval_changed');
+            bus.$off('offset_changed');
+            bus.$off('limit_changed');
         }
 
     };
