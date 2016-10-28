@@ -24,11 +24,37 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
 
+    $publish_interval =
+        $faker->dateTimeBetween(
+            $startDate = '-5 years',
+            $endDate = 'now',
+            $timezone = date_default_timezone_get()
+        )->format('Y-m-d h:m:s')
+        . '|'
+        . $faker->dateTimeBetween(
+            $startDate = 'now',
+            $endDate = '+1 years',
+            $timezone = date_default_timezone_get()
+        )->format('Y-m-d h:m:s');
+
+    $bidding_interval =
+        $faker->dateTimeBetween(
+            $startDate = '-5 years',
+            $endDate = 'now',
+            $timezone = date_default_timezone_get()
+        )->format('Y-m-d h:m:s')
+        . '|'
+        . $faker->dateTimeBetween(
+            $startDate = 'now',
+            $endDate = '+1 years',
+            $timezone = date_default_timezone_get()
+        )->format('Y-m-d h:m:s');
+
     return [
         'name' => $faker->words($nb = 4, $asText = true),
         'desc' => $faker->paragraph,
         'public' => $faker->numberBetween($min = 0, $max = 1),
-        'publish_interval' => ($faker->date($format = 'Y-m-d h:m:s', $max = 'now') . "|" . $faker->date($format = 'Y-m-d h:m:s', $min = 'now')),
-        'bidding_interval' => ($faker->date($format = 'Y-m-d h:m:s', $max = 'now') . "|" . $faker->date($format = 'Y-m-d h:m:s', $min = 'now'))
+        'publish_interval' => $publish_interval,
+        'bidding_interval' => $bidding_interval
     ];
 });
