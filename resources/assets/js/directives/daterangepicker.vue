@@ -1,13 +1,16 @@
 <script>
     export default {
         inserted: function(el){
+            // Generate some ranges
+            var now = moment();
+            var day = moment().hours(18).minutes(0).seconds(0);
+            var week = moment().add(1, 'week').hours(18).minutes(0).seconds(0);
+            var month = moment().add(1, 'months').hours(18).minutes(0).seconds(0);
             $(el).daterangepicker(
-                // TODO: Switch between singleDatePicker:true|false
-                // TODO: Maybe option to reset range/date
                 // Options
                 {
                     locale: {
-                        format: "YYYY-MM-DD hh:mm:ss",
+                        format: "YYYY-MM-DD HH:mm:ss",
                         separator: " | "
                     },
                     timePicker: true,
@@ -15,21 +18,17 @@
                     timePicker24Hour: true,
                     timePickerSeconds: true,
                     ranges: {
-                            "Today": [
-                                "2016-10-25T11:52:21.389Z",
-                                "2016-10-25T11:52:21.389Z"
+                            "Today only": [
+                                now,
+                                day
                             ],
-                            "Last 7 Days": [
-                                "2016-10-19T11:52:21.389Z",
-                                "2016-10-25T11:52:21.389Z"
+                            "Today + 7 Days": [
+                                now,
+                                week
                             ],
-                            "This Month": [
-                                "2016-09-30T22:00:00.000Z",
-                                "2016-10-31T22:59:59.999Z"
-                            ],
-                            "Clear": [
-                                "0000-00-00T00:00:00.000Z",
-                                "0000-00-00T00:00:00.000Z"
+                            "Today + 1 Month": [
+                                now,
+                                month
                             ]
                     },
                 },
@@ -39,7 +38,7 @@
                     bus.$emit(
                         el.name+'_changed',
                         el.id,
-                        start.format('YYYY-MM-DD hh:mm:ss') + ' | ' + end.format('YYYY-MM-DD hh:mm:ss')
+                        start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
                     );
                 }
             );
