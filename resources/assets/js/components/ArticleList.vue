@@ -50,14 +50,14 @@
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.publish_interval" name="publish_interval"
                                         >
                                         <i class="fa fa-calendar-o btn-stacked-bg"></i>
-                                        <i :class="'fa fa-dollar btn-stacked-fg '+((ithem.publish_interval!='') ? 'text-primary':'')"></i>
+                                        <i :class="'fa fa-dollar btn-stacked-fg '+((activeInterval(ithem.publish_interval)) ? 'text-primary':'')"></i>
                                     </a>
                                     <a class="btn-stacked btn btn-default btn-sm fa tooltip-interval"
                                         v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
                                         >
                                         <i class="fa fa-calendar-o btn-stacked-bg"></i>
-                                        <i :class="'fa fa-gavel btn-stacked-fg '+((ithem.bidding_interval!='') ? 'text-primary':'')"></i>
+                                        <i :class="'fa fa-gavel btn-stacked-fg '+((activeInterval(ithem.bidding_interval)) ? 'text-primary':'')"></i>
                                     </a>
                                     <router-link
                                         :to="'/articles/'+ithem.id"
@@ -163,6 +163,11 @@
                     result += "<br><b>End:</b><br>" + dates[1];
 
                 return result;
+            },
+            activeInterval(interval){
+                if (interval=='' || typeof interval !='string' || interval.split('|')[1]=='')
+                    return false;
+                return moment().isBefore( interval.split('|')[1] );
             },
             displaySummary(info){
                 var formated = info.replace(/\n/g,'<br>');
