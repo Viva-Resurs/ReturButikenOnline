@@ -3,6 +3,9 @@
     /* Tooltip */
     .tooltip-info + .tooltip > .tooltip-inner {
         text-align: left;
+    }
+    .tooltip-interval + .tooltip > .tooltip-inner {
+        text-align: left;
         white-space: nowrap;
     }
 
@@ -11,7 +14,7 @@
         white-space: nowrap;
         .btn, .btn:focus, btn:active {
             border: 0px;
-            margin-top: -2.5px;
+            margin-top: -5px;
             margin-bottom: -2.5px;
             background: transparent;
             outline: 0 none;
@@ -38,18 +41,18 @@
             white-space: nowrap;
 
             /* Collect buttons */
-            .btn:first-child:not(:last-child) {
+            .btn:first-of-type:not(:last-of-type) {
                 border-bottom-right-radius: 0;
                 border-top-right-radius: 0;
                 margin-left: 0px;
                 margin-right: -5px;
             }
-            .btn:not(:last-child):not(:first-child){
+            .btn:not(:last-of-type):not(:first-of-type){
                 border-radius: 0px;
                 margin-left: 0px;
                 margin-right: -5px;
             }
-            .btn:last-child:not(:first-child) {
+            .btn:last-of-type:not(:first-of-type) {
                 border-bottom-left-radius: 0;
                 border-top-left-radius: 0;
                 margin-left: 0px;

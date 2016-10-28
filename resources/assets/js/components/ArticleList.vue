@@ -22,7 +22,6 @@
                             <tr>
                                 <th class="num">#</th>
                                 <th>Name <button :class="[headers.name, headers.name_icon]" @click="setSortBy('name');"></button></th>
-                                <th>Desc</th>
                                 <th><span>Updated</span><button :class="[headers.updated_at, headers.updated_at_icon]" @click="setSortBy('updated_at');"></button></th>
                                 <th class="text-center">Public</th>
                                 <th>Tools</th>
@@ -31,36 +30,45 @@
                         <tbody>
                             <tr v-for="(ithem, index) in filterIthems">
                                 <td class="num"><strong>{{(index+1)+offset}}. </strong></td>
-                                <td>{{ithem.name}}</td>
+                                <td>
+                                    <div class="tooltip-info"
+                                        v-tooltip :data-original-title="displaySummary(ithem.desc)">
+                                        {{ithem.name}}
+                                    </div>
+                                </td>
 
-                                <td class="desc">{{ithem.desc}}</td>
-
-                                <td class="text-center">
-                                    <span class="fa fa-clock-o"
-                                        v-tooltip :data-original-title="ithem.updated_at">
-                                    </span>
+                                <td>
+                                    {{ithem.updated_at}}
                                 </td>
 
                                 <td class="text-center"><span :class="'fa ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
 
                                 <td class="tools">
                                     <div class="tool-group">
-                                    <a class="btn-stacked btn btn-default btn-sm fa tooltip-info"
+                                    <a class="btn-stacked btn btn-default btn-sm fa tooltip-interval"
                                         v-tooltip :data-original-title="displayInterval(ithem.publish_interval)"
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.publish_interval" name="publish_interval"
                                         >
                                         <i class="fa fa-calendar-o btn-stacked-bg"></i>
                                         <i :class="'fa fa-dollar btn-stacked-fg '+((ithem.publish_interval!='') ? 'text-primary':'')"></i>
                                     </a>
-                                    <a class="btn-stacked btn btn-default btn-sm fa tooltip-info"
+                                    <a class="btn-stacked btn btn-default btn-sm fa tooltip-interval"
                                         v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
                                         >
                                         <i class="fa fa-calendar-o btn-stacked-bg"></i>
                                         <i :class="'fa fa-gavel btn-stacked-fg '+((ithem.bidding_interval!='') ? 'text-primary':'')"></i>
                                     </a>
-                                    <router-link :to="'/articles/'+ithem.id" class="btn btn-default btn-sm fa fa-pencil"></router-link>
-                                    <a class="btn btn-default btn-sm fa fa-trash btn-hover-danger" @click="remove(ithem)"></a>
+                                    <router-link
+                                        :to="'/articles/'+ithem.id"
+                                        class="btn btn-default btn-sm fa fa-pencil"
+                                        v-tooltip data-original-title="Edit"
+                                        >
+                                    </router-link>
+                                    <a class="btn btn-default btn-sm fa fa-trash btn-hover-danger"
+                                        v-tooltip data-original-title="Remove"
+                                        @click="remove(ithem)">
+                                    </a>
                                     </div>
                                 </td>
                             </tr>
@@ -155,6 +163,10 @@
                     result += "<br><b>End:</b><br>" + dates[1];
 
                 return result;
+            },
+            displaySummary(info){
+                var formated = info.replace(/\n/g,'<br>');
+                return formated;
             },
             remove(ithem){
                 // Validation?
