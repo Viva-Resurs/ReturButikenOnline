@@ -23,11 +23,12 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
 });
 
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
+
     return [
         'name' => $faker->words($nb = 4, $asText = true),
         'desc' => $faker->paragraph,
         'public' => $faker->numberBetween($min = 0, $max = 1),
-        'publish_interval' => $faker->date($format = 'Y-m-d h:m:s', $max = 'now'),
-        'bidding_interval' => $faker->date($format = 'Y-m-d h:m:s', $max = 'now')
+        'publish_interval' => ($faker->date($format = 'Y-m-d h:m:s', $max = 'now') . "|" . $faker->date($format = 'Y-m-d h:m:s', $min = 'now')),
+        'bidding_interval' => ($faker->date($format = 'Y-m-d h:m:s', $max = 'now') . "|" . $faker->date($format = 'Y-m-d h:m:s', $min = 'now'))
     ];
 });
