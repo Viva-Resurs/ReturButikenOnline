@@ -8,7 +8,6 @@ window._ = require('lodash');
  */
 
 window.$ = window.jQuery = require('jquery');
-require('bootstrap-sass');
 
 /**
  * moment
@@ -20,7 +19,7 @@ window.moment = require('moment');
  * daterangepicker
  * https://www.npmjs.com/package/daterangepicker
  */
-window.daterangepicker = require('./vendor/bootstrap.daterangepicker.2.1.24.js');
+//window.daterangepicker = require('./vendor/bootstrap.daterangepicker.2.1.24.js');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces

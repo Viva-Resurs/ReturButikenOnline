@@ -81,7 +81,7 @@
 
             /* Danger Icons */
             .btn-hover-danger:hover {
-                @extend .btn-danger;
+                @extend .btn-danger !optional;
             }
         }
     }

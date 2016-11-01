@@ -1,6 +1,7 @@
 <script>
     export default {
         inserted: function(el){
+            return "daterangepicker is not ready";
             // Generate some ranges
             var now = moment();
             var day = moment().hours(18).minutes(0).seconds(0);

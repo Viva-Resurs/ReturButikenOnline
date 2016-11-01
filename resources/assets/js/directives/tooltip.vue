@@ -1,7 +1,7 @@
 <script>
     export default {
         inserted: function(el){
-            $(el).tooltip({html:true});
+            //$(el).tooltip({html:true});
         }
     };
 </script>
