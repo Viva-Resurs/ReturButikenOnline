@@ -5,6 +5,9 @@ composer.lock
 # NPM
 /node_modules
 
+# Semantic UI
+/semantic
+
 # Builds
 /public/css
 /public/js

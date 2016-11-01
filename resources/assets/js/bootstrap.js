@@ -10,6 +10,11 @@ window._ = require('lodash');
 window.$ = window.jQuery = require('jquery');
 
 /**
+ * Semantic UI
+ */
+require('../../../semantic/dist/semantic.min.js');
+
+/**
  * moment
  * http://momentjs.com/docs/
  */
