@@ -22,6 +22,7 @@
      * Define global directives
      */
     Vue.directive('tooltip', require('./directives/tooltip.vue'));
+    Vue.directive('dropdown', require('./directives/dropdown.vue'));
     Vue.directive('daterangepicker', require('./directives/daterangepicker.vue'));
 
     /**
