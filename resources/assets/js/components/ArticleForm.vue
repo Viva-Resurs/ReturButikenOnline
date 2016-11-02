@@ -1,130 +1,113 @@
 <template>
-    <div class="panel panel-default" id="articleForm">
+    <div class="ui container segment" id="articleForm">
 
-        <div class="panel-heading">
-            Skapa artikel
+        <div class="ui dividing header">
+            Publicera
         </div>
 
-        <form class="form-vertical" v-on:submit.prevent="attemptCreate" role="form" name="myform">
+        <form class="ui form" v-on:submit.prevent="attemptCreate" role="form" name="myform">
 
-            <div class="panel-body">
+                <div class="fields">
+                    <div class="twelve wide field">
+                        <label for="name">Varunamn:</label>
+                        <input id="name"
+                            type="text"
+                            v-model="article.name"
+                            placeholder="Varunamn"
+                        >
+                    </div>
+                    <div class="four wide field" style="white-space: nowrap;">
+                        <label class="control-label" for="category">Välj varukategori:</label>
+                        <select class="ui fluid dropdown v-dropdown dropdown-toggle"
+                            id="category"
+                            type="button"
+                            data-toggle="dropdown"
+                        >
+                            <option value="">Kategori</option>
+                            <option value="k1">Kategori 1</option>
+                        </select>
+                    </div>
+                </div>
 
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-10">
-                            <label class="control-label" for="name">Varunamn:</label>
-                            <input class="form-control"
-                                id="name"
-                                type="text"
-                                v-model="article.name"
-                                placeholder="Varunamn"
-                            >
-                        </div>
-                        <div class="col-xs-2" style="white-space: nowrap;">
-                            <div class="pull-right">
-                                <label class="control-label" for="category">Välj varukategori:</label>
-                                <div class="dropdown text-right">
-                                    <button class="btn btn-default dropdown-toggle"
-                                        id="category"
-                                        type="button"
-                                        data-toggle="dropdown"
-                                    >
-                                        Kategori <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="category">
-                                        <li role="presentation">
-                                            <a role="menuitem" href="#">Category item</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                <div class="field">
+                    <label for="desc">Beskrivning av varan:</label>
+                    <textarea class="form-control" rows="4"
+                        id="desc"
+                        v-model="article.desc"
+                        placeholder="Ge din beskrivning här"
+                    ></textarea>
+                </div>
+
+                <div class="field">
+                    <div class="inline fields">
+
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" tabindex="0" value="1" v-model="settings.publish_interval">
+                                <label>Publicera inom datumintervall</label>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="control-label" for="desc">Beskrivning av varan:</label>
-                            <textarea class="form-control" rows="4"
-                                id="desc"
-                                v-model="article.desc"
-                                placeholder="Ge din beskrivning här"
-                            ></textarea>
+                        <div class="field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" tabindex="0" value="1" v-model="settings.bidding_interval">
+                                <label>Aktivera budgivning</label>
+                            </div>
                         </div>
+
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="checkbox-inline">
-                                <input type="checkbox" value="1" v-model="settings.publish_interval">
-                                Publicera inom datumintervall
-                            </label>
-                            <label class="checkbox-inline">
-                                <input type="checkbox" value="1" v-model="settings.bidding_interval">
-                                Aktivera budgivning
-                            </label>
-                        </div>
+                <div class="field" v-show="settings.publish_interval">
+                    <date-interval interval="publish_interval_form" :date="article.publish_interval"></date-interval>
+                </div>
+
+                <div class="field" v-show="settings.bidding_interval">
+                    <date-interval interval="bidding_interval_form" :date="article.bidding_interval"></date-interval>
+                </div>
+
+                <div class="inline fields">
+                    <div class="field">
+                      <div class="ui radio checkbox">
+                        <input type="radio" name="public" tabindex="0" class="hidden" v-model="article.public" value="0">
+                        <label>Publicera på kommunens Intranät</label>
+                      </div>
+                  </div>
+                  <div class="field">
+                    <div class="ui radio checkbox">
+                      <input type="radio" name="public" tabindex="1" class="hidden" v-model="article.public" value="1">
+                      <label>Publicera för allmänheten</label>
                     </div>
                 </div>
 
-                <div class="form-group" v-show="settings.publish_interval">
-                    <div class="row">
-                      <date-interval interval="publish_interval_form" :date="article.publish_interval"></date-interval>
-                    </div>
-                </div>
+              </div>
 
-                <div class="form-group" v-show="settings.bidding_interval">
-                    <div class="row">
-                      <date-interval interval="bidding_interval_form" :date="article.bidding_interval"></date-interval>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <label class="radio-inline">
-                                <input type="radio" name="public" v-model="article.public" value="0">
-                                Publicera på kommunens Intranät
-                            </label>
-                            <label class="radio-inline">
-                                <input type="radio" name="public" v-model="article.public" value="1"> Publicera för allmänheten
-                            </label>
-                        </div>
-                    </div>
-               </div>
-
-               <div class="form-group">
-                   <div class="row">
-                       <div class="col-xs-6">
-                           <label class="control-label" for="fullname">Namn kontaktperson:</label>
-                           <input type="text" class="form-control" id="fullname" placeholder="Ditt namn">
+               <div class="field">
+                   <div class="two fields">
+                       <div class="field">
+                           <label for="fullname">Namn kontaktperson:</label>
+                           <input type="text" id="fullname" placeholder="Ditt namn">
                        </div>
-                       <div class="col-xs-6">
-                           <label class="control-label" for="phone">Telefon kontaktperson:</label>
-                           <input type="text" class="form-control" id="phone" placeholder="Ditt nummer">
+                       <div class="field">
+                           <label for="phone">Telefon kontaktperson:</label>
+                           <input type="text" id="phone" placeholder="Ditt nummer">
                        </div>
                     </div>
-                    <div class="row">
-                       <div class="col-xs-12">
-                           <label class="control-label" for="email">E-post kontaktperson:</label>
-                           <input type="email" class="form-control" id="email" placeholder="Din epost">
-                       </div>
+                    <div class="field">
+                       <label class="control-label" for="email">E-post kontaktperson:</label>
+                       <input type="email" class="form-control" id="email" placeholder="Din epost">
                    </div>
                </div>
 
-            </div>
-
-            <div class="panel-footer text-right">
-                <button type="submit" class="btn btn-default">Förhandsgranska</button>
-                <button type="submit" class="btn btn-primary" @keydown.enter.prevent="attemptCreate">
+            <div class="field">
+                <button type="submit" class="ui right floated button primary " @keydown.enter.prevent="attemptCreate">
                     Publicera
                 </button>
+                <button type="submit" class="ui right floated button">Förhandsgranska</button>
             </div>
-
+            <br />
         </form>
+        <br />
 
     </div>
 </template>
