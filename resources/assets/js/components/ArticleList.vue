@@ -1,11 +1,9 @@
 <template>
-    <div class="panel panel-default">
+    <div class="ui container segment">
 
-        <div class="panel-heading">
+        <div class="ui dividing header">
             Articles
         </div>
-
-        <div class="panel-body">
 
             <template v-if="this.$root.loading">
                 <loading></loading>
@@ -16,8 +14,8 @@
                 <template v-if="ithems.length > 0">
 
                     <input v-model="search">
-                    <hr>
-                    <table class="table table-responsive table-condensed table-bordered">
+
+                    <table class="ui celled table">
                         <thead>
                             <tr>
                                 <th class="num">#</th>
@@ -73,18 +71,23 @@
                                 </td>
                             </tr>
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="5">
+                                    <pagination
+                                        :total="ithems.length"
+                                        :show-pagination="(search=='' && !limitOffBtn)"
+                                    >
+                                        <div slot="replacePagination">
+                                            <button v-if="limitOffBtn" class="btn btn-default searchresults_expander" @click="limitOff = true">
+                                                Visa alla resultat
+                                            </button>
+                                        </div>
+                                    </pagination>
+                                </th>
+                            </tr>
+                      </tfoot>
                     </table>
-
-                    <pagination
-                        :total="ithems.length"
-                        :show-pagination="(search=='' && !limitOffBtn)"
-                    >
-                        <div slot="replacePagination">
-                            <button v-if="limitOffBtn" class="btn btn-default searchresults_expander" @click="limitOff = true">
-                                Visa alla resultat
-                            </button>
-                        </div>
-                    </pagination>
 
                 </template>
 
@@ -94,7 +97,7 @@
 
             </template>
 
-        </div>
+
 
     </div>
 </template>
