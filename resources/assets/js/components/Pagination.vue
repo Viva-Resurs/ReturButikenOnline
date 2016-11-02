@@ -1,33 +1,30 @@
 <template>
     <div class="pagination">
-        <div class="row">
+        <div class="two fields">
 
-
-        <div v-if="total>limit" class="pagination_left col-sm-10">
+        <div v-if="total>limit" class="pagination_left ui floated left pagination menu">
 
             <template v-if="showPagination">
 
-                <div class="btn-group" role="group">
+                    <a class="icon item" @click="firstPage">
+                        <i class="fa fa-btn fa-angle-double-left"></i>
+                    </a>
 
-                    <button class="btn btn-default" @click="firstPage">
-                        <span class="fa fa-btn fa-angle-double-left"></span>
-                    </button>
+                    <a class="icon item" @click="prevPage">
+                        <i class="left chevron icon"></i>
+                    </a>
 
-                    <button class="btn btn-default" @click="prevPage">
-                        <span class="fa fa-btn fa-angle-left"></span>
-                    </button>
+                    <a v-for="n in totalPages" :class="'icon item '+((n==currentPage)?'primary':'default')" @click="toPage(n)">{{n}}
+                    </a>
 
-                    <button v-for="n in totalPages" :class="'btn btn-'+((n==currentPage)?'primary':'default')" @click="toPage(n)">{{n}}
-                    </button>
+                    <a class="icon item" @click="nextPage">
+                        <i class="right chevron icon"></i>
+                    </a>
 
-                    <button class="btn btn-default" @click="nextPage">
-                        <span class="fa fa-btn fa-angle-right"></span>
-                    </button>
-
-                    <button class="btn btn-default" @click="lastPage">
+                    <a class="icon item" @click="lastPage">
                         <span class="fa fa-btn fa-angle-double-right"></span>
-                    </button>
-                </div>
+                    </a>
+
 
             </template>
             <template v-else>
@@ -42,23 +39,20 @@
         <div v-else class="pagination_left">
         </div>
 
-        <div v-show="total>limit && showPagination" class="pagination_right col-sm-2">
-            <div class="input-group">
-                <select class="form-control selectpicker show-tick"
-                        v-model="limit"
-                        id="limit"
-                        ref="select-input"
+        <div v-show="total>limit && showPagination" class="pagination_right ui floated right secondary menu">
+            <div class="pagination_right" style="white-space: nowrap;">
+                <select class="ui fluid dropdown v-dropdown dropdown-toggle selectpicker show-tick"
+                    v-model="limit"
+                    id="limit"
+                    ref="select-input"
                 >
                     <option v-for="option in limitOptions" :value="option">{{option}}</option>
                 </select>
-                <span class="input-group-addon">
-                    <span class="fa fa-list"></span>
-                </span>
-
             </div>
         </div>
     </div>
     </div>
+
 </template>
 
 <script>
