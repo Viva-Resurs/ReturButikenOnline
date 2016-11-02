@@ -7,22 +7,22 @@
             <template v-if="showPagination">
 
                     <a class="icon item" @click="firstPage">
-                        <i class="fa fa-btn fa-angle-double-left"></i>
+                        <i class="angle dubble left icon"></i>
                     </a>
 
                     <a class="icon item" @click="prevPage">
-                        <i class="left chevron icon"></i>
+                        <i class="angle left icon"></i>
                     </a>
 
                     <a v-for="n in totalPages" :class="'icon item '+((n==currentPage)?'primary':'default')" @click="toPage(n)">{{n}}
                     </a>
 
                     <a class="icon item" @click="nextPage">
-                        <i class="right chevron icon"></i>
+                        <i class="angle right icon"></i>
                     </a>
 
                     <a class="icon item" @click="lastPage">
-                        <span class="fa fa-btn fa-angle-double-right"></span>
+                        <span class="angle double right icon"></span>
                     </a>
 
 
