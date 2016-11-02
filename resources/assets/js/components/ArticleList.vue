@@ -12,8 +12,9 @@
             <template v-else>
 
                 <template v-if="ithems.length > 0">
-
-                    <input v-model="search">
+                    <div class="ui fluid search">
+                        <input v-model="search" class="prompt" placeholder="Type to search">
+                    </div>
 
                     <table class="ui celled table">
                         <thead>
