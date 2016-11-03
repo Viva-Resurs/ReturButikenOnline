@@ -58,12 +58,11 @@
                                         v-tooltip :data-html="displayInterval(ithem.bidding_interval)"
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
                                         >
-
                                         <i :class="'ui icon calendar '+((activeInterval(ithem.bidding_interval)) ? 'text-primary':'')"></i>
                                     </button>
                                     <router-link
                                         :to="'/articles/'+ithem.id"
-                                        class="ui circular button"
+                                        class="ui circular icon button pencil"
                                         v-tooltip data-html="Edit"
                                         >
                                         <i class="ui icon pencil"></i>
