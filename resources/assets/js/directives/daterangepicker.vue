@@ -1,7 +1,6 @@
 <script>
     export default {
         inserted: function(el){
-            return "daterangepicker is not ready";
             // Generate some ranges
             var now = moment();
             var day = moment().hours(18).minutes(0).seconds(0);
@@ -17,6 +16,7 @@
                     timePicker: true,
                     opens: 'left',
                     timePicker24Hour: true,
+                    timePicker12Hour: false,
                     timePickerSeconds: true,
                     ranges: {
                             "Today only": [
@@ -35,7 +35,6 @@
                 },
                 // Callback
                 (start,end,label)=>{
-                    console.log('emit')
                     bus.$emit(
                         el.name+'_changed',
                         el.id,
