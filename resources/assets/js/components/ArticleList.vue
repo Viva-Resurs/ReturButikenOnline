@@ -62,13 +62,13 @@
                                     </button>
                                     <router-link
                                         :to="'/articles/'+ithem.id"
-                                        class="ui circular icon button pencil"
+                                        class="ui circular icon button"
                                         v-tooltip data-html="Edit"
                                         >
                                         <i class="ui icon pencil"></i>
                                     </router-link>
 
-                                    <button class="ui circular red icon button trash"
+                                    <button class="ui circular red icon button"
                                         v-tooltip data-html="Remove"
                                         @click="remove(ithem)">
                                         <i class="ui icon trash"></i>
@@ -176,7 +176,7 @@
             activeInterval(interval){
                 if (interval=='' || typeof interval !='string' || interval.split('|')[1]=='')
                     return false;
-                return moment().isBefore( interval.split('|')[1] );
+                //return moment().isBefore( interval.split('|')[1] );
             },
             displaySummary(info){
                 var formated = info.replace(/\n/g,'<br>');
@@ -237,9 +237,7 @@
         },
 
         created: function(){
-            console.log('about do create list')
             bus.$on('publish_interval_changed', (id,new_value) => {
-                console.log('on')
                 for (var i = 0 ; i<this.ithems.length ; i++ )
                     if (this.ithems[i].id == id) {
                         this.ithems[i].publish_interval = new_value;
@@ -248,7 +246,6 @@
             } );
 
             bus.$on('bidding_interval_changed', (id,new_value) => {
-                console.log('on')
                 for (var i = 0 ; i<this.ithems.length ; i++ )
                     if (this.ithems[i].id == id) {
                         this.ithems[i].bidding_interval = new_value;
@@ -263,7 +260,6 @@
         },
 
         beforeDestroy: function() {
-            console.log('about do destroy list')
             bus.$off('publish_interval_changed');
             bus.$off('bidding_interval_changed');
             bus.$off('offset_changed');
