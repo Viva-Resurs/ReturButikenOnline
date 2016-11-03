@@ -49,13 +49,13 @@
                                 <td class="tools">
                                     <div class="tool-group">
                                     <button class="ui circular  icon button tooltip-interval"
-                                        v-tooltip :data-original-title="displayInterval(ithem.publish_interval)"
+                                        v-tooltip :data-html="displayInterval(ithem.publish_interval)"
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.publish_interval" name="publish_interval"
                                         >
                                         <i :class="'ui icon calendar '+((activeInterval(ithem.publish_interval)) ? 'text-primary':'')"></i>
                                     </button>
                                     <button class="ui circular icon button tooltip-interval"
-                                        v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
+                                        v-tooltip :data-html="displayInterval(ithem.bidding_interval)"
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
                                         >
 
@@ -64,13 +64,13 @@
                                     <router-link
                                         :to="'/articles/'+ithem.id"
                                         class="ui circular button"
-                                        v-tooltip data-original-title="Edit"
+                                        v-tooltip data-html="Edit"
                                         >
                                         <i class="ui icon pencil"></i>
                                     </router-link>
 
                                     <button class="ui circular red icon button trash"
-                                        v-tooltip data-original-title="Remove"
+                                        v-tooltip data-html="Remove"
                                         @click="remove(ithem)">
                                         <i class="ui icon trash"></i>
                                     </button>

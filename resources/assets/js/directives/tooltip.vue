@@ -1,7 +1,9 @@
 <script>
     export default {
         inserted: function(el){
-            //$(el).tooltip({html:true});
+            $(el).popup({
+                variation:"inverted"
+            });
         }
     };
 </script>
