@@ -16,12 +16,16 @@
                         <input v-model="search" class="prompt" placeholder="Type to search">
                     </div>
 
-                    <table class="ui celled table">
+                    <table class="ui compact celled table">
                         <thead>
                             <tr>
                                 <th class="num">#</th>
-                                <th>Name <button :class="[headers.name, headers.name_icon]" @click="setSortBy('name');"></button></th>
-                                <th><span>Updated</span><button :class="[headers.updated_at, headers.updated_at_icon]" @click="setSortBy('updated_at');"></button></th>
+                                <th>Name
+                                    <i :class="[headers.name, headers.name_icon]" @click="setSortBy('name');"></i>
+                                </th>
+                                <th>Updated<i :class="[headers.updated_at, headers.updated_at_icon]" @click="setSortBy('updated_at');"></i>
+                                </th>
+
                                 <th class="text-center">Public</th>
                                 <th>Tools</th>
                             </tr>
@@ -40,7 +44,7 @@
                                     {{ithem.updated_at}}
                                 </td>
 
-                                <td class="text-center"><span :class="'fa ' + ((ithem.public==1) ? 'fa-check' : 'fa-remove')"></span></td>
+                                <td class="center aligned"><span :class="'ui icon ' + ((ithem.public==1) ? 'positive' : 'negative')"></span></td>
 
                                 <td class="tools">
                                     <div class="tool-group">
@@ -151,9 +155,9 @@
                 offset: 0,
                 maxIthems: 10,
                 headers : {
-                    name : "ui icon button",
+                    name : "ui icon",
                     name_icon : 'sort',
-                    updated_at : 'ui icon button',
+                    updated_at : 'ui icon',
                     updated_at_icon : 'sort',
                 },
             };
@@ -196,15 +200,15 @@
                 switch (headingTitle) {
                     case 'name':
                         this.setOrder('name');
-                        selectedHeader = ((this.desc == 1) ? "fa-sort-alpha-asc"
-                            : "fa-sort-alpha-desc");
+                        selectedHeader = ((this.desc == 1) ? "sort alphabet ascending icon"
+                            : "sort alphabet descending icon");
 
                         break;
 
                     case 'updated_at':
                         this.setOrder('updated_at',1);
-                        selectedHeader = ((this.desc == 1) ? "fa-sort-numeric-asc"
-                            : "fa-sort-numeric-desc");
+                        selectedHeader = ((this.desc == 1) ? "sort numeric ascending icon"
+                            : "sort numeric descending icon");
                         break;
 
                     default:
@@ -215,7 +219,7 @@
                 // Change the other (not sorted by) icons to a generic sort icon
                 for (var i = 0;i < this.targets.length ; i++){
                     if (this.targets[i] != headingTitle){
-                        this.headers[this.targets[i]+'_icon'] = "fa-sort";
+                        this.headers[this.targets[i]+'_icon'] = "sort";
                     }
                 }
 
