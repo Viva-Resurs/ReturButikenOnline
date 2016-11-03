@@ -44,30 +44,32 @@
 
                                 <td class="tools">
                                     <div class="tool-group">
-                                    <a class="btn-stacked btn btn-default btn-sm fa tooltip-interval"
+                                    <button class="ui circular  icon button tooltip-interval"
                                         v-tooltip :data-original-title="displayInterval(ithem.publish_interval)"
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.publish_interval" name="publish_interval"
                                         >
-                                        <i class="fa fa-calendar-o btn-stacked-bg"></i>
-                                        <i :class="'fa fa-dollar btn-stacked-fg '+((activeInterval(ithem.publish_interval)) ? 'text-primary':'')"></i>
-                                    </a>
-                                    <a class="btn-stacked btn btn-default btn-sm fa tooltip-interval"
+                                        <i :class="'ui icon calendar '+((activeInterval(ithem.publish_interval)) ? 'text-primary':'')"></i>
+                                    </button>
+                                    <button class="ui circular icon button tooltip-interval"
                                         v-tooltip :data-original-title="displayInterval(ithem.bidding_interval)"
                                         v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
                                         >
-                                        <i class="fa fa-calendar-o btn-stacked-bg"></i>
-                                        <i :class="'fa fa-gavel btn-stacked-fg '+((activeInterval(ithem.bidding_interval)) ? 'text-primary':'')"></i>
-                                    </a>
+
+                                        <i :class="'ui icon calendar '+((activeInterval(ithem.bidding_interval)) ? 'text-primary':'')"></i>
+                                    </button>
                                     <router-link
                                         :to="'/articles/'+ithem.id"
-                                        class="btn btn-default btn-sm fa fa-pencil"
+                                        class="ui circular button"
                                         v-tooltip data-original-title="Edit"
                                         >
+                                        <i class="ui icon pencil"></i>
                                     </router-link>
-                                    <a class="btn btn-default btn-sm fa fa-trash btn-hover-danger"
+
+                                    <button class="ui circular red icon button trash"
                                         v-tooltip data-original-title="Remove"
                                         @click="remove(ithem)">
-                                    </a>
+                                        <i class="ui icon trash"></i>
+                                    </button>
                                     </div>
                                 </td>
                             </tr>
@@ -149,10 +151,10 @@
                 offset: 0,
                 maxIthems: 10,
                 headers : {
-                    name : "btn btn-sm fa",
-                    name_icon : 'fa-sort',
-                    updated_at : 'btn btn-sm fa',
-                    updated_at_icon : 'fa-sort',
+                    name : "ui icon button",
+                    name_icon : 'sort',
+                    updated_at : 'ui icon button',
+                    updated_at_icon : 'sort',
                 },
             };
         },
