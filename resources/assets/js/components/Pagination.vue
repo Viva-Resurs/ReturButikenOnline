@@ -7,7 +7,7 @@
             <template v-if="showPagination">
 
                     <a class="icon item" @click="firstPage">
-                        <i class="angle dubble left icon"></i>
+                        <i class="angle double left icon"></i>
                     </a>
 
                     <a class="icon item" @click="prevPage">
@@ -22,7 +22,7 @@
                     </a>
 
                     <a class="icon item" @click="lastPage">
-                        <span class="angle double right icon"></span>
+                        <i class="angle double right icon"></i>
                     </a>
 
 
