@@ -20,14 +20,17 @@
                         <thead>
                             <tr>
                                 <th class="num">#</th>
-                                <th>Name
-                                    <i :class="[headers.name, headers.name_icon]" @click="setSortBy('name');"></i>
+                                <th @click="setSortBy('name');" class="link">
+                                    Name
+                                    <i :class="[headers.name, headers.name_icon]" ></i>
                                 </th>
-                                <th>Updated<i :class="[headers.updated_at, headers.updated_at_icon]" @click="setSortBy('updated_at');"></i>
+                                <th @click="setSortBy('updated_at');" class="link">
+                                    Updated
+                                    <i :class="[headers.updated_at, headers.updated_at_icon]"></i>
                                 </th>
 
-                                <th class="text-center">Public</th>
-                                <th>Tools</th>
+                                <th class="center aligned">Public</th>
+                                <th class="center aligned">Tools</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -44,35 +47,37 @@
                                     {{ithem.updated_at}}
                                 </td>
 
-                                <td class="center aligned"><span :class="'ui icon ' + ((ithem.public==1) ? 'positive' : 'negative')"></span></td>
+                                <td class="center aligned">
+                                    <span :class="'ui icon ' + ((ithem.public==1) ? 'positive' : 'negative')"></span>
+                                </td>
 
-                                <td class="tools">
-                                    <div class="tool-group">
-                                    <button class="ui circular  icon button tooltip-interval"
-                                        v-tooltip :data-html="displayInterval(ithem.publish_interval)"
-                                        v-daterangepicker :id="ithem.id" :data-value="ithem.publish_interval" name="publish_interval"
-                                        >
-                                        <i :class="'ui icon calendar '+((activeInterval(ithem.publish_interval)) ? 'text-primary':'')"></i>
-                                    </button>
-                                    <button class="ui circular icon button tooltip-interval"
-                                        v-tooltip :data-html="displayInterval(ithem.bidding_interval)"
-                                        v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
-                                        >
-                                        <i :class="'ui icon calendar '+((activeInterval(ithem.bidding_interval)) ? 'text-primary':'')"></i>
-                                    </button>
-                                    <router-link
-                                        :to="'/articles/'+ithem.id"
-                                        class="ui circular icon button"
-                                        v-tooltip data-html="Edit"
-                                        >
-                                        <i class="ui icon pencil"></i>
-                                    </router-link>
+                                <td class="collapsing">
+                                    <div class="ui icon basic buttons">
+                                        <button class="ui icon button hover-default"
+                                            v-tooltip :data-html="displayInterval(ithem.publish_interval)"
+                                            v-daterangepicker :id="ithem.id" :data-value="ithem.publish_interval" name="publish_interval"
+                                            >
+                                            <i :class="'ui icon dollar '+((activeInterval(ithem.publish_interval)) ? 'active-interval':'')"></i>
+                                        </button>
+                                        <button class="ui icon button hover-default"
+                                            v-tooltip :data-html="displayInterval(ithem.bidding_interval)"
+                                            v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
+                                            >
+                                            <i :class="'ui icon legal '+((activeInterval(ithem.bidding_interval)) ? 'active-interval':'')"></i>
+                                        </button>
+                                        <router-link
+                                            :to="'/articles/'+ithem.id"
+                                            class="ui icon button hover-primary"
+                                            v-tooltip data-html="Edit"
+                                            >
+                                            <i class="ui icon pencil"></i>
+                                        </router-link>
 
-                                    <button class="ui circular red icon button"
-                                        v-tooltip data-html="Remove"
-                                        @click="remove(ithem)">
-                                        <i class="ui icon trash"></i>
-                                    </button>
+                                        <button class="ui icon button hover-danger"
+                                            v-tooltip data-html="Remove"
+                                            @click="remove(ithem)">
+                                            <i class="ui icon trash"></i>
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -164,19 +169,21 @@
 
         methods: {
             displayInterval(interval){
+                if (interval.indexOf('|') < 0)
+                    return 'Click to set interval';
+
                 var dates = interval.split('|');
 
-                var result = "<b>Start:</b><br>" + dates[0] + "<br>";
+                if (dates.length < 2)
+                    return false;
 
-                if (dates.length > 1)
-                    result += "<br><b>End:</b><br>" + dates[1];
-
-                return result;
+                return "<b>Start:</b><br>" + dates[0] + "<br><br>"+
+                       "<b>End:</b><br>" + dates[1];
             },
             activeInterval(interval){
                 if (interval=='' || typeof interval !='string' || interval.split('|')[1]=='')
                     return false;
-                //return moment().isBefore( interval.split('|')[1] );
+                return moment().isBefore( interval.split('|')[1] );
             },
             displaySummary(info){
                 var formated = info.replace(/\n/g,'<br>');
