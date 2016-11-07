@@ -2,7 +2,7 @@
     <div class="ui container segment">
 
         <div class="ui dividing header">
-            Articles
+            Arkiv
         </div>
 
             <template v-if="this.$root.loading">
@@ -12,8 +12,9 @@
             <template v-else>
 
                 <template v-if="ithems.length > 0">
-                    <div class="ui fluid search">
+                    <div class="ui icon input">
                         <input v-model="search" class="prompt" placeholder="Type to search">
+                        <i class="search icon"></i>
                     </div>
 
                     <table class="ui compact celled table">

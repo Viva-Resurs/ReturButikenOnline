@@ -1,11 +1,9 @@
 <template>
-<div class="panel panel-default">
+<div class="ui container segment">
 
-    <div class="panel-heading">
-        Categories
+    <div class="ui dividing header">
+        Kategorier
     </div>
-
-    <div class="panel-body">
 
         <div v-if="this.$root.loading">
             <loading></loading>
@@ -13,28 +11,36 @@
 
         <div v-else>
 
-            <div>
-
-                <table class="table table-condensed table-responsive">
+                <table class="ui compact celled table">
                     <thead class="thead-default">
                         <tr>
                             <th>Name <a @click="setOrder('name')">S</a></th>
                             <th>Updated <a @click="setOrder('updated_at',1)">S</a></th>
-                            <th>Tools</th>
+                            <th class="center aligned">Tools</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-if="ithems.length > 0" v-for="(ithem, index) in filterIthems">
                             <td v-show="!ithem.edit">{{ithem.name}}</td>
                             <td v-show="ithem.edit">
-                                <input v-model="ithem.name">
+                                <div class="ui input">
+                                    <input v-model="ithem.name">
+                                </div>
                             </td>
-                            <td>{{ithem.updated_at}}</td>
-                            <td v-if="!ithem.edit">
-                                <button class="btn btn-default btn-sm fa fa-btn fa-pencil" @click="editIthem(ithem)"></button>
-                                <button class="btn btn-default btn-sm fa fa-btn fa-trash" @click="attemptRemove(ithem)"></button>
+                            <td class="collapsing">{{ithem.updated_at}}</td>
+                            <td v-if="!ithem.edit" class="collapsing">
+                                <div class="ui icon basic buttons">
+                                <button class="ui icon button hover-primary" @click="editIthem(ithem)"
+                                    v-tooltip data-html="Edit">
+                                    <i class="ui icon pencil"></i>
+                                </button>
+                                <button class="ui icon button hover-danger" @click="attemptRemove(ithem)"
+                                    v-tooltip data-html="Remove">
+                                <i class="ui icon trash"></i>
+                                </button>
+                                </div>
                             </td>
-                            <td v-if="ithem.edit">
+                            <td v-if="ithem.edit" class="collapsing">
                                 <a role="button" @click="revertIthem(ithem)">Cancel</a>
                                 <a role="button" @click="attemptUpdate(ithem)">Save</a>
                             </td>
@@ -43,17 +49,18 @@
                             <td></td>
                             <td></td>
                             <td>
-                                <button class="btn btn-default btn-sm fa fa-btn fa-plus" @click="newIthem"></button>
+                                <button class="ui basic icon button" @click="newIthem">
+                                    <i class="ui icon plus"></i>
+                                </button>
 
                             </td>
                         </tr>
                     </tbody>
                 </table>
 
-            </div>
+
 
         </div>
-    </div>
 
 </div>
 </template>
