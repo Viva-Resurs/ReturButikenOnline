@@ -90,7 +90,7 @@
                                         :show-pagination="(search=='' && !limitOffBtn)"
                                     >
                                         <div slot="replacePagination">
-                                            <button v-if="limitOffBtn" class="btn btn-default searchresults_expander" @click="limitOff = true">
+                                            <button v-if="limitOffBtn" class="ui button searchresults_expander" @click="limitOff = true">
                                                 Visa alla resultat
                                             </button>
                                         </div>
