@@ -48,7 +48,7 @@
                                 </td>
 
                                 <td class="center aligned">
-                                    <span :class="'ui icon ' + ((ithem.public==1) ? 'positive' : 'negative')"></span>
+                                    <i :class="'ui icon ' + ((ithem.public==1) ? 'checkmark box' : 'square outline')"></i>
                                 </td>
 
                                 <td class="collapsing">
