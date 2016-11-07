@@ -36,11 +36,8 @@
                         <tbody>
                             <tr v-for="(ithem, index) in filterIthems">
                                 <td class="num"><strong>{{(index+1)+offset}}. </strong></td>
-                                <td>
-                                    <div class="tooltip-info"
-                                        v-tooltip :data-original-title="displaySummary(ithem.desc)">
-                                        {{ithem.name}}
-                                    </div>
+                                <td v-tooltip :data-html="displaySummary(ithem.desc)">
+                                    {{ithem.name}}
                                 </td>
 
                                 <td>
@@ -48,7 +45,9 @@
                                 </td>
 
                                 <td class="center aligned">
-                                    <i :class="'ui icon ' + ((ithem.public==1) ? 'checkmark box' : 'square outline')"></i>
+                                    <i :class="'ui icon ' + ((ithem.public==1) ? 'checkmark box' : 'square outline')"
+                                        v-tooltip :data-html="((ithem.public==1) ? 'Publicerad för allmänheten' : 'Publicerad på kommunens intranät')"
+                                    ></i>
                                 </td>
 
                                 <td class="collapsing">
