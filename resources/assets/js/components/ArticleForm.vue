@@ -112,80 +112,67 @@
     </div>
 </template>
 
-<script>
-    import DateInterval from './DateInterval.vue'
+<script lang="coffee">
+    DateInterval = require './DateInterval.vue'
 
-    export default {
+    module.exports =
 
-        name: 'ArticleForm',
+        name: 'ArticleForm'
 
         components: { DateInterval },
 
         props: [ 'original' ],
 
-        data: function() {
-            return {
-                article: {
-                    name: '',
-                    desc: '',
-                    public: false,
-                    publish_interval: '',
-                    bidding_interval: '',
-                },
-                settings: {
-                    publish_interval: false,
-                    bidding_interval: false
-                },
-                myform: []
-            }
-        },
+        data: -> {
+            article:
+                name: ''
+                desc: ''
+                public: false
+                publish_interval: ''
+                bidding_interval: ''
+            settings:
+                publish_interval: false
+                bidding_interval: false
+            myform: []
+        }
 
-        methods: {
+        methods:
 
-            attemptCreate() {
+            attemptCreate: ->
 
-                // TODO: Validation
-                if (this.settings.publish_interval === false)
+                # Todo: test
+                if (this.settings.publish_interval == false)
                     this.article.publish_interval = '';
-                if (this.settings.bidding_interval === false)
+                if (this.settings.bidding_interval == false)
                     this.article.bidding_interval = '';
 
                 bus.$emit( 'article_form_update', this.article );
 
-            }
+        created: ->
 
-        },
-
-        created: function() {
-            console.log('about do create form')
-            // If a original is passed (Update-mode), fill the form
+            # If a original is passed (Update-mode), fill the form
             if (this.original)
                 this.article = this.original;
 
-            // Check if using publish_interval
+            # Check if using publish_interval
             if (this.article.publish_interval!='')
                 this.settings.publish_interval = true;
 
-            // Check if using bidding_interval
+            # Check if using bidding_interval
             if (this.article.bidding_interval!='')
                 this.settings.bidding_interval = true;
 
-            // Listen for changes in DateInterval
-            bus.$on('publish_interval_form_changed', (id,new_value) => {
+            # Listen for changes in DateInterval
+            bus.$on('publish_interval_form_changed', (id,new_value) =>
                 this.article.publish_interval = new_value;
-            } );
-            bus.$on('bidding_interval_form_changed', (id,new_value) => {
+            );
+            bus.$on('bidding_interval_form_changed', (id,new_value) =>
                 this.article.bidding_interval = new_value;
-            } );
+            );
 
-        },
-
-        beforeDestroy: function() {
+        beforeDestroy: ->
             console.log('about do destroy form')
             bus.$off('publish_interval_form_changed');
             bus.$off('bidding_interval_form_changed');
 
-        }
-
-    }
 </script>

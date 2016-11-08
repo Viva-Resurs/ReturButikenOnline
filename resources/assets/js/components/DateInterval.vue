@@ -16,9 +16,9 @@
      </div>
 </template>
 
-<script>
-    export default {
-        name: 'DateInterval',
+<script lang="coffee">
+    module.exports = {
+        name: 'DateInterval'
         props: [ 'interval', 'date' ]
     }
 </script>

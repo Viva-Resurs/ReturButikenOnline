@@ -2,9 +2,9 @@
     <div class="pagination">
         <div class="two fields">
 
-        <div v-if="total>limit" class="pagination_left ui floated left pagination menu">
+        <div v-if="total!=0 && total>limit" class="pagination_left">
 
-            <template v-if="showPagination">
+            <div v-if="showPagination" class="ui floated left pagination menu">
 
                     <a class="icon item" @click="firstPage">
                         <i class="angle double left icon"></i>
@@ -14,7 +14,7 @@
                         <i class="angle left icon"></i>
                     </a>
 
-                    <a v-for="n in totalPages" :class="'icon item '+((n==currentPage)?'primary':'default')" @click="toPage(n)">{{n}}
+                    <a v-for="n in totalPages" :class="'item '+((n==currentPage)?'active':'')" @click="toPage(n)">{{n}}
                     </a>
 
                     <a class="icon item" @click="nextPage">
@@ -25,8 +25,7 @@
                         <i class="angle double right icon"></i>
                     </a>
 
-
-            </template>
+            </div>
             <template v-else>
 
                 <slot name="replacePagination">
@@ -39,7 +38,7 @@
         <div v-else class="pagination_left">
         </div>
 
-        <div v-show="total>limit && showPagination" class="pagination_right ui floated right secondary menu">
+        <div v-show="total>limitOptions[0] && showPagination" class="pagination_right ui floated right secondary menu">
             <div class="pagination_right" style="white-space: nowrap;">
                 <select class="ui fluid dropdown v-dropdown dropdown-toggle selectpicker show-tick"
                     v-model="limit"
@@ -55,114 +54,86 @@
 
 </template>
 
-<script>
-    export default {
+<script lang="coffee">
+    module.exports = {
 
-        name: 'Pagination',
+        name: 'Pagination'
 
-        props: [ 'total', 'showPagination' ],
+        props: [ 'total', 'showPagination' ]
 
-        data: function(){
-            return {
-                offset: 0,
-                limit: 10,
-                limitOptions: [ 10, 50, 100, 500 ]
-            };
-        },
+        data: ->
+            offset: 0
+            limit: 10
+            limitOptions: [ 10, 50, 100, 500 ]
 
-        computed: {
+        computed:
 
-            currentPage(){
-                var p = 1;
-                for (var i=0, c=0 ; i<this.total ; i++, c++){
-                    if (i==this.offset)
+            currentPage: ->
+                p = 1
+                c = 0
+                i = 0
+                while i < @total
+                    if (i==@offset)
                         return p;
-                    if (c+1==this.limit && i<this.total-p){
+                    if (c+1==@limit && i<@total-p)
                         p++; c=0;
-                    }
-                }
-            },
+                    i++
+                    c++
 
-            totalPages(){
-                var p = 1;
-                for (var i=0, c=0 ; i<this.total ; i++, c++){
-                    if (c+1==this.limit && i<this.total-p){
-                        p++; c=0;
-                    }
-                }
+            totalPages: ->
+                p = 1
+                c = 0
+                i = 0
+                while i < @total
+                    if (c+1==@limit && i<@total-p)
+                        p+=1; c=0;
+                    i++
+                    c++
+
                 return p;
-            }
 
-        },
 
-        methods: {
+        methods:
 
-            firstPage(){
-                this.offset = 0;
-            },
+            firstPage: ->
+                @offset = 0;
 
-            prevPage(){
-                if (this.offset-this.limit<0)
-                    return this.firstPage();
-                this.offset -= this.limit;
-            },
+            prevPage: ->
+                if (@offset-@limit<0)
+                    return @firstPage();
+                @offset -= @limit;
 
-            toPage(p){
-                this.offset = (p-1)*this.limit;
-            },
+            toPage: (p) ->
+                @offset = (p-1)*@limit;
 
-            nextPage(){
-                if (this.offset>this.total-this.limit)
-                    return this.lastPage();
-                this.offset += this.limit;
-            },
+            nextPage: ->
+                if (@offset>=@total-@limit)
+                    return @lastPage();
+                @offset += @limit;
 
-            lastPage(){
-                this.offset = this.total-(((this.total-1)%this.limit)+1);
-            }
+            lastPage: ->
+                @offset = @total-(((@total-1)%@limit)+1);
 
-        },
 
-        watch: {
-            limit: function(val, oldVal){
+        watch:
+            limit: (val, oldVal) ->
                 bus.$emit('limit_changed',val);
-            },
-            offset: function(val, oldVal){
+
+            offset: (val, oldVal) ->
                 bus.$emit('offset_changed',val);
-            }
-        },
 
-        created: function(){
 
-            /*
-            this.$nextTick(function() {
+        created: ->
 
-                var target = $(this.$els.selectInput);
-
-                let g = target.selectpicker({
-                    size: 4,
-                    iconBase: 'fa',
-                    tickIcon: 'fa-check'
-                });
-
-                target.selectpicker('refresh');
-
-            });
-            */
-
-            window.onkeyup = (function(e) {
-                var key = e.which || e.keyCode;
+            window.onkeyup = (e) =>
+                key = e.which || e.keyCode
                 if (key == 37)
-                    this.prevPage();
+                    @prevPage()
                 if (key == 39)
-                    this.nextPage();
-            }).bind(this);
+                    @nextPage()
 
-        },
-
-        beforeDestroy: function () {
+        beforeDestroy: ->
             window.onkey = false;
-        }
 
-    };
+    }
 </script>

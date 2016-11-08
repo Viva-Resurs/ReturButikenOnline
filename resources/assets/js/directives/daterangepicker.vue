@@ -40,7 +40,7 @@
                     },
                 },
                 // Callback
-                (start,end,label)=>{
+                (start,end,label) => {
                     bus.$emit(
                         el.name+'_changed',
                         el.id,
