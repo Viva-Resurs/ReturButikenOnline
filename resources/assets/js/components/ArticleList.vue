@@ -211,18 +211,19 @@
                 switch headingTitle
                     when 'name'
                         this.setOrder('name')
-                        selectedHeader = ((this.desc == 1) ? "sort alphabet ascending icon" : "sort alphabet descending icon")
+                        selectedHeader = if (this.desc == 1) then "sort alphabet ascending icon" else "sort alphabet descending icon"
 
                     when 'updated_at'
                         this.setOrder('updated_at',1)
-                        selectedHeader = ((this.desc == 1) ? "sort numeric ascending icon" : "sort numeric descending icon")
+                        selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
+
 
                 this.headers[headingTitle+'_icon'] = selectedHeader
 
                 # Change the other (not sorted by) icons to a generic sort icon
-                for i in this.targets
-                    if (this.targets[i] != headingTitle)
-                        this.headers[this.targets[i]+'_icon'] = "sort"
+                for target in @targets
+                    if (target != headingTitle)
+                        @headers[target+'_icon'] = "sort"
 
         watch:
             # Reset show all results when editing search

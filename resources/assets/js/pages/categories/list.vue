@@ -65,122 +65,105 @@
 </div>
 </template>
 
-<script>
-import Filters from '../../mixins/Filters.vue'
+<script lang="coffee">
+Filters = require '../../mixins/Filters.vue';
 
-export default {
+module.exports = {
 
-    name: 'List',
+    name: 'List'
 
-    mixins: [Filters],
+    mixins: [Filters]
 
-    computed: {
-        filterIthems() {
-            return this.ithems
+    computed:
+        filterIthems: ->
+            this.ithems
                 .filter(
                     (ithem) => (ithem.removed != true)
                 )
                 .sort(
                     (a, b) => this.shallowSort(a[this.order], b[this.order], this)
-
                 )
-        }
-    },
 
-    data: function() {
-        return {
-            ithems: [],
+    data: ->
+        ithems: []
+        order: 'originalName'
+        desc: -1
 
-            order: 'originalName',
-            desc: -1
-        }
-    },
+    methods:
 
-    methods: {
-
-        newIthem() {
-            var category = {
+        newIthem: () ->
+            category = {
                 name: 'namnlös kategori'
             };
 
             this.$http.post('categories', category).then(
-                (response) => {
+                (response) =>
                     console.log('ok');
                     category = response.data;
                     this.ithems.push(category);
                     this.editIthem(category);
-                },
+
                 (response) => bus.$emit('error', response)
             );
-        },
 
-        editIthem(ithem) {
+
+        editIthem: (ithem) ->
             ithem.edit = true;
             this.ithems.reverse();
-        },
 
-        revertIthem(ithem) {
+        revertIthem: (ithem) ->
             ithem.name = ithem.originalName;
             ithem.edit = false;
             this.ithems.reverse();
-        },
 
-        attemptUpdate(category) {
-
+        attemptUpdate: (category) ->
             this.$http.put('categories/' + category.id, category).then(
-                (response) => {
+                (response) =>
                     console.log('ok');
                     category.edit = false;
                     category.originalName = category.name;
                     this.ithems.reverse();
-                },
+
                 (response) => bus.$emit('error', response)
             );
 
-        },
-
-        attemptRemove(category) {
-            // Are you sure?
-            // ... yes
+        attemptRemove: (category) ->
+            # Are you sure?
+            # ... yes
             this.removeCategory(category);
-        },
 
-        removeCategory(category) {
+        removeCategory: (category) ->
             this.$http.delete('categories/' + category.id).then(
-                (response) => {
+                (response) =>
                     bus.$emit('success', 'removed_category');
                     category.removed = true;
                     this.ithems.reverse();
-                },
+
                 (response) => bus.$emit('error', response)
             );
-        },
 
-        getCategories() {
+        getCategories: () ->
 
             this.$root.loading = true;
 
             this.$http.get('categories').then(
-                (response) => {
+                (response) =>
                     this.ithems = response.data;
 
-                    // Fill in all ithems originalName
-                    for (var i = 0; i < this.ithems.length; i++)
-                        this.ithems[i].originalName = this.ithems[i].name;
+                    # Fill in all ithems originalName
+                    for ithem in @ithems
+                        ithem.originalName = ithem.name
 
                     this.$root.loading = false;
-                },
-                (response) => {
+
+                (response) =>
                     bus.$emit('error', response);
                     this.$root.loading = false;
-                }
+
             );
-        }
 
-    },
-
-    created: function() {
+    created: ->
         this.getCategories();
-    }
+
 }
 </script>
