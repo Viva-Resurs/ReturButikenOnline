@@ -2,64 +2,51 @@
     <article-form v-if="article!=null" :original="article"></article-form>
 </template>
 
-<script>
-    import ArticleForm from '../../components/ArticleForm.vue'
+<script lang="coffee">
+    ArticleForm = require '../../components/ArticleForm.vue';
 
-    export default {
+    module.exports = {
 
-        name: 'Update',
+        name: 'Update'
 
-        components: { ArticleForm },
+        components: { ArticleForm }
 
-        data: function(){
-            return {
-                article: null
-            }
-        },
+        data: ->
+            article: null
 
         methods: {
 
-            getArticle(id){
+            getArticle: (id) ->
+                @$root.loading = true;
 
-                this.$root.loading = true;
+                @$http.get('articles/'+id).then(
+                    (response) =>
+                        @article = response.data;
+                        @$root.loading = false;
 
-                this.$http.get('articles/'+id).then(
-                    (response) => {
-                        this.article = response.data;
-                        this.$root.loading = false;
-                    },
-                    (response) => {
+                    (response) =>
                         bus.$emit('error',response);
-                        this.$root.loading = false;
-                    }
+                        @$root.loading = false;
                 );
-            },
 
-            updateArticle(article) {
-
-                this.$http.put('articles/'+article.id,article).then(
-                    (response) => {
+            updateArticle: (article) ->
+                @$http.put('articles/'+article.id,article).then(
+                    (response) =>
                         console.log('ok');
-                        this.$router.push({ path: '/articles' });
-                    },
+                        @$router.push({ path: '/articles' });
+
                     (response) => bus.$emit('error',response)
                 );
 
-            }
-
         },
 
-        created: function() {
-
+        created: ->
             this.getArticle(this.$route.params.id);
 
-            bus.$on('article_form_update', payload => this.updateArticle(payload) );
+            bus.$on('article_form_update', (payload) => this.updateArticle(payload) )
 
-        },
-
-        beforeDestroy: function() {
+        beforeDestroy: ->
             bus.$off('article_form_update');
-        }
 
     }
 </script>

@@ -2,81 +2,65 @@
     <article-list :ithems="ithems"></article-list>
 </template>
 
-<script>
-    import ArticleList from '../../components/ArticleList.vue'
+<script lang="coffee">
+    ArticleList = require '../../components/ArticleList.vue';
 
-    export default {
+    module.exports = {
 
-        name: 'List',
+        name: 'List'
 
-        components: { ArticleList },
+        components: { ArticleList }
 
-        data: function(){
-            return {
-                ithems: []
-            }
-        },
+        data: ->
+            ithems: []
 
-        methods: {
+        methods:
+            attemptRemove: (article) ->
+                # Are you sure?
+                # ... yes
+                @removeArticle(article);
 
-            attemptRemove(article){
-                // Are you sure?
-                // ... yes
-                this.removeArticle(article);
-            },
-
-            removeArticle(article){
-                this.$http.delete('articles/'+article.id).then(
-                    (response) => {
-                        bus.$emit('success','removed_article');
+            removeArticle: (article) ->
+                @$http.delete('articles/'+article.id).then(
+                    (response) =>
+                        bus.$emit('success','removed_article')
                         article.removed = true;
-                        this.ithems.reverse();
-                    },
+                        @ithems.reverse();
+
                     (response) => bus.$emit('error',response)
                 );
-            },
 
-            updateArticle(article) {
-
-                this.$http.put('articles/'+article.id,article).then(
-                    (response) => {
+            updateArticle: (article) ->
+                @$http.put('articles/'+article.id,article).then(
+                    (response) =>
                         console.log('ok');
-                        //this.$router.push({ path: '/articles' });
-                    },
+                        #@$router.push({ path: '/articles' })
+
                     (response) => bus.$emit('error',response)
                 );
 
-            },
+            getArticles: () ->
+                @$root.loading = true;
 
-            getArticles(){
+                @$http.get('articles').then(
+                    (response) =>
+                        @ithems = response.data
+                        @$root.loading = false;
 
-                this.$root.loading = true;
+                    (response) =>
+                        bus.$emit('error',response)
+                        @$root.loading = false;
 
-                this.$http.get('articles').then(
-                    (response) => {
-                        this.ithems = response.data;
-                        this.$root.loading = false;
-                    },
-                    (response) => {
-                        bus.$emit('error',response);
-                        this.$root.loading = false;
-                    }
                 );
-            }
 
-        },
-
-        created: function(){
+        created: ->
             this.getArticles();
+            # Listen for changes in data by components
+            bus.$on('article_remove', (payload) => @attemptRemove(payload) )
+            bus.$on('article_changed', (payload) => @updateArticle(payload) )
 
-            // Listen for changes in data by components
-            bus.$on('article_remove', payload => this.attemptRemove(payload) );
-            bus.$on('article_changed', payload => this.updateArticle(payload) );
-        },
-
-        beforeDestroy: function() {
+        beforeDestroy: ->
             bus.$off('article_remove');
             bus.$off('article_changed');
-        }
     }
 </script>
