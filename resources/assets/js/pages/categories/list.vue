@@ -14,9 +14,17 @@
                 <table class="ui compact celled table">
                     <thead class="thead-default">
                         <tr>
-                            <th>Name <a @click="setOrder('name')">S</a></th>
-                            <th>Updated <a @click="setOrder('updated_at',1)">S</a></th>
+                            <th @click="setSortBy('name');" class="link">
+                                Name
+                                <i :class="[headers.name, headers.name_icon]" ></i>
+                            </th>
+                            <th @click="setSortBy('updated_at');" class="link">
+                                Updated
+                                <i :class="[headers.updated_at, headers.updated_at_icon]"></i>
+                            </th>
                             <th class="center aligned">Tools</th>
+
+
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +57,8 @@
                             <td></td>
                             <td></td>
                             <td>
-                                <button class="ui basic icon button" @click="newIthem">
+                                <button class="ui basic icon button" @click="newIthem"
+                                    v-tooltip data-html="Add">
                                     <i class="ui icon plus"></i>
                                 </button>
 
@@ -86,10 +95,38 @@ module.exports = {
 
     data: ->
         ithems: []
+        targets: ['name','updated_at'],
         order: 'originalName'
         desc: -1
+        headers :
+            name : "ui icon",
+            name_icon : 'sort',
+            updated_at : 'ui icon',
+            updated_at_icon : 'sort',
 
     methods:
+
+        setSortBy: (headingTitle) ->
+
+            # Set correct sort icon to the header (ascending, descending)
+            selectedHeader = ''
+
+            switch headingTitle
+                when 'name'
+                    this.setOrder('name')
+                    selectedHeader = if (this.desc == 1) then "sort alphabet ascending icon" else "sort alphabet descending icon"
+
+                when 'updated_at'
+                    this.setOrder('updated_at',1)
+                    selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
+
+
+            this.headers[headingTitle+'_icon'] = selectedHeader
+
+            # Change the other (not sorted by) icons to a generic sort icon
+            for target in @targets
+                if (target != headingTitle)
+                    @headers[target+'_icon'] = "sort"
 
         newIthem: () ->
             category = {
