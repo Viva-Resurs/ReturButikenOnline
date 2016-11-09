@@ -25,7 +25,7 @@
                 <table class="ui compact celled table" v-if="countIthems > 0">
                     <thead>
                         <tr>
-                            <th class="num">#</th>
+                            <th class="center aligned collapsing">#</th>
                             <th @click="setSortBy('name');" class="link">
                                 Name
                                 <i :class="[headers.name, headers.name_icon]" ></i>
@@ -41,7 +41,7 @@
                     </thead>
                     <tbody>
                         <tr v-for="(ithem, index) in filterIthems">
-                            <td class="num"><strong>{{(index+1)+offset}}. </strong></td>
+                            <td class="center aligned warning collapsing"><strong>{{(index+1)+offset}}. </strong></td>
                             <td v-tooltip :data-html="displaySummary(ithem.desc)">
                                 {{ithem.name}}
                             </td>
