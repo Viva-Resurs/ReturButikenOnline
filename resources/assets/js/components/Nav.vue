@@ -22,7 +22,7 @@
 
                 <router-link to="/categories" exact class="item">Kategorier</router-link>
 
-                <router-link to="/articles" exact class="item">Användare</router-link>
+                <router-link to="/users" exact class="item">Användare</router-link>
 
                 <a class="ui dropdown item" v-dropdown>
                         {{ $root.user.name }}
