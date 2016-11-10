@@ -27,41 +27,67 @@
 
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr v-if="ithems.length > 0" v-for="(ithem, index) in filterIthems">
-                            <td v-show="!ithem.edit">{{ithem.name}}</td>
-                            <td v-show="ithem.edit">
-                                <div class="ui input">
-                                    <input v-model="ithem.name">
+                    <tbody v-item id="category_content">
+                        <tr v-if="ithems.length > 0" v-for="(ithem, index) in filterIthems" :id="ithem.id">
+                            <td v-show="!ithem.edit" @click="editIthem(ithem)">{{ithem.name}}</td>
+                            <td v-if="ithem.edit">
+                                <div class="ui input fluid">
+                                    <input v-model="ithem.new_name" placeholder="Type category name"
+                                    @keyup.enter="attemptUpdate(ithem)"
+                                    v-focus>
                                 </div>
+
                             </td>
                             <td class="collapsing">{{ithem.updated_at}}</td>
-                            <td v-if="!ithem.edit" class="collapsing">
+                            <td v-show="!ithem.edit" class="collapsing">
                                 <div class="ui icon basic buttons">
-                                <button class="ui icon button hover-primary" @click="editIthem(ithem)"
-                                    v-tooltip data-html="Edit">
-                                    <i class="ui icon pencil"></i>
-                                </button>
-                                <button class="ui icon button hover-danger" @click="attemptRemove(ithem)"
-                                    v-tooltip data-html="Remove">
-                                <i class="ui icon trash"></i>
-                                </button>
+                                    <button class="ui icon button hover-primary" @click="editIthem(ithem)"
+                                        v-tooltip data-html="Edit">
+                                        <i class="ui icon pencil"></i>
+                                    </button>
+                                    <button class="ui icon button hover-danger" @click="attemptRemove(ithem)"
+                                        v-tooltip data-html="Remove">
+                                    <i class="ui icon trash"></i>
+                                    </button>
                                 </div>
                             </td>
-                            <td v-if="ithem.edit" class="collapsing">
-                                <a role="button" @click="revertIthem(ithem)">Cancel</a>
-                                <a role="button" @click="attemptUpdate(ithem)">Save</a>
+                            <td v-show="ithem.edit" class="collapsing">
+                                <div class="ui icon basic buttons">
+                                    <button class="ui icon button hover-primary" @click="attemptUpdate(ithem)"
+                                        v-tooltip data-html="Save">
+                                        <i class="ui icon save"></i>
+                                    </button>
+                                    <button class="ui icon button" @click="revertIthem(ithem)"
+                                        v-tooltip data-html="Undo">
+                                        <i class="ui icon undo"></i>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td></td>
                             <td>
-                                <button class="ui basic icon button" @click="newIthem"
+                                <div class="ui input" v-if="adding">
+                                    <input v-model="new_category.name" placeholder="Type category name"
+                                    @keyup.enter="attemptCreate()"
+                                    v-focus>
+                                </div>
+                            </td>
+                            <td></td>
+                            <td class="collapsing">
+                                <div class="ui icon basic buttons" v-show="adding">
+                                    <button class="ui icon button hover-primary" @click="attemptCreate()"
+                                        v-tooltip data-html="Save">
+                                        <i class="ui icon save"></i>
+                                    </button>
+                                    <button class="ui icon button" @click="adding = false"
+                                        v-tooltip data-html="Undo">
+                                        <i class="ui icon undo"></i>
+                                    </button>
+                                </div>
+                                <button v-if="!adding" class="ui basic icon button" @click="adding = true"
                                     v-tooltip data-html="Add">
                                     <i class="ui icon plus"></i>
                                 </button>
-
                             </td>
                         </tr>
                     </tbody>
@@ -95,14 +121,17 @@ module.exports = {
 
     data: ->
         ithems: []
-        targets: ['name','updated_at'],
+        targets: ['name','updated_at']
         order: 'originalName'
         desc: -1
         headers :
-            name : "ui icon",
-            name_icon : 'sort',
-            updated_at : 'ui icon',
-            updated_at_icon : 'sort',
+            name : "ui icon"
+            name_icon : 'sort'
+            updated_at : 'ui icon'
+            updated_at_icon : 'sort'
+        adding: false
+        new_category:
+            name: ''
 
     methods:
 
@@ -128,38 +157,43 @@ module.exports = {
                 if (target != headingTitle)
                     @headers[target+'_icon'] = "sort"
 
-        newIthem: () ->
-            category = {
-                name: 'namnlös kategori'
-            };
-
-            this.$http.post('categories', category).then(
+        attemptCreate: () ->
+            this.$http.post('categories', @new_category).then(
                 (response) =>
-                    console.log('ok');
-                    category = response.data;
-                    this.ithems.push(category);
-                    this.editIthem(category);
+                    console.log('ok')
+                    category = response.data
+                    this.ithems.push(category)
+                    @new_category.name = ''
+                    @adding = false
+                    this.$nextTick ->
+                        $('#category_content').trigger('updated',category.id)
 
                 (response) => bus.$emit('error', response)
             );
 
 
         editIthem: (ithem) ->
+            ithem.new_name = ithem.name
             ithem.edit = true;
+            this.ithems.reverse();
             this.ithems.reverse();
 
         revertIthem: (ithem) ->
-            ithem.name = ithem.originalName;
             ithem.edit = false;
+            this.ithems.reverse();
             this.ithems.reverse();
 
         attemptUpdate: (category) ->
+            category.edit = false;
+            category.name = category.new_name.trim()
+
             this.$http.put('categories/' + category.id, category).then(
                 (response) =>
                     console.log('ok');
-                    category.edit = false;
-                    category.originalName = category.name;
                     this.ithems.reverse();
+                    this.ithems.reverse();
+                    this.$nextTick ->
+                        $('#category_content').trigger('updated',category.id)
 
                 (response) => bus.$emit('error', response)
             );
@@ -173,9 +207,11 @@ module.exports = {
             this.$http.delete('categories/' + category.id).then(
                 (response) =>
                     bus.$emit('success', 'removed_category');
-                    category.removed = true;
-                    this.ithems.reverse();
-
+                    $('#category_content').trigger('removed',category.id, ->
+                        category.removed = true;
+                        this.ithems.reverse();
+                        this.ithems.reverse();
+                    )
                 (response) => bus.$emit('error', response)
             );
 
