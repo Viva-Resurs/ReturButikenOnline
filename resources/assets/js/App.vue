@@ -20,6 +20,7 @@
     Vue.directive('dropdown', require('./directives/dropdown.vue'));
     Vue.directive('daterangepicker', require('./directives/daterangepicker.vue'));
     Vue.directive('focus', require('./directives/focus.vue'));
+    Vue.directive('item', require('./directives/item.vue'));
 
     # Export the root-instance options
     Navigation = require './components/Nav.vue'
