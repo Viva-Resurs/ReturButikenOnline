@@ -165,7 +165,7 @@
             // Set order & toggle desc
             setOrder(what,desc){
                 this.desc = (this.order == what) ? this.desc*=-1 : (desc) ? -1 : 1;
-                this.order = what || event.updated_at;
+                this.order = what || 'updated_at';
             },
 
         }
