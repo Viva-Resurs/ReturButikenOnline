@@ -239,7 +239,7 @@
         created: ->
             bus.$on('publish_interval_changed', (id,new_value) =>
                 for item in this.items
-                    if (item.id == id)
+                    if (Number item.id == Number id)
                         item.publish_interval = new_value
                         bus.$emit('article_changed',item)
 
@@ -247,7 +247,7 @@
 
             bus.$on('bidding_interval_changed', (id,new_value) =>
                 for item in this.items
-                    if (item.id == id)
+                    if (Number item.id == Number id)
                         item.bidding_interval = new_value
                         bus.$emit('article_changed',item)
 
