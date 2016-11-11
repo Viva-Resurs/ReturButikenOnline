@@ -21,9 +21,9 @@ class Article extends Model
         return $this->belongsTo(User::class, 'articles_owner');
     }
 
-    public function category()
+    public function categories()
     {
-        return $this->belongsTo(Category::class, 'articles_category');
+        return $this->belongsToMany(Category::class, 'articles_category');
     }
 
     public function images() {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\Category;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +22,20 @@ class ArticleController extends Controller
         if (!$user)
             abort(401,'Not allowed to list articles');
 
-        return Article::all();
+        $result = [];
+        foreach (Article::all() as $article)
+            array_push($result,[
+                'id' => $article->id,
+                'name' => $article->name,
+                'desc' => $article->desc,
+                'updated_at' => $article->updated_at->format('Y-m-d h:m:s'),
+                'publish_interval' => $article->publish_interval,
+                'bidding_interval' => $article->bidding_interval,
+                'public' => $article->public,
+                'selected_categories' => $article->categories
+            ]);
+
+        return $result;
     }
 
     public function show($id){
@@ -36,7 +50,21 @@ class ArticleController extends Controller
         if (!$article)
             abort(404);
 
-        return $article;
+        $result = [
+            'id' => $article->id,
+            'name' => $article->name,
+            'desc' => $article->desc,
+            'updated_at' => $article->updated_at,
+            'publish_interval' => $article->publish_interval,
+            'bidding_interval' => $article->bidding_interval,
+            'public' => $article->public,
+            'selected_categories' => []
+        ];
+
+        foreach ($article->categories as $category)
+            array_push($result['selected_categories'],$category->id);
+
+        return $result;
     }
 
     public function store(Request $request){
@@ -55,6 +83,13 @@ class ArticleController extends Controller
         ]);
 
         $article->save();
+
+        // Attach Categories
+        if ($request['selected_categories'])
+            foreach ($request['selected_categories'] as $category){
+                $c = Category::find($category);
+                $article->categories()->save($c);
+            }
 
         return $article;
     }
@@ -82,6 +117,18 @@ class ArticleController extends Controller
         $article->publish_interval = $request['publish_interval'];
 
         $article->bidding_interval = $request['bidding_interval'];
+
+        // Clear Categories
+        if ($article->categories)
+            foreach( $article->categories as $c)
+                $article->categories()->detach($c->id);
+
+        // Attach Categories
+        if ($request['selected_categories'])
+            foreach ($request['selected_categories'] as $category){
+                $c = Category::find($category);
+                $article->categories()->save($c);
+            }
 
         $article->save();
     }
