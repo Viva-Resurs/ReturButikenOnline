@@ -18,7 +18,8 @@
                     </div>
                     <div class="four wide field" style="white-space: nowrap;">
                         <label class="control-label" for="category">Välj varukategori:</label>
-                        <div class="ui fluid multiple selection dropdown" name="categories" id="category" v-dropdown>
+                        <div v-if="categories" class="ui fluid multiple selection dropdown" name="categories" id="category"
+                            v-dropdown :data-selected="article.selected_categories">
                             <i class="dropdown icon"></i>
                             <div class="default text">Select Category</div>
                             <div class="menu">
@@ -194,8 +195,10 @@
             # Get categories
             @getCategoryList()
 
+        ready: ->
+            @initialSelected()
+
         beforeDestroy: ->
-            console.log('about do destroy form')
             bus.$off('publish_interval_form_changed');
             bus.$off('bidding_interval_form_changed');
 
