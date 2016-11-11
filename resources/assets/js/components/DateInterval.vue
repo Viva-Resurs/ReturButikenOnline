@@ -5,8 +5,10 @@
               <label class="control-label" for="fullname">{{interval}}</label>
               <div class='input-group date'>
                   <input type='text' class="form-control"
+                      @click="openRangePicker"
                       v-model="date"
-                      v-daterangepicker :name="interval"/>
+                      :name="interval"
+                  />
                   <span class="input-group-addon">
                       <span class="fa fa-calendar"></span>
                   </span>
@@ -17,9 +19,11 @@
 </template>
 
 <script lang="coffee">
+    DateRangePicker = require '../mixins/DateRangePicker.vue';
     module.exports = {
         name: 'DateInterval'
         props: [ 'interval', 'date' ]
+        mixins: [ DateRangePicker ]
     }
 </script>
 
