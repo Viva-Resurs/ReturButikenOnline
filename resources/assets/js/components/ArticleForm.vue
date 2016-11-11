@@ -18,14 +18,15 @@
                     </div>
                     <div class="four wide field" style="white-space: nowrap;">
                         <label class="control-label" for="category">Välj varukategori:</label>
-                        <select class="ui fluid dropdown v-dropdown dropdown-toggle"
-                            id="category"
-                            type="button"
-                            data-toggle="dropdown"
-                        >
-                            <option value="0"></option>
-                            <option v-for="category in categories" value="category.id">{{category.name}}</option>
-                        </select>
+                        <div class="ui fluid multiple selection dropdown" name="categories" id="category" v-dropdown>
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Select Category</div>
+                            <div class="menu">
+                                <div v-for="category in categories" class="item" :data-value="category.id">
+                                    {{category.name}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -131,6 +132,7 @@
                 public: false
                 publish_interval: ''
                 bidding_interval: ''
+                selected_categories: []
             categories:
                 null
             settings:
@@ -182,6 +184,11 @@
             );
             bus.$on('bidding_interval_form_changed', (id,new_value) =>
                 this.article.bidding_interval = new_value;
+            );
+
+            # Listen for changes in Categories
+            bus.$on('categories_changed', (id,new_value) =>
+                this.article.selected_categories = new_value;
             );
 
             # Get categories
