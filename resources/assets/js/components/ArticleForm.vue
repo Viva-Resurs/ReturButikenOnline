@@ -23,8 +23,8 @@
                             type="button"
                             data-toggle="dropdown"
                         >
-                            <option value="">Kategori</option>
-                            <option value="k1">Kategori 1</option>
+                            <option value="0"></option>
+                            <option v-for="category in categories" value="category.id">{{category.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -42,15 +42,15 @@
                     <div class="inline fields">
 
                         <div class="field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" tabindex="0" value="1" v-model="settings.publish_interval">
+                            <div class="ui checkbox" v-checkbox>
+                                <input type="checkbox" tabindex="0" value="0" class="hidden" v-model="settings.publish_interval">
                                 <label>Publicera inom datumintervall</label>
                             </div>
                         </div>
 
                         <div class="field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" tabindex="0" value="1" v-model="settings.bidding_interval">
+                            <div class="ui checkbox" v-checkbox>
+                                <input type="checkbox" tabindex="1" value="1" class="hidden" v-model="settings.bidding_interval">
                                 <label>Aktivera budgivning</label>
                             </div>
                         </div>
@@ -67,14 +67,15 @@
                 </div>
 
                 <div class="inline fields">
+
                     <div class="field">
-                      <div class="ui radio checkbox">
+                      <div class="ui radio checkbox" v-checkbox>
                         <input type="radio" name="public" tabindex="0" class="hidden" v-model="article.public" value="0">
                         <label>Publicera på kommunens Intranät</label>
                       </div>
                   </div>
                   <div class="field">
-                    <div class="ui radio checkbox">
+                    <div class="ui radio checkbox" v-checkbox>
                       <input type="radio" name="public" tabindex="1" class="hidden" v-model="article.public" value="1">
                       <label>Publicera för allmänheten</label>
                     </div>
@@ -130,6 +131,8 @@
                 public: false
                 publish_interval: ''
                 bidding_interval: ''
+            categories:
+                null
             settings:
                 publish_interval: false
                 bidding_interval: false
@@ -147,6 +150,17 @@
                     this.article.bidding_interval = '';
 
                 bus.$emit( 'article_form_update', this.article );
+
+            getCategoryList: ->
+                this.$http.get('categories').then(
+                    (response) =>
+                        this.categories = response.data;
+
+                    (response) =>
+                        bus.$emit('error', response);
+                        this.categories = []
+
+                );
 
         created: ->
 
@@ -169,6 +183,9 @@
             bus.$on('bidding_interval_form_changed', (id,new_value) =>
                 this.article.bidding_interval = new_value;
             );
+
+            # Get categories
+            @getCategoryList()
 
         beforeDestroy: ->
             console.log('about do destroy form')
