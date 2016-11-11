@@ -1,9 +1,9 @@
 <template>
-<div class="ui container segment">
+    <div class="ui container segment">
 
-    <div class="ui dividing header">
-        Kategorier
-    </div>
+        <div class="ui dividing header">
+            Kategorier
+        </div>
 
         <div v-if="this.$root.loading">
             <loading></loading>
@@ -11,93 +11,89 @@
 
         <div v-else>
 
-                <table class="ui compact celled table">
-                    <thead class="thead-default">
-                        <tr>
-                            <th @click="setSortBy('name');" class="link">
-                                Name
-                                <i :class="[headers.name, headers.name_icon]" ></i>
-                            </th>
-                            <th @click="setSortBy('updated_at');" class="link">
-                                Updated
-                                <i :class="[headers.updated_at, headers.updated_at_icon]"></i>
-                            </th>
-                            <th class="center aligned">Tools</th>
+            <table class="ui compact celled table">
+                <thead class="thead-default">
+                    <tr>
+                        <th @click="setSortBy('name');" class="link">
+                            Name
+                            <i :class="[headers.name, headers.name_icon]" ></i>
+                        </th>
+                        <th @click="setSortBy('updated_at');" class="link">
+                            Updated
+                            <i :class="[headers.updated_at, headers.updated_at_icon]"></i>
+                        </th>
+                        <th class="center aligned">Tools</th>
+                    </tr>
+                </thead>
+                <tbody v-item id="category_content">
+                    <tr v-if="ithems.length > 0" v-for="(ithem, index) in filterIthems" :id="ithem.id">
+                        <td v-show="!ithem.edit" @click="editIthem(ithem)">{{ithem.name}}</td>
+                        <td v-if="ithem.edit">
+                            <div class="ui input fluid">
+                                <input v-model="ithem.new_name" placeholder="Type category name"
+                                @keyup.enter="attemptUpdate(ithem)"
+                                v-focus>
+                            </div>
 
-
-                        </tr>
-                    </thead>
-                    <tbody v-item id="category_content">
-                        <tr v-if="ithems.length > 0" v-for="(ithem, index) in filterIthems" :id="ithem.id">
-                            <td v-show="!ithem.edit" @click="editIthem(ithem)">{{ithem.name}}</td>
-                            <td v-if="ithem.edit">
-                                <div class="ui input fluid">
-                                    <input v-model="ithem.new_name" placeholder="Type category name"
-                                    @keyup.enter="attemptUpdate(ithem)"
-                                    v-focus>
-                                </div>
-
-                            </td>
-                            <td class="collapsing">{{ithem.updated_at}}</td>
-                            <td v-show="!ithem.edit" class="collapsing">
-                                <div class="ui icon basic buttons">
-                                    <button class="ui icon button hover-primary" @click="editIthem(ithem)"
-                                        v-tooltip data-html="Edit">
-                                        <i class="ui icon pencil"></i>
-                                    </button>
-                                    <button class="ui icon button hover-danger" @click="attemptRemove(ithem)"
-                                        v-tooltip data-html="Remove">
-                                    <i class="ui icon trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                            <td v-show="ithem.edit" class="collapsing">
-                                <div class="ui icon basic buttons">
-                                    <button class="ui icon button hover-primary" @click="attemptUpdate(ithem)"
-                                        v-tooltip data-html="Save">
-                                        <i class="ui icon save"></i>
-                                    </button>
-                                    <button class="ui icon button" @click="revertIthem(ithem)"
-                                        v-tooltip data-html="Undo">
-                                        <i class="ui icon undo"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="ui input" v-if="adding">
-                                    <input v-model="new_category.name" placeholder="Type category name"
-                                    @keyup.enter="attemptCreate()"
-                                    v-focus>
-                                </div>
-                            </td>
-                            <td></td>
-                            <td class="collapsing">
-                                <div class="ui icon basic buttons" v-show="adding">
-                                    <button class="ui icon button hover-primary" @click="attemptCreate()"
-                                        v-tooltip data-html="Save">
-                                        <i class="ui icon save"></i>
-                                    </button>
-                                    <button class="ui icon button" @click="adding = false"
-                                        v-tooltip data-html="Undo">
-                                        <i class="ui icon undo"></i>
-                                    </button>
-                                </div>
-                                <button v-if="!adding" class="ui basic icon button" @click="adding = true"
-                                    v-tooltip data-html="Add">
-                                    <i class="ui icon plus"></i>
+                        </td>
+                        <td class="collapsing">{{ithem.updated_at}}</td>
+                        <td v-show="!ithem.edit" class="collapsing">
+                            <div class="ui icon basic buttons">
+                                <button class="ui icon button hover-primary" @click="editIthem(ithem)"
+                                    v-tooltip data-html="Edit">
+                                    <i class="ui icon pencil"></i>
                                 </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-
+                                <button class="ui icon button hover-danger" @click="attemptRemove(ithem)"
+                                    v-tooltip data-html="Remove">
+                                <i class="ui icon trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td v-show="ithem.edit" class="collapsing">
+                            <div class="ui icon basic buttons">
+                                <button class="ui icon button hover-primary" @click="attemptUpdate(ithem)"
+                                    v-tooltip data-html="Save">
+                                    <i class="ui icon save"></i>
+                                </button>
+                                <button class="ui icon button" @click="revertIthem(ithem)"
+                                    v-tooltip data-html="Undo">
+                                    <i class="ui icon undo"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="ui input" v-if="adding">
+                                <input v-model="new_category.name" placeholder="Type category name"
+                                @keyup.enter="attemptCreate()"
+                                v-focus>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td class="collapsing">
+                            <div class="ui icon basic buttons" v-show="adding">
+                                <button class="ui icon button hover-primary" @click="attemptCreate()"
+                                    v-tooltip data-html="Save">
+                                    <i class="ui icon save"></i>
+                                </button>
+                                <button class="ui icon button" @click="adding = false"
+                                    v-tooltip data-html="Undo">
+                                    <i class="ui icon undo"></i>
+                                </button>
+                            </div>
+                            <button v-if="!adding" class="ui basic icon button" @click="adding = true"
+                                v-tooltip data-html="Add">
+                                <i class="ui icon plus"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
         </div>
 
-</div>
+    </div>
 </template>
 
 <script lang="coffee">
@@ -136,7 +132,6 @@ module.exports = {
     methods:
 
         setSortBy: (headingTitle) ->
-
             # Set correct sort icon to the header (ascending, descending)
             selectedHeader = ''
 
@@ -148,7 +143,6 @@ module.exports = {
                 when 'updated_at'
                     this.setOrder('updated_at',1)
                     selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
-
 
             this.headers[headingTitle+'_icon'] = selectedHeader
 
@@ -175,13 +169,11 @@ module.exports = {
         editIthem: (ithem) ->
             ithem.new_name = ithem.name
             ithem.edit = true;
-            this.ithems.reverse();
-            this.ithems.reverse();
+            this.updateList(this.ithems)
 
         revertIthem: (ithem) ->
             ithem.edit = false;
-            this.ithems.reverse();
-            this.ithems.reverse();
+            this.updateList(this.ithems)
 
         attemptUpdate: (category) ->
             category.edit = false;
@@ -189,11 +181,8 @@ module.exports = {
 
             this.$http.put('categories/' + category.id, category).then(
                 (response) =>
-                    console.log('ok');
-                    console.log response
                     category.updated_at = response.data.updated_at
-                    this.ithems.reverse();
-                    this.ithems.reverse();
+                    this.updateList(this.ithems)
                     this.$nextTick ->
                         $('#category_content').trigger('updated',category.id)
 
@@ -211,8 +200,7 @@ module.exports = {
                     bus.$emit('success', 'removed_category');
                     $('#category_content').trigger('removed',category.id, ->
                         category.removed = true;
-                        this.ithems.reverse();
-                        this.ithems.reverse();
+                        this.updateList(this.ithems)
                     )
                 (response) => bus.$emit('error', response)
             );

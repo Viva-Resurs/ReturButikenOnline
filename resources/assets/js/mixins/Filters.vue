@@ -168,6 +168,12 @@
                 this.order = what || 'updated_at';
             },
 
+            // Force rerender
+            updateList(list){
+                list.reverse();
+                list.reverse();
+            },
+
         }
 
     };
