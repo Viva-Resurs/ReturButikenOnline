@@ -1,5 +1,5 @@
 <template>
-    <article-list :ithems="ithems"></article-list>
+    <article-list :items="items"></article-list>
 </template>
 
 <script lang="coffee">
@@ -12,7 +12,7 @@
         components: { ArticleList }
 
         data: ->
-            ithems: []
+            items: []
 
         methods:
             attemptRemove: (article) ->
@@ -25,7 +25,7 @@
                     (response) =>
                         bus.$emit('success','removed_article')
                         article.removed = true;
-                        @ithems.reverse();
+                        @items.reverse();
 
                     (response) => bus.$emit('error',response)
                 );
@@ -44,7 +44,7 @@
 
                 @$http.get('articles').then(
                     (response) =>
-                        @ithems = response.data
+                        @items = response.data
                         @$root.loading = false;
 
                     (response) =>

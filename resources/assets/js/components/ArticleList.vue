@@ -16,13 +16,13 @@
                     <i class="search icon"></i>
                 </div>
 
-                <div class="ui warning message" v-if="countIthems==0">
+                <div class="ui warning message" v-if="countItems==0">
                     <p>
-                        {{ (ithems.length > 0) ? 'No results' : 'Empty' }}
+                        {{ (items.length > 0) ? 'No results' : 'Empty' }}
                     </p>
                 </div>
 
-                <table class="ui compact celled table" v-if="countIthems > 0">
+                <table class="ui compact celled table" v-if="countItems > 0">
                     <thead>
                         <tr>
                             <th class="center aligned collapsing">#</th>
@@ -40,38 +40,38 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(ithem, index) in filterIthems">
+                        <tr v-for="(item, index) in filterItems">
                             <td class="center aligned warning collapsing"><strong>{{(index+1)+offset}}. </strong></td>
-                            <td v-tooltip :data-html="displaySummary(ithem.desc)">
-                                {{ithem.name}}
+                            <td v-tooltip :data-html="displaySummary(item.desc)">
+                                {{item.name}}
                             </td>
 
                             <td>
-                                {{ithem.updated_at}}
+                                {{item.updated_at}}
                             </td>
 
                             <td class="center aligned">
-                                <i :class="'ui icon ' + ((ithem.public==1) ? 'checkmark box' : 'square outline')"
-                                    v-tooltip :data-html="((ithem.public==1) ? 'Publicerad för allmänheten' : 'Publicerad på kommunens intranät')"
+                                <i :class="'ui icon ' + ((item.public==1) ? 'checkmark box' : 'square outline')"
+                                    v-tooltip :data-html="((item.public==1) ? 'Publicerad för allmänheten' : 'Publicerad på kommunens intranät')"
                                 ></i>
                             </td>
 
                             <td class="collapsing">
                                 <div class="ui icon basic buttons">
                                     <button class="ui icon button hover-default"
-                                        v-tooltip :data-html="displayInterval(ithem.publish_interval)"
-                                        v-daterangepicker :id="ithem.id" :data-value="ithem.publish_interval" name="publish_interval"
+                                        v-tooltip :data-html="displayInterval(item.publish_interval)"
+                                        v-daterangepicker :id="item.id" :data-value="item.publish_interval" name="publish_interval"
                                         >
-                                        <i :class="'ui icon dollar '+((activeInterval(ithem.publish_interval)) ? 'active-interval':'')"></i>
+                                        <i :class="'ui icon dollar '+((activeInterval(item.publish_interval)) ? 'active-interval':'')"></i>
                                     </button>
                                     <button class="ui icon button hover-default"
-                                        v-tooltip :data-html="displayInterval(ithem.bidding_interval)"
-                                        v-daterangepicker :id="ithem.id" :data-value="ithem.bidding_interval" name="bidding_interval"
+                                        v-tooltip :data-html="displayInterval(item.bidding_interval)"
+                                        v-daterangepicker :id="item.id" :data-value="item.bidding_interval" name="bidding_interval"
                                         >
-                                        <i :class="'ui icon legal '+((activeInterval(ithem.bidding_interval)) ? 'active-interval':'')"></i>
+                                        <i :class="'ui icon legal '+((activeInterval(item.bidding_interval)) ? 'active-interval':'')"></i>
                                     </button>
                                     <router-link
-                                        :to="'/articles/'+ithem.id"
+                                        :to="'/articles/'+item.id"
                                         class="ui icon button hover-primary"
                                         v-tooltip data-html="Edit"
                                         >
@@ -80,7 +80,7 @@
 
                                     <button class="ui icon button hover-danger"
                                         v-tooltip data-html="Remove"
-                                        @click="remove(ithem)">
+                                        @click="remove(item)">
                                         <i class="ui icon trash"></i>
                                     </button>
                                 </div>
@@ -91,7 +91,7 @@
                         <tr>
                             <th colspan="5">
                                 <pagination
-                                    :total="countIthems"
+                                    :total="countItems"
                                     :show-pagination="(search=='' && !limitOffBtn)"
                                 >
                                     <div slot="replacePagination">
@@ -122,31 +122,31 @@
 
         components: { Pagination }
 
-        props: [ 'ithems' ]
+        props: [ 'items' ]
 
         computed:
-            filterIthems: ->
-                this.ithems
+            filterItems: ->
+                this.items
                     .filter(
-                        (ithem) => (ithem.removed!=true)
+                        (item) => (item.removed!=true)
                     )
                     .filter(
-                        (ithem) => this.filterBy(ithem,this.search,this.targets)
+                        (item) => this.filterBy(item,this.search,this.targets)
                     )
                     .sort(
                         (a,b) => this.shallowSort(a[this.order],b[this.order],this)
                     )
                     .filter(
-                        (ithem,index) => this.rangeFilter(ithem,index,this)
+                        (item,index) => this.rangeFilter(item,index,this)
                     );
 
-            countIthems: ->
-                this.ithems
+            countItems: ->
+                this.items
                     .filter(
-                        (ithem) => (ithem.removed!=true)
+                        (item) => (item.removed!=true)
                     )
                     .filter(
-                        (ithem) => this.filterBy(ithem,this.search,this.targets)
+                        (item) => this.filterBy(item,this.search,this.targets)
                     )
                     .length
 
@@ -162,7 +162,7 @@
             limitOffBtn: false,
 
             offset: 0,
-            maxIthems: 10,
+            maxItems: 10,
             headers :
                 name : "ui icon",
                 name_icon : 'sort',
@@ -194,9 +194,9 @@
                 formated = info.replace(/\n/g,'<br>')
                 return formated;
 
-            remove: (ithem) ->
+            remove: (item) ->
                 # Validation?
-                bus.$emit('article_remove',ithem)
+                bus.$emit('article_remove',item)
 
             openInterval: (e) ->
                 $(e.target).closest('td').find('input').trigger('click')
@@ -231,31 +231,31 @@
                 this.offset = 0
                 this.limitOff = false
 
-            maxIthems: (val, oldVal) ->
+            maxItems: (val, oldVal) ->
                 this.offset = 0
 
 
 
         created: ->
             bus.$on('publish_interval_changed', (id,new_value) =>
-                for ithem in this.ithems
-                    if (ithem.id == id)
-                        ithem.publish_interval = new_value
-                        bus.$emit('article_changed',ithem)
+                for item in this.items
+                    if (item.id == id)
+                        item.publish_interval = new_value
+                        bus.$emit('article_changed',item)
 
             );
 
             bus.$on('bidding_interval_changed', (id,new_value) =>
-                for i in this.ithems
-                    if (ithem.id == id)
-                        ithem.bidding_interval = new_value
-                        bus.$emit('article_changed',ithem)
+                for item in this.items
+                    if (item.id == id)
+                        item.bidding_interval = new_value
+                        bus.$emit('article_changed',item)
 
             );
 
             # Listen for changes in data by components
             bus.$on('offset_changed', (new_offset) => this.offset = new_offset)
-            bus.$on('limit_changed', (new_limit) => this.maxIthems = new_limit)
+            bus.$on('limit_changed', (new_limit) => this.maxItems = new_limit)
 
 
 

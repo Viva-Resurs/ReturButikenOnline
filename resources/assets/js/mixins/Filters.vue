@@ -15,7 +15,7 @@
                 if (scope.search!==''){
                     if (!scope.limitOff){
 
-                        if (index<scope.maxIthems)
+                        if (index<scope.maxItems)
                             return true;
 
                         scope.limitOffBtn=true;
@@ -26,12 +26,12 @@
                 }
 
                 // Show contents in range
-                return (index >= scope.offset && index < scope.offset+scope.maxIthems);
+                return (index >= scope.offset && index < scope.offset+scope.maxItems);
 
             },
 
             // Case insensitive filter
-            filterBy(ithem,search,targets){
+            filterBy(item,search,targets){
 
                 if (search === '')
                     return true;
@@ -39,7 +39,7 @@
                 var s = new RegExp(search,"gi");
 
                 for (var i=0 ; targets && i<targets.length ; i++)
-                    if ( s.test(ithem[targets[i]]) )
+                    if ( s.test(item[targets[i]]) )
                         return true;
 
                 return false;

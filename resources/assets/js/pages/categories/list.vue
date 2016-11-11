@@ -26,36 +26,36 @@
                     </tr>
                 </thead>
                 <tbody v-item id="category_content">
-                    <tr v-if="ithems.length > 0" v-for="(ithem, index) in filterIthems" :id="ithem.id">
-                        <td v-show="!ithem.edit" @click="editIthem(ithem)">{{ithem.name}}</td>
-                        <td v-if="ithem.edit">
+                    <tr v-if="items.length > 0" v-for="(item, index) in filteritems" :id="item.id">
+                        <td v-show="!item.edit" @click="edititem(item)">{{item.name}}</td>
+                        <td v-if="item.edit">
                             <div class="ui input fluid">
-                                <input v-model="ithem.new_name" placeholder="Type category name"
-                                @keyup.enter="attemptUpdate(ithem)"
+                                <input v-model="item.new_name" placeholder="Type category name"
+                                @keyup.enter="attemptUpdate(item)"
                                 v-focus>
                             </div>
 
                         </td>
-                        <td class="collapsing">{{ithem.updated_at}}</td>
-                        <td v-show="!ithem.edit" class="collapsing">
+                        <td class="collapsing">{{item.updated_at}}</td>
+                        <td v-show="!item.edit" class="collapsing">
                             <div class="ui icon basic buttons">
-                                <button class="ui icon button hover-primary" @click="editIthem(ithem)"
+                                <button class="ui icon button hover-primary" @click="edititem(item)"
                                     v-tooltip data-html="Edit">
                                     <i class="ui icon pencil"></i>
                                 </button>
-                                <button class="ui icon button hover-danger" @click="attemptRemove(ithem)"
+                                <button class="ui icon button hover-danger" @click="attemptRemove(item)"
                                     v-tooltip data-html="Remove">
                                 <i class="ui icon trash"></i>
                                 </button>
                             </div>
                         </td>
-                        <td v-show="ithem.edit" class="collapsing">
+                        <td v-show="item.edit" class="collapsing">
                             <div class="ui icon basic buttons">
-                                <button class="ui icon button hover-primary" @click="attemptUpdate(ithem)"
+                                <button class="ui icon button hover-primary" @click="attemptUpdate(item)"
                                     v-tooltip data-html="Save">
                                     <i class="ui icon save"></i>
                                 </button>
-                                <button class="ui icon button" @click="revertIthem(ithem)"
+                                <button class="ui icon button" @click="revertitem(item)"
                                     v-tooltip data-html="Undo">
                                     <i class="ui icon undo"></i>
                                 </button>
@@ -106,17 +106,17 @@ module.exports = {
     mixins: [Filters]
 
     computed:
-        filterIthems: ->
-            this.ithems
+        filteritems: ->
+            this.items
                 .filter(
-                    (ithem) => (ithem.removed != true)
+                    (item) => (item.removed != true)
                 )
                 .sort(
                     (a, b) => this.shallowSort(a[this.order], b[this.order], this)
                 )
 
     data: ->
-        ithems: []
+        items: []
         targets: ['name','updated_at']
         order: 'originalName'
         desc: -1
@@ -156,7 +156,7 @@ module.exports = {
                 (response) =>
                     console.log('ok')
                     category = response.data
-                    this.ithems.push(category)
+                    this.items.push(category)
                     @new_category.name = ''
                     @adding = false
                     this.$nextTick ->
@@ -166,14 +166,14 @@ module.exports = {
             );
 
 
-        editIthem: (ithem) ->
-            ithem.new_name = ithem.name
-            ithem.edit = true;
-            this.updateList(this.ithems)
+        edititem: (item) ->
+            item.new_name = item.name
+            item.edit = true;
+            this.updateList(this.items)
 
-        revertIthem: (ithem) ->
-            ithem.edit = false;
-            this.updateList(this.ithems)
+        revertitem: (item) ->
+            item.edit = false;
+            this.updateList(this.items)
 
         attemptUpdate: (category) ->
             category.edit = false;
@@ -182,7 +182,7 @@ module.exports = {
             this.$http.put('categories/' + category.id, category).then(
                 (response) =>
                     category.updated_at = response.data.updated_at
-                    this.updateList(this.ithems)
+                    this.updateList(this.items)
                     this.$nextTick ->
                         $('#category_content').trigger('updated',category.id)
 
@@ -200,7 +200,7 @@ module.exports = {
                     bus.$emit('success', 'removed_category');
                     $('#category_content').trigger('removed',category.id, ->
                         category.removed = true;
-                        this.updateList(this.ithems)
+                        this.updateList(this.items)
                     )
                 (response) => bus.$emit('error', response)
             );
@@ -211,11 +211,11 @@ module.exports = {
 
             this.$http.get('categories').then(
                 (response) =>
-                    this.ithems = response.data;
+                    this.items = response.data;
 
-                    # Fill in all ithems originalName
-                    for ithem in @ithems
-                        ithem.originalName = ithem.name
+                    # Fill in all items originalName
+                    for item in @items
+                        item.originalName = item.name
 
                     this.$root.loading = false;
 
