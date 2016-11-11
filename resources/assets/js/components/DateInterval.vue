@@ -3,15 +3,13 @@
       <div class="row">
           <div class="col-xs-12">
               <label class="control-label" for="fullname">{{interval}}</label>
-              <div class='input-group date'>
+              <div class="ui icon input">
                   <input type='text' class="form-control"
                       @click="openRangePicker"
                       v-model="date"
                       :name="interval"
                   />
-                  <span class="input-group-addon">
-                      <span class="fa fa-calendar"></span>
-                  </span>
+                  <i class="calendar icon"></i>
               </div>
           </div>
        </div>
