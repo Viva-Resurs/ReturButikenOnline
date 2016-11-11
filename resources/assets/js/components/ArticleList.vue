@@ -60,13 +60,13 @@
                                 <div class="ui icon basic buttons">
                                     <button class="ui icon button hover-default"
                                         v-tooltip :data-html="displayInterval(item.publish_interval)"
-                                        v-daterangepicker :id="item.id" :data-value="item.publish_interval" name="publish_interval"
+                                        @click="openRangePicker" :id="item.id" :data-value="item.publish_interval" name="publish_interval"
                                         >
                                         <i :class="'ui icon dollar '+((activeInterval(item.publish_interval)) ? 'active-interval':'')"></i>
                                     </button>
                                     <button class="ui icon button hover-default"
                                         v-tooltip :data-html="displayInterval(item.bidding_interval)"
-                                        v-daterangepicker :id="item.id" :data-value="item.bidding_interval" name="bidding_interval"
+                                        @click="openRangePicker" :id="item.id" :data-value="item.bidding_interval" name="bidding_interval"
                                         >
                                         <i :class="'ui icon legal '+((activeInterval(item.bidding_interval)) ? 'active-interval':'')"></i>
                                     </button>
@@ -112,13 +112,14 @@
 
 <script lang="coffee">
     Filters = require '../mixins/Filters.vue';
+    DateRangePicker = require '../mixins/DateRangePicker.vue';
     Pagination = require './Pagination.vue';
 
     module.exports = {
 
         name: 'ArticleList',
 
-        mixins: [ Filters ]
+        mixins: [ Filters, DateRangePicker ]
 
         components: { Pagination }
 
