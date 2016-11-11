@@ -190,6 +190,8 @@ module.exports = {
             this.$http.put('categories/' + category.id, category).then(
                 (response) =>
                     console.log('ok');
+                    console.log response
+                    category.updated_at = response.data.updated_at
                     this.ithems.reverse();
                     this.ithems.reverse();
                     this.$nextTick ->
