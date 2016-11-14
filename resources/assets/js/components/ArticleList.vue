@@ -91,28 +91,77 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th colspan="5">
-                                        <pagination
-                                            :total="countItems"
-                                            :show-pagination="(search=='' && !limitOffBtn)"
-                                        >
-                                            <div slot="replacePagination">
-                                                <button v-if="limitOffBtn" class="ui button searchresults_expander" @click="limitOff = true">
-                                                    Visa alla resultat
-                                                </button>
-                                            </div>
-                                        </pagination>
-                                    </th>
-                                </tr>
-                            </tfoot>
+
                         </table>
                     </div>
 
                     <div class="mobile tablet only row">
-                        <p>Put Moile Tablet only here</p>
+                        <div class="ui celled list">
+                            <div class="ui fluid card" v-for="(item, index) in filterItems">
+
+                                <div class="content">
+                                    <div class="header">{{item.name}}</div>
+                                    <div class="meta">
+                                        <span class="right floated time">{{item.updated_at}}</span>
+                                        <span class="category">Category</span>
+                                    </div>
+                                    <div class="description">
+                                        {{item.desc}}
+                                    </div>
+
+                                </div>
+                                <div class="extra content">
+
+                                    <div class="meta left floated">
+                                        <p>
+                                            {{(item.public==1) ? 'Publicerad för allmänheten' : 'Publicerad på kommunens intranät'}}
+                                        </p>
+
+                                    </div>
+                                    <div class="ui right floated icon basic buttons">
+                                        <button class="ui icon button hover-default"
+                                            v-tooltip :data-html="displayInterval(item.publish_interval)"
+                                            @click="openRangePicker" :id="item.id" :data-value="item.publish_interval" name="publish_interval"
+                                            >
+                                            <i :class="'ui icon dollar '+((activeInterval(item.publish_interval)) ? 'active-interval':'')"></i>
+                                        </button>
+                                        <button class="ui icon button hover-default"
+                                            v-tooltip :data-html="displayInterval(item.bidding_interval)"
+                                            @click="openRangePicker" :id="item.id" :data-value="item.bidding_interval" name="bidding_interval"
+                                            >
+                                            <i :class="'ui icon legal '+((activeInterval(item.bidding_interval)) ? 'active-interval':'')"></i>
+                                        </button>
+                                        <router-link
+                                            :to="'/articles/'+item.id"
+                                            class="ui icon button hover-primary"
+                                            v-tooltip data-html="Edit"
+                                            >
+                                            <i class="ui icon pencil"></i>
+                                        </router-link>
+
+                                        <button class="ui icon button hover-danger"
+                                            v-tooltip data-html="Remove"
+                                            @click="remove(item)">
+                                            <i class="ui icon trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
+
+                    <pagination
+                        :total="countItems"
+                        :show-pagination="(search=='' && !limitOffBtn)"
+                        class="row "
+                    >
+                        <div slot="replacePagination">
+                            <button v-if="limitOffBtn" class="ui floated right button searchresults_expander" @click="limitOff = true">
+                                Visa alla resultat
+                            </button>
+                        </div>
+                    </pagination>
 
                 </div>
 
