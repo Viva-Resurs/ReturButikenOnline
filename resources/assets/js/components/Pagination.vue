@@ -1,10 +1,9 @@
 <template>
-    <div class="pagination">
-        <div class="two fields">
+    <div class="ui grid">
 
-        <div v-if="total!=0 && total>limit" class="pagination_left">
+        <div v-if="total!=0 && total>limit" class="thirteen wide column">
 
-            <div v-if="showPagination" class="ui floated left pagination menu">
+            <div v-if="showPagination" class="ui pagination menu">
 
                     <a class="icon item" @click="firstPage">
                         <i class="angle double left icon"></i>
@@ -35,21 +34,17 @@
             </template>
         </div>
 
-        <div v-else class="pagination_left">
+        <div v-show="total>limitOptions[0] && showPagination" class="three wide column">
+            <select class="ui dropdown"
+                v-model="limit"
+                id="limit"
+                ref="select-input"
+                v-dropdown
+            >
+                <option v-for="option in limitOptions" :value="option">{{option}}</option>
+            </select>
         </div>
 
-        <div v-show="total>limitOptions[0] && showPagination" class="pagination_right ui floated right secondary menu">
-            <div class="pagination_right" style="white-space: nowrap;">
-                <select class="ui fluid dropdown v-dropdown dropdown-toggle selectpicker show-tick"
-                    v-model="limit"
-                    id="limit"
-                    ref="select-input"
-                >
-                    <option v-for="option in limitOptions" :value="option">{{option}}</option>
-                </select>
-            </div>
-        </div>
-    </div>
     </div>
 
 </template>
