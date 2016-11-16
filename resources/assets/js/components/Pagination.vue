@@ -1,10 +1,8 @@
 <template>
-    <div class="ui grid">
-
+    <div class="left padded ui grid">
         <div v-if="total!=0 && total>limit" class="thirteen wide column">
-
-            <div v-if="showPagination" class="ui pagination menu">
-
+            <div class="ui grid computer only">
+                <div v-if="showPagination" class="ui pagination menu">
                     <a class="icon item" @click="firstPage">
                         <i class="angle double left icon"></i>
                     </a>
@@ -23,27 +21,59 @@
                     <a class="icon item" @click="lastPage">
                         <i class="angle double right icon"></i>
                     </a>
+                </div>
+                <template v-else>
 
+                    <slot name="replacePagination">
+
+                    </slot>
+
+                </template>
             </div>
-            <template v-else>
 
-                <slot name="replacePagination">
+            <div class="ui grid mobile tablet only">
+                <div v-if="showPagination" class="ui pagination menu">
+                    <a class="icon item" @click="firstPage">
+                        <i class="angle double left icon"></i>
+                    </a>
 
-                </slot>
+                    <a class="icon item" @click="prevPage">
+                        <i class="angle left icon"></i>
+                    </a>
 
-            </template>
+                    <a class="icon item">
+                        <i>Page {{currentPage}} ... {{totalPages}}</i>
+                    </a>
+
+                    <a class="icon item" @click="nextPage">
+                        <i class="angle right icon"></i>
+                    </a>
+
+                    <a class="icon item" @click="lastPage">
+                        <i class="angle double right icon"></i>
+                    </a>
+                </div>
+                <template v-else>
+
+                    <slot name="replacePagination">
+
+                    </slot>
+
+                </template>
+            </div>
+
         </div>
 
-        <div v-show="total>limitOptions[0] && showPagination" class="three wide column">
-            <select class="ui dropdown"
+
+        <select class="ui dropdown three wide column floated right" v-show="total>limitOptions[0] && showPagination"
                 v-model="limit"
                 id="limit"
                 ref="select-input"
                 v-dropdown
             >
                 <option v-for="option in limitOptions" :value="option">{{option}}</option>
-            </select>
-        </div>
+        </select>
+
 
     </div>
 
@@ -86,7 +116,6 @@
                     c++
 
                 return p;
-
 
         methods:
 
