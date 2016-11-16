@@ -1,12 +1,12 @@
 <template>
 
-    <div class="ui secondary pointing menu">
+    <div class="ui stackable secondary pointing menu">
 
         <router-link to="/" class="item" exact>
             {{ $root.settings.title }}
         </router-link>
 
-        <div class="right menu">
+        <div class="ui right secondary stackable menu">
             <template v-if="!$root.user">
                 <router-link to="/auth/login" exact class="item">Login</router-link>
 
