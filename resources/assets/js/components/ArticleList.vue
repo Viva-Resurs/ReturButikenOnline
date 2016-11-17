@@ -102,7 +102,7 @@
                                 <div class="content">
                                     <div class="header">{{item.name}}</div>
                                     <div class="meta">
-                                        <span class="right floated time">{{item.updated_at}}</span>
+                                        <span class="right floated time">Updated: {{item.updated_at}}</span>
                                         <span class="category">Category</span>
                                     </div>
                                     <div class="description">
@@ -118,29 +118,25 @@
                                         </p>
 
                                     </div>
-                                    <div class="ui right floated icon basic buttons">
-                                        <button class="ui icon button hover-default"
-                                            v-tooltip :data-html="displayInterval(item.publish_interval)"
+                                    <div class="ui right floated icon buttons">
+                                        <button class="ui icon button"
                                             @click="openRangePicker" :id="item.id" :data-value="item.publish_interval" name="publish_interval"
                                             >
                                             <i :class="'ui icon dollar '+((activeInterval(item.publish_interval)) ? 'active-interval':'')"></i>
                                         </button>
-                                        <button class="ui icon button hover-default"
-                                            v-tooltip :data-html="displayInterval(item.bidding_interval)"
+                                        <button class="ui icon button"
                                             @click="openRangePicker" :id="item.id" :data-value="item.bidding_interval" name="bidding_interval"
                                             >
                                             <i :class="'ui icon legal '+((activeInterval(item.bidding_interval)) ? 'active-interval':'')"></i>
                                         </button>
                                         <router-link
                                             :to="'/articles/'+item.id"
-                                            class="ui icon button hover-primary"
-                                            v-tooltip data-html="Edit"
+                                            class="ui primary icon button"
                                             >
                                             <i class="ui icon pencil"></i>
                                         </router-link>
 
-                                        <button class="ui icon button hover-danger"
-                                            v-tooltip data-html="Remove"
+                                        <button class="ui danger negative icon button"
                                             @click="remove(item)">
                                             <i class="ui icon trash"></i>
                                         </button>
@@ -154,7 +150,7 @@
                     <pagination
                         :total="countItems"
                         :show-pagination="(search=='' && !limitOffBtn)"
-                        class="row "
+                        class="row"
                     >
                         <div slot="replacePagination">
                             <button v-if="limitOffBtn" class="ui floated right button searchresults_expander" @click="limitOff = true">
