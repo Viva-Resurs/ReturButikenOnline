@@ -1,8 +1,8 @@
 <template>
     <div class="left padded ui grid">
-        <div v-if="total!=0 && total>limit" class="thirteen wide column">
+        <div v-if="total!=0 && total>limit && showPagination" class="thirteen wide column">
             <div class="ui grid computer only">
-                <div v-if="showPagination" class="ui pagination menu">
+                <div class="ui pagination menu">
                     <a class="icon item" @click="firstPage">
                         <i class="angle double left icon"></i>
                     </a>
@@ -22,17 +22,11 @@
                         <i class="angle double right icon"></i>
                     </a>
                 </div>
-                <template v-else>
 
-                    <slot name="replacePagination">
-
-                    </slot>
-
-                </template>
             </div>
 
             <div class="ui grid mobile tablet only">
-                <div v-if="showPagination" class="ui pagination menu">
+                <div class="ui pagination menu">
                     <a class="icon item" @click="firstPage">
                         <i class="angle double left icon"></i>
                     </a>
@@ -53,19 +47,19 @@
                         <i class="angle double right icon"></i>
                     </a>
                 </div>
-                <template v-else>
 
-                    <slot name="replacePagination">
+            </div>
+        </div>
 
-                    </slot>
-
-                </template>
+        <div v-else class="thirteen wide column">
+            <div class="ui grid">
+                <slot name="replacePagination">
+                </slot>
             </div>
 
         </div>
 
-
-        <select class="ui dropdown three wide column floated right" v-show="total>limitOptions[0] && showPagination"
+        <select class="ui dropdown three wide column" v-show="total>limitOptions[0] && showPagination"
                 v-model="limit"
                 id="limit"
                 ref="select-input"
@@ -73,7 +67,6 @@
             >
                 <option v-for="option in limitOptions" :value="option">{{option}}</option>
         </select>
-
 
     </div>
 

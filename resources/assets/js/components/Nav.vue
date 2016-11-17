@@ -24,7 +24,7 @@
 
                 <router-link to="/users" exact class="item">Användare</router-link>
 
-                <a class="ui dropdown item" v-dropdown>
+                <div class="ui dropdown item" v-dropdown>
                         {{ $root.user.name }}
                         <i class="dropdown icon"></i>
                         <div class="menu">

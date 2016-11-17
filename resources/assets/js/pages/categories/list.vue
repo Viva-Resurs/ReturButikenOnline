@@ -11,7 +11,7 @@
 
         <div v-else>
 
-            <table class="ui compact celled table">
+            <table class="ui compact unstackable celled table">
                 <thead class="thead-default">
                     <tr>
                         <th @click="setSortBy('name');" class="link">
