@@ -91,7 +91,7 @@ class ArticleController extends Controller
                 $article->categories()->save($c);
             }
 
-        return $article;
+        return $this->show($article->id);
     }
 
     public function update(Request $request, $id){
@@ -131,6 +131,8 @@ class ArticleController extends Controller
             }
 
         $article->save();
+
+        return $this->show($article->id);
     }
 
     public function destroy($id){
