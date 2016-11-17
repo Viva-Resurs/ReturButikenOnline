@@ -1,57 +1,53 @@
 <template>
-    <div class="left padded ui grid">
-        <div v-if="total!=0 && total>limit && showPagination" class="thirteen wide column">
-            <div class="ui grid computer only">
-                <div class="ui pagination menu">
-                    <a class="icon item" @click="firstPage">
-                        <i class="angle double left icon"></i>
-                    </a>
+    <div class="ui grid">
+        <div v-if="total!=0 && total>limit && showPagination" class="twelve wide column">
 
-                    <a class="icon item" @click="prevPage">
-                        <i class="angle left icon"></i>
-                    </a>
+            <div class="ui grid computer only pagination menu">
+                <a class="icon item" @click="firstPage">
+                    <i class="angle double left icon"></i>
+                </a>
 
-                    <a v-for="n in totalPages" :class="'item '+((n==currentPage)?'active':'')" @click="toPage(n)">{{n}}
-                    </a>
+                <a class="icon item" @click="prevPage">
+                    <i class="angle left icon"></i>
+                </a>
 
-                    <a class="icon item" @click="nextPage">
-                        <i class="angle right icon"></i>
-                    </a>
+                <a v-for="n in totalPages" :class="'item '+((n==currentPage)?'active':'')" @click="toPage(n)">{{n}}
+                </a>
 
-                    <a class="icon item" @click="lastPage">
-                        <i class="angle double right icon"></i>
-                    </a>
-                </div>
+                <a class="icon item" @click="nextPage">
+                    <i class="angle right icon"></i>
+                </a>
 
+                <a class="icon item" @click="lastPage">
+                    <i class="angle double right icon"></i>
+                </a>
             </div>
 
-            <div class="ui grid mobile tablet only">
-                <div class="ui pagination menu">
-                    <a class="icon item" @click="firstPage">
-                        <i class="angle double left icon"></i>
-                    </a>
+            <div class="ui grid mobile tablet only pagination menu">
+                <a class="icon item" @click="firstPage">
+                    <i class="angle double left icon"></i>
+                </a>
 
-                    <a class="icon item" @click="prevPage">
-                        <i class="angle left icon"></i>
-                    </a>
+                <a class="icon item" @click="prevPage">
+                    <i class="angle left icon"></i>
+                </a>
 
-                    <a class="icon item">
-                        <i>Page {{currentPage}} ... {{totalPages}}</i>
-                    </a>
+                <a class="icon item">
+                    <i>Page {{currentPage}} ... {{totalPages}}</i>
+                </a>
 
-                    <a class="icon item" @click="nextPage">
-                        <i class="angle right icon"></i>
-                    </a>
+                <a class="icon item" @click="nextPage">
+                    <i class="angle right icon"></i>
+                </a>
 
-                    <a class="icon item" @click="lastPage">
-                        <i class="angle double right icon"></i>
-                    </a>
-                </div>
-
+                <a class="icon item" @click="lastPage">
+                    <i class="angle double right icon"></i>
+                </a>
             </div>
+
         </div>
 
-        <div v-else class="thirteen wide column">
+        <div v-else class="twelve wide column">
             <div class="ui grid">
                 <slot name="replacePagination">
                 </slot>
@@ -59,17 +55,15 @@
 
         </div>
 
-        <select class="ui dropdown three wide column" v-show="total>limitOptions[0] && showPagination"
-                v-model="limit"
-                id="limit"
-                ref="select-input"
-                v-dropdown
-            >
-                <option v-for="option in limitOptions" :value="option">{{option}}</option>
-        </select>
+        <div class="four wide column right aligned">
+            <select class="ui selection dropdown" v-show="total>limitOptions[0]"
+                v-dropdown v-model="limit" id="limit"
+                >
+                <option class="item" v-for="option in limitOptions" :value="option">{{option}}</option>
+            </select>
+        </div>
 
     </div>
-
 </template>
 
 <script lang="coffee">
