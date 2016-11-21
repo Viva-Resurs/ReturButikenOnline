@@ -17,7 +17,7 @@
                         <p>{{ (items.length > 0) ? 'No results' : 'Empty' }}</p>
                     </div>
                 </div>
-                <div class="row computer only">
+                <div class="row computer only" v-if="columns && card">
                     <table class="ui compact celled table" v-if="countItems > 0">
                         <thead>
                             <tr>
@@ -87,6 +87,43 @@
                         </div>
                     </div>
                 </div> -->
+                <table class="ui compact unstackable celled table" v-if="!card">
+                    <thead>
+                        <tr>
+                            <th class="center aligned collapsing">#</th>
+                            <th v-for="column in columns"
+                                :class="column.class"
+                                @click="(column.sort) ? setSortBy(column.label) : false">
+                                {{column.label}} <i v-if="column.sort" :class="[headers[column.label], headers[column.label+'_icon']]" ></i>
+                            </th>
+                            <th class="center aligned">Tools</th>
+                        </tr>
+                    </thead>
+                    <tbody v-item>
+                        <tr v-for="(item, index) in filterItems" :id="item.id">
+                            <td class="center aligned warning collapsing"><strong>{{(index+1)+offset}}. </strong></td>
+                            <td v-for="column in columns"
+                                :class="column.class"
+                                v-tooltip :data-html="formatTooltip(item[column.tooltip])"
+                                >
+                                <div v-if="item.edit && column.type=='string'" class="ui input fluid">
+                                    <input v-model="item[column.label+'_new']" :placeholder="'Type ' + column.label"
+                                    @keyup.enter="attemptUpdate(item)"
+                                    v-focus>
+                                </div>
+                                <div v-else>
+                                    {{item[column.label]}}
+                                </div>
+                            </td>
+                            <td class="collapsing">
+                                <div class="ui icon basic buttons">
+                                    <component v-for="tool in tools" :is="tool" :item="item" >
+                                    </component>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <pagination
                     :total="countItems"
                     :show-pagination="(search=='' && !limitOffBtn)"
