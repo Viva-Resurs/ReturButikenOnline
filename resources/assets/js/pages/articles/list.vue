@@ -76,9 +76,13 @@
                     class: 'center aligned collapsing'
 
         methods:
+            updateList: () ->
+                @items.reverse()
+                this.$nextTick ->
+                    @items.reverse()
+
             attemptRemove: (article) ->
                 # Are you sure?
-                # ... yes
                 @removeArticle(article);
 
             removeArticle: (article) ->
@@ -86,32 +90,31 @@
                     (response) =>
                         bus.$emit('success','removed_article')
                         article.removed = true;
-                        @items.reverse();
-
+                        @updateList();
                     (response) => bus.$emit('error',response)
                 );
+
+            attemptUpdate: (article) ->
+                # Validation
+                @updateArticle(article)
 
             updateArticle: (article) ->
                 @$http.put('articles/'+article.id,article).then(
                     (response) =>
-                        console.log('ok');
-                        #@$router.push({ path: '/articles' })
-
+                        bus.$emit('success','updated_article')
+                        @updateList();
                     (response) => bus.$emit('error',response)
                 );
 
             getArticles: () ->
                 @$root.loading = true;
-
                 @$http.get('articles').then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false;
-
                     (response) =>
                         bus.$emit('error',response)
                         @$root.loading = false;
-
                 );
 
         created: ->
@@ -119,27 +122,26 @@
             # Listen for changes in data by components
             bus.$on('item_remove', (item) => @attemptRemove(item) )
             bus.$on('item_edit', (item) => @$router.push({ path: '/articles/'+item.id }) )
-            bus.$on('article_changed', (payload) => @updateArticle(payload) )
+            bus.$on('item_changed', (payload) => @attemptUpdate(payload) )
+
             bus.$on('publish_interval_changed', (id,new_value) =>
                 for item in this.items
                     if (Number item.id == Number id)
                         item.publish_interval = new_value
-                        bus.$emit('article_changed',item)
-
+                        bus.$emit('item_changed',item)
             );
 
             bus.$on('bidding_interval_changed', (id,new_value) =>
                 for item in this.items
                     if (Number item.id == Number id)
                         item.bidding_interval = new_value
-                        bus.$emit('article_changed',item)
-
+                        bus.$emit('item_changed',item)
             );
 
         beforeDestroy: ->
             bus.$off('item_edit');
             bus.$off('item_remove');
-            bus.$off('article_changed');
+            bus.$off('item_changed');
             bus.$off('publish_interval_changed')
             bus.$off('bidding_interval_changed')
     }
