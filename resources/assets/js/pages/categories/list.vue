@@ -1,232 +1,142 @@
 <template>
-    <div class="ui container segment">
-
-        <div class="ui dividing header">
-            Kategorier
-        </div>
-
-        <div v-if="this.$root.loading">
-            <loading></loading>
-        </div>
-
-        <div v-else>
-
-            <table class="ui compact unstackable celled table">
-                <thead class="thead-default">
-                    <tr>
-                        <th @click="setSortBy('name');" class="link">
-                            Name
-                            <i :class="[headers.name, headers.name_icon]" ></i>
-                        </th>
-                        <th @click="setSortBy('updated_at');" class="link">
-                            Updated
-                            <i :class="[headers.updated_at, headers.updated_at_icon]"></i>
-                        </th>
-                        <th class="center aligned">Tools</th>
-                    </tr>
-                </thead>
-                <tbody v-item id="category_content">
-                    <tr v-if="items.length > 0" v-for="(item, index) in filteritems" :id="item.id">
-                        <td v-show="!item.edit" @click="edititem(item)">{{item.name}}</td>
-                        <td v-if="item.edit">
-                            <div class="ui input fluid">
-                                <input v-model="item.new_name" placeholder="Type category name"
-                                @keyup.enter="attemptUpdate(item)"
-                                v-focus>
-                            </div>
-
-                        </td>
-                        <td class="collapsing">{{item.updated_at}}</td>
-                        <td v-show="!item.edit" class="collapsing">
-                            <div class="ui icon basic buttons">
-                                <button class="ui icon button hover-primary" @click="edititem(item)"
-                                    v-tooltip data-html="Edit">
-                                    <i class="ui icon pencil"></i>
-                                </button>
-                                <button class="ui icon button hover-danger" @click="attemptRemove(item)"
-                                    v-tooltip data-html="Remove">
-                                <i class="ui icon trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                        <td v-show="item.edit" class="collapsing">
-                            <div class="ui icon basic buttons">
-                                <button class="ui icon button hover-primary" @click="attemptUpdate(item)"
-                                    v-tooltip data-html="Save">
-                                    <i class="ui icon save"></i>
-                                </button>
-                                <button class="ui icon button" @click="revertitem(item)"
-                                    v-tooltip data-html="Undo">
-                                    <i class="ui icon undo"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="ui input" v-if="adding">
-                                <input v-model="new_category.name" placeholder="Type category name"
-                                @keyup.enter="attemptCreate()"
-                                v-focus>
-                            </div>
-                        </td>
-                        <td></td>
-                        <td class="collapsing">
-                            <div class="ui icon basic buttons" v-show="adding">
-                                <button class="ui icon button hover-primary" @click="attemptCreate()"
-                                    v-tooltip data-html="Save">
-                                    <i class="ui icon save"></i>
-                                </button>
-                                <button class="ui icon button" @click="adding = false"
-                                    v-tooltip data-html="Undo">
-                                    <i class="ui icon undo"></i>
-                                </button>
-                            </div>
-                            <button v-if="!adding" class="ui basic icon button" @click="adding = true"
-                                v-tooltip data-html="Add">
-                                <i class="ui icon plus"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-        </div>
-
-    </div>
+    <item-grid
+        header="Categories"
+        :columns="columns"
+        :tools=
+            "[
+              $options.components.Edit,
+              $options.components.Remove,
+              $options.components.Save,
+              $options.components.Undo
+            ]"
+        :items="items">
+    </item-grid>
 </template>
 
 <script lang="coffee">
-Filters = require '../../mixins/Filters.vue';
+    ItemGrid = require '../../components/ItemGrid.vue';
+    Remove = require '../../components/tools/Remove.vue';
+    Save = require '../../components/tools/Save.vue';
+    Undo = require '../../components/tools/Undo.vue';
+    Edit = require '../../components/tools/Edit.vue';
 
-module.exports = {
+    module.exports = {
 
-    name: 'List'
+        name: 'List'
 
-    mixins: [Filters]
+        components: { ItemGrid, Edit, Remove, Save, Undo }
 
-    computed:
-        filteritems: ->
-            this.items
-                .filter(
-                    (item) => (item.removed != true)
-                )
-                .sort(
-                    (a, b) => this.shallowSort(a[this.order], b[this.order], this)
-                )
+        data: ->
+            items: []
 
-    data: ->
-        items: []
-        targets: ['name','updated_at']
-        order: 'originalName'
-        desc: -1
-        headers :
-            name : "ui icon"
-            name_icon : 'sort'
-            updated_at : 'ui icon'
-            updated_at_icon : 'sort'
-        adding: false
-        new_category:
-            name: ''
+            # Not done
+            adding: false
+            new_category:
+                name: ''
 
-    methods:
-
-        setSortBy: (headingTitle) ->
-            # Set correct sort icon to the header (ascending, descending)
-            selectedHeader = ''
-
-            switch headingTitle
-                when 'name'
-                    this.setOrder('name')
-                    selectedHeader = if (this.desc == 1) then "sort alphabet ascending icon" else "sort alphabet descending icon"
-
-                when 'updated_at'
-                    this.setOrder('updated_at',1)
-                    selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
-
-            this.headers[headingTitle+'_icon'] = selectedHeader
-
-            # Change the other (not sorted by) icons to a generic sort icon
-            for target in @targets
-                if (target != headingTitle)
-                    @headers[target+'_icon'] = "sort"
-
-        attemptCreate: () ->
-            this.$http.post('categories', @new_category).then(
-                (response) =>
-                    console.log('ok')
-                    category = response.data
-                    this.items.push(category)
-                    @new_category.name = ''
-                    @adding = false
-                    this.$nextTick ->
-                        $('#category_content').trigger('updated',category.id)
-
-                (response) => bus.$emit('error', response)
-            );
+            columns:
+                name:
+                    label: 'name'
+                    type: 'string'
+                    search: true
+                    sort: true
+                    class: 'link'
+                updated_at:
+                    label: 'updated_at'
+                    type: 'number'
+                    desc: true
+                    default_sort: true
+                    search: true
+                    sort: true
+                    class: 'collapsing'
 
 
-        edititem: (item) ->
-            item.new_name = item.name
-            item.edit = true;
-            this.updateList(this.items)
+        methods:
+            updateList: () ->
+                @items.reverse()
+                @$nextTick ->
+                    @items.reverse()
 
-        revertitem: (item) ->
-            item.edit = false;
-            this.updateList(this.items)
+            attemptCreate: (category) ->
+                # Validation
+                @createCategory(category)
 
-        attemptUpdate: (category) ->
-            category.edit = false;
-            category.name = category.new_name.trim()
+            createCategory: (category) ->
+                # Not done...
+                return false
+                @$http.post('categories', @new_category).then(
+                    (response) =>
+                        console.log('ok')
+                        category = response.data
+                        @items.push(category)
+                        @new_category.name = ''
+                        @adding = false
+                        @$nextTick ->
+                            $('#category_content').trigger('updated',category.id)
 
-            this.$http.put('categories/' + category.id, category).then(
-                (response) =>
-                    category.updated_at = response.data.updated_at
-                    this.updateList(this.items)
-                    this.$nextTick ->
-                        $('#category_content').trigger('updated',category.id)
+                    (response) => bus.$emit('error', response)
+                );
 
-                (response) => bus.$emit('error', response)
-            );
+            editItem: (item) ->
+                item.edit = true
+                @updateList()
 
-        attemptRemove: (category) ->
-            # Are you sure?
-            # ... yes
-            this.removeCategory(category);
+            revertItem: (item) ->
+                item.edit = false
+                @updateList()
 
-        removeCategory: (category) ->
-            this.$http.delete('categories/' + category.id).then(
-                (response) =>
-                    bus.$emit('success', 'removed_category');
-                    $('#category_content').trigger('removed',category.id, ->
-                        category.removed = true;
-                        this.updateList(this.items)
-                    )
-                (response) => bus.$emit('error', response)
-            );
+            attemptUpdate: (category) ->
+                category.edit = false;
+                # Not done...
+                return false
+                category.name = category.new_name.trim()
+                @$http.put('categories/' + category.id, category).then(
+                    (response) =>
+                        category.updated_at = response.data.updated_at
+                        @updateList()
+                        @$nextTick ->
+                            $('#category_content').trigger('updated',category.id)
+                    (response) => bus.$emit('error', response)
+                );
 
-        getCategories: () ->
+            attemptRemove: (category) ->
+                # Are you sure?
+                @removeCategory(category)
 
-            this.$root.loading = true;
+            removeCategory: (category) ->
+                @$http.delete('categories/' + category.id).then(
+                    (response) =>
+                        bus.$emit('success', 'removed_category')
+                        $('table').trigger('removed',category.id, ->
+                            category.removed = true
+                            @updateList()
+                        )
+                    (response) => bus.$emit('error', response)
+                );
 
-            this.$http.get('categories').then(
-                (response) =>
-                    this.items = response.data;
+            getCategories: () ->
+                @$root.loading = true;
+                @$http.get('categories').then(
+                    (response) =>
+                        @items = response.data
+                        @$root.loading = false
+                    (response) =>
+                        bus.$emit('error', response)
+                        @$root.loading = false
+                );
 
-                    # Fill in all items originalName
-                    for item in @items
-                        item.originalName = item.name
+        created: ->
+            @getCategories()
 
-                    this.$root.loading = false;
+            bus.$on('item_edit', (item) => @editItem(item) )
+            bus.$on('item_revert', (item) => @revertItem(item) )
+            bus.$on('item_remove', (item) => @attemptRemove(item) )
+            bus.$on('item_changed', (item) => @attemptUpdate(item) )
 
-                (response) =>
-                    bus.$emit('error', response);
-                    this.$root.loading = false;
-
-            );
-
-    created: ->
-        this.getCategories();
-
-}
+        beforeDestroy: ->
+            bus.$off('item_edit')
+            bus.$off('item_revert')
+            bus.$off('item_remove')
+            bus.$off('item_changed')
+    }
 </script>
