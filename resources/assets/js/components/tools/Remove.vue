@@ -1,6 +1,7 @@
 <template>
     <div class="ui icon button hover-danger"
         v-tooltip data-html="Remove"
+        v-show="!item.edit"
         @click="remove(item)">
         <i class="ui icon trash"></i>
     </div>
@@ -12,7 +13,6 @@
         props: [ 'item' ]
         methods:
             remove: (item) ->
-                # Validation?
                 bus.$emit('item_remove',item)
     }
 </script>

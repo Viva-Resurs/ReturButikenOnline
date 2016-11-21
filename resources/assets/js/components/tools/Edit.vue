@@ -1,6 +1,7 @@
 <template>
     <div class="ui icon button hover-primary"
         v-tooltip data-html="Edit"
+        v-show="!item.edit"
         @click="edit(item)">
         <i class="ui icon pencil"></i>
     </div>
