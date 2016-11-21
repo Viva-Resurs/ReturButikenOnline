@@ -109,7 +109,7 @@
 
     module.exports = {
         name: 'ItemGrid'
-        props: [ 'header', 'columns', 'card', 'items', 'tools', 'extraTools' ]
+        props: [ 'header', 'columns', 'card', 'items', 'tools' ]
         mixins: [ Filters ]
         components: { Pagination }
         data: ->
