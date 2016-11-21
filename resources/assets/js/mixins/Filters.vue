@@ -38,8 +38,8 @@
 
                 var s = new RegExp(search,"gi");
 
-                for (var i=0 ; targets && i<targets.length ; i++)
-                    if ( s.test(item[targets[i]]) )
+                for (var key in targets)
+                    if ( s.test(item[key]) )
                         return true;
 
                 return false;

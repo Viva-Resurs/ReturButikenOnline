@@ -136,13 +136,13 @@
                         (item) => (item.removed!=true)
                     )
                     .filter(
-                        (item) => this.filterBy(item,this.search,this.targets)
+                        (item) => @filterBy(item,@search,this.columns)
                     )
                     .sort(
-                        (a,b) => this.shallowSort(a[this.order],b[this.order],this)
+                        (a,b) => @shallowSort(a[@order],b[@order],this)
                     )
                     .filter(
-                        (item,index) => this.rangeFilter(item,index,this)
+                        (item,index) => @rangeFilter(item,index,this)
                     );
             countItems: ->
                 this.items
@@ -150,7 +150,7 @@
                         (item) => (item.removed!=true)
                     )
                     .filter(
-                        (item) => this.filterBy(item,this.search,this.targets)
+                        (item) => @filterBy(item,@search,@columns)
                     )
                     .length
 
