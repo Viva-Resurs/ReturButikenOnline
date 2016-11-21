@@ -3,22 +3,29 @@
         header="Articles"
         :columns="columns"
         :card="card"
-        :tools="$options.components.ItemTools"
-        :extraTools="$options.components.IntervalTools"
+        :tools=
+            "[
+              $options.components.PublishInterval,
+              $options.components.BiddingInterval,
+              $options.components.Edit,
+              $options.components.Remove
+            ]"
         :items="items">
     </item-grid>
 </template>
 
 <script lang="coffee">
     ItemGrid = require '../../components/ItemGrid.vue';
-    ItemTools = require '../../components/ItemTools.vue';
-    IntervalTools = require '../../components/IntervalTools.vue';
+    PublishInterval = require '../../components/tools/PublishInterval.vue';
+    BiddingInterval = require '../../components/tools/BiddingInterval.vue';
+    Remove = require '../../components/tools/Remove.vue';
+    Edit = require '../../components/tools/Edit.vue';
 
     module.exports = {
 
         name: 'List'
 
-        components: { ItemGrid, ItemTools, IntervalTools }
+        components: { ItemGrid, PublishInterval, BiddingInterval, Edit, Remove }
 
         data: ->
             items: []

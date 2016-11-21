@@ -48,18 +48,16 @@
                                     </div>
                                 </td>
                                 <td class="collapsing">
-                                    <component :is="tools" :item="item">
-                                        <div slot="extraTools">
-                                            <component :is="extraTools" :item="item">
-                                            </component>
-                                        </div>
-                                    </component>
+                                    <div class="ui icon basic buttons">
+                                        <component v-for="tool in tools" :is="tool" :item="item" >
+                                        </component>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div class="mobile tablet only row">
+                <!-- <div class="mobile tablet only row">
                     <div class="ui fluid card" v-for="(item, index) in filterItems">
                         <div class="content">
                             <div class="header">{{item[card.header.label]}}</div>
@@ -88,7 +86,7 @@
                             </component>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <pagination
                     :total="countItems"
                     :show-pagination="(search=='' && !limitOffBtn)"
