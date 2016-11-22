@@ -41,6 +41,11 @@
                 </div>
 
                 <div class="field">
+                    <label for="desc">Bilder:</label>
+                    <image-dropzone></image-dropzone>
+                </div>
+
+                <div class="field">
                     <div class="inline fields">
 
                         <div class="field">
@@ -117,12 +122,13 @@
 
 <script lang="coffee">
     DateInterval = require './DateInterval.vue'
+    ImageDropzone = require './ImageDropzone.vue'
 
     module.exports =
 
         name: 'ArticleForm'
 
-        components: { DateInterval },
+        components: { DateInterval, ImageDropzone },
 
         props: [ 'original' ],
 
