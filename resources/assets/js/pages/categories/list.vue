@@ -19,18 +19,20 @@
 </template>
 
 <script lang="coffee">
-    ItemGrid = require '../../components/ItemGrid.vue';
-    Remove = require '../../components/tools/Remove.vue';
-    Save = require '../../components/tools/Save.vue';
-    Undo = require '../../components/tools/Undo.vue';
-    Edit = require '../../components/tools/Edit.vue';
-    Add = require '../../components/tools/Add.vue';
+
 
     module.exports = {
 
         name: 'List'
 
-        components: { ItemGrid, Edit, Remove, Save, Undo, Add }
+        components: {
+            ItemGrid: require '../../components/ItemGrid.vue'
+            Remove: require '../../components/tools/Remove.vue'
+            Save: require '../../components/tools/Save.vue'
+            Undo: require '../../components/tools/Undo.vue'
+            Edit: require '../../components/tools/Edit.vue'
+            Add: require '../../components/tools/Add.vue'
+        }
 
         data: ->
             items: []
