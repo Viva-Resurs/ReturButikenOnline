@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="field">
-                    <label for="desc">Bilder:</label>
+                    <label for="images">Bilder:</label>
                     <image-dropzone></image-dropzone>
                 </div>
 

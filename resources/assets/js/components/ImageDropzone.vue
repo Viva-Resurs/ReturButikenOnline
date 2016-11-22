@@ -1,5 +1,5 @@
 <template>
-    <div class="ui segment" id='dropZone'>
+    <div class="ui segment bottom attached" id='dropZone'>
         <input type='file' id='files' name='files[]' hidden multiple/>
         <div class="ui four doubling stackable cards">
             <div class="ui fluid card" v-for="file in files">
