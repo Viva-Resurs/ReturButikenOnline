@@ -1,18 +1,12 @@
 
-// Fonts
-@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
 // Variables
 @import "_variables";
 
-// Bootstrap
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
-// FA icons
-@import "./vendor/font-awesome";
+// Semantic UI
+@import "semantic/dist/semantic.min";
 
 // daterangepicker
-@import "./vendor/bootstrap.daterangepicker";
+@import "./vendor/semantic-ui-daterangepicker.1.3.21";
 
 // SweetAlert
 @import "node_modules/sweetalert/dev/sweetalert";

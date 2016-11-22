@@ -1,5 +1,7 @@
 module.exports = {
 
+    linkActiveClass: 'active',
+
     routes : [
         {
             path: '/',

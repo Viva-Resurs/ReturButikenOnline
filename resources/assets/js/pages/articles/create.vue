@@ -2,38 +2,32 @@
     <article-form></article-form>
 </template>
 
-<script>
-    import ArticleForm from '../../components/ArticleForm.vue'
+<script lang="coffee">
+    ArticleForm = require '../../components/ArticleForm.vue';
 
-    export default {
+    module.exports = {
 
-        name: 'Create',
+        name: 'Create'
 
-        components: { ArticleForm },
+        components: { ArticleForm }
 
-        methods: {
-
-            createArticle(article) {
-
+        methods:
+            createArticle: (article) ->
                 this.$http.post('articles',article).then(
-                    (response) => {
+                    (response) =>
                         console.log('ok');
                         this.$router.push({ path: '/articles' });
-                    },
+
                     (response) => bus.$emit('error',response)
                 );
 
-            }
+        created: ->
+            bus.$on('article_form_update', (payload) => @createArticle(payload) )
 
-        },
 
-        created: function() {
-            bus.$on('article_form_update', payload => { this.createArticle(payload); } );
-        },
-
-        beforeDestroy: function() {
+        beforeDestroy: ->
             bus.$off('article_form_update');
-        }
+
 
     }
 </script>

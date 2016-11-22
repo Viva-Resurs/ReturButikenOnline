@@ -1,82 +1,144 @@
 <template>
-    <article-list :ithems="ithems"></article-list>
+    <item-grid
+        header="Articles"
+        :columns="columns"
+        :card="card"
+        :toolsRow=
+            "[
+              $options.components.PublishInterval,
+              $options.components.BiddingInterval,
+              $options.components.Edit,
+              $options.components.Remove
+            ]"
+        :items="items">
+    </item-grid>
 </template>
 
-<script>
-    import ArticleList from '../../components/ArticleList.vue'
+<script lang="coffee">
+    module.exports = {
 
-    export default {
+        name: 'List'
 
-        name: 'List',
-
-        components: { ArticleList },
-
-        data: function(){
-            return {
-                ithems: []
-            }
-        },
-
-        methods: {
-
-            attemptRemove(article){
-                // Are you sure?
-                // ... yes
-                this.removeArticle(article);
-            },
-
-            removeArticle(article){
-                this.$http.delete('articles/'+article.id).then(
-                    (response) => {
-                        bus.$emit('success','removed_article');
-                        article.removed = true;
-                        this.ithems.reverse();
-                    },
-                    (response) => bus.$emit('error',response)
-                );
-            },
-
-            updateArticle(article) {
-
-                this.$http.put('articles/'+article.id,article).then(
-                    (response) => {
-                        console.log('ok');
-                        //this.$router.push({ path: '/articles' });
-                    },
-                    (response) => bus.$emit('error',response)
-                );
-
-            },
-
-            getArticles(){
-
-                this.$root.loading = true;
-
-                this.$http.get('articles').then(
-                    (response) => {
-                        this.ithems = response.data;
-                        this.$root.loading = false;
-                    },
-                    (response) => {
-                        bus.$emit('error',response);
-                        this.$root.loading = false;
-                    }
-                );
-            }
-
-        },
-
-        created: function(){
-            this.getArticles();
-
-            // Listen for changes in data by components
-            bus.$on('article_remove', payload => this.attemptRemove(payload) );
-            bus.$on('article_changed', payload => this.updateArticle(payload) );
-        },
-
-        beforeDestroy: function() {
-            bus.$off('article_remove');
-            bus.$off('article_changed');
+        components: {
+            ItemGrid: require '../../components/ItemGrid.vue'
+            PublishInterval: require '../../components/tools/PublishInterval.vue'
+            BiddingInterval: require '../../components/tools/BiddingInterval.vue'
+            Remove: require '../../components/tools/Remove.vue'
+            Edit: require '../../components/tools/Edit.vue'
         }
+
+        data: ->
+            items: []
+            card:
+                header:
+                    label: 'name'
+                meta:
+                    updated_at:
+                        label: 'Updated'
+                        key: 'updated_at'
+                        class: 'right floated time'
+                    categories:
+                        label: 'Categories'
+                        key: 'categories'
+                        class: 'category'
+                description:
+                    key: 'desc'
+                extra:
+                    public:
+                        key: 'public'
+                        class: ''
+                        type: 'boolean'
+                        true: 'Publicerad för allmänheten'
+                        false: 'Publicerad på kommunens intranät'
+            columns:
+                name:
+                    label: 'Name'
+                    key: 'name'
+                    type: 'string'
+                    search: true
+                    sort: true
+                    tooltip: 'desc'
+                    class: 'link'
+                updated_at:
+                    label: 'Updated'
+                    key: 'updated_at'
+                    type: 'number'
+                    desc: true
+                    default_sort: true
+                    search: true
+                    sort: true
+                    class: 'link'
+                public:
+                    label: 'Public'
+                    key: 'public'
+                    search: false
+                    sort: false
+                    type: 'checkbox'
+                    checkbox_true: 'Publicerad för allmänheten'
+                    checkbox_false: 'Publicerad på kommunens intranät'
+                    class: 'center aligned collapsing'
+
+        methods:
+            attemptRemove: (article) ->
+                # Are you sure?
+                @removeArticle(article);
+
+            removeArticle: (article) ->
+                @$http.delete('articles/'+article.id).then(
+                    (response) =>
+                        bus.$emit('success','removed_article')
+                        Vue.set article, 'removed', true;
+                    (response) => bus.$emit('error',response)
+                );
+
+            attemptUpdate: (article) ->
+                # Validation
+                @updateArticle(article)
+
+            updateArticle: (article) ->
+                @$http.put('articles/'+article.id,article).then(
+                    (response) =>
+                        bus.$emit('success','updated_article')
+                    (response) => bus.$emit('error',response)
+                );
+
+            getArticles: () ->
+                @$root.loading = true;
+                @$http.get('articles').then(
+                    (response) =>
+                        @items = response.data
+                        @$root.loading = false;
+                    (response) =>
+                        bus.$emit('error',response)
+                        @$root.loading = false;
+                );
+
+        created: ->
+            this.getArticles();
+            # Listen for changes in data by components
+            bus.$on('item_remove', (item) => @attemptRemove(item) )
+            bus.$on('item_edit', (item) => @$router.push({ path: '/articles/'+item.id }) )
+            bus.$on('item_changed', (payload) => @attemptUpdate(payload) )
+
+            bus.$on('publish_interval_changed', (id,new_value) =>
+                for item in this.items
+                    if (Number item.id == Number id)
+                        Vue.set item, 'publish_interval', new_value
+                        bus.$emit('item_changed',item)
+            );
+
+            bus.$on('bidding_interval_changed', (id,new_value) =>
+                for item in this.items
+                    if (Number item.id == Number id)
+                        Vue.set item, 'bidding_interval', new_value
+                        bus.$emit('item_changed',item)
+            );
+
+        beforeDestroy: ->
+            bus.$off('item_edit');
+            bus.$off('item_remove');
+            bus.$off('item_changed');
+            bus.$off('publish_interval_changed')
+            bus.$off('bidding_interval_changed')
     }
 </script>

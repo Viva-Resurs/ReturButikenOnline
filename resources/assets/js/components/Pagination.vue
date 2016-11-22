@@ -1,174 +1,150 @@
 <template>
-    <div class="pagination">
-        <div class="row">
+    <div class="ui grid">
+        <div v-if="total!=0 && total>limit && showPagination" class="twelve wide column">
 
+            <div class="ui grid computer only pagination menu">
+                <a class="icon item" @click="firstPage">
+                    <i class="angle double left icon"></i>
+                </a>
 
-        <div v-if="total>limit" class="pagination_left col-sm-10">
+                <a class="icon item" @click="prevPage">
+                    <i class="angle left icon"></i>
+                </a>
 
-            <template v-if="showPagination">
+                <a v-for="n in totalPages" :class="'item '+((n==currentPage)?'active':'')" @click="toPage(n)">{{n}}
+                </a>
 
-                <div class="btn-group" role="group">
+                <a class="icon item" @click="nextPage">
+                    <i class="angle right icon"></i>
+                </a>
 
-                    <button class="btn btn-default" @click="firstPage">
-                        <span class="fa fa-btn fa-angle-double-left"></span>
-                    </button>
-
-                    <button class="btn btn-default" @click="prevPage">
-                        <span class="fa fa-btn fa-angle-left"></span>
-                    </button>
-
-                    <button v-for="n in totalPages" :class="'btn btn-'+((n==currentPage)?'primary':'default')" @click="toPage(n)">{{n}}
-                    </button>
-
-                    <button class="btn btn-default" @click="nextPage">
-                        <span class="fa fa-btn fa-angle-right"></span>
-                    </button>
-
-                    <button class="btn btn-default" @click="lastPage">
-                        <span class="fa fa-btn fa-angle-double-right"></span>
-                    </button>
-                </div>
-
-            </template>
-            <template v-else>
-
-                <slot name="replacePagination">
-
-                </slot>
-
-            </template>
-        </div>
-
-        <div v-else class="pagination_left">
-        </div>
-
-        <div v-show="total>limit && showPagination" class="pagination_right col-sm-2">
-            <div class="input-group">
-                <select class="form-control selectpicker show-tick"
-                        v-model="limit"
-                        id="limit"
-                        ref="select-input"
-                >
-                    <option v-for="option in limitOptions" :value="option">{{option}}</option>
-                </select>
-                <span class="input-group-addon">
-                    <span class="fa fa-list"></span>
-                </span>
-
+                <a class="icon item" @click="lastPage">
+                    <i class="angle double right icon"></i>
+                </a>
             </div>
+
+            <div class="ui grid mobile tablet only pagination menu">
+                <a class="icon item" @click="firstPage">
+                    <i class="angle double left icon"></i>
+                </a>
+
+                <a class="icon item" @click="prevPage">
+                    <i class="angle left icon"></i>
+                </a>
+
+                <a class="icon item">
+                    <i>Page {{currentPage}} ... {{totalPages}}</i>
+                </a>
+
+                <a class="icon item" @click="nextPage">
+                    <i class="angle right icon"></i>
+                </a>
+
+                <a class="icon item" @click="lastPage">
+                    <i class="angle double right icon"></i>
+                </a>
+            </div>
+
         </div>
-    </div>
+
+        <div v-else class="twelve wide column">
+            <div class="ui grid">
+                <slot name="replacePagination">
+                </slot>
+            </div>
+
+        </div>
+
+        <div class="four wide column right aligned">
+            <select class="ui selection dropdown" v-show="total>limitOptions[0]"
+                v-dropdown v-model="limit" id="limit"
+                >
+                <option class="item" v-for="option in limitOptions" :value="option">{{option}}</option>
+            </select>
+        </div>
+
     </div>
 </template>
 
-<script>
-    export default {
+<script lang="coffee">
+    module.exports = {
 
-        name: 'Pagination',
+        name: 'Pagination'
 
-        props: [ 'total', 'showPagination' ],
+        props: [ 'total', 'showPagination' ]
 
-        data: function(){
-            return {
-                offset: 0,
-                limit: 10,
-                limitOptions: [ 10, 50, 100, 500 ]
-            };
-        },
+        data: ->
+            offset: 0
+            limit: 10
+            limitOptions: [ 10, 50, 100, 500 ]
 
-        computed: {
+        computed:
 
-            currentPage(){
-                var p = 1;
-                for (var i=0, c=0 ; i<this.total ; i++, c++){
-                    if (i==this.offset)
+            currentPage: ->
+                p = 1
+                c = 0
+                i = 0
+                while i < @total
+                    if (i==@offset)
                         return p;
-                    if (c+1==this.limit && i<this.total-p){
+                    if (c+1==@limit && i<@total-p)
                         p++; c=0;
-                    }
-                }
-            },
+                    i++
+                    c++
 
-            totalPages(){
-                var p = 1;
-                for (var i=0, c=0 ; i<this.total ; i++, c++){
-                    if (c+1==this.limit && i<this.total-p){
-                        p++; c=0;
-                    }
-                }
+            totalPages: ->
+                p = 1
+                c = 0
+                i = 0
+                while i < @total
+                    if (c+1==@limit && i<@total-p)
+                        p+=1; c=0;
+                    i++
+                    c++
+
                 return p;
-            }
 
-        },
+        methods:
 
-        methods: {
+            firstPage: ->
+                @offset = 0;
 
-            firstPage(){
-                this.offset = 0;
-            },
+            prevPage: ->
+                if (@offset-@limit<0)
+                    return @firstPage();
+                @offset -= @limit;
 
-            prevPage(){
-                if (this.offset-this.limit<0)
-                    return this.firstPage();
-                this.offset -= this.limit;
-            },
+            toPage: (p) ->
+                @offset = (p-1)*@limit;
 
-            toPage(p){
-                this.offset = (p-1)*this.limit;
-            },
+            nextPage: ->
+                if (@offset>=@total-@limit)
+                    return @lastPage();
+                @offset += @limit;
 
-            nextPage(){
-                if (this.offset>this.total-this.limit)
-                    return this.lastPage();
-                this.offset += this.limit;
-            },
+            lastPage: ->
+                @offset = @total-(((@total-1)%@limit)+1);
 
-            lastPage(){
-                this.offset = this.total-(((this.total-1)%this.limit)+1);
-            }
 
-        },
-
-        watch: {
-            limit: function(val, oldVal){
+        watch:
+            limit: (val, oldVal) ->
                 bus.$emit('limit_changed',val);
-            },
-            offset: function(val, oldVal){
+
+            offset: (val, oldVal) ->
                 bus.$emit('offset_changed',val);
-            }
-        },
 
-        created: function(){
 
-            /*
-            this.$nextTick(function() {
+        created: ->
 
-                var target = $(this.$els.selectInput);
-
-                let g = target.selectpicker({
-                    size: 4,
-                    iconBase: 'fa',
-                    tickIcon: 'fa-check'
-                });
-
-                target.selectpicker('refresh');
-
-            });
-            */
-
-            window.onkeyup = (function(e) {
-                var key = e.which || e.keyCode;
+            window.onkeyup = (e) =>
+                key = e.which || e.keyCode
                 if (key == 37)
-                    this.prevPage();
+                    @prevPage()
                 if (key == 39)
-                    this.nextPage();
-            }).bind(this);
+                    @nextPage()
 
-        },
-
-        beforeDestroy: function () {
+        beforeDestroy: ->
             window.onkey = false;
-        }
 
-    };
+    }
 </script>

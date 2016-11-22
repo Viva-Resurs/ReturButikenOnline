@@ -1,179 +1,150 @@
 <template>
-<div class="panel panel-default">
-
-    <div class="panel-heading">
-        Categories
-    </div>
-
-    <div class="panel-body">
-
-        <div v-if="this.$root.loading">
-            <loading></loading>
-        </div>
-
-        <div v-else>
-
-            <div>
-
-                <table class="table table-condensed table-responsive">
-                    <thead class="thead-default">
-                        <tr>
-                            <th>Name <a @click="setOrder('name')">S</a></th>
-                            <th>Updated <a @click="setOrder('updated_at',1)">S</a></th>
-                            <th>Tools</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-if="ithems.length > 0" v-for="(ithem, index) in filterIthems">
-                            <td v-show="!ithem.edit">{{ithem.name}}</td>
-                            <td v-show="ithem.edit">
-                                <input v-model="ithem.name">
-                            </td>
-                            <td>{{ithem.updated_at}}</td>
-                            <td v-if="!ithem.edit">
-                                <button class="btn btn-default btn-sm fa fa-btn fa-pencil" @click="editIthem(ithem)"></button>
-                                <button class="btn btn-default btn-sm fa fa-btn fa-trash" @click="attemptRemove(ithem)"></button>
-                            </td>
-                            <td v-if="ithem.edit">
-                                <a role="button" @click="revertIthem(ithem)">Cancel</a>
-                                <a role="button" @click="attemptUpdate(ithem)">Save</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <button class="btn btn-default btn-sm fa fa-btn fa-plus" @click="newIthem"></button>
-
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
-        </div>
-    </div>
-
-</div>
+    <item-grid
+        header="Categories"
+        :columns="columns"
+        :toolsRow=
+            "[
+              $options.components.Edit,
+              $options.components.Save,
+              $options.components.Remove,
+              $options.components.Undo
+            ]"
+        :toolsBottom=
+        "[
+          $options.components.Add
+        ]"
+        :itemsNew="itemsNew"
+        :items="items">
+    </item-grid>
 </template>
 
-<script>
-import Filters from '../../mixins/Filters.vue'
+<script lang="coffee">
 
-export default {
 
-    name: 'List',
+    module.exports = {
 
-    mixins: [Filters],
+        name: 'List'
 
-    computed: {
-        filterIthems() {
-            return this.ithems
-                .filter(
-                    (ithem) => (ithem.removed != true)
-                )
-                .sort(
-                    (a, b) => this.shallowSort(a[this.order], b[this.order], this)
-
-                )
-        }
-    },
-
-    data: function() {
-        return {
-            ithems: [],
-
-            order: 'originalName',
-            desc: -1
-        }
-    },
-
-    methods: {
-
-        newIthem() {
-            var category = {
-                name: 'namnlös kategori'
-            };
-
-            this.$http.post('categories', category).then(
-                (response) => {
-                    console.log('ok');
-                    category = response.data;
-                    this.ithems.push(category);
-                    this.editIthem(category);
-                },
-                (response) => bus.$emit('error', response)
-            );
-        },
-
-        editIthem(ithem) {
-            ithem.edit = true;
-            this.ithems.reverse();
-        },
-
-        revertIthem(ithem) {
-            ithem.name = ithem.originalName;
-            ithem.edit = false;
-            this.ithems.reverse();
-        },
-
-        attemptUpdate(category) {
-
-            this.$http.put('categories/' + category.id, category).then(
-                (response) => {
-                    console.log('ok');
-                    category.edit = false;
-                    category.originalName = category.name;
-                    this.ithems.reverse();
-                },
-                (response) => bus.$emit('error', response)
-            );
-
-        },
-
-        attemptRemove(category) {
-            // Are you sure?
-            // ... yes
-            this.removeCategory(category);
-        },
-
-        removeCategory(category) {
-            this.$http.delete('categories/' + category.id).then(
-                (response) => {
-                    bus.$emit('success', 'removed_category');
-                    category.removed = true;
-                    this.ithems.reverse();
-                },
-                (response) => bus.$emit('error', response)
-            );
-        },
-
-        getCategories() {
-
-            this.$root.loading = true;
-
-            this.$http.get('categories').then(
-                (response) => {
-                    this.ithems = response.data;
-
-                    // Fill in all ithems originalName
-                    for (var i = 0; i < this.ithems.length; i++)
-                        this.ithems[i].originalName = this.ithems[i].name;
-
-                    this.$root.loading = false;
-                },
-                (response) => {
-                    bus.$emit('error', response);
-                    this.$root.loading = false;
-                }
-            );
+        components: {
+            ItemGrid: require '../../components/ItemGrid.vue'
+            Remove: require '../../components/tools/Remove.vue'
+            Save: require '../../components/tools/Save.vue'
+            Undo: require '../../components/tools/Undo.vue'
+            Edit: require '../../components/tools/Edit.vue'
+            Add: require '../../components/tools/Add.vue'
         }
 
-    },
+        data: ->
+            items: []
 
-    created: function() {
-        this.getCategories();
+            itemsNew: []
+
+            columns:
+                name:
+                    label: 'Name'
+                    key: 'name'
+                    type: 'string'
+                    search: true
+                    sort: true
+                    class: 'link'
+                updated_at:
+                    label: 'Updated'
+                    key: 'updated_at'
+                    type: 'number'
+                    desc: true
+                    default_sort: true
+                    search: true
+                    sort: true
+                    class: 'collapsing'
+
+
+        methods:
+            addItem: () ->
+                @itemsNew.push({id_new:@itemsNew.length})
+
+            attemptCreate: (category) ->
+                # Validation
+                @createCategory(category)
+
+            createCategory: (new_category) ->
+                @$http.post('categories', new_category).then(
+                    (response) =>
+                        @attemptRemove(new_category)
+                        category = response.data
+                        @items.push(category)
+                        @$nextTick ->
+                            $('#category_content').trigger('updated',category.id)
+
+                    (response) => bus.$emit('error', response)
+                );
+
+            editItem: (item) ->
+                Vue.set item, 'edit', true
+                for key, column of @columns
+                    Vue.set item, key+'_new', item[key]
+
+            revertItem: (item) ->
+                Vue.set item, 'edit', false
+
+            attemptUpdate: (category) ->
+                Vue.set category, 'edit', false
+                for key, column of @columns
+                    Vue.set category, key, category[key+'_new']
+
+                @$http.put('categories/' + category.id, category).then(
+                    (response) =>
+                        Vue.set category, 'updated_at', response.data.updated_at
+                        @$nextTick ->
+                            $('#category_content').trigger('updated',category.id)
+                    (response) => bus.$emit('error', response)
+                );
+
+            attemptRemove: (category) ->
+                # Remove new items that are not yet created
+                if (!category.id)
+                    for index, ob of @itemsNew
+                        if (Number ob.id_new == Number category.id_new)
+                            return @itemsNew.splice(index,1)
+                    return false
+                # Are you sure?
+                @removeCategory(category)
+
+            removeCategory: (category) ->
+                @$http.delete('categories/' + category.id).then(
+                    (response) =>
+                        bus.$emit('success', 'removed_category')
+                        $('tbody').trigger('removed',category.id, ->
+                            Vue.set category, 'removed', true
+                        )
+                    (response) => bus.$emit('error', response)
+                );
+
+            getCategories: () ->
+                @$root.loading = true;
+                @$http.get('categories').then(
+                    (response) =>
+                        @items = response.data
+                        @$root.loading = false
+                    (response) =>
+                        bus.$emit('error', response)
+                        @$root.loading = false
+                );
+
+        created: ->
+            @getCategories()
+            bus.$on('item_add', () => @addItem() )
+            bus.$on('item_edit', (item) => @editItem(item) )
+            bus.$on('item_revert', (item) => @revertItem(item) )
+            bus.$on('item_remove', (item) => @attemptRemove(item) )
+            bus.$on('item_changed', (item) => @attemptUpdate(item) )
+            bus.$on('item_created', (item) => @attemptCreate(item) )
+
+        beforeDestroy: ->
+            bus.$off('item_add')
+            bus.$off('item_edit')
+            bus.$off('item_revert')
+            bus.$off('item_remove')
+            bus.$off('item_changed')
+            bus.$off('item_created')
     }
-}
 </script>

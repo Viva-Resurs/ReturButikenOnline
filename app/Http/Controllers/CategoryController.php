@@ -25,7 +25,7 @@ class CategoryController extends Controller
     }
 
     public function store(Request $request){
-        
+
 		$user = Auth::user();
 
         if (!$user || !$user->hasRole('admin'))
@@ -41,7 +41,7 @@ class CategoryController extends Controller
     }
 
     public function update(Request $request, $id){
-        
+
 		$user = Auth::user();
 
         if (!$user || !$user->hasRole('admin'))
@@ -56,10 +56,12 @@ class CategoryController extends Controller
             $category->name = $request['name'];
 
         $category->save();
+
+        return $category;
     }
 
     public function destroy($id){
-        
+
 		$user = Auth::user();
 
         if (!$user || !$user->hasRole('admin'))

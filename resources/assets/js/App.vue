@@ -7,53 +7,47 @@
     </div>
 </template>
 
-<script>
-    /**
-     * Create a event-central
-     */
+<script lang="coffee">
+
+    # Create a event-central
     window.bus = new Vue();
 
-    /**
-     * Define global components
-     */
+    # Define global components
     Vue.component('loading', require('./components/Loading.vue'));
 
-    /**
-     * Define global directives
-     */
+    # Define global directives
     Vue.directive('tooltip', require('./directives/tooltip.vue'));
-    Vue.directive('daterangepicker', require('./directives/daterangepicker.vue'));
+    Vue.directive('dropdown', require('./directives/dropdown.vue'));
+    Vue.directive('checkbox', require('./directives/checkbox.vue'));
+    Vue.directive('focus', require('./directives/focus.vue'));
+    Vue.directive('item', require('./directives/item.vue'));
 
-    /**
-     * Export the root-instance options
-     */
-    import Navigation from './components/Nav.vue'
-    import Auth from './mixins/Auth.vue'
-    import ErrorHandler from './mixins/ErrorHandler.vue'
-    import SuccessHandler from './mixins/SuccessHandler.vue'
-    import SweetAlert from './mixins/SweetAlert.vue'
-    export default {
+    # Export the root-instance options
+    Navigation = require './components/Nav.vue'
+
+    Auth = require './mixins/Auth.vue'
+    ErrorHandler = require './mixins/ErrorHandler.vue'
+    SuccessHandler = require './mixins/SuccessHandler.vue'
+    SweetAlert = require './mixins/SweetAlert.vue'
+
+    module.exports = {
 
         name: 'App',
 
         components: { Navigation },
 
-        mixins: [ Auth, SweetAlert, ErrorHandler, SuccessHandler ],
+        mixins: [ Auth, SweetAlert, ErrorHandler, SuccessHandler ]
 
-        data: function(){
-            return {
-                loading: true,
+        data: ->
+            loading: true,
 
-                settings: {
-                    title: 'ReturButikenOnline'
-                }
-            }
-        },
+            settings:
+                title: 'ReturButikenOnline'
 
-        created: function(){
-            // Log a reference to this App
+        created: ->
+            # Log a reference to this App
             console.log(this)
-        }
+
 
     }
 </script>

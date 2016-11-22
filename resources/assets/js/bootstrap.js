@@ -8,7 +8,11 @@ window._ = require('lodash');
  */
 
 window.$ = window.jQuery = require('jquery');
-require('bootstrap-sass');
+
+/**
+ * Semantic UI
+ */
+require('../../../semantic/dist/semantic.min.js');
 
 /**
  * moment
@@ -18,9 +22,9 @@ window.moment = require('moment');
 
 /**
  * daterangepicker
- * https://www.npmjs.com/package/daterangepicker
+ * https://www.npmjs.com/package/semantic-ui-daterangepicker
  */
-window.daterangepicker = require('./vendor/bootstrap.daterangepicker.2.1.24.js');
+require('./vendor/semantic-ui-daterangepicker.1.3.21.js');
 
 /**
  * Vue is a modern JavaScript library for building interactive web interfaces

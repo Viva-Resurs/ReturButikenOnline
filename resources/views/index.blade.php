@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>{{ config('app.name', 'Index') }}</title>
-        
+
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
