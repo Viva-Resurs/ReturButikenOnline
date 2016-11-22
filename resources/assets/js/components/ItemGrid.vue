@@ -24,8 +24,8 @@
                                 <th class="center aligned collapsing">#</th>
                                 <th v-for="column in columns"
                                     :class="column.class"
-                                    @click="(column.sort) ? setSortBy(column.label) : false">
-                                    {{column.label}} <i v-if="column.sort" :class="[headers[column.label], headers[column.label+'_icon']]" ></i>
+                                    @click="(column.sort) ? setSortBy(column.key) : false">
+                                    {{column.label}} <i v-if="column.sort" :class="[headers[column.key], headers[column.key+'_icon']]" ></i>
                                 </th>
                                 <th class="center aligned">Tools</th>
                             </tr>
@@ -39,11 +39,11 @@
                                     v-tooltip :data-html="formatTooltip(item[column.tooltip])"
                                     >
                                     <span v-if="column.type=='string' || column.type=='number' || column.type==''">
-                                        {{item[column.label]}}
+                                        {{item[column.key]}}
                                     </span>
                                     <div v-if="column.type=='checkbox'" class="center aligned">
-                                        <i :class="'ui icon ' + ((item[column.label]==1) ? 'checkmark box' : 'square outline')"
-                                            v-tooltip :data-html="((item[column.label]==1) ? column.checkbox_true : column.checkbox_false)"
+                                        <i :class="'ui icon ' + ((item[column.key]==1) ? 'checkmark box' : 'square outline')"
+                                            v-tooltip :data-html="((item[column.key]==1) ? column.checkbox_true : column.checkbox_false)"
                                         ></i>
                                     </div>
                                 </td>
@@ -94,8 +94,8 @@
                                 <th class="center aligned collapsing">#</th>
                                 <th v-for="column in columns"
                                     :class="column.class"
-                                    @click="(column.sort) ? setSortBy(column.label) : false">
-                                    {{column.label}} <i v-if="column.sort" :class="[headers[column.label], headers[column.label+'_icon']]" ></i>
+                                    @click="(column.sort) ? setSortBy(column.key) : false">
+                                    {{column.label}} <i v-if="column.sort" :class="[headers[column.key], headers[column.key+'_icon']]" ></i>
                                 </th>
                                 <th class="center aligned">Tools</th>
                             </tr>
@@ -108,12 +108,12 @@
                                     v-tooltip :data-html="formatTooltip(item[column.tooltip])"
                                     >
                                     <div v-if="item.edit && column.type=='string'" class="ui input fluid">
-                                        <input v-model="item[column.label+'_new']" :placeholder="'Type ' + column.label"
+                                        <input v-model="item[column.key+'_new']" :placeholder="'Type ' + column.label"
                                         @keyup.enter="attemptUpdate(item)"
                                         v-focus>
                                     </div>
                                     <div v-else>
-                                        {{item[column.label]}}
+                                        {{item[column.key]}}
                                     </div>
                                 </td>
                                 <td class="collapsing">
@@ -130,7 +130,7 @@
                                     v-tooltip :data-html="formatTooltip(item[column.tooltip])"
                                     >
                                     <div v-if="column.type=='string'" class="ui input fluid">
-                                        <input v-model="item[column.label]" :placeholder="'Type ' + column.label"
+                                        <input v-model="item[column.key]" :placeholder="'Type ' + column.label"
                                         @keyup.enter="attemptUpdate(item)"
                                         v-focus>
                                     </div>

@@ -15,17 +15,17 @@
 </template>
 
 <script lang="coffee">
-    ItemGrid = require '../../components/ItemGrid.vue';
-    PublishInterval = require '../../components/tools/PublishInterval.vue';
-    BiddingInterval = require '../../components/tools/BiddingInterval.vue';
-    Remove = require '../../components/tools/Remove.vue';
-    Edit = require '../../components/tools/Edit.vue';
-
     module.exports = {
 
         name: 'List'
 
-        components: { ItemGrid, PublishInterval, BiddingInterval, Edit, Remove }
+        components: {
+            ItemGrid: require '../../components/ItemGrid.vue'
+            PublishInterval: require '../../components/tools/PublishInterval.vue'
+            BiddingInterval: require '../../components/tools/BiddingInterval.vue'
+            Remove: require '../../components/tools/Remove.vue'
+            Edit: require '../../components/tools/Edit.vue'
+        }
 
         data: ->
             items: []
@@ -34,32 +34,34 @@
                     label: 'name'
                 meta:
                     updated_at:
-                        title: 'Updated'
-                        label: 'updated_at'
+                        label: 'Updated'
+                        key: 'updated_at'
                         class: 'right floated time'
                     categories:
-                        title: 'Categories'
-                        label: 'categories'
+                        label: 'Categories'
+                        key: 'categories'
                         class: 'category'
                 description:
-                    label: 'desc'
+                    key: 'desc'
                 extra:
                     public:
-                        label: 'public'
+                        key: 'public'
                         class: ''
                         type: 'boolean'
                         true: 'Publicerad för allmänheten'
                         false: 'Publicerad på kommunens intranät'
             columns:
                 name:
-                    label: 'name'
+                    label: 'Name'
+                    key: 'name'
                     type: 'string'
                     search: true
                     sort: true
                     tooltip: 'desc'
                     class: 'link'
                 updated_at:
-                    label: 'updated_at'
+                    label: 'Updated'
+                    key: 'updated_at'
                     type: 'number'
                     desc: true
                     default_sort: true
@@ -67,7 +69,8 @@
                     sort: true
                     class: 'link'
                 public:
-                    label: 'public'
+                    label: 'Public'
+                    key: 'public'
                     search: false
                     sort: false
                     type: 'checkbox'

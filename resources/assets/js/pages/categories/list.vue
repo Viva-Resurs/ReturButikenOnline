@@ -39,13 +39,15 @@
 
             columns:
                 name:
-                    label: 'name'
+                    label: 'Name'
+                    key: 'name'
                     type: 'string'
                     search: true
                     sort: true
                     class: 'link'
                 updated_at:
-                    label: 'updated_at'
+                    label: 'Updated'
+                    key: 'updated_at'
                     type: 'number'
                     desc: true
                     default_sort: true
