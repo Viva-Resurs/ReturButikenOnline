@@ -3,7 +3,7 @@
         header="Articles"
         :columns="columns"
         :card="card"
-        :tools=
+        :toolsRow=
             "[
               $options.components.PublishInterval,
               $options.components.BiddingInterval,
@@ -76,11 +76,6 @@
                     class: 'center aligned collapsing'
 
         methods:
-            updateList: () ->
-                @items.reverse()
-                this.$nextTick ->
-                    @items.reverse()
-
             attemptRemove: (article) ->
                 # Are you sure?
                 @removeArticle(article);
@@ -89,8 +84,7 @@
                 @$http.delete('articles/'+article.id).then(
                     (response) =>
                         bus.$emit('success','removed_article')
-                        article.removed = true;
-                        @updateList();
+                        Vue.set article, 'removed', true;
                     (response) => bus.$emit('error',response)
                 );
 
@@ -102,7 +96,6 @@
                 @$http.put('articles/'+article.id,article).then(
                     (response) =>
                         bus.$emit('success','updated_article')
-                        @updateList();
                     (response) => bus.$emit('error',response)
                 );
 
@@ -127,14 +120,14 @@
             bus.$on('publish_interval_changed', (id,new_value) =>
                 for item in this.items
                     if (Number item.id == Number id)
-                        item.publish_interval = new_value
+                        Vue.set item, 'publish_interval', new_value
                         bus.$emit('item_changed',item)
             );
 
             bus.$on('bidding_interval_changed', (id,new_value) =>
                 for item in this.items
                     if (Number item.id == Number id)
-                        item.bidding_interval = new_value
+                        Vue.set item, 'bidding_interval', new_value
                         bus.$emit('item_changed',item)
             );
 

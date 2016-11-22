@@ -2,13 +2,18 @@
     <item-grid
         header="Categories"
         :columns="columns"
-        :tools=
+        :toolsRow=
             "[
               $options.components.Edit,
-              $options.components.Remove,
               $options.components.Save,
+              $options.components.Remove,
               $options.components.Undo
             ]"
+        :toolsBottom=
+        "[
+          $options.components.Add
+        ]"
+        :itemsNew="itemsNew"
         :items="items">
     </item-grid>
 </template>
@@ -19,20 +24,18 @@
     Save = require '../../components/tools/Save.vue';
     Undo = require '../../components/tools/Undo.vue';
     Edit = require '../../components/tools/Edit.vue';
+    Add = require '../../components/tools/Add.vue';
 
     module.exports = {
 
         name: 'List'
 
-        components: { ItemGrid, Edit, Remove, Save, Undo }
+        components: { ItemGrid, Edit, Remove, Save, Undo, Add }
 
         data: ->
             items: []
 
-            # Not done
-            adding: false
-            new_category:
-                name: ''
+            itemsNew: []
 
             columns:
                 name:
@@ -52,25 +55,19 @@
 
 
         methods:
-            updateList: () ->
-                @items.reverse()
-                @$nextTick ->
-                    @items.reverse()
+            addItem: () ->
+                @itemsNew.push({id_new:@itemsNew.length})
 
             attemptCreate: (category) ->
                 # Validation
                 @createCategory(category)
 
-            createCategory: (category) ->
-                # Not done...
-                return false
-                @$http.post('categories', @new_category).then(
+            createCategory: (new_category) ->
+                @$http.post('categories', new_category).then(
                     (response) =>
-                        console.log('ok')
+                        @attemptRemove(new_category)
                         category = response.data
                         @items.push(category)
-                        @new_category.name = ''
-                        @adding = false
                         @$nextTick ->
                             $('#category_content').trigger('updated',category.id)
 
@@ -78,28 +75,33 @@
                 );
 
             editItem: (item) ->
-                item.edit = true
-                @updateList()
+                Vue.set item, 'edit', true
+                for key, column of @columns
+                    Vue.set item, key+'_new', item[key]
 
             revertItem: (item) ->
-                item.edit = false
-                @updateList()
+                Vue.set item, 'edit', false
 
             attemptUpdate: (category) ->
-                category.edit = false;
-                # Not done...
-                return false
-                category.name = category.new_name.trim()
+                Vue.set category, 'edit', false
+                for key, column of @columns
+                    Vue.set category, key, category[key+'_new']
+
                 @$http.put('categories/' + category.id, category).then(
                     (response) =>
-                        category.updated_at = response.data.updated_at
-                        @updateList()
+                        Vue.set category, 'updated_at', response.data.updated_at
                         @$nextTick ->
                             $('#category_content').trigger('updated',category.id)
                     (response) => bus.$emit('error', response)
                 );
 
             attemptRemove: (category) ->
+                # Remove new items that are not yet created
+                if (!category.id)
+                    for index, ob of @itemsNew
+                        if (Number ob.id_new == Number category.id_new)
+                            return @itemsNew.splice(index,1)
+                    return false
                 # Are you sure?
                 @removeCategory(category)
 
@@ -107,9 +109,8 @@
                 @$http.delete('categories/' + category.id).then(
                     (response) =>
                         bus.$emit('success', 'removed_category')
-                        $('table').trigger('removed',category.id, ->
-                            category.removed = true
-                            @updateList()
+                        $('tbody').trigger('removed',category.id, ->
+                            Vue.set category, 'removed', true
                         )
                     (response) => bus.$emit('error', response)
                 );
@@ -127,16 +128,19 @@
 
         created: ->
             @getCategories()
-
+            bus.$on('item_add', () => @addItem() )
             bus.$on('item_edit', (item) => @editItem(item) )
             bus.$on('item_revert', (item) => @revertItem(item) )
             bus.$on('item_remove', (item) => @attemptRemove(item) )
             bus.$on('item_changed', (item) => @attemptUpdate(item) )
+            bus.$on('item_created', (item) => @attemptCreate(item) )
 
         beforeDestroy: ->
+            bus.$off('item_add')
             bus.$off('item_edit')
             bus.$off('item_revert')
             bus.$off('item_remove')
             bus.$off('item_changed')
+            bus.$off('item_created')
     }
 </script>

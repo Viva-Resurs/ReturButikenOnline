@@ -49,7 +49,7 @@
                                 </td>
                                 <td class="collapsing">
                                     <div class="ui icon basic buttons">
-                                        <component v-for="tool in tools" :is="tool" :item="item" >
+                                        <component v-for="tool in toolsRow" :is="tool" :item="item" >
                                         </component>
                                     </div>
                                 </td>
@@ -87,43 +87,74 @@
                         </div>
                     </div>
                 </div> -->
-                <table class="ui compact unstackable celled table" v-if="!card">
-                    <thead>
-                        <tr>
-                            <th class="center aligned collapsing">#</th>
-                            <th v-for="column in columns"
-                                :class="column.class"
-                                @click="(column.sort) ? setSortBy(column.label) : false">
-                                {{column.label}} <i v-if="column.sort" :class="[headers[column.label], headers[column.label+'_icon']]" ></i>
-                            </th>
-                            <th class="center aligned">Tools</th>
-                        </tr>
-                    </thead>
-                    <tbody v-item>
-                        <tr v-for="(item, index) in filterItems" :id="item.id">
-                            <td class="center aligned warning collapsing"><strong>{{(index+1)+offset}}. </strong></td>
-                            <td v-for="column in columns"
-                                :class="column.class"
-                                v-tooltip :data-html="formatTooltip(item[column.tooltip])"
-                                >
-                                <div v-if="item.edit && column.type=='string'" class="ui input fluid">
-                                    <input v-model="item[column.label+'_new']" :placeholder="'Type ' + column.label"
-                                    @keyup.enter="attemptUpdate(item)"
-                                    v-focus>
-                                </div>
-                                <div v-else>
-                                    {{item[column.label]}}
-                                </div>
-                            </td>
-                            <td class="collapsing">
-                                <div class="ui icon basic buttons">
-                                    <component v-for="tool in tools" :is="tool" :item="item" >
-                                    </component>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="row" v-if="!card">
+                    <table class="ui compact unstackable celled table">
+                        <thead>
+                            <tr>
+                                <th class="center aligned collapsing">#</th>
+                                <th v-for="column in columns"
+                                    :class="column.class"
+                                    @click="(column.sort) ? setSortBy(column.label) : false">
+                                    {{column.label}} <i v-if="column.sort" :class="[headers[column.label], headers[column.label+'_icon']]" ></i>
+                                </th>
+                                <th class="center aligned">Tools</th>
+                            </tr>
+                        </thead>
+                        <tbody v-item>
+                            <tr v-for="(item, index) in filterItems" :id="item.id">
+                                <td class="center aligned warning collapsing"><strong>{{(index+1)+offset}}. </strong></td>
+                                <td v-for="column in columns"
+                                    :class="column.class"
+                                    v-tooltip :data-html="formatTooltip(item[column.tooltip])"
+                                    >
+                                    <div v-if="item.edit && column.type=='string'" class="ui input fluid">
+                                        <input v-model="item[column.label+'_new']" :placeholder="'Type ' + column.label"
+                                        @keyup.enter="attemptUpdate(item)"
+                                        v-focus>
+                                    </div>
+                                    <div v-else>
+                                        {{item[column.label]}}
+                                    </div>
+                                </td>
+                                <td class="collapsing">
+                                    <div class="ui icon basic buttons">
+                                        <component v-for="tool in toolsRow" :is="tool" :item="item" >
+                                        </component>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr v-for="(item, index) in itemsNew">
+                                <td class="center aligned warning collapsing"></td>
+                                <td v-for="column in columns"
+                                    :class="column.class"
+                                    v-tooltip :data-html="formatTooltip(item[column.tooltip])"
+                                    >
+                                    <div v-if="column.type=='string'" class="ui input fluid">
+                                        <input v-model="item[column.label]" :placeholder="'Type ' + column.label"
+                                        @keyup.enter="attemptUpdate(item)"
+                                        v-focus>
+                                    </div>
+                                </td>
+                                <td class="collapsing">
+                                    <div class="ui icon basic buttons">
+                                        <component v-for="tool in toolsRow" :is="tool" :item="item" >
+                                        </component>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td v-for="c in columns"></td>
+                                <td>
+                                    <div class="ui icon basic buttons">
+                                        <component v-for="tool in toolsBottom" :is="tool">
+                                        </component>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <pagination
                     :total="countItems"
                     :show-pagination="(search=='' && !limitOffBtn)"
@@ -146,7 +177,7 @@
 
     module.exports = {
         name: 'ItemGrid'
-        props: [ 'header', 'columns', 'card', 'items', 'tools' ]
+        props: [ 'header', 'columns', 'card', 'items', 'itemsNew', 'toolsRow', 'toolsBottom' ]
         mixins: [ Filters ]
         components: { Pagination }
         data: ->

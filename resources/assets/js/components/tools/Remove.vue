@@ -1,7 +1,7 @@
 <template>
     <div class="ui icon button hover-danger"
         v-tooltip data-html="Remove"
-        v-show="!item.edit"
+        v-show="!item.edit || !item.id"
         @click="remove(item)">
         <i class="ui icon trash"></i>
     </div>
