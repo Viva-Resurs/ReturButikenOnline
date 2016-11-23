@@ -58,8 +58,14 @@ class ImageController extends Controller
 
         if ($request->has('name') && $request['name']!='')
             $image->name = $request['name'];
+
+        if ($request->has('original_name') && $request['original_name']!='')
             $image->original_name = $request['original_name'];
+
+        if ($request->has('path') && $request['path']!='')
             $image->path = $request['path'];
+
+        if ($request->has('thumb_path') && $request['thumb_path']!='')
             $image->thumb_path = $request['thumb_path'];
 
         $image->save();
