@@ -21,6 +21,8 @@ Route::resource('articles', 'ArticleController');
 
 Route::resource('categories', 'CategoryController');
 
+Route::resource('images', 'ImageController');
+
 Route::resource('users', 'UserController');
 
 Route::get('/user', 'UserController@me');

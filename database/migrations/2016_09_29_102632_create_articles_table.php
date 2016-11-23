@@ -45,6 +45,16 @@ class CreateArticlesTable extends Migration
 
             $table->timestamps();
         });
+
+        Schema::create('articles_image', function (Blueprint $table) {
+
+            $table->integer('image_id')->unsigned()->index();
+            $table->foreign('image_id')->references('id')->on('image')->onDelete('cascade');
+            $table->integer('article_id')->unsigned()->index();
+            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -57,5 +67,6 @@ class CreateArticlesTable extends Migration
         Schema::drop('articles');
         Schema::drop('articles_owner');
         Schema::drop('articles_category');
+        Schema::drop('articles_image');
     }
 }

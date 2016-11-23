@@ -27,7 +27,7 @@ class Article extends Model
     }
 
     public function images() {
-        return $this->hasMany(Image::class);
+        return $this->belongsToMany(Image::class, 'articles_image');
     }
 
 }
