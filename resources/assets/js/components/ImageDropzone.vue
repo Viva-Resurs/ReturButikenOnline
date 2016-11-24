@@ -3,7 +3,7 @@
         <input type='file' id='files' name='files[]' hidden multiple/>
         <div class="ui eight doubling stackable cards">
             <div class="ui fluid card" v-for="image in images">
-                <img :src="image.src" :id="image.id" class="ui fluid rounded image">
+                <img :src="image.thumb_path" :id="image.id" class="ui fluid rounded image">
             </div>
             <div class="ui fluid card" v-for="waiting in buffer">
                 <div class="ui loader centered inline active">
@@ -48,15 +48,8 @@
 
                 this.$http.post('images',data).then(
                     (response) =>
-
                         @buffer.pop( file )
-                        image = {
-                            id: response.data.id
-                            src: response.data.thumb_path
-                        }
-                        bus.$emit('image_added',image)
-
-
+                        bus.$emit('image_added',response.data)
 
                     (response) =>
                         bus.$emit('error', response);
