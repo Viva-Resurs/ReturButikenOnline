@@ -13,6 +13,9 @@ composer.lock
 /public/js
 /public/fonts
 
+# Uploads
+/public/uploads/*.*
+
 # Application
 .env
 /database/*.sqlite
