@@ -39,7 +39,31 @@
             openDialog: () ->
                 $('#files').trigger('click')
 
+            createFile: (file) ->
+                data = new FormData()
+                data.append('files[]', file)
+
+                this.$http.post('images',data).then(
+                    (response) =>
+                        console.log response
+                        return
+                        # Move to files
+                        @files.push( response.data )
+                        @buffer.pop( file )
+
+                    (response) =>
+                        bus.$emit('error', response);
+                        @buffer.pop( file )
+
+                );
+
+
+
             handleFile: (file) ->
+
+                # Test to send file as is
+                return @createFile( file )
+
                 reader = new FileReader()
 
                 img = document.createElement('img')

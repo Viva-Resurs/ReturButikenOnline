@@ -16,40 +16,46 @@ class ImageController extends Controller
 {
     public function index(Request $request){
 
-		$user = Auth::user();
+        $user = Auth::user();
 
         if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to list images');
+            abort(401,'Not allowed to list images');
 
         return Image::all();
     }
 
     public function store(Request $request){
 
-		$user = Auth::user();
+        $user = Auth::user();
 
         if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to create images');
+            abort(401,'Not allowed to create images');
+
+        foreach ($request->file('files') as $file) {
+
+            dd($path);
+
+        }
+
+        dd('nofiles');
 
         $image = new Image([
-            'name' => ($request->has('name')) ? $request['name'] : 'namnlös bild',
-            'original_name' => ($request->has('original_name')) ? $request['original_name'] : 'namnlös bild',
+            'name' => ($file->has('name')) ? $request['name'] : 'namnlös bild',
+            'original_name' => $file->originalName,
             'path' => ($request->has('path')) ? $request['path'] : 'ingen sökväg',
             'thumb_path' => ($request->has('thumb_path')) ? $request['thumb_path'] : 'ingen miniatyrbild'
 
         ]);
-
-        $image->save();
 
         return $image;
     }
 
     public function update(Request $request, $id){
 
-		$user = Auth::user();
+        $user = Auth::user();
 
         if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to update images');
+            abort(401,'Not allowed to update images');
 
         $image = Image::find($id);
 
@@ -75,10 +81,10 @@ class ImageController extends Controller
 
     public function destroy($id){
 
-		$user = Auth::user();
+        $user = Auth::user();
 
         if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to remove images');
+            abort(401,'Not allowed to remove images');
 
         $image = Image::find($id);
 
