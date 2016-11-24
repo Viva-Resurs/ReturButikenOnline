@@ -35,6 +35,7 @@ class ImageController extends Controller
 
         foreach ($request->file('files') as $file) {
 
+
             $file_path = $file->store('uploads','public');
 
             $tmb = ImageGenerator::make($file_path)->fit(200);
@@ -42,21 +43,16 @@ class ImageController extends Controller
 
             $tmb->save($thumb_path);
 
-            dd('File saved to: '.$file_path.'     Thumbnail saved to: '.$thumb_path);
+            $image = new Image([
+                'name' => $tmb->basename,
+                'original_name' => $file->getClientOriginalName(),
+                'path' => $file_path,
+                'thumb_path' => $thumb_path
+            ]);
 
+            return $image;
         }
 
-        dd('nofiles');
-
-        $image = new Image([
-            'name' => ($file->has('name')) ? $request['name'] : 'namnlös bild',
-            'original_name' => $file->originalName,
-            'path' => ($request->has('path')) ? $request['path'] : 'ingen sökväg',
-            'thumb_path' => ($request->has('thumb_path')) ? $request['thumb_path'] : 'ingen miniatyrbild'
-
-        ]);
-
-        return $image;
     }
 
     public function update(Request $request, $id){
