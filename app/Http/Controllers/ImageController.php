@@ -50,6 +50,8 @@ class ImageController extends Controller
                 'thumb_path' => $thumb_path
             ]);
 
+            $image->save();
+
             return $image;
         }
 
