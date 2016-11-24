@@ -43,6 +43,11 @@ class ImageController extends Controller
 
             $tmb->save($thumb_path);
 
+            $exists = Image::where('path',$file_path)->count();
+
+            if ($exists>0)
+                return Image::where('path',$file_path)->first();
+
             $image = new Image([
                 'name' => $tmb->basename,
                 'original_name' => $file->getClientOriginalName(),
