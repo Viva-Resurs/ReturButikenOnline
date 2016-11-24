@@ -33,6 +33,8 @@ class ImageController extends Controller
 
         foreach ($request->file('files') as $file) {
 
+            $path = $file->store('uploads','public');
+
             dd($path);
 
         }
