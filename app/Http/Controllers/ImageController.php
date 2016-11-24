@@ -37,7 +37,7 @@ class ImageController extends Controller
 
             $file_path = $file->store('uploads','public');
 
-            $tmb = ImageGenerator::make($file_path)->resize(300, 200);
+            $tmb = ImageGenerator::make($file_path)->fit(200);
             $thumb_path = 'uploads/_'.$tmb->basename;
 
             $tmb->save($thumb_path);
