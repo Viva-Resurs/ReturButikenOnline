@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\Image;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -67,7 +68,10 @@ class ArticleController extends Controller
             array_push($result['selected_categories'],$category->id);
 
         foreach ($article->images as $image)
-            array_push($result['selected_images'], $image->id);
+            array_push($result['selected_images'], [
+                'id' => $image->id,
+                'thumb_path' => $image->thumb_path
+            ]);
 
         return $result;
     }
@@ -102,7 +106,7 @@ class ArticleController extends Controller
                 $im = Image::find($image);
                 $article->images()->save($im);
             }
-        
+
         return $this->show($article->id);
     }
 
@@ -158,7 +162,7 @@ class ArticleController extends Controller
         // Attach Images
         if ($request['selected_images'])
             foreach ($request['selected_images'] as $image){
-                $im = Image::find($image);
+                $im = Image::find($image['id']);
                 $article->images()->save($im);
             }
 
