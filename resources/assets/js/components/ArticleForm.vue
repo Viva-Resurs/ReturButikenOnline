@@ -42,7 +42,7 @@
 
                 <div class="field">
                     <label for="images">Bilder:</label>
-                    <image-dropzone></image-dropzone>
+                    <image-dropzone :images="article.selected_images"></image-dropzone>
                 </div>
 
                 <div class="field">
@@ -140,6 +140,7 @@
                 publish_interval: ''
                 bidding_interval: ''
                 selected_categories: []
+                selected_images: []
             categories:
                 null
             settings:
@@ -201,8 +202,12 @@
             # Get categories
             @getCategoryList()
 
-        ready: ->
-            @initialSelected()
+            # Images
+            bus.$on('image_added', (image) =>
+                console.log image
+                @article.selected_images.push(image)
+            )
+
 
         beforeDestroy: ->
             bus.$off('publish_interval_form_changed');

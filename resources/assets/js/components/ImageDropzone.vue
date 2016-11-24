@@ -1,12 +1,13 @@
 <template>
     <div class="ui segment bottom attached" id='dropZone'>
         <input type='file' id='files' name='files[]' hidden multiple/>
-        <div class="ui four doubling stackable cards">
-            <div class="ui fluid card" v-for="file in files">
-                <img :src="file.src" class="ui fluid rounded image">
+        <div class="ui eight doubling stackable cards">
+            <div class="ui fluid card" v-for="image in images">
+                <img :src="image.src" :id="image.id" class="ui fluid rounded image">
             </div>
             <div class="ui fluid card" v-for="waiting in buffer">
-                <div class="ui loader active"></div>
+                <div class="ui loader centered inline active">
+                </div>
             </div>
             <div class="ui fluid card">
                 <div class="ui icon massive fluid button" @click="openDialog()">
@@ -31,8 +32,8 @@
 <script lang="coffee">
     module.exports = {
         name: 'Dropzone'
+        props: ['images']
         data: () ->
-            files: []
             buffer: []
 
         methods:
@@ -40,16 +41,22 @@
                 $('#files').trigger('click')
 
             handleFile: (file) ->
+                @buffer.push( file )
+
                 data = new FormData()
                 data.append('files[]', file)
 
                 this.$http.post('images',data).then(
                     (response) =>
-                        console.log response
-                        return
-                        # Move to files
-                        @files.push( response.data )
+
                         @buffer.pop( file )
+                        image = {
+                            id: response.data.id
+                            src: response.data.thumb_path
+                        }
+                        bus.$emit('image_added',image)
+
+
 
                     (response) =>
                         bus.$emit('error', response);
