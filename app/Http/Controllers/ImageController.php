@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Image;
 
+use ImageGenerator;
+
 use Illuminate\Support\Facades\Auth;
 
 use Illuminate\Support\Facades\DB;
@@ -33,9 +35,14 @@ class ImageController extends Controller
 
         foreach ($request->file('files') as $file) {
 
-            $path = $file->store('uploads','public');
+            $file_path = $file->store('uploads','public');
 
-            dd($path);
+            $tmb = ImageGenerator::make($file_path)->resize(300, 200);
+            $thumb_path = 'uploads/thumbs/'.$tmb->basename;
+
+            $tmb->save($thumb_path);
+
+            dd('File saved to: '.$file_path.'     Thumbnail saved to: '.$thumb_path);
 
         }
 
