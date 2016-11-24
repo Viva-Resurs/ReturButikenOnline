@@ -39,7 +39,7 @@
             openDialog: () ->
                 $('#files').trigger('click')
 
-            createFile: (file) ->
+            handleFile: (file) ->
                 data = new FormData()
                 data.append('files[]', file)
 
@@ -56,32 +56,6 @@
                         @buffer.pop( file )
 
                 );
-
-
-
-            handleFile: (file) ->
-
-                # Test to send file as is
-                return @createFile( file )
-
-                reader = new FileReader()
-
-                img = document.createElement('img')
-                img.file = file
-
-                # Add to buffer
-                @buffer.push(img)
-
-                # When ready
-                reader.onload = (e) =>
-                    img.src = e.target.result
-
-                    # Move to files
-                    @files.push( img )
-                    @buffer.pop( img )
-
-                # Start reading file
-                reader.readAsDataURL(file)
 
             handleFileSelect: (e) ->
                 e.stopPropagation()
