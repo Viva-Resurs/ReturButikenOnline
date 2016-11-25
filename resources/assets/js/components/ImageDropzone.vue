@@ -9,9 +9,20 @@
                             <div class="ui inverted standard button icon" @click="show(image)">
                                 <i class="eye icon"></i>
                             </div>
-                            <div class="ui inverted red button icon" @click="remove(image)">
-                                <i class="delete icon"></i>
-                            </div>
+                            <div class="ui modal" :id="'imageModal'+image.id">
+                                <i class="close icon"></i>
+                                <div class="header">
+                                    {{image.name}}
+                                </div>
+                                <div class="image content">
+                                    <div class="image">
+                                        <img :src="image.path" :id="image.id" class="ui fluid rounded image">
+                                    </div>
+                              </div>
+                          </div>
+                          <div class="ui inverted red button icon" @click="remove(image)">
+                              <i class="delete icon"></i>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -51,6 +62,9 @@
         methods:
             show: (image) ->
                 # Show image
+                $('#imageModal'+image.id)
+                        .modal('show');
+
 
             remove: (image) ->
                 bus.$emit('image_removed',image)
