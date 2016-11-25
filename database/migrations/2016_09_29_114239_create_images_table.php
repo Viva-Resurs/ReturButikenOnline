@@ -23,16 +23,6 @@ class CreateImagesTable extends Migration
 
             $table->timestamps();
         });
-
-        Schema::create('images_article', function (Blueprint $table) {
-
-            $table->integer('images_id')->unsigned()->index();
-            $table->foreign('images_id')->references('id')->on('images')->onDelete('cascade');
-            $table->integer('article_id')->unsigned()->index();
-            $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
-
-            $table->timestamps();
-        });
     }
 
     /**
@@ -43,6 +33,5 @@ class CreateImagesTable extends Migration
     public function down()
     {
         Schema::drop('images');
-        Schema::drop('images_article');
     }
 }
