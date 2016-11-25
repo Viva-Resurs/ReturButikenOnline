@@ -70,6 +70,8 @@ class ArticleController extends Controller
         foreach ($article->images as $image)
             array_push($result['selected_images'], [
                 'id' => $image->id,
+                'name' => $image->name,
+                'path' => $image->path,
                 'thumb_path' => $image->thumb_path
             ]);
 
@@ -103,7 +105,7 @@ class ArticleController extends Controller
         // Attach Images
         if ($request['selected_images'])
             foreach ($request['selected_images'] as $image){
-                $im = Image::find($image);
+                $im = Image::find($image['id']);
                 $article->images()->save($im);
             }
 
@@ -154,17 +156,38 @@ class ArticleController extends Controller
                 $article->categories()->save($c);
             }
 
-        // Clear Images
-        if ($article->images)
-            foreach( $article->images as $im)
-                $article->images()->detach($im->id);
-
-        // Attach Images
-        if ($request['selected_images'])
-            foreach ($request['selected_images'] as $image){
-                $im = Image::find($image['id']);
-                $article->images()->save($im);
+        // Clear removed Images
+        foreach($article->images as $old_image){
+            $keep = false;
+            if ($request['selected_images'])
+                foreach ($request['selected_images'] as $selected_image)
+                    if ($old_image->id == $selected_image['id'])
+                        $keep = true;
+            if (!$keep){
+                // Attached image could not be found in selection, detach it
+                $article->images()->detach($old_image->id);
+                // Check if image is used on other articles
+                if (Image::withCount('articles')->find($old_image->id)->articles_count<1){
+                    // No article is using the image, delete it
+                    $old_image->delete();
+                }
             }
+        }
+
+        // Attach new Images
+        foreach ($request['selected_images'] as $selected_image){
+            $new = true;
+            if ($article->images)
+                foreach( $article->images as $old_image)
+                    if ($old_image->id == $selected_image['id'])
+                        $new = false;
+            if ($new) {
+                // Image could not be found in currently attached images
+                $image = Image::find($selected_image['id']);
+                // Attach it
+                $article->images()->save($image);
+            }
+        }
 
         $article->save();
 
