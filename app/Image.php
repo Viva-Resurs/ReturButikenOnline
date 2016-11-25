@@ -15,7 +15,7 @@ class Image extends Model
         'thumb_path'
     ];
 
-    public function article()
+    public function articles()
     {
         return $this->hasMany(Article::class);
     }
