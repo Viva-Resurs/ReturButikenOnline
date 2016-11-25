@@ -35,13 +35,15 @@ class ImageController extends Controller
 
         foreach ($request->file('files') as $file) {
 
-
             $file_path = $file->store('uploads','public');
 
-            $tmb = ImageGenerator::make($file_path)->fit(200);
-            $thumb_path = 'uploads/_'.$tmb->basename;
+            $name = substr( $file_path, 8, strripos( $file_path, '.' )-8 );
 
-            $tmb->save($thumb_path);
+            $ext = substr( $file_path, strripos( $file_path, '.' )+1 );
+
+            $thumb_path = 'uploads/_'.$name.'.'.$ext;
+
+            $tmb = ImageGenerator::make($file_path)->fit(200)->save($thumb_path);
 
             $exists = Image::where('path',$file_path)->count();
 
@@ -49,7 +51,7 @@ class ImageController extends Controller
                 return Image::where('path',$file_path)->first();
 
             $image = new Image([
-                'name' => $tmb->basename,
+                'name' => $name,
                 'original_name' => $file->getClientOriginalName(),
                 'path' => $file_path,
                 'thumb_path' => $thumb_path
