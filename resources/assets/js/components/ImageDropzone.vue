@@ -2,7 +2,19 @@
     <div class="ui segment bottom attached" id='dropZone'>
         <input type='file' id='files' name='files[]' hidden multiple/>
         <div class="ui eight doubling stackable cards">
-            <div class="ui fluid card" v-for="image in images">
+            <div class="ui dimmable blurring fluid card" v-for="image in images" v-image>
+                <div class="ui dimmer">
+                    <div class="content">
+                        <div class="center">
+                            <div class="ui inverted standard button icon" @click="show(image)">
+                                <i class="eye icon"></i>
+                            </div>
+                            <div class="ui inverted red button icon" @click="remove(image)">
+                                <i class="delete icon"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <img :src="image.thumb_path" :id="image.id" class="ui fluid rounded image">
             </div>
             <div class="ui fluid card" v-for="waiting in buffer">
@@ -37,6 +49,12 @@
             buffer: []
 
         methods:
+            show: (image) ->
+                # Show image
+
+            remove: (image) ->
+                bus.$emit('image_removed',image)
+
             openDialog: () ->
                 $('#files').trigger('click')
 

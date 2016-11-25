@@ -207,7 +207,12 @@
                 console.log image
                 @article.selected_images.push(image)
             )
-
+            bus.$on('image_removed', (image) =>
+                console.log image
+                for index, img of @article.selected_images
+                    if (Number img.id == Number image.id)
+                        @article.selected_images.splice(index,1)
+            )
 
         beforeDestroy: ->
             bus.$off('publish_interval_form_changed');
