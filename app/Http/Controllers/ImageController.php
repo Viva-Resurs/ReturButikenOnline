@@ -64,31 +64,6 @@ class ImageController extends Controller
 
     public function update(Request $request, $id){
 
-        $user = Auth::user();
-
-        if (!$user || !$user->hasRole('admin'))
-            abort(401,'Not allowed to update images');
-
-        $image = Image::find($id);
-
-        if (!$image)
-            abort(404);
-
-        if ($request->has('name') && $request['name']!='')
-            $image->name = $request['name'];
-
-        if ($request->has('original_name') && $request['original_name']!='')
-            $image->original_name = $request['original_name'];
-
-        if ($request->has('path') && $request['path']!='')
-            $image->path = $request['path'];
-
-        if ($request->has('thumb_path') && $request['thumb_path']!='')
-            $image->thumb_path = $request['thumb_path'];
-
-        $image->save();
-
-        return $image;
     }
 
     public function destroy($id){
@@ -99,6 +74,19 @@ class ImageController extends Controller
             abort(401,'Not allowed to remove images');
 
         $image = Image::find($id);
+
+        dd($image->articles);
+
+        foreach ($image->article as $association);
+        //$image->article
+
+        foreach ($article->images as $image)
+            array_push($result['selected_images'], [
+                'id' => $image->id,
+                'thumb_path' => $image->thumb_path
+            ]);
+
+        $exists = Image::where('path',$file_path)->count();
 
         if (!$image)
             abort(404);
