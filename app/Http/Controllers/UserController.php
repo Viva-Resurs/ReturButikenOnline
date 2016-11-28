@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-	public function index(){
+    public function index(){
 
-		$user = Auth::user();
+        $user = Auth::user();
 
         if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to list users');
+            abort(401,'Not allowed to list users');
 
         return User::all();
     }
@@ -36,8 +36,20 @@ class UserController extends Controller
     /**
      * Get currently authorized user
      */
-	public function me(){
-		return Auth::user();
+    public function me(){
+        return [
+            'user' => Auth::user(),
+            'token' => csrf_token()
+        ];
+    }
+
+    /**
+     * Get currently authorized user
+     */
+    public function token(){
+        return [
+            'token' => csrf_token()
+        ];
     }
 
 }

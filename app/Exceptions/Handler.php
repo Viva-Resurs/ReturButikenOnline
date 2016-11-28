@@ -44,17 +44,25 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // Database
         if ($exception instanceof \PDOException) {
             return response()->json(['error' => 'PDOException','details' => $exception], 500);
         }
+
+        // Requests
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException) {
             return response()->json(['error' => 'Not Found','details' => $exception], 404);
         }
-        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
 
-            if ($exception->getStatusCode() == 401)            
-                return response()->json(['error' => 'Unauthorized','details' => $exception->getMessage()],401);
-            
+        // Permissions
+        if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+            if ($exception->getStatusCode() == 401)
+                return response()->json(['error' => 'Unauthorized','details' => $exception->getMessage()], 401);
+        }
+
+        // Tokens
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+            return response()->json(['error' => 'TokenMismatch','details' => 'Try again'], 401);
         }
 
         return parent::render($request, $exception);

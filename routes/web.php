@@ -26,3 +26,5 @@ Route::resource('images', 'ImageController');
 Route::resource('users', 'UserController');
 
 Route::get('/user', 'UserController@me');
+
+Route::get('/token', 'UserController@token');

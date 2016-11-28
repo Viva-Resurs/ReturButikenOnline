@@ -6,14 +6,11 @@
                 sessionStorage.user = payload.user;
                 sessionStorage.token = payload.token;
                 bus.$emit('user_changed', payload.user );
-                bus.$emit('token_changed', payload.user );
             },
-
             clearUser() {
                 sessionStorage.user = false;
                 sessionStorage.token = false;
                 bus.$emit('user_changed', false );
-                bus.$emit('token_changed', false );
             },
             getUser(mode) {
                 this.$http.get('user').then(

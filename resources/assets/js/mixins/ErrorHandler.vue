@@ -7,10 +7,13 @@
 
             handleError(message) {
 
-                this.showError({text:message});
+                this.showError({
+                    title: message.error,
+                    message: message.details
+                });
 
-                if (!this.$root.user)
-                    console.error('Not logged in!');
+                if (message.error=='TokenMismatch')
+                    this.getToken();
 
             }
 

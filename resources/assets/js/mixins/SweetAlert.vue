@@ -7,7 +7,7 @@
 
             showError(what){
 
-                return swal("Error", what.text, "error");
+                return swal(what.title, what.message, "error");
 
             }
 
