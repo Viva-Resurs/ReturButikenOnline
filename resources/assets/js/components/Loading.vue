@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
     div.ui.loader.huge.centered.inline.active
 </template>
 

@@ -1,4 +1,4 @@
-<template lang="jade">
+<template lang="pug">
     div.ui.stackable.secondary.pointing.menu
 
         router-link.item( to="/" exact ) {{ $root.settings.title }}
