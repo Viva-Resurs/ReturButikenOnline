@@ -1,9 +1,7 @@
-<template>
-    <div class="ui active centered inline huge loader"></div>
+<template lang="jade">
+    div.ui.loader.huge.centered.inline.active
 </template>
 
-<script>
-    export default {
-        name: 'Loading'
-    }
+<script lang="coffee">
+    module.exports = { name: 'Loading' }
 </script>
