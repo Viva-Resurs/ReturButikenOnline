@@ -1,36 +1,26 @@
-<template>
-    <div class="ui stackable secondary pointing menu">
+<template lang="jade">
+    div.ui.stackable.secondary.pointing.menu
 
-        <router-link to="/" class="item" exact>
-            {{ $root.settings.title }}
-        </router-link>
+        router-link.item( to="/" exact ) {{ $root.settings.title }}
 
-        <div class="ui right secondary stackable menu">
+        div.ui.right.secondary.stackable.menu
 
-            <template v-if="!user">
-                <router-link to="/auth/login" exact class="item">Login</router-link>
-                <router-link to="/auth/register" exact class="item">Register</router-link>
-                <router-link to="/help" class="item">Hjälp</router-link>
-            </template>
+            template( v-if="!user" )
+                router-link.item( to="/auth/login" exact ) Login
+                router-link.item( to="/auth/register" exact ) Register
+                router-link.item( to="/help" exact ) Hjälp
 
-            <template v-if="user">
-                <router-link to="/articles/create" exact class="item">Publicera</router-link>
-                <router-link to="/articles" exact class="item">Arkiv</router-link>
-                <router-link to="/categories" exact class="item">Kategorier</router-link>
-                <router-link to="/users" exact class="item">Användare</router-link>
-                <div class="ui dropdown item" v-dropdown>
-                    {{ user.name }}
-                    <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <div class="item">Profil</div>
-                        <a class="item" @click="$root.exitUser()">Logout</a>
-                    </div>
-                </div>
-            </template>
+            template( v-if="user" )
+                router-link.item( to="/articles/create" exact ) Publicera
+                router-link.item( to="/articles" exact ) Arkiv
+                router-link.item( to="/categories" exact ) Kategorier
+                router-link.item( to="/users" exact ) Användare
+                div.ui.dropdown.item( v-dropdown="" ) {{ user.name }}
+                    i.dropdown.icon
+                    div.menu
+                        div.item Profil
+                        a.item( @click="$root.exitUser()" ) Logout
 
-        </div>
-
-    </div>
 </template>
 
 <script lang="coffee">
