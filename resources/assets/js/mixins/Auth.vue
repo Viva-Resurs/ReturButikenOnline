@@ -1,32 +1,21 @@
 <script>
     export default {
-
         name: 'Auth',
-
-        data: function() {
-            return {
-                user: false
-            };
-        },
-
         methods: {
-
-            setUser(user) {
-
-                this.user = user;
-
+            setUser(payload) {
+                sessionStorage.user = payload.user;
+                sessionStorage.token = payload.token;
+                bus.$emit('user_changed', payload.user );
+                bus.$emit('token_changed', payload.user );
             },
 
             clearUser() {
-
-                this.user = false;
-
+                sessionStorage.user = false;
+                sessionStorage.token = false;
+                bus.$emit('user_changed', false );
+                bus.$emit('token_changed', false );
             },
-
             getUser(mode) {
-
-                console.log('Auth: getUser');
-
                 this.$http.get('user').then(
                     (response) => {
 
@@ -41,13 +30,8 @@
                     },
                     (response) => bus.$emit('error',response)
                 );
-
             },
-
             exitUser() {
-
-                console.log('Auth: exitUser');
-
                 this.$http.post('logout').then(
                     (response) => {
 
@@ -61,32 +45,21 @@
                         // Go to home
                         this.$router.push({ path: '/' });
 
-                        // Reload page to generate a new Laravel.csrfToken
-                        location.reload();
-
                     },
                     (response) => bus.$emit('error',response)
                 );
-
             }
-
         },
-
         mounted: function() {
-
             this.getUser();
-
             bus.$on('login_ok', (response) => {
                 this.getUser();
                 this.$router.push({ path: '/' });
             });
-
             bus.$on('register_ok', (response) => {
                 this.getUser();
                 this.$router.push({ path: '/' });
             });
-
         }
-
     };
 </script>
