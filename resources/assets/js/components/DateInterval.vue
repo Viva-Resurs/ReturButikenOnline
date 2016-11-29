@@ -1,19 +1,16 @@
-<template lang="html">
-  <div class="form-group">
-      <div class="row">
-          <div class="col-xs-12">
-              <label class="control-label" for="fullname">{{interval}}</label>
-              <div class="ui icon input">
-                  <input type='text' class="form-control"
-                      @click="openRangePicker"
-                      v-model="date"
-                      :name="interval"
-                  />
-                  <i class="calendar icon"></i>
-              </div>
-          </div>
-       </div>
-     </div>
+<template lang="pug">
+    div.form-group
+        div.row
+            div.col-xs-12
+                label.control-label( for="fullname" ) {{interval}}
+                div.ui.icon.input
+                    input.form-control(
+                        type='text'
+                        @click="openRangePicker"
+                        v-model="date"
+                        "name"="interval"
+                    )
+                    i.calendar.icon
 </template>
 
 <script lang="coffee">
