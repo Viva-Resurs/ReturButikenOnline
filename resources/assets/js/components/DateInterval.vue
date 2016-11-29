@@ -1,6 +1,6 @@
 <template lang="pug">
     div.field
-        label( ":for"="interval" ) {{interval}}
+        label {{interval}}
         div.ui.icon.input
             input(
                 type='text'
