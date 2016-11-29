@@ -20,7 +20,6 @@
                     div.menu
                         div.item Profil
                         a.item( @click="$root.exitUser()" ) Logout
-
 </template>
 
 <script lang="coffee">
