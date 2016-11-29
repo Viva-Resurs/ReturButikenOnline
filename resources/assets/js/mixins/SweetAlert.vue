@@ -6,9 +6,10 @@
         methods: {
 
             showError(what){
+                var title = what.title || 'Error';
+                var message = what.message || ' ';
 
-                return swal(what.title, what.message, "error");
-
+                return swal(title, message, "error");
             }
 
         }

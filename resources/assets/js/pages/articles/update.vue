@@ -25,17 +25,16 @@
                         @$root.loading = false;
 
                     (response) =>
-                        bus.$emit('error',response);
+                        bus.$emit('error',response.data);
                         @$root.loading = false;
                 );
 
             updateArticle: (article) ->
                 @$http.put('articles/'+article.id,article).then(
                     (response) =>
-                        console.log('ok');
                         @$router.push({ path: '/articles' });
 
-                    (response) => bus.$emit('error',response)
+                    (response) => bus.$emit('error',response.data)
                 );
 
         },
