@@ -67,8 +67,8 @@
                     // Callback
                     (start,end,label) => {
                         bus.$emit(
-                            el.name+'_changed',
-                            el.id,
+                            el.getAttribute('name')+'_changed',
+                            el.getAttribute('id'),
                             start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
                         );
                     }
