@@ -1,55 +1,41 @@
-<template>
-    <div class="ui segment bottom attached" id='dropZone'>
-        <input type='file' id='files' name='files[]' hidden multiple/>
-        <div class="ui eight doubling stackable cards">
-            <div class="ui dimmable blurring fluid card" v-for="image in images" v-image>
-                <div class="ui dimmer">
-                    <div class="content">
-                        <div class="center">
-                            <div class="ui inverted standard button icon" @click="show(image)">
-                                <i class="eye icon"></i>
-                            </div>
-                            <div class="ui modal" :id="'imageModal'+image.id">
-                                <i class="close icon"></i>
-                                <div class="header">
-                                    {{image.name}}
-                                </div>
-                                <div class="image content">
-                                    <div class="image">
-                                        <img :src="image.path" :id="image.id" class="ui fluid rounded image">
-                                    </div>
-                              </div>
-                          </div>
-                          <div class="ui inverted red button icon" @click="remove(image)">
-                              <i class="delete icon"></i>
-                          </div>
-                        </div>
-                    </div>
-                </div>
-                <img :src="image.thumb_path" :id="image.id" class="ui fluid rounded image">
-            </div>
-            <div class="ui fluid card" v-for="waiting in buffer">
-                <div class="ui loader centered inline active">
-                </div>
-            </div>
-            <div class="ui fluid card">
-                <div class="ui icon massive fluid button" @click="openDialog()">
-                    <i class="upload icon"></i>
-                </div>
-            </div>
-        </div>
-        <p></p>
-        <div class="ui dimmer">
-            <div class="content">
-                <div class="center">
-                    <h2 class="ui inverted icon header">
-                        <i class="upload icon"></i>
-                        Drop Files
-                    </h2>
-                </div>
-            </div>
-        </div>
-    </div>
+<template lang="pug">
+    div.ui.segment.bottom.attached#dropZone
+        input#files( type='file' name='files[]' hidden multiple)
+        div.ui.eight.doubling.stackable.cards
+            div.ui.dimmable.blurring.fluid.card( v-for="image in images" v-image )
+                div.ui.dimmer
+                    div.content
+                        div.center
+                            div.ui.inverted.standard.button.icon( @click="show(image)" )
+                                i.eye.icon                   
+                            
+                            div.ui.modal( ":id"="'imageModal'+image.id" )
+                                i.close.icon
+                                
+                                div.header {{image.name}}                                    
+                                
+                                div.image.content
+                                    div.image
+                                        img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
+
+                            div.ui.inverted.red.button.icon( @click="remove(image)" )
+                                i.delete.icon
+                                  
+                img.ui.fluid.rounded.image( ":src"="image.thumb_path" ":id"="image.id" )
+
+            div.ui.fluid.card( v-for="waiting in buffer" )
+                div.ui.loader.centered.inline.active
+
+            div.ui.fluid.card
+                div.ui.icon.massive.fluid.button( @click="openDialog()" )
+                    i.upload.icon
+
+        div.ui.dimmer
+            div.content
+                div.center
+                    h2.ui.inverted.icon.header
+                        i.upload.icon Drop Files
+
 </template>
 
 <script lang="coffee">
