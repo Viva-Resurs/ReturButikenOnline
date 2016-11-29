@@ -12,6 +12,9 @@
                 if ($(el).data('daterangepicker'))
                     return;
 
+                // dialog-placement
+                var opens = $(el).data('opens') || 'left';
+
                 // Get current interval on init
                 var interval = (typeof $(el).data('value') == 'string') ? $(el).data('value').split('|') : [];
                 var startDate = interval[0] || false;
@@ -30,7 +33,7 @@
                         format: "YYYY-MM-DD HH:mm:ss",
                         separator: " | ",
                         timePicker: true,
-                        opens: 'left',
+                        opens: opens,
                         timePicker12Hour: false,
                         timePickerSeconds: true,
                         startDate: startDate,
