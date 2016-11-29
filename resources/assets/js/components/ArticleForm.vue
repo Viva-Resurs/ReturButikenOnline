@@ -22,14 +22,14 @@
                         v-if="categories"
                         name="categories"
                         v-dropdown=""
-                        "data-selected"="article.selected_categories"
+                        ":data-selected"="article.selected_categories"
                     )
                         i.dropdown.icon
                         div.default.text Select Category
                         div.menu
                             div.item(
                                 v-for="category in categories"
-                                "data-value"="category.id"
+                                ":data-value"="category.id"
                             ) {{category.name}}
 
             div.field
@@ -68,7 +68,6 @@
                         v-show="settings.publish_interval"
                         interval="publish_interval_form"
                         ":date"="article.publish_interval"
-                        opens="right"
                     )
                 div.field
                     date-interval(

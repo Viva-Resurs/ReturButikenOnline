@@ -7,7 +7,6 @@
                 @click="openRangePicker"
                 v-model="date"
                 ":name"="interval"
-                ":data-opens"="opens"
             )
             i.calendar.icon
 </template>
@@ -16,7 +15,7 @@
     DateRangePicker = require '../mixins/DateRangePicker.vue'
     module.exports = {
         name: 'DateInterval'
-        props: [ 'interval', 'date', 'opens' ]
+        props: [ 'interval', 'date' ]
         mixins: [ DateRangePicker ]
     }
 </script>

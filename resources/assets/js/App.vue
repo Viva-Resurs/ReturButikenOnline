@@ -4,6 +4,8 @@
         <div class="container">
             <router-view></router-view>
         </div>
+        <div class="offset_container"></div>
+        <div class="ui page dimmer"></div>
     </div>
 </template>
 

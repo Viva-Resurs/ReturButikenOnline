@@ -8,12 +8,23 @@
                 if (el.nodeName=='I')
                     el = el.parentElement;
 
-                // If already initiated, let it be
-                if ($(el).data('daterangepicker'))
-                    return;
+                // Trigger a click on the picker
+                $(el.drp).trigger('click');
 
-                // dialog-placement
-                var opens = $(el).data('opens') || 'left';
+                // If already initiated, let it be
+                if (el.drp)
+                    return;
+                //if ($(el.drp).data('daterangepicker'))
+                //    return;
+
+                // Create a hidden element
+                el.drp = document.createElement('div');
+                el.drp.classList.add('hidden');
+                el.drp.style.top = '10%';
+                el.drp.style.width= '100%';
+                el.drp.style.position = 'fixed';
+
+                $('.offset_container').append(el.drp);
 
                 // Get current interval on init
                 var interval = (typeof $(el).data('value') == 'string') ? $(el).data('value').split('|') : [];
@@ -27,13 +38,13 @@
                 var month = moment().add(1, 'months').hours(18).minutes(0).seconds(0);
 
                 // Start the daterangepicker
-                $(el).daterangepicker(
+                $(el.drp).daterangepicker(
                     // Options
                     {
                         format: "YYYY-MM-DD HH:mm:ss",
                         separator: " | ",
                         timePicker: true,
-                        opens: opens,
+                        opens: 'center',
                         timePicker12Hour: false,
                         timePickerSeconds: true,
                         startDate: startDate,
@@ -63,8 +74,17 @@
                     }
                 );
 
+                // Page dimmer
+                $(el.drp).on('show.daterangepicker',(e)=>{
+                    $('.ui.page.dimmer').addClass('active');
+                });
+                $(el.drp).on('hide.daterangepicker',(e)=>{
+                    $('.ui.page.dimmer').removeClass('active');
+                });
+
                 // Trigger the daterangepicker to open first time
-                $(el).trigger('click');
+                $(el.drp).trigger('click');
+
             }
         }
     };
