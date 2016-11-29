@@ -13,7 +13,7 @@
             div.ui.padded.grid
                 div.row( v-if="countItems==0" )
                     div.ui.warning.message
-                        p {{ (items.length > 0) ? 'No results' : 'Empty' }}
+                        p {{ (items.length != 0) ? 'No results' : 'Empty' }}
 
                 div.row.computer.only( v-if="columns && card" )
                     table.ui.compact.celled.table( v-if="countItems > 0" )
@@ -35,7 +35,7 @@
 
                                 td( v-for="column in columns"
                                     ":class"="column.class"
-                                    v-tooltip ":data-html"="formatTooltip(item[column.tooltip])" )
+                                    v-tooltip="" ":data-html"="formatTooltip(item[column.tooltip])" )
 
                                     span( v-if="column.type=='string' || column.type=='number' || column.type==''") {{item[column.key]}}
 
@@ -210,27 +210,27 @@
                 return formated;
 
             setSortBy: (headingTitle) ->
-                # Set correct sort icon to the header (ascending, descending)    
+                # Set correct sort icon to the header (ascending, descending)
                 selectedHeader = ''
 
                 for key, column of @columns
                     if (headingTitle=='' && column.default_sort)
-                        this.setOrder(column.label,column.desc)
+                        this.setOrder(key,column.desc)
                         selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
-                    if (column.label == headingTitle)
+                    if (key == headingTitle)
                         if (column.type == 'string')
-                            this.setOrder(column.label,column.desc)
+                            this.setOrder(key,column.desc)
                             selectedHeader = if (this.desc == 1) then "sort alphabet ascending icon" else "sort alphabet descending icon"
                         if (column.type == 'number')
-                            this.setOrder(column.label,column.desc)
+                            this.setOrder(key,column.desc)
                             selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
 
                 this.headers[headingTitle+'_icon'] = selectedHeader
 
                 # Change the other (not sorted by) icons to a generic sort icon
                 for key, column of @columns
-                    if (column.label != headingTitle)
-                        @headers[column.label+'_icon'] = "sort"
+                    if (key != headingTitle)
+                        @headers[key+'_icon'] = "sort"
 
         created: ->
             @setSortBy()
