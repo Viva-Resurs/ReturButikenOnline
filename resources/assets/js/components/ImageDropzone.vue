@@ -7,20 +7,20 @@
                     div.content
                         div.center
                             div.ui.inverted.standard.button.icon( @click="show(image)" )
-                                i.eye.icon                   
-                            
+                                i.eye.icon
+
                             div.ui.modal( ":id"="'imageModal'+image.id" )
                                 i.close.icon
-                                
-                                div.header {{image.name}}                                    
-                                
+
+                                div.header {{image.name}}
+
                                 div.image.content
                                     div.image
                                         img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
 
                             div.ui.inverted.red.button.icon( @click="remove(image)" )
                                 i.delete.icon
-                                  
+
                 img.ui.fluid.rounded.image( ":src"="image.thumb_path" ":id"="image.id" )
 
             div.ui.fluid.card( v-for="waiting in buffer" )
@@ -35,7 +35,6 @@
                 div.center
                     h2.ui.inverted.icon.header
                         i.upload.icon Drop Files
-
 </template>
 
 <script lang="coffee">
