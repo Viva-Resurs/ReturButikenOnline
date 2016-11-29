@@ -1,69 +1,46 @@
-<template>
-    <div class="ui grid">
-        <div v-if="total!=0 && total>limit && showPagination" class="twelve wide column">
+<template lang="pug">
+    div.ui.grid
+        div.twelve.wide.column( v-if="total!=0 && total>limit && showPagination" )
+            div.ui.grid.computer.only.pagination.menu
+                a.icon.item( @click="firstPage" )
+                    i.angle.double.left.icon
 
-            <div class="ui grid computer only pagination menu">
-                <a class="icon item" @click="firstPage">
-                    <i class="angle double left icon"></i>
-                </a>
+                a.icon.item( @click="prevPage" )
+                    i.angle.left.icon
 
-                <a class="icon item" @click="prevPage">
-                    <i class="angle left icon"></i>
-                </a>
+                a( v-for="n in totalPages" ":class"="'item '+((n==currentPage)?'active':'')" @click="toPage(n)" ) {{n}}
 
-                <a v-for="n in totalPages" :class="'item '+((n==currentPage)?'active':'')" @click="toPage(n)">{{n}}
-                </a>
+                a.icon.item( @click="nextPage" )
+                    i.angle.right.icon
 
-                <a class="icon item" @click="nextPage">
-                    <i class="angle right icon"></i>
-                </a>
+                a.icon.item( @click="lastPage" )
+                    i.angle.double.right.icon
 
-                <a class="icon item" @click="lastPage">
-                    <i class="angle double right icon"></i>
-                </a>
-            </div>
+            div.ui.grid.mobile.tablet.only.pagination.menu
+                a.icon.item( @click="firstPage" )
+                    i.angle.double.left.icon
 
-            <div class="ui grid mobile tablet only pagination menu">
-                <a class="icon item" @click="firstPage">
-                    <i class="angle double left icon"></i>
-                </a>
+                a.icon.item( @click="prevPage" )
+                    i.angle.left.icon
 
-                <a class="icon item" @click="prevPage">
-                    <i class="angle left icon"></i>
-                </a>
+                a.icon.item
+                    i Page {{currentPage}} ... {{totalPages}}
 
-                <a class="icon item">
-                    <i>Page {{currentPage}} ... {{totalPages}}</i>
-                </a>
+                a.icon.item( @click="nextPage" )
+                    i.angle.right.icon
 
-                <a class="icon item" @click="nextPage">
-                    <i class="angle right icon"></i>
-                </a>
+                a.icon.item( @click="lastPage" )
+                    i.angle.double.right.icon
 
-                <a class="icon item" @click="lastPage">
-                    <i class="angle double right icon"></i>
-                </a>
-            </div>
+        div.twelve.wide.column( v-else="" )
+            div.ui.grid
+                slot( name="replacePagination" )
 
-        </div>
-
-        <div v-else class="twelve wide column">
-            <div class="ui grid">
-                <slot name="replacePagination">
-                </slot>
-            </div>
-
-        </div>
-
-        <div class="four wide column right aligned">
-            <select class="ui selection dropdown" v-show="total>limitOptions[0]"
-                v-dropdown v-model="limit" id="limit"
-                >
-                <option class="item" v-for="option in limitOptions" :value="option">{{option}}</option>
-            </select>
-        </div>
-
-    </div>
+        div.four.wide.column.right.aligned
+            select.ui.selection.dropdown#limit(
+                v-show="total>limitOptions[0]" 
+                v-dropdown="" v-model="limit" )
+                option.item( v-for="option in limitOptions" ":value"="option") {{option}}
 </template>
 
 <script lang="coffee">
