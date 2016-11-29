@@ -1,123 +1,122 @@
-<template>
-    <div class="ui container segment" id="articleForm">
+<template lang="pug">
+    div.ui.container.segment#articleForm
 
-        <div class="ui dividing header">
-            Publicera
-        </div>
+        div.ui.dividing.header Publicera
 
-        <form class="ui form" v-on:submit.prevent="attemptCreate" role="form" name="myform">
+        form.ui.form(
+            "v-on:submit.prevent"="attemptCreate"
+            role="form"
+        )
 
-                <div class="fields">
-                    <div class="twelve wide field">
-                        <label for="name">Varunamn:</label>
-                        <input id="name"
-                            type="text"
-                            v-model="article.name"
-                            placeholder="Varunamn"
-                        >
-                    </div>
-                    <div class="four wide field" style="white-space: nowrap;">
-                        <label class="control-label" for="category">Välj varukategori:</label>
-                        <div v-if="categories" class="ui fluid multiple selection dropdown" name="categories" id="category"
-                            v-dropdown :data-selected="article.selected_categories">
-                            <i class="dropdown icon"></i>
-                            <div class="default text">Select Category</div>
-                            <div class="menu">
-                                <div v-for="category in categories" class="item" :data-value="category.id">
-                                    {{category.name}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            div.fields
+                div.twelve.wide.field
+                    label Varunamn:
+                    input#name(
+                        type="text"
+                        "v-model"="article.name"
+                        placeholder="Varunamn"
+                    )
+                div.four.wide.field
+                    label Välj varukategori:
+                    div.ui.fluid.multiple.selection.dropdown#category(
+                        v-if="categories"
+                        name="categories"
+                        v-dropdown=""
+                        "data-selected"="article.selected_categories"
+                    )
+                        i.dropdown.icon
+                        div.default.text Select Category
+                        div.menu
+                            div.item(
+                                v-for="category in categories"
+                                "data-value"="category.id"
+                            ) {{category.name}}
 
-                <div class="field">
-                    <label for="desc">Beskrivning av varan:</label>
-                    <textarea class="form-control" rows="4"
-                        id="desc"
-                        v-model="article.desc"
-                        placeholder="Ge din beskrivning här"
-                    ></textarea>
-                </div>
+            div.field
+                label Beskrivning av varan:
+                textarea#desc(
+                    rows="4"
+                    v-model="article.desc"
+                    placeholder="Ge din beskrivning här"
+                )
 
-                <div class="field">
-                    <label for="images">Bilder:</label>
-                    <image-dropzone :images="article.selected_images"></image-dropzone>
-                </div>
+            div.field
+                label Bilder:
+                image-dropzone( ":images"="article.selected_images" )
 
-                <div class="field">
-                    <div class="inline fields">
+            div.two.fields
+                div.field
+                    div.ui.checkbox( v-checkbox="" )
+                        input.hidden(
+                            type="checkbox"
+                            tabindex="0" value="0"
+                            v-model="settings.publish_interval"
+                        )
+                        label Publicera inom datumintervall
+                div.field
+                    div.ui.checkbox( v-checkbox="" )
+                        input.hidden(
+                            type="checkbox"
+                            tabindex="1" value="1"
+                            v-model="settings.bidding_interval"
+                        )
+                        label Aktivera budgivning
 
-                        <div class="field">
-                            <div class="ui checkbox" v-checkbox>
-                                <input type="checkbox" tabindex="0" value="0" class="hidden" v-model="settings.publish_interval">
-                                <label>Publicera inom datumintervall</label>
-                            </div>
-                        </div>
+            div.two.fields
+                div.field
+                    date-interval(
+                        v-show="settings.publish_interval"
+                        interval="publish_interval_form"
+                        ":date"="article.publish_interval"
+                        opens="right"
+                    )
+                div.field
+                    date-interval(
+                        v-show="settings.bidding_interval"
+                        interval="bidding_interval_form"
+                        ":date"="article.bidding_interval"
+                    )
 
-                        <div class="field">
-                            <div class="ui checkbox" v-checkbox>
-                                <input type="checkbox" tabindex="1" value="1" class="hidden" v-model="settings.bidding_interval">
-                                <label>Aktivera budgivning</label>
-                            </div>
-                        </div>
+            div.two.fields
+                div.field
+                    div.ui.radio.checkbox( v-checkbox="" )
+                        input.hidden(
+                            type="radio"
+                            name="public"
+                            tabindex="0" value="0"
+                            v-model="article.public"
+                        )
+                        label Publicera på kommunens Intranät
+                div.field
+                    div.ui.radio.checkbox( v-checkbox="" )
+                        input.hidden(
+                            type="radio"
+                            name="public"
+                            tabindex="1" value="1"
+                            v-model="article.public"
+                        )
+                        label Publicera för allmänheten
 
-                    </div>
-                </div>
+            div.field
+                div.two.fields
+                    div.field
+                        label Namn kontaktperson:
+                        input( type="text" id="fullname" placeholder="Ditt namn" )
+                    div.field
+                        label Telefon kontaktperson:
+                        input( type="text" id="phone" placeholder="Ditt nummer" )
 
-                <div class="field" v-show="settings.publish_interval">
-                    <date-interval interval="publish_interval_form" :date="article.publish_interval"></date-interval>
-                </div>
+                label E-post kontaktperson:
+                input#email( type="email" placeholder="Din epost" )
 
-                <div class="field" v-show="settings.bidding_interval">
-                    <date-interval interval="bidding_interval_form" :date="article.bidding_interval"></date-interval>
-                </div>
-
-                <div class="inline fields">
-
-                    <div class="field">
-                      <div class="ui radio checkbox" v-checkbox>
-                        <input type="radio" name="public" tabindex="0" class="hidden" v-model="article.public" value="0">
-                        <label>Publicera på kommunens Intranät</label>
-                      </div>
-                  </div>
-                  <div class="field">
-                    <div class="ui radio checkbox" v-checkbox>
-                      <input type="radio" name="public" tabindex="1" class="hidden" v-model="article.public" value="1">
-                      <label>Publicera för allmänheten</label>
-                    </div>
-                </div>
-
-              </div>
-
-               <div class="field">
-                   <div class="two fields">
-                       <div class="field">
-                           <label for="fullname">Namn kontaktperson:</label>
-                           <input type="text" id="fullname" placeholder="Ditt namn">
-                       </div>
-                       <div class="field">
-                           <label for="phone">Telefon kontaktperson:</label>
-                           <input type="text" id="phone" placeholder="Ditt nummer">
-                       </div>
-                    </div>
-                    <div class="field">
-                       <label class="control-label" for="email">E-post kontaktperson:</label>
-                       <input type="email" class="form-control" id="email" placeholder="Din epost">
-                   </div>
-               </div>
-
-            <div class="field">
-                <button type="submit" class="ui right floated button primary " @keydown.enter.prevent="attemptCreate">
-                    Publicera
-                </button>
-                <button type="submit" class="ui right floated button">Förhandsgranska</button>
-            </div>
-            <br />
-        </form>
-        <br />
-
-    </div>
+            div.field
+                button.ui.right.floated.button.primary(
+                    type="submit"
+                    @keydown.enter.prevent="attemptCreate"
+                ) Publicera
+                button.ui.right.floated.button(
+                    type="submit"
+                ) Förhandsgranska
 </template>
 
 <script lang="coffee">
