@@ -1,12 +1,11 @@
-<template>
-    <div>
-        <navigation></navigation>
-        <div class="container">
-            <router-view></router-view>
-        </div>
-        <div class="offset_container"></div>
-        <div class="ui page dimmer"></div>
-    </div>
+<template lang="pug">
+    div
+        navigation
+        div.container
+            router-view
+
+        div.offset_container
+        div.ui.page.dimmer
 </template>
 
 <script lang="coffee">
