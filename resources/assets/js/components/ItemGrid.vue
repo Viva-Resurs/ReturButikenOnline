@@ -48,36 +48,23 @@
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
 
                 //-
-                    <div class="mobile tablet only row">
-                    <div class="ui fluid card" v-for="(item, index) in filterItems">
-                        <div class="content">
-                            <div class="header">{{item[card.header.label]}}</div>
-                            <div class="meta">
-                                <div v-for="meta in card.meta" :class="meta.class">
-                                    {{meta.title}}: {{item[meta.label]}}
-                                </div>
-                            </div>
-                            <div class="description">
-                                {{item[card.description.label]}}
-                            </div>
-                        </div>
-                        <div class="extra content">
-                            <div class="meta left floated">
-                                <div v-for="extra in card.extra" :class="extra.class">
-                                    <span v-if="extra.type=='boolean'">
-                                        {{ (item[extra.label]) ? extra.true : extra.false }}
-                                    </span>
-                                </div>
-                            </div>
-                            <component :is="tools" :item="item" class="meta right floated">
-                                <div slot="extraTools">
-                                    <component :is="extraTools" :item="item">
-                                    </component>
-                                </div>
-                            </component>
-                        </div>
-                    </div>
-                    </div>
+                    div.mobile.tablet.only.row
+                        div.ui.fluid.card( v-for="(item, index) in filterItems" )
+                            div.content
+                                div.header {{item[card.header.label]}}
+                                div.meta
+                                    div( v-for="meta in card.meta" ":class"="meta.class" ) {{meta.title}}: {{item[meta.label]}}
+
+                                div.description {{item[card.description.label]}}
+
+                            div.extra.content
+                                div.meta.left.floated
+                                    div( v-for="extra in card.extra" ":class"="extra.class" )
+                                        span( v-if="extra.type=='boolean'" ) {{ (item[extra.label]) ? extra.true : extra.false }}
+
+                                component.meta.right.floated( ":is"="tools" ":item"="item" )
+                                    div( slot="extraTools" )
+                                        component( ":is"="extraTools" ":item"="item" )
 
                 div.row( v-if="!card" )
                     table.ui.compact.unstackable.celled.table
