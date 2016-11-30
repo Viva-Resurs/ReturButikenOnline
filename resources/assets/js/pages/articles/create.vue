@@ -1,5 +1,5 @@
-<template>
-    <article-form></article-form>
+<template lang="pug">
+    article-form
 </template>
 
 <script lang="coffee">

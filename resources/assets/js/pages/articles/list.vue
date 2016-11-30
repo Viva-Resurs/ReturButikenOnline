@@ -1,17 +1,15 @@
-<template>
-    <item-grid
+<template lang="pug">
+    item-grid(
         header="Articles"
-        :columns="columns"
-        :card="card"
-        :toolsRow=
-            "[
+        ":columns"="columns"
+        ":card"="card"
+        ":toolsRow"=`[
               $options.components.PublishInterval,
               $options.components.BiddingInterval,
               $options.components.Edit,
               $options.components.Remove
-            ]"
-        :items="items">
-    </item-grid>
+            ]`
+        ":items"="items" )
 </template>
 
 <script lang="coffee">

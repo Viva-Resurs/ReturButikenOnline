@@ -1,13 +1,12 @@
-<template>
-    <div>
-        <router-view></router-view>
-    </div>
+<template lang="pug">
+    div
+        router-view    
 </template>
 
 <script>
     export default {
 
         name: 'Articles'
-        
+
     }
 </script>

@@ -1,39 +1,29 @@
-<template>
-<div class="ui container segment">
-    <div class="ui dividing header">
-        Registrering
-    </div>
-    <form class="ui form" v-on:submit.prevent="attemptRegister" role="form">
-        <input id="_token" type="hidden" name="_token" v-model="register._token">
-        <div class="field">
-            <label for="name" class="col-md-4 control-label">Name</label>
-            <input id="name" type="text" class="form-control" name="name" v-model="register.name" required autofocus>
-        </div>
+<template lang="pug">
+    div.ui.container.segment
+        div.ui.dividing.header Registrering
 
-        <div class="field">
-            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-            <input id="email" type="email" class="form-control" name="email" v-model="register.email" required>
-        </div>
+        form.ui.form( v-on:submit.prevent="attemptRegister" role="form" )
+            input#_token( type="hidden" name="_token" v-model="register._token" )
+            div.field
+                label Name
+                input#name( type="text" name="name" v-model="register.name" required autofocus )
 
-        <div class="field">
-            <label for="password" class="col-md-4 control-label">Password</label>
-            <input id="password" type="password" class="form-control" name="password" v-model="register.password" required>
-        </div>
+            div.field
+                label E-Mail Address
+                input#email( type="email" name="email" v-model="register.email" required )
 
-        <div class="field">
-            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" v-model="register.password_confirmation" required>
-        </div>
+            div.field
+                label Password
+                input#password( type="password" name="password" v-model="register.password" required )
 
-            <button type="submit" class="ui right floated button primary" @keydown.enter.prevent="attemptRegister">
-                Register
-            </button>
+            div.field
+                label Confirm Password
+                input#password-confirm( type="password" name="password_confirmation" v-model="register.password_confirmation" required )
 
-            <br /><br />
+            button.ui.right.floated.button.primary( type="submit" @keydown.enter.prevent="attemptRegister" ) Register
 
-    </form>
-
-</div>
+            br
+            br
 </template>
 <script>
     export default {

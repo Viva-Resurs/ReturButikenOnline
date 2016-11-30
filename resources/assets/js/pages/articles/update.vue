@@ -1,5 +1,5 @@
-<template>
-    <article-form v-if="article!=null" :original="article"></article-form>
+<template lang="pug">
+    article-form( v-if="article!=null" ":original"="article" )
 </template>
 
 <script lang="coffee">

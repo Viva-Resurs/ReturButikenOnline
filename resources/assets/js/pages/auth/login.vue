@@ -1,38 +1,26 @@
-<template>
-    <div class="ui container segment" id="articleForm">
+<template lang="pug">
+    div.ui.container.segment#articleForm
 
-        <div class="ui dividing header">
-            Inloggning
-        </div>
+        div.ui.dividing.header Inloggning
 
-        <form class="ui form" v-on:submit.prevent="attemptLogin" role="form" name="myform">
+        form.ui.form( v-on:submit.prevent="attemptLogin" role="form" name="myform" )
 
-            <div class="field">
-                <label class="control-label" for="name">E-post:</label>
-                <input class="form-control"
-                    id="name"
+            div.field
+                label E-post:
+                input#name(
                     type="email"
                     v-model="login.email"
-                    placeholder="name@domain.com"
-                >
-            </div>
+                    placeholder="name@domain.com" )
 
-            <div class="field">
-                <label class="control-label" for="password">Lösenord:</label>
-                <input class="form-control"
-                    id="password"
+            div.field
+                label Lösenord:
+                input#password(
                     type="password"
-                    v-model="login.password"
-                >
-            </div>
+                    v-model="login.password" )
 
-            <button type="submit" class="ui right floated button primary" @keydown.enter.prevent="attemptLogin">
-                Login
-            </button>
-            <br /> <br />
-
-        </form>
-
+            button.ui.right.floated.button.primary( type="submit" @keydown.enter.prevent="attemptLogin" ) Login
+            br
+            br
 </template>
 
 <style>

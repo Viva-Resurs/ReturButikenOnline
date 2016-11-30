@@ -1,25 +1,23 @@
-<template>
-    <item-grid
+<template lang="pug">
+    item-grid(
         header="Categories"
-        :columns="columns"
-        :toolsRow=
-            "[
+        ":columns"="columns"
+        ":toolsRow"=
+            `[
               $options.components.Edit,
               $options.components.Save,
               $options.components.Remove,
               $options.components.Undo
-            ]"
-        :toolsBottom=
-        "[
+            ]`
+        ":toolsBottom"=
+        `[
           $options.components.Add
-        ]"
-        :itemsNew="itemsNew"
-        :items="items">
-    </item-grid>
+        ]`
+        ":itemsNew"="itemsNew"
+        ":items"="items" )    
 </template>
 
 <script lang="coffee">
-
 
     module.exports = {
 

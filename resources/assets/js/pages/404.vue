@@ -1,5 +1,3 @@
-<template>
-    <div>
-        404 - Route Not found
-    </div>
+<template lang="pug">
+    div 404 - Route Not found
 </template>
