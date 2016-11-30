@@ -116,6 +116,9 @@
                 button.ui.right.floated.button(
                     type="submit"
                 ) Förhandsgranska
+
+            br
+            br
 </template>
 
 <script lang="coffee">
