@@ -1,10 +1,10 @@
-<template>
-    <div class="ui icon button"
-        v-tooltip data-html="Undo"
+<template lang="pug">
+    div.ui.icon.button(
+        v-tooltip="" data-html="Undo"
         v-show="item.edit"
-        @click="undo(item)">
-        <i class="ui icon undo"></i>
-    </div>
+        @click="undo(item)" )
+        
+        i.ui.icon.undo
 </template>
 
 <script lang="coffee">

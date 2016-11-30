@@ -1,9 +1,9 @@
-<template>
-    <div class="ui icon button hover-primary"
-        v-tooltip data-html="Add"
-        @click="add()">
-        <i class="ui icon plus"></i>
-    </div>
+<template lang="pug">
+    div.ui.icon.button.hover-primary(
+        v-tooltip="" data-html="Add"
+        @click="add()" )
+        
+        i.ui.icon.plus
 </template>
 
 <script lang="coffee">

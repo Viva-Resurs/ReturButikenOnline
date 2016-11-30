@@ -1,10 +1,13 @@
-<template>
-    <div class="ui icon button hover-default"
-        v-tooltip :data-html="displayInterval(item.bidding_interval)"
-        @click="openRangePicker" :id="item.id" :data-value="item.bidding_interval" name="bidding_interval"
-        >
-        <i :class="'ui icon legal '+((activeInterval(item.bidding_interval)) ? 'active-interval':'')"></i>
-    </div>
+<template lang="pug">
+    div.ui.icon.button.hover-default(
+        v-tooltip=""
+        ":data-html"="displayInterval(item.bidding_interval)"
+        @click="openRangePicker"
+        ":id"="item.id"
+        ":data-value"="item.bidding_interval"
+        name="bidding_interval" )
+        
+        i( ":class"="'ui icon legal '+((activeInterval(item.bidding_interval)) ? 'active-interval':'')" )
 </template>
 
 <script lang="coffee">

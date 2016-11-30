@@ -1,10 +1,10 @@
-<template>
-    <div class="ui icon button hover-primary"
-        v-tooltip data-html="Edit"
+<template lang="pug">
+    div.ui.icon.button.hover-primary(
+        v-tooltip="" data-html="Edit"
         v-show="!item.edit && item.id"
-        @click="edit(item)">
-        <i class="ui icon pencil"></i>
-    </div>
+        @click="edit(item)" )
+
+        i.ui.icon.pencil
 </template>
 
 <script lang="coffee">
