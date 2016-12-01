@@ -1,15 +1,15 @@
 <template lang="pug">
     div
-        div.ui.grid.menu.tablet.mobile.only.attached.two.item.unstackable
-            div.left.aligned.left.floated.item
+        div.ui.secondary.pointing.menu.tablet.mobile.only.grid
+            div.toc.item
                 a.ui.button.launch.icon( @click="menuToggle" )
                     i.content.icon
-            div.right.aligned.right.floated.item
-                div.ui.compact.dropdown( v-dropdown="" ) {{ user.name }}
-                    i.dropdown.icon
-                    div.menu
-                        div.item Profil
-                        a.item( @click="$root.exitUser()" ) Logout
+                        
+            div.ui.compact.right.item.dropdown( v-dropdown="" ) {{ user.name }}
+                i.dropdown.icon
+                div.menu
+                    div.item Profil
+                    a.item( @click="$root.exitUser()" ) Logout
 
         div.ui.grid.fluid.menu.computer.only.attached
             router-link.item( to="/" exact ) {{ $root.settings.title }}
