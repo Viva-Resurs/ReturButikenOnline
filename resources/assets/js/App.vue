@@ -1,9 +1,8 @@
 <template lang="pug">
-    div
+    div.pusher
         navigation
-        div.container
+        div.ui.container
             router-view
-
         div.offset_container
         div.ui.page.dimmer
 </template>
