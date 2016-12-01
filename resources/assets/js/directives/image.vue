@@ -5,7 +5,9 @@
                 $(el).dimmer('show')
             })
             el.addEventListener('mouseout', (e) => {
-                if (e.toElement.classList.contains('cards'))
+                // if pointer is leaving this element
+                //   (and not onto a child of this element)
+                if ($(el).find(e.toElement).length==0)
                     $(el).dimmer('hide')
             })
         }

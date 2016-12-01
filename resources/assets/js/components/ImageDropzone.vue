@@ -2,7 +2,7 @@
     div.ui.segment.bottom.attached#dropZone
         input#files( type='file' name='files[]' hidden multiple)
         div.ui.eight.doubling.stackable.cards
-            div.ui.dimmable.blurring.fluid.card( v-for="image in images" v-image )
+            div.ui.dimmable.blurring.fluid.card( v-for="image in images" v-image="" )
                 div.ui.dimmer
                     div.content
                         div.center
