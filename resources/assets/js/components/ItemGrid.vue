@@ -2,10 +2,10 @@
     div.ui.container.segment
         div.ui.dividing.header {{header}}
 
-        template( v-if="this.$root.loading" )
+        div.ui.attached( v-if="this.$root.loading" )
             loading
 
-        template( v-else="" )
+        div.ui.attached( v-else="" )
             div.ui.icon.input
                 input.prompt( v-focus="" v-model="search" class="prompt" placeholder="Type to search" )
                 i.search.icon
@@ -120,13 +120,12 @@
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsBottom" ":is"="tool" )
 
-                pagination.row(
-                    ":total"="countItems"
-                    ":show-pagination"="(search=='' && !limitOffBtn)" )
+        pagination.ui.bottom.attached(
+            ":total"="countItems"
+            ":show-pagination"="(search=='' && !limitOffBtn)" )
 
-                    div( slot="replacePagination" )
-                        button.ui.floated.right.button.searchresults_expander( v-if="limitOffBtn" @click="limitOff = true" )
-                            Visa alla resultat
+            div( slot="replacePagination" )
+                button.ui.button.searchresults_expander( v-if="limitOffBtn" @click="limitOff = true" ) Visa alla resultat
 </template>
 
 <script lang="coffee">

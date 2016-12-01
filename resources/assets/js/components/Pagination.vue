@@ -1,46 +1,47 @@
 <template lang="pug">
     div.ui.grid
-        div.twelve.wide.column( v-if="total!=0 && total>limit && showPagination" )
-            div.ui.grid.computer.only.pagination.menu
-                a.icon.item( @click="firstPage" )
-                    i.angle.double.left.icon
+        div.two.column.row
+            div.left.floated.column( v-if="total!=0 && total>limit && showPagination" )
+                div.ui.grid.computer.only.pagination.menu
+                    a.icon.item( @click="firstPage" )
+                        i.angle.double.left.icon
 
-                a.icon.item( @click="prevPage" )
-                    i.angle.left.icon
+                    a.icon.item( @click="prevPage" )
+                        i.angle.left.icon
 
-                a( v-for="n in totalPages" ":class"="'item '+((n==currentPage)?'active':'')" @click="toPage(n)" ) {{n}}
+                    a( v-for="n in totalPages" ":class"="'item '+((n==currentPage)?'active':'')" @click="toPage(n)" ) {{n}}
 
-                a.icon.item( @click="nextPage" )
-                    i.angle.right.icon
+                    a.icon.item( @click="nextPage" )
+                        i.angle.right.icon
 
-                a.icon.item( @click="lastPage" )
-                    i.angle.double.right.icon
+                    a.icon.item( @click="lastPage" )
+                        i.angle.double.right.icon
 
-            div.ui.grid.mobile.tablet.only.pagination.menu
-                a.icon.item( @click="firstPage" )
-                    i.angle.double.left.icon
+                div.ui.grid.mobile.tablet.only.pagination.menu
+                    a.icon.item( @click="firstPage" )
+                        i.angle.double.left.icon
 
-                a.icon.item( @click="prevPage" )
-                    i.angle.left.icon
+                    a.icon.item( @click="prevPage" )
+                        i.angle.left.icon
 
-                a.icon.item
-                    i Page {{currentPage}} ... {{totalPages}}
+                    a.icon.item
+                        i Page {{currentPage}} ... {{totalPages}}
 
-                a.icon.item( @click="nextPage" )
-                    i.angle.right.icon
+                    a.icon.item( @click="nextPage" )
+                        i.angle.right.icon
 
-                a.icon.item( @click="lastPage" )
-                    i.angle.double.right.icon
+                    a.icon.item( @click="lastPage" )
+                        i.angle.double.right.icon
 
-        div.twelve.wide.column( v-else="" )
-            div.ui.grid
-                slot( name="replacePagination" )
+            div.left.floated.column( v-else="" )
+                div.ui.grid
+                    slot( name="replacePagination" )
 
-        div.four.wide.column.right.aligned
-            select.ui.selection.dropdown#limit(
-                v-show="total>limitOptions[0]" 
-                v-dropdown="" v-model="limit" )
-                option.item( v-for="option in limitOptions" ":value"="option") {{option}}
+            div.right.floated.right.aligned.column
+                    select.selection.dropdown#limit(
+                        v-show="total>limitOptions[0]"
+                        v-dropdown="" v-model="limit" )
+                        option.item( v-for="option in limitOptions" ":value"="option") {{option}}
 </template>
 
 <script lang="coffee">
