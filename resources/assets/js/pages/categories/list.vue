@@ -4,25 +4,22 @@
         ":columns"="columns"
         ":toolsRow"=
             `[
-              $options.components.Edit,
-              $options.components.Save,
-              $options.components.Remove,
-              $options.components.Undo
+                $options.components.Edit,
+                $options.components.Save,
+                $options.components.Remove,
+                $options.components.Undo
             ]`
         ":toolsBottom"=
-        `[
-          $options.components.Add
-        ]`
+            `[
+                $options.components.Add
+            ]`
         ":itemsNew"="itemsNew"
-        ":items"="items" )    
+        ":items"="items" )
 </template>
 
 <script lang="coffee">
-
     module.exports = {
-
         name: 'List'
-
         components: {
             ItemGrid: require '../../components/ItemGrid.vue'
             Remove: require '../../components/tools/Remove.vue'
@@ -31,12 +28,9 @@
             Edit: require '../../components/tools/Edit.vue'
             Add: require '../../components/tools/Add.vue'
         }
-
         data: ->
             items: []
-
             itemsNew: []
-
             columns:
                 name:
                     label: 'Name'
@@ -54,7 +48,6 @@
                     search: true
                     sort: true
                     class: 'collapsing'
-
 
         methods:
             addItem: () ->
