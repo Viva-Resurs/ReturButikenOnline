@@ -47,24 +47,21 @@
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
 
-                //-
-                    div.mobile.tablet.only.row
-                        div.ui.fluid.card( v-for="(item, index) in filterItems" )
-                            div.content
-                                div.header {{item[card.header.label]}}
-                                div.meta
-                                    div( v-for="meta in card.meta" ":class"="meta.class" ) {{meta.title}}: {{item[meta.label]}}
+                div.mobile.tablet.only.row
+                    div.ui.fluid.card( v-for="(item, index) in filterItems" )
+                        div.content
+                            div.header {{item[card.header.label]}}
+                            div.meta
+                                div( v-for="meta in card.meta" ":class"="meta.class" ) {{meta.title}}: {{item[meta.label]}}
 
-                                div.description {{item[card.description.label]}}
+                            div.description {{item[card.description.label]}}
 
-                            div.extra.content
-                                div.meta.left.floated
-                                    div( v-for="extra in card.extra" ":class"="extra.class" )
-                                        span( v-if="extra.type=='boolean'" ) {{ (item[extra.label]) ? extra.true : extra.false }}
+                        div.extra.content
+                            div.meta.left.floated
+                                div( v-for="extra in card.extra" ":class"="extra.class" )
+                                    span( v-if="extra.type=='boolean'" ) {{ (item[extra.label]) ? extra.true : extra.false }}
 
-                                component.meta.right.floated( ":is"="tools" ":item"="item" )
-                                    div( slot="extraTools" )
-                                        component( ":is"="extraTools" ":item"="item" )
+                            component.meta.right.floated( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
 
                 div.row( v-if="!card" )
                     table.ui.compact.unstackable.celled.table
