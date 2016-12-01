@@ -85,7 +85,7 @@
                                     strong {{(index+1)+offset}}.
                                 td( v-for="column in columns"
                                     ":class"="column.class"
-                                    v-tooltip ":data-html"="formatTooltip(item[column.tooltip])" )
+                                    v-tooltip="" ":data-html"="formatTooltip(item[column.tooltip])" )
 
                                     div.ui.input.fluid( v-if="item.edit && column.type=='string'" )
                                         input( v-model="item[column.key+'_new']" ":placeholder"="'Type ' + column.label"
