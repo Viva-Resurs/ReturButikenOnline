@@ -1,10 +1,11 @@
 <template lang="pug">
     div.ui.icon.button.hover-primary(
-        v-tooltip="" data-html="Save"
-        v-show="item.edit || !item.id"
-        @click="save(item)" )
-
-        i.ui.icon.save    
+        v-tooltip = ""
+        data-html = "Save"
+        v-show    = "item.edit || !item.id"
+        @click    = "save(item)"
+    )
+        i.ui.icon.save
 </template>
 
 <script lang="coffee">

@@ -1,9 +1,16 @@
 <template lang="pug">
     div.ui.icon.button.hover-default(
-        v-tooltip="" ":data-html"="displayInterval(item.publish_interval)"
-        @click="openRangePicker" ":id"="item.id" ":data-value"="item.publish_interval" name="publish_interval" )        
-
-        i( ":class"="'ui icon dollar '+((activeInterval(item.publish_interval)) ? 'active-interval':'')" )
+        v-tooltip     = ""
+        ":data-html"  = "displayInterval(item.publish_interval)"
+        name          = "publish_interval"
+        ":id"         = "item.id"
+        ":data-value" = "item.publish_interval"
+        @click        = "openRangePicker"
+    )
+        i( ":class" = `
+            'ui icon dollar ' +
+            ((activeInterval(item.bidding_interval)) ? 'active-interval':'')
+        ` )
 </template>
 
 <script lang="coffee">
@@ -23,7 +30,11 @@
                        "<b>End:</b><br>" + dates[1]
 
             activeInterval: (interval) ->
-                if (interval=='' || typeof interval !='string' || interval.split('|')[1]=='')
+                if (
+                    interval=='' ||
+                    typeof interval !='string' ||
+                    interval.split('|')[1]==''
+                )
                     return false;
                 return moment().isBefore( interval.split('|')[1] )
     }

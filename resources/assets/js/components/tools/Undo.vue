@@ -1,9 +1,10 @@
 <template lang="pug">
     div.ui.icon.button(
-        v-tooltip="" data-html="Undo"
-        v-show="item.edit"
-        @click="undo(item)" )
-        
+        v-tooltip = ""
+        data-html = "Undo"
+        v-show    = "item.edit"
+        @click    = "undo(item)"
+    )
         i.ui.icon.undo
 </template>
 
