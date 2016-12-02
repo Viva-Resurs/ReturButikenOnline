@@ -11,7 +11,7 @@
                 i.search.icon
 
             div.ui.padded.grid
-                div.row( v-if="countItems==0" )
+                div.row( v-if="columns && card && countItems==0" )
                     div.ui.warning.message
                         p {{ (items.length != 0) ? 'No results' : 'Empty' }}
 
