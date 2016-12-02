@@ -4,7 +4,7 @@
         div.ui.dividing.header Publicera
 
         form.ui.form(
-            "v-on:submit.prevent"="attemptCreate"
+            "v-on:submit.prevent"="attemptSave"
             role="form"
         )
 
@@ -111,7 +111,7 @@
             div.field
                 button.ui.right.floated.button.primary(
                     type="submit"
-                    @keydown.enter.prevent="attemptCreate"
+                    @keydown.enter.prevent="attemptSave"
                 ) Publicera
                 button.ui.right.floated.button(
                     type="submit"
@@ -152,7 +152,7 @@
 
         methods:
 
-            attemptCreate: ->
+            attemptSave: ->
 
                 # Todo: test
                 if (this.settings.publish_interval == false)
