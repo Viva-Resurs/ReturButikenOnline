@@ -18,7 +18,7 @@ class CategoryController extends Controller
 
 		$user = Auth::user();
 
-        if (!$user || !$user->hasRole('admin'))
+        if (!$user)
 			abort(401,'Not allowed to list categories');
 
         return Category::all();
