@@ -29,4 +29,6 @@ Route::resource('users', 'UserController');
 
 Route::get('/user', 'UserController@me');
 
+Route::get('/roles', 'UserController@rolesList');
+
 Route::get('/token', 'UserController@token');
