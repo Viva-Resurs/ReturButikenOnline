@@ -26,7 +26,7 @@
 
                                     i( v-if="column.sort" ":class"="[headers[column.key], headers[column.key+'_icon']]" )
 
-                                th.center.aligned Tools
+                                th.collapsing.center.aligned Tools
 
                         tbody
                             tr( v-for="(item, index) in filterItems" )
@@ -76,7 +76,7 @@
 
                                     i( v-if="column.sort" ":class"="[headers[column.key], headers[column.key+'_icon']]" )
 
-                                th.center.aligned Tools
+                                th.collapsing.center.aligned Tools
 
                         tbody( v-item="")
                             tr( v-for="(item, index) in filterItems" ":id"="item.id" )
