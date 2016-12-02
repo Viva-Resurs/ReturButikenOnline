@@ -28,9 +28,21 @@ class RolesTablesSeeder extends Seeder {
         DB::table('roles_user')->delete();
 
         // Admin
-        $admin = Role::create([
+        Role::create([
             'name'  => 'admin',
             'label' => 'auth.administrator',
+        ]);
+
+        // Section Admin
+        Role::create([
+            'name'  => 'sectionadmin',
+            'label' => 'auth.section_administrator',
+        ]);
+
+        // Publisher
+        Role::create([
+            'name'  => 'publisher',
+            'label' => 'auth.publisher',
         ]);
     }
 }
