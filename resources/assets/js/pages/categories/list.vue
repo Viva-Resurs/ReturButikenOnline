@@ -123,19 +123,19 @@
 
         created: ->
             @getCategories()
-            bus.$on('item_add', () => @addItem() )
-            bus.$on('item_edit', (item) => @editItem(item) )
-            bus.$on('item_revert', (item) => @revertItem(item) )
-            bus.$on('item_remove', (item) => @attemptRemove(item) )
-            bus.$on('item_changed', (item) => @attemptUpdate(item) )
-            bus.$on('item_created', (item) => @attemptCreate(item) )
+            bus.$on('categories_item_add', () => @addItem() )
+            bus.$on('categories_item_edit', (item) => @editItem(item) )
+            bus.$on('categories_item_revert', (item) => @revertItem(item) )
+            bus.$on('categories_item_remove', (item) => @attemptRemove(item) )
+            bus.$on('categories_item_changed', (item) => @attemptUpdate(item) )
+            bus.$on('categories_item_created', (item) => @attemptCreate(item) )
 
         beforeDestroy: ->
-            bus.$off('item_add')
-            bus.$off('item_edit')
-            bus.$off('item_revert')
-            bus.$off('item_remove')
-            bus.$off('item_changed')
-            bus.$off('item_created')
+            bus.$off('categories_item_add')
+            bus.$off('categories_item_edit')
+            bus.$off('categories_item_revert')
+            bus.$off('categories_item_remove')
+            bus.$off('categories_item_changed')
+            bus.$off('categories_item_created')
     }
 </script>

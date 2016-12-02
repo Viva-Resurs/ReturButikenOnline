@@ -9,7 +9,7 @@
     )
         i( ":class" = `
             'ui icon dollar ' +
-            ((activeInterval(item.bidding_interval)) ? 'active-interval':'')
+            ((activeInterval(item.publish_interval)) ? 'active-interval':'')
         ` )
 </template>
 

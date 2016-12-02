@@ -10,8 +10,9 @@
 <script lang="coffee">
     module.exports = {
         name: 'Add'
+        props: [ 'from' ]
         methods:
             add: () ->
-                bus.$emit('item_add')
+                bus.$emit(@from+'_item_add')
     }
 </script>

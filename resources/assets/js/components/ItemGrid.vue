@@ -45,7 +45,7 @@
 
                                 td.collapsing
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
 
                 div.mobile.tablet.only.row(v-if="card")
@@ -63,7 +63,7 @@
                                     span( v-if="extra.type=='boolean'" ) {{ (item[extra.label]) ? extra.true : extra.false }}
 
                             div.ui.icon.basic.buttons.meta.right.floated
-                                component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
+                                component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
                 div.row( v-if="!card" )
                     table.ui.compact.unstackable.celled.table
@@ -95,7 +95,7 @@
 
                                 td.collapsing
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
                             tr( v-for="(item, index) in itemsNew" )
                                 td.center.aligned.warning.collapsing
@@ -110,14 +110,14 @@
 
                                 td.collapsing
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
                             tr
                                 td
                                 td( v-for="c in columns" )
                                 td
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsBottom" ":is"="tool" )
+                                        component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
 
         pagination.ui.bottom.attached(
             ":total"="countItems"
@@ -154,6 +154,8 @@
             maxItems: 10
 
         computed:
+            from: () ->
+                @$route.path.substring(1)
             filterItems: ->
                 this.items
                     .filter(

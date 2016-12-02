@@ -11,9 +11,9 @@
 <script lang="coffee">
     module.exports = {
         name: 'Undo'
-        props: [ 'item' ]
+        props: [ 'item', 'from' ]
         methods:
             undo: (item) ->
-                bus.$emit('item_revert',item)
+                bus.$emit(@from+'_item_revert',item)
     }
 </script>

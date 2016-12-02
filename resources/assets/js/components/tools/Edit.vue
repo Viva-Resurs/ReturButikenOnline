@@ -11,9 +11,9 @@
 <script lang="coffee">
     module.exports = {
         name: 'Edit'
-        props: [ 'item' ]
+        props: [ 'item', 'from' ]
         methods:
             edit: (item) ->
-                bus.$emit('item_edit',item)
+                bus.$emit(@from+'_item_edit',item)
     }
 </script>

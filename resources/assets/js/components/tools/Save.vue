@@ -11,12 +11,12 @@
 <script lang="coffee">
     module.exports = {
         name: 'Save'
-        props: [ 'item' ]
+        props: [ 'item', 'from' ]
         methods:
             save: (item) ->
                 if (item.id)
-                    bus.$emit('item_changed',item)
+                    bus.$emit(@from+'_item_changed',item)
                 else
-                    bus.$emit('item_created',item)
+                    bus.$emit(@from+'_item_created',item)
     }
 </script>

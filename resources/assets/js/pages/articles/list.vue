@@ -114,9 +114,9 @@
         created: ->
             this.getArticles();
             # Listen for changes in data by components
-            bus.$on('item_remove', (item) => @attemptRemove(item) )
-            bus.$on('item_edit', (item) => @$router.push({ path: '/articles/'+item.id }) )
-            bus.$on('item_changed', (payload) => @attemptUpdate(payload) )
+            bus.$on('articles_item_remove', (item) => @attemptRemove(item) )
+            bus.$on('articles_item_edit', (item) => @$router.push({ path: '/articles/'+item.id }) )
+            bus.$on('articles_item_changed', (payload) => @attemptUpdate(payload) )
 
             bus.$on('publish_interval_changed', (id,new_value) =>
                 for item in this.items
@@ -133,9 +133,9 @@
             );
 
         beforeDestroy: ->
-            bus.$off('item_edit');
-            bus.$off('item_remove');
-            bus.$off('item_changed');
+            bus.$off('articles_item_edit');
+            bus.$off('articles_item_remove');
+            bus.$off('articles_item_changed');
             bus.$off('publish_interval_changed')
             bus.$off('bidding_interval_changed')
     }
