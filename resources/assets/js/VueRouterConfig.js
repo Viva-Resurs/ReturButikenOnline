@@ -54,6 +54,24 @@ module.exports = {
             ]
         },
         {
+            path: '/users',
+            component: require('./pages/Users.vue'),
+            children: [
+                {
+                  path: '/',
+                  component: require('./pages/users/list.vue')
+                },
+                {
+                  path: 'create',
+                  component: require('./pages/users/create.vue')
+                },
+                {
+                  path: ':id',
+                  component: require('./pages/users/update.vue')
+                }
+            ]
+        },
+        {
             path: '*',
             component: require('./pages/404.vue')
         }
