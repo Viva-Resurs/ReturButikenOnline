@@ -6,11 +6,17 @@
                     i.content.icon
                     | {{ ' ' + $root.settings.title }}
 
-            div.ui.compact.right.item.dropdown( v-dropdown="" ) {{ user.name }}
-                i.dropdown.icon
-                div.menu
-                    div.item Profil
-                    a.item( @click="$root.exitUser()" ) Logout
+            template( v-if="!user" )
+                div.ui.right.secondary.menu
+                    router-link.item( to="/auth/login" exact ) Login
+                    router-link.item( to="/help" exact ) Hjälp
+
+            template( v-if="user" )
+                div.ui.compact.right.item.dropdown( v-dropdown="" ) {{ user.name }}
+                    i.dropdown.icon
+                    div.menu
+                        div.item Profil
+                        a.item( @click="$root.exitUser()" ) Logout
 
         div.ui.grid.fluid.menu.computer.only.attached
             router-link.item( to="/" exact ) {{ $root.settings.title }}
@@ -19,7 +25,6 @@
 
                 template( v-if="!user" )
                     router-link.item( to="/auth/login" exact ) Login
-                    router-link.item( to="/auth/register" exact ) Register
                     router-link.item( to="/help" exact ) Hjälp
 
                 template( v-if="user" )
