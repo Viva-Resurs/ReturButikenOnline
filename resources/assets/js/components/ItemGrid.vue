@@ -47,7 +47,8 @@
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
 
-                div.mobile.tablet.only.row
+
+                div.mobile.tablet.only.row(v-if="card")
                     div.ui.fluid.card( v-for="(item, index) in filterItems" )
                         div.content
                             div.header {{item[card.header.label]}}
@@ -61,7 +62,8 @@
                                 div( v-for="extra in card.extra" ":class"="extra.class" )
                                     span( v-if="extra.type=='boolean'" ) {{ (item[extra.label]) ? extra.true : extra.false }}
 
-                            component.meta.right.floated( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
+                            div.ui.icon.basic.buttons.meta.right.floated
+                                component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" )
 
                 div.row( v-if="!card" )
                     table.ui.compact.unstackable.celled.table
