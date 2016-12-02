@@ -1,0 +1,82 @@
+<template lang="pug">
+    item-grid(
+        header="Users"
+        ":columns"="columns"
+        ":toolsRow"=`[
+                $options.components.Edit,
+                $options.components.Remove
+            ]`
+        ":toolsBottom"=`[
+                $options.components.Add
+        ]`
+        ":items"="items" )
+</template>
+
+<script lang="coffee">
+    module.exports = {
+
+        name: 'List'
+
+        components: {
+            ItemGrid: require '../../components/ItemGrid.vue'
+            Remove: require '../../components/tools/Remove.vue'
+            Edit: require '../../components/tools/Edit.vue'
+            Add: require '../../components/tools/Add.vue'
+        }
+
+        data: ->
+            items: []
+            columns:
+                name:
+                    label: 'Name'
+                    key: 'name'
+                    type: 'string'
+                    search: true
+                    sort: true
+                    default_sort: true
+                    tooltip: 'desc'
+                    class: 'link'
+                role:
+                    label: 'Roles'
+                    key: 'roles'
+                    type: 'string'
+                    search: true
+                    sort: true
+                    class: 'link'
+
+        methods:
+            attemptRemove: (user) ->
+                # Are you sure?
+                @removeUser(user);
+
+            removeUser: (user) ->
+                @$http.delete('users/'+user.id).then(
+                    (response) =>
+                        bus.$emit('success','removed_user')
+                        Vue.set user, 'removed', true;
+                    (response) => bus.$emit('error',response)
+                );
+
+            getUsers: () ->
+                @$root.loading = true;
+                @$http.get('users').then(
+                    (response) =>
+                        @items = response.data
+                        @$root.loading = false;
+                    (response) =>
+                        bus.$emit('error',response)
+                        @$root.loading = false;
+                );
+
+        created: ->
+            this.getUsers();
+            bus.$on('users_item_add', () => @$router.push({ path: '/users/create' }) )
+            bus.$on('users_item_remove', (item) => @attemptRemove(item) )
+            bus.$on('users_item_edit', (item) => @$router.push({ path: '/users/'+item.id }) )
+
+        beforeDestroy: ->
+            bus.$off('users_item_add');
+            bus.$off('users_item_edit');
+            bus.$off('users_item_remove');
+    }
+</script>
