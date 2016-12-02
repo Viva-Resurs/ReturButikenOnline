@@ -98,7 +98,7 @@ class ArticleController extends Controller
         // Attach Categories
         if ($request['selected_categories'])
             foreach ($request['selected_categories'] as $category){
-                $c = Category::find($category)->get();
+                $c = Category::find($category);
                 if ($c)
                     $article->categories()->save($c);
             }
