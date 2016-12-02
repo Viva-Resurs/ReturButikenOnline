@@ -23,6 +23,7 @@
                     router-link.item( to="/help" exact ) Hjälp
 
                 template( v-if="user" )
+                    router-link.item( to="/sections" exact ) Avdelningar
                     router-link.item( to="/articles/create" exact ) Publicera
                     router-link.item( to="/articles" exact ) Arkiv
                     router-link.item( to="/categories" exact ) Kategorier
@@ -38,6 +39,7 @@
                 router-link.item( to="/" exact )
                     div.ui.container.center.aligned
                         h3.ui.inverted.header {{ $root.settings.title }}
+                router-link.item( to="/sections" exact ) Avdelningar
                 router-link.item( to="/articles" exact ) Arkiv
                 router-link.item( to="/articles/create" exact ) Publicera
                 router-link.item( to="/categories" exact ) Kategorier

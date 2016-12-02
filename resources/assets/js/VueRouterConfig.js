@@ -44,6 +44,16 @@ module.exports = {
             ]
         },
         {
+            path: '/sections',
+            component: require('./pages/Sections.vue'),
+            children: [
+                {
+                  path: '/',
+                  component: require('./pages/sections/list.vue')
+                }
+            ]
+        },
+        {
             path: '*',
             component: require('./pages/404.vue')
         }
