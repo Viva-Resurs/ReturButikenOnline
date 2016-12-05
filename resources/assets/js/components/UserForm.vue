@@ -8,29 +8,13 @@
             role="form"
         )
 
-            div.fields
-                div.twelve.wide.field
-                    label Användarnamn:
-                    input#name(
-                        type="text"
-                        "v-model"="user.name"
-                        placeholder="Varunamn"
-                    )
-                div.four.wide.field
-                    label Välj roll:
-                    div.ui.fluid.selection.dropdown#role(
-                        v-if="roles"
-                        name="roles"
-                        v-dropdown=""
-                        ":data-selected"="user.selected_roles"
-                    )
-                        i.dropdown.icon
-                        div.default.text Select Roles
-                        div.menu
-                            div.item(
-                                v-for="role in roles"
-                                ":data-value"="role.id"
-                            ) {{role.name}}
+            div.eight.wide.field
+                label Användarnamn:
+                input#name(
+                    type="text"
+                    "v-model"="user.name"
+                    placeholder="Varunamn"
+                )
 
             div.field
                 div.ui.checkbox( v-checkbox="" )
@@ -41,13 +25,45 @@
                     )
                     label Ändra lösenord
 
-            div.field( v-if="settings.change_password" )
+            div.eight.wide.field( v-if="settings.change_password" )
                 label Lösenord:
                 input#password(
                     type="password"
                     "v-model"="user.password"
                     placeholder="***"
                 )
+
+            div.eight.wide.field( v-if="$root.isAdmin()" )
+                label Välj roll:
+                div.ui.fluid.selection.dropdown#role(
+                    v-if="roles"
+                    name="roles"
+                    v-dropdown=""
+                    ":data-selected"="(user.selected_roles.length) ? user.selected_roles[0].id : user.selected_roles"
+                )
+                    i.dropdown.icon
+                    div.default.text Select Roles
+                    div.menu
+                        div.item(
+                            v-for="role in roles"
+                            ":data-value"="role.id"
+                        ) {{role.name}}
+
+            div.eight.wide.field( v-if="roles && $root.isAdmin()" )
+                label Välj område:
+                div.ui.fluid.selection.dropdown#role(
+                    name="sections"
+                    v-if="sections"
+                    v-dropdown=""
+                    ":data-selected"="(user.selected_sections.length) ? user.selected_sections[0].id : user.selected_sections"
+                )
+                    i.dropdown.icon
+                    div.default.text Select Sections
+                    div.menu
+                        div.item(
+                            v-for="section in sections"
+                            ":data-value"="section.id"
+                        ) {{section.name}}
 
             div.field
                 div.two.fields
@@ -56,7 +72,7 @@
                         input(
                             type="text"
                             id="fullname"
-                            "v-model"="user.fullName"
+                            "v-model"="user.fullname"
                             placeholder="Ditt namn"
                         )
                     div.field
@@ -87,18 +103,21 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'ArticleForm'
+        name: 'UserForm'
         props: [ 'original' ],
         data: -> {
             user:
                 name: ''
                 password: false
                 email: ''
-                fullName: false
+                fullname: false
                 phone: ''
                 selected_roles: []
+                selected_sections: []
             roles:
-                null
+                false
+            sections:
+                false
             settings:
                 change_password: false
             myform: []
@@ -113,11 +132,22 @@
             getRoleList: ->
                 this.$http.get('roles').then(
                     (response) =>
+                        console.log 'roles ready'
                         this.roles = response.data;
 
                     (response) =>
                         bus.$emit('error', response);
                         this.roles = []
+
+                );
+            getSectionList: ->
+                this.$http.get('sections').then(
+                    (response) =>
+                        this.sections = response.data;
+
+                    (response) =>
+                        bus.$emit('error', response);
+                        this.sections = []
 
                 );
 
@@ -131,7 +161,15 @@
                 this.user.selected_roles = new_value;
             );
 
+            # Listen for changes in Sections
+            bus.$on('sections_changed', (id,new_value) =>
+                this.user.selected_sections = new_value;
+            );
+
             # Get roles
             @getRoleList()
+
+            # Get sections
+            @getSectionList()
 
 </script>
