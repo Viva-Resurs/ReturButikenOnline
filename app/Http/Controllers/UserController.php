@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Role;
+use App\Section;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -15,11 +16,23 @@ use App\Http\Requests;
 
 class UserController extends Controller
 {
+    /**
+     * List users.
+     *
+     * Admin can list all users
+     * Section-admin can list users within their sections
+     * Publishers cant list users at all
+     *
+     * @return Array
+     */
     public function index(){
 
         $me = Auth::user();
 
-        if (!$me || !$me->hasRole('admin'))
+        if (!$me)
+            abort(401,'Not logged in');
+
+        if (!$me->hasRole('admin') && !$me->hasRole('sectionadmin'))
             abort(401,'Not allowed to list users');
 
         $results = [];
@@ -27,55 +40,103 @@ class UserController extends Controller
             $u = [
                 'id' => $user->id,
                 'name' => $user->name,
-                'roles' => []
+                'fullname' => $user->fullname,
+                'email' => $user->email,
+                'phone' => $user->phone,
+                'roles' => [],
+                'sections' => []
             ];
 
             foreach ($user->roles as $role)
-                array_push($u['roles'],$role->name);
+                array_push($u['roles'],[
+                    'id' => $role->id,
+                    'name' => $role->name
+                ]);
 
-            array_push($results,$u);
+            foreach ($user->sections as $section)
+                array_push($u['sections'],[
+                    'id' => $section->id,
+                    'name' => $section->name
+                ]);
+
+            if ($me->hasRole('admin') || $this->sameSections($me,$u))
+                array_push($results,$u);
         }
 
         return $results;
     }
 
+    /**
+     * Show a user.
+     *
+     * Admin can show any user
+     * Section-admin can show users within their sections
+     * Publishers can only show themselves
+     *
+     * @return Array
+     */
     public function show($id){
 
         $me = Auth::user();
 
-        if (!$me || !$me->hasRole('admin'))
-            abort(401,'Not allowed to show users');
+        if (!$me)
+            abort(401,'Not logged in');
 
         $user = User::find($id);
 
         if (!$user)
             abort(404, 'Could not find user');
 
+        if (!$me->hasRole('admin') && !$me->hasRole('sectionadmin') && $user->id!=$me->id)
+            abort(401,'Not allowed to list user');
+
         $result = [
             'id' => $user->id,
             'name' => $user->name,
-            'fullName' => $user->fullName,
+            'fullname' => $user->fullname,
             'email' => $user->email,
             'phone' => $user->phone,
-            'selected_roles' => []
+            'selected_roles' => [],
+            'selected_sections' => []
         ];
 
         foreach ($user->roles as $role)
-            array_push($result['selected_roles'],$role->id);
+            array_push($result['selected_roles'],[
+                'id' => $role->id,
+                'name' => $role->name
+            ]);
+
+        foreach ($user->sections as $section)
+            array_push($result['selected_sections'],[
+                'id' => $section->id,
+                'name' => $section->name
+            ]);
 
         return $result;
     }
 
+    /**
+     * Create a new user.
+     *
+     * Admin can create any user
+     * Section-admin can create publishers within their sections
+     * Publishers cant create anything
+     *
+     * @return Array
+     */
     public function store(Request $request){
 
         $me = Auth::user();
 
         if (!$me)
+            abort(401,'Not logged in');
+
+        if (!$me->hasRole('admin') && !$me->hasRole('sectionadmin') )
             abort(401,'Not allowed to create users');
 
         $user = new User([
             'name' => $request['name'],
-            'fullName' => ($request->has('fullName')) ? $request['fullName'] : '',
+            'fullname' => ($request->has('fullname')) ? $request['fullname'] : '',
             'phone' => ($request->has('phone')) ? $request['phone'] : '',
             'email' => ($request->has('email')) ? $request['email'] : '',
             'password' => bcrypt($request['password'])
@@ -83,37 +144,77 @@ class UserController extends Controller
 
         $user->save();
 
-        // Attach Roles
-        if ($request['selected_roles'])
-            foreach ($request['selected_roles'] as $role){
-                $r = Role::find($role);
-                if ($r)
-                    $user->roles()->save($r);
-            }
+        // Admin can create any type of user
+        if ($me->hasRole('admin')) {
+
+            // Attach Roles
+            if ($request['selected_roles'])
+                foreach ($request['selected_roles'] as $role){
+                    $r = Role::find($role);
+                    if ($r)
+                        $user->roles()->save($r);
+                }
+
+            // Attach Sections
+            if ($request['selected_sections'])
+                foreach ($request['selected_sections'] as $section){
+                    $s = Role::find($section);
+                    if ($s)
+                        $user->sections()->save($s);
+                }
+
+        }
+
+        // Section-admin can create publishers within their sections
+        if ($me->hasRole('sectionadmin')){
+
+            // Attach Roles
+            $r = Role::where('name', 'publisher')->first();
+            if ($r)
+                $user->roles()->save($r);
+
+            // Attach Sections
+            foreach ($me['sections'] as $section)
+                $user->sections()->save($section);
+
+        }
 
         return $this->show($user->id);
     }
 
+    /**
+     * Update a user.
+     *
+     * Admin can change any user
+     * Section-admin can edit publishers info within their sections
+     * Publishers can only update their info
+     *
+     * @return Array
+     */
     public function update(Request $request, $id){
 
         $me = Auth::user();
 
         if (!$me)
-            abort(401,'Not allowed to list users');
+            abort(401,'Not logged in');
 
         $user = User::find($id);
 
         if (!$user)
             abort(404);
 
-        if ($user->id!=$me->id && !$me->hasRole('admin'))
-            abort(401,'Not allowed to update users');
+        if (
+            !$me->hasRole('admin') &&
+            $user->id!=$me->id &&
+            ($me->hasRole('sectionadmin') && !$this->sameSections($me,$user))
+        )
+            abort(401,'Not allowed to update user');
 
         if ($request->has('name') && $request['name']!='')
             $user->name = $request['name'];
 
-        if ($request->has('fullName') && $request['fullName']!='')
-            $user->fullName = $request['fullName'];
+        if ($request->has('fullname') && $request['fullname']!='')
+            $user->fullname = $request['fullname'];
 
         if ($request->has('email') && $request['email']!='')
             $user->email = $request['email'];
@@ -139,17 +240,41 @@ class UserController extends Controller
                 }
         }
 
+        // Admin can change users sections
+        if ($me->hasRole('admin')) {
+            // Clear Sections
+            foreach($user->sections as $section)
+                $user->sections()->detach($section->id);
+
+            // Attach Sections
+            if ($request['selected_sections'])
+                foreach ($request['selected_sections'] as $section){
+                    $s = Section::find($section);
+                    if ($s)
+                        $user->sections()->save($s);
+                }
+        }
+
         $user->save();
 
         return $this->show($user->id);
     }
 
+    /**
+     * Remove a user.
+     *
+     * Admin can remove any user (except itself)
+     * Section-admin can remove publishers within their sections
+     * Publishers cant remove anything
+     *
+     * @return void
+     */
     public function destroy($id){
 
         $me = Auth::user();
 
         if (!$me)
-            abort(401,'Not allowed to remove users');
+            abort(401,'Not logged in');
 
         $user = User::find($id);
 
@@ -159,16 +284,64 @@ class UserController extends Controller
         if ($user->id==$me->id)
             abort(401,'No suicide');
 
+        if ( !$me->hasRole('admin') && !$me->hasRole('sectionadmin') )
+            abort(401,'Not allowed to remove user');
+
+        if ($me->hasRole('sectionadmin'))
+            if ( !$this->sameSections($me,$user) || !$user->hasRole('publisher') )
+                abort(401,'Not allowed to remove user');
+
         $user->delete();
     }
 
+    /**
+     * Check if two users share a section
+     */
+    public function sameSections($user1, $user2){
+        foreach ($user1['sections'] as $sectionA) {
+            foreach ($user2['sections'] as $sectionB) {
+                if ($sectionA && $sectionB)
+                    if ($sectionA['id'] == $sectionB['id'])
+                        return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Get currently authorized user
      */
     public function me(){
+
+        $me = Auth::user();
+
+        if (!$me)
+            abort(401,'Not logged in');
+
+        $result = [
+            'id' => $me->id,
+            'name' => $me->name,
+            'fullname' => $me->fullname,
+            'email' => $me->email,
+            'phone' => $me->phone,
+            'roles' => [],
+            'sections' => []
+        ];
+
+        foreach ($me->roles as $role)
+            array_push($result['roles'],[
+                'id' => $role->id,
+                'name' => $role->name
+            ]);
+
+        foreach ($me->sections as $section)
+            array_push($result['sections'],[
+                'id' => $section->id,
+                'name' => $section->name
+            ]);
+
         return [
-            'user' => Auth::user(),
+            'user' => $result,
             'token' => csrf_token()
         ];
     }
