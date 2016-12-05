@@ -88,7 +88,6 @@
 
                                     div.ui.input.fluid( v-if="item.edit && column.type=='string'" )
                                         input( v-model="item[column.key+'_new']" ":placeholder"="'Type ' + column.label"
-                                        @keyup.enter="attemptUpdate(item)"
                                         v-focus="" )
 
                                     div( v-else="") {{item[column.key]}}
@@ -105,7 +104,6 @@
 
                                     div.ui.input.fluid( v-if="column.type=='string'" )
                                         input( v-model="item[column.key]" ":placeholder"="'Type ' + column.label"
-                                        @keyup.enter="attemptUpdate(item)"
                                         v-focus="" )
 
                                 td.collapsing
