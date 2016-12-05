@@ -21,6 +21,13 @@ class CreateSectionsTable extends Migration
 
             $table->timestamps();
         });
+
+        Schema::create('sections_user', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('section_id')->unsigned()->index();
+            $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');
+        });
     }
 
     /**
@@ -31,5 +38,6 @@ class CreateSectionsTable extends Migration
     public function down()
     {
         Schema::drop('sections');
+        Schema::drop('sections_user');
     }
 }

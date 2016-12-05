@@ -13,9 +13,9 @@ class Section extends Model
         'desc',
     ];
 
-    public function admins()
+    public function users()
     {
-        return $this->belongsToMany(User::class, 'sections_admins');
+        return $this->belongsToMany(User::class, 'sections_user');
     }
 
     public function articles()

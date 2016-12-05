@@ -12,24 +12,48 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
+/**
+ * List sections.
+ *
+ * Admin can list and edit all sections
+ * Section-admin & Publisher can only view their sections
+ */
+
 class SectionController extends Controller
 {
     public function index(Request $request){
 
-		$user = Auth::user();
+        $me = Auth::user();
 
-        if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to list sections');
+        if (!$me)
+            abort(401,'Not logged in');
 
-        return Section::all();
+        if ($me->hasRole('admin'))
+            return Section::all();
+
+        $results = [];
+        foreach (Section::all() as $section) {
+            foreach ($me->sections as $user_section) {
+                if ($user_section->id == $section->id)
+                    array_push( $results, [
+                        'id' => $section->id,
+                        'name' => $section->name
+                    ]);
+            }
+        }
+
+        return $results;
     }
 
     public function store(Request $request){
 
-		$user = Auth::user();
+        $me = Auth::user();
 
-        if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to create sections');
+        if (!$me)
+            abort(401,'Not logged in');
+
+        if (!$me->hasRole('admin'))
+            abort(401,'Not allowed to create sections');
 
         $section = new Section([
             'name' => ($request->has('name')) ? $request['name'] : 'namnlös sektion',
@@ -43,10 +67,13 @@ class SectionController extends Controller
 
     public function update(Request $request, $id){
 
-		$user = Auth::user();
+        $me = Auth::user();
 
-        if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to update section');
+        if (!$me)
+            abort(401,'Not logged in');
+
+        if (!$me->hasRole('admin'))
+            abort(401,'Not allowed to update sections');
 
         $section = Section::find($id);
 
@@ -63,10 +90,13 @@ class SectionController extends Controller
 
     public function destroy($id){
 
-		$user = Auth::user();
+        $me = Auth::user();
 
-        if (!$user || !$user->hasRole('admin'))
-			abort(401,'Not allowed to remove sections');
+        if (!$me)
+            abort(401,'Not logged in');
+
+        if (!$me->hasRole('admin'))
+            abort(401,'Not allowed to remove sections');
 
         $section = Section::find($id);
 

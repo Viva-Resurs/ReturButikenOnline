@@ -48,6 +48,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Section association
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function sections() {
+        return $this->belongsToMany(Section::class,'sections_user');
+    }
+
+    /**
      * Check if the User have a given role
      *
      * @param $role
@@ -67,7 +76,7 @@ class User extends Authenticatable
      * @return Model
      */
     public function assignRole($role) {
-        
+
         if (is_string($role))
             return $this->roles()->save(
                 Role::whereName($role)->firstOrFail()
@@ -84,10 +93,10 @@ class User extends Authenticatable
      */
     public function getRoles() {
         $roles_array = [];
-        
+
         foreach ($this->roles as $role)
             array_push($roles_array, $role->name);
-        
+
         return $roles_array;
     }
 
