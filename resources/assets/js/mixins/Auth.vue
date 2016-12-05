@@ -2,14 +2,25 @@
     export default {
         name: 'Auth',
         methods: {
+            data(){
+                return {
+                    user: false,
+                }
+            },
             setUser(payload) {
-                sessionStorage.user = payload.user;
                 sessionStorage.token = payload.token;
+                this.user = payload.user;
                 bus.$emit('user_changed', payload.user );
             },
+            isAdmin() {
+                for (var i=0 ; i<this.user.roles.length ; i++)
+                    if (this.user.roles[i].name == 'admin')
+                        return true;
+                return false;
+            },
             clearUser() {
-                sessionStorage.user = false;
                 sessionStorage.token = false;
+                this.user = false;
                 bus.$emit('user_changed', false );
             },
             getUser(mode) {
