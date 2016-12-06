@@ -39,11 +39,14 @@
 
                                     span( v-if="column.type=='string' || column.type=='number' || column.type==''") {{item[column.key]}}
 
-                                    img.ui.mini.fluid.rounded.image(v-if="column.type=='image'" ":src"="item.selected_images[0].thumb_path")
+                                    img.ui.mini.fluid.rounded.image(
+                                        v-if="column.type=='image' && item[column.key].length"
+                                        ":src"="item[column.key][0].thumb_path"
+                                    )
 
                                     div(v-if="column.type=='array'")
                                         div( v-for="(post, column_index) in item[column.key]") {{ post.name }}
-                                            span(v-if="column_index < item[column.key].length -1") ,
+                                            span(v-if="column_index != item[column.key].length -1") ,
 
                                     div.center.aligned( v-if="column.type=='checkbox'" )
                                         i( ":class"="'ui icon ' + ((item[column.key]==1) ? 'checkmark box' : 'square outline')"

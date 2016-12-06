@@ -51,7 +51,7 @@
             columns:
                 image:
                     label: 'Image'
-                    key: 'image'
+                    key: 'selected_images'
                     type: 'image'
                     class: 'center aligned collapsing'
                 name:
@@ -72,7 +72,7 @@
                     sort: true
                     class: 'link'
                 category:
-                    label: 'Category'
+                    label: 'Categories'
                     key: 'selected_categories'
                     type: 'array'
                     search: true
