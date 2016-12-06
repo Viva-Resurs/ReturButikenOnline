@@ -39,8 +39,15 @@
                         label: 'Categories'
                         key: 'categories'
                         class: 'category'
+                    image:
+                        label: 'Image'
+                        key: 'selected_images'
+                        type: 'image'
+                        class: 'ui tiny images'
+
                 description:
                     key: 'desc'
+
                 extra:
                     public:
                         key: 'public'

@@ -64,7 +64,12 @@
                             div.meta
                                 div( v-for="meta in card.meta" ":class"="meta.class" ) {{meta.title}}: {{item[meta.label]}}
 
-                            div.description {{item[card.description.label]}}
+                            div.description
+                                p {{item[card.description.key]}}
+
+                                div( v-for="meta in card.meta" ":class"="meta.class" v-if="meta.type=='image' && item[meta.key].length")
+                                    div.ui.image( v-for="image in item[meta.key]" )
+                                        img.ui.tiny.rounded.image( ":src"="image.thumb_path" )
 
                         div.extra.content
                             div.meta.left.floated
