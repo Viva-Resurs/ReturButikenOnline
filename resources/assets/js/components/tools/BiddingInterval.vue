@@ -8,7 +8,7 @@
         @click        = "openRangePicker"
     )
         i( ":class" = `
-            'ui icon dollar ' +
+            'ui icon legal ' +
             ((activeInterval(item.bidding_interval)) ? 'active-interval':'')
         ` )
 </template>
