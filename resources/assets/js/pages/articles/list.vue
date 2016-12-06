@@ -49,6 +49,11 @@
                         true: 'Publicerad för allmänheten'
                         false: 'Publicerad på kommunens intranät'
             columns:
+                image:
+                    label: 'Image'
+                    key: 'image'
+                    type: 'image'
+                    class: 'center aligned collapsing'
                 name:
                     label: 'Name'
                     key: 'name'
@@ -65,6 +70,13 @@
                     default_sort: true
                     search: true
                     sort: true
+                    class: 'link'
+                category:
+                    label: 'Category'
+                    key: 'selected_categories'
+                    type: 'array'
+                    search: true
+                    sort: false
                     class: 'link'
                 public:
                     label: 'Public'
