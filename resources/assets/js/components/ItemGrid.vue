@@ -58,23 +58,41 @@
 
 
                 div.mobile.tablet.only.row(v-if="card")
-                    div.ui.fluid.card( v-for="(item, index) in filterItems" )
+                    div.ui.fluid.raised.card( v-for="(item, index) in filterItems" )
                         div.content
+                            div.ui.right.ribbon.label
+                                 i.checked.calendar.icon
+                                 | {{ item[card.meta.updated_at.key]+' ' }}
+
                             div.header {{item[card.header.label]}}
-                            div.meta
-                                div( v-for="meta in card.meta" ":class"="meta.class" ) {{meta.title}}: {{item[meta.label]}}
-
+                                div( v-for="meta in card.meta" ":class"="meta.class" v-if="meta.type=='array'")
+                                     div.ui.red.horizontal.label( v-for="(post, card_index) in item[meta.key]") {{ post.name }}
+                            div.ui.divider
                             div.description
-                                p {{item[card.description.key]}}
+                                div.ui.padded.segment
+                                    div.top.attached.ui.secondary.label
+                                        i.tag.icon
+                                        | Description
+                                    p {{item[card.description.key]}}
 
-                                div( v-for="meta in card.meta" ":class"="meta.class" v-if="meta.type=='image' && item[meta.key].length")
-                                    div.ui.image( v-for="image in item[meta.key]" )
-                                        img.ui.tiny.rounded.image( ":src"="image.thumb_path" )
+                                div.ui.secondary.padded.segment
+
+                                    div.top.attached.ui.secondary.label
+                                        i.image.icon
+                                        | Images
+
+
+                                    div( v-for="meta in card.meta" ":class"="meta.class" v-if="meta.type=='image' && item[meta.key].length")
+                                        div.ui.image( v-for="image in item[meta.key]" )
+                                            img.ui.tiny.rounded.image( ":src"="image.thumb_path" )
+
 
                         div.extra.content
                             div.meta.left.floated
+                                br
                                 div( v-for="extra in card.extra" ":class"="extra.class" )
                                     span( v-if="extra.type=='boolean'" ) {{ (item[extra.label]) ? extra.true : extra.false }}
+
 
                             div.ui.icon.basic.buttons.meta.right.floated
                                 component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )

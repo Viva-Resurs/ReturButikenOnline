@@ -1,6 +1,6 @@
 <template lang="pug">
     item-grid(
-        header="Articles"
+        header="Arkiv"
         ":columns"="columns"
         ":card"="card"
         ":toolsRow"=`[
@@ -34,16 +34,17 @@
                     updated_at:
                         label: 'Updated'
                         key: 'updated_at'
-                        class: 'right floated time'
+                        class: 'left floated time'
                     categories:
                         label: 'Categories'
-                        key: 'categories'
-                        class: 'category'
+                        key: 'selected_categories'
+                        class: 'categories'
+                        type: 'array'
                     image:
                         label: 'Image'
                         key: 'selected_images'
                         type: 'image'
-                        class: 'ui tiny images'
+                        class: 'ui left aligned tiny images'
 
                 description:
                     key: 'desc'
