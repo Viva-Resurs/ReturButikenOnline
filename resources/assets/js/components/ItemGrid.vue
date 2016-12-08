@@ -60,13 +60,15 @@
                 div.mobile.tablet.only.row(v-if="card")
                     div.ui.fluid.raised.card( v-for="(item, index) in filterItems" )
                         div.content
-                            div.ui.right.ribbon.label
-                                 i.checked.calendar.icon
-                                 | {{ item[card.meta.updated_at.key]+' ' }}
 
-                            div.header {{item[card.header.label]}}
+                            div.header.left.aligned
+                                div.ui.right.ribbon.label
+                                    i.checked.calendar.icon
+                                    | {{ item[card.meta.updated_at.key]+' ' }}
+                                div(style="margin-top: -25px") {{item[card.header.label]}}
                                 div( v-for="meta in card.meta" ":class"="meta.class" v-if="meta.type=='array'")
-                                     div.ui.red.horizontal.label( v-for="(post, card_index) in item[meta.key]") {{ post.name }}
+                                    div.ui.black.horizontal.label( v-for="(post, card_index) in item[meta.key]") {{ post.name }}
+
                             div.ui.divider
                             div.description
                                 div.ui.padded.segment
