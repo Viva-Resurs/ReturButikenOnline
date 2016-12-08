@@ -91,7 +91,7 @@
                             div.meta.left.floated
                                 br
                                 div( v-for="extra in card.extra" ":class"="extra.class" )
-                                    span( v-if="extra.type=='boolean'" ) {{ (item[extra.label]) ? extra.true : extra.false }}
+                                    span( v-if="extra.type=='boolean'" ) {{ (item[extra.key] == 1) ? extra.true : extra.false }}
 
 
                             div.ui.icon.basic.buttons.meta.right.floated
