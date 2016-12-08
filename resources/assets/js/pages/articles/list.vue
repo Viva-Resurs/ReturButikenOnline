@@ -44,7 +44,7 @@
                         label: 'Image'
                         key: 'selected_images'
                         type: 'image'
-                        class: 'ui left aligned tiny images'
+                        class: 'ui center aligned tiny images'
 
                 description:
                     key: 'desc'

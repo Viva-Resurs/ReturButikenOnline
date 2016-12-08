@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.container.segment
+    div.ui.padded.container.segment
         div.ui.dividing.header {{header}}
 
         div.ui.attached( v-if="this.$root.loading" )
