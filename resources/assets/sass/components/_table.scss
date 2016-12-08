@@ -1,0 +1,28 @@
+@import "semantic/dist/semantic.min";
+
+.ui.table {
+
+    th.link {
+        cursor: pointer !important;
+    }
+
+}
+
+.active-interval {
+    color: #050;
+    text-shadow: 2px 2px 8px #21ba45;
+}
+
+div.ui.icon.button.hover-default:hover {
+    background-color: #eee !important;
+}
+
+div.ui.icon.button.hover-primary:hover {
+    background-color: #2185d0 !important;
+    color: #fff !important;
+}
+
+div.ui.icon.button.hover-danger:hover {
+    background-color: #db2828 !important;
+    color: #fff !important;
+}
