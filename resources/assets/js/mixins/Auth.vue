@@ -36,7 +36,7 @@
                         this.loginCheck = setInterval( this.getUser, 1000*30 );
 
                     },
-                    (response) => bus.$emit('error',response)
+                    (response) => bus.$emit('error',response.data)
                 );
             },
             exitUser() {
