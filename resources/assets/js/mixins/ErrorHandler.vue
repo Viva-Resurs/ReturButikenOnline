@@ -1,12 +1,8 @@
-<script>
-    export default {
-
-        name: 'ErrorHandler',
-
+<script lang="coffee">
+    module.exports = {
+        name: 'ErrorHandler'
         methods: {
-
-            handleError(message) {
-
+            handleError: (message) ->
                 bus.$emit('show_message',{
                     type: 'error',
                     title: message.error,
@@ -14,21 +10,14 @@
                 });
 
                 if (message.error=='TokenMismatch')
-                    this.getToken();
+                    this.getToken()
+
                 else if (message.error=='Unauthorized')
                     bus.$emit('user_changed', false );
-                    this.$router.push({ path: '/auth/login' });
-
-            }
-
-        },
-
-        mounted: function() {
-
-            // Listen for errors
-            bus.$on('error', this.handleError );
-
+                    this.$router.push({ path: '/auth/login' })
         }
-
-    };
+        mounted: () ->
+            # Listen for errors
+            bus.$on('error', this.handleError )
+    }
 </script>
