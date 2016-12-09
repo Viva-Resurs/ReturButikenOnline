@@ -1,55 +1,92 @@
 <template lang="pug">
     div
-        div.ui.inverted.menu.tablet.mobile.only.grid.attached
-            div.toc.item
-                a.ui.button.launch.black.icon( @click="menuToggle" )
-                    i.content.icon
-                    | {{ ' ' + $root.settings.title }}
+        div.ui.inverted.menu.tablet.mobile.only.grid.attached.three.item
+            div.item
+            router-link.item( to="/" exact ) {{ $root.settings.title }}
+            a.item( v-if="user" @click="menuToggle" )
+                div.column.right.floated
+                    div.ui.container
+                        | Meny &nbsp;
+                        i.icon.content
+            router-link.item( v-if="!user" to="/auth/login" exact )
+                div.column.right.floated
+                    div.ui.container
+                        | Logga in &nbsp;
+                        i.icon.sign.in
 
-            template( v-if="!user" )
-                div.ui.right.secondary.menu
-                    router-link.item( to="/auth/login" exact ) Login
-                    router-link.item( to="/help" exact ) Hjälp
-
-            template( v-if="user" )
-                div.ui.compact.right.item.dropdown( v-dropdown="" ) {{ user.name }}
-                    i.dropdown.icon
-                    div.menu
-                        div.item Profil
-                        a.item( @click="$root.exitUser()" ) Logout
-
-        div.ui.left.vertical.inverted.sidebar.labeled.menu
-            div( @click="menuToggle()" )
-                router-link.item( to="/" exact )
+        div.ui.right.vertical.inverted.sidebar.labeled.menu
+            div( v-if="user" @click="menuToggle()" )
+                div.item
                     div.ui.container.center.aligned
                         h3.ui.inverted.header {{ $root.settings.title }}
-                template( v-if="user" )
-                    router-link.item( to="/sections" exact ) Avdelningar
-                    router-link.item( to="/articles" exact ) Arkiv
-                    router-link.item( to="/articles/create" exact ) Publicera
-                    router-link.item( to="/categories" exact ) Kategorier
-                    router-link.item( to="/users" exact ) Användare
+                div.item
+                    div.header Avdelningar
+                    div.menu
+                        router-link.item( to="/sections" exact ) Lista
+                            i.icon.browser
+                div.item
+                    div.header Användare
+                    div.menu
+                        router-link.item( to="/users" exact ) Lista
+                            i.icon.browser
+                div.item
+                    div.header Artiklar
+                    div.menu
+                        router-link.item( to="/articles" exact ) Lista
+                            i.icon.browser
+                        router-link.item( to="/articles/create" exact ) Publicera
+                            i.icon.write
+                div.item
+                    div.header Kategorier
+                    div.menu
+                        router-link.item( to="/categories" exact ) Lista
+                            i.icon.browser
+                div.item
+                    div.ui.label.grey {{ user.name }}
+                    div.header
+                        | Inloggad som
 
-        div.ui.grid.fluid.menu.computer.only.attached
-            router-link.item( to="/" exact ) {{ $root.settings.title }}
+                    div.vertical.menu
+                        router-link.item( to="/auth/profile" exact ) Profil
+                            i.icon.user
+                        a.item( @click="$root.exitUser()" ) Logga ut
+                            i.icon.sign.out
 
-            div.ui.right.secondary.menu
+        div.ui.grid.fluid.inverted.menu.computer.only.attached
+            div.ui.container
+                router-link.item( to="/" exact ) {{ $root.settings.title }}
 
-                template( v-if="!user" )
-                    router-link.item( to="/auth/login" exact ) Login
-                    router-link.item( to="/help" exact ) Hjälp
+                div.ui.right.inverted.menu
+                    template( v-if="!user" )
+                        router-link.item( to="/auth/login" exact ) Login
+                        router-link.item( to="/help" exact ) Hjälp
 
-                template( v-if="user" )
-                    router-link.item( to="/sections" exact ) Avdelningar
-                    router-link.item( to="/articles/create" exact ) Publicera
-                    router-link.item( to="/articles" exact ) Arkiv
-                    router-link.item( to="/categories" exact ) Kategorier
-                    router-link.item( to="/users" exact ) Användare
-                    div.ui.dropdown.item( v-dropdown="" ) {{ user.name }}
-                        i.dropdown.icon
-                        div.menu
-                            div.item Profil
-                            a.item( @click="$root.exitUser()" ) Logout
+                    template( v-if="user" )
+                        router-link.item( to="/sections" exact )
+                            i.icon.building
+                            |  Avdelningar
+                        router-link.item( to="/users" exact )
+                            i.icon.users
+                            |  Användare
+                        router-link.item( to="/articles/create" exact )
+                            i.icon.write
+                            |  Publicera
+                        router-link.item( to="/articles" exact )
+                            i.icon.browser
+                            |  Arkiv
+                        router-link.item( to="/categories" exact )
+                            i.icon.tags
+                            |  Kategorier
+
+                        div.ui.dropdown.item( v-dropdown="" ) {{ user.name }}
+                            i.dropdown.icon
+                            div.menu
+                                div.item
+                                    i.icon.user
+                                    |  Profil
+                                a.item( @click="$root.exitUser()" )
+                                    i.icon.sign.out
+                                    |  Logga ut
 </template>
 
 <script lang="coffee">
