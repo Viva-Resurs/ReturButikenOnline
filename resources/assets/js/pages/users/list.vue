@@ -1,6 +1,6 @@
 <template lang="pug">
     item-grid(
-        header="Users"
+        header="Användare"
         ":columns"="columns"
         ":toolsRow"=`[
                 $options.components.Edit,
