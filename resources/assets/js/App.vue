@@ -17,6 +17,7 @@
 
     # Define global directives
     Vue.directive('tooltip', require('./directives/tooltip.vue'));
+    Vue.directive('accordion', require('./directives/accordion.vue'));
     Vue.directive('dropdown', require('./directives/dropdown.vue'));
     Vue.directive('checkbox', require('./directives/checkbox.vue'));
     Vue.directive('focus', require('./directives/focus.vue'));
