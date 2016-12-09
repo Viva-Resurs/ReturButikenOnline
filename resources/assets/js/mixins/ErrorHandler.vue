@@ -14,6 +14,9 @@
 
                 if (message.error=='TokenMismatch')
                     this.getToken();
+                else if (message.error=='Unauthorized')
+                    bus.$emit('user_changed', false );
+                    this.$router.push({ path: '/auth/login' });
 
             }
 
