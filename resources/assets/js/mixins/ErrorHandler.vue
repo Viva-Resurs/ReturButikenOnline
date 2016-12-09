@@ -7,7 +7,8 @@
 
             handleError(message) {
 
-                this.showError({
+                bus.$emit('show_message',{
+                    type: 'error',
                     title: message.error,
                     message: message.details
                 });

@@ -1,6 +1,7 @@
 <template lang="pug">
     div.pusher
         navigation
+        semantic-dialog
         div.ui.container
             router-view
         div.offset_container
@@ -26,6 +27,7 @@
 
     # Export the root-instance options
     Navigation = require './components/Nav.vue'
+    SemanticDialog = require './components/SemanticDialog.vue'
 
     Auth = require './mixins/Auth.vue'
     ErrorHandler = require './mixins/ErrorHandler.vue'
@@ -36,7 +38,7 @@
 
         name: 'App',
 
-        components: { Navigation },
+        components: { Navigation, SemanticDialog },
 
         mixins: [ Auth, SweetAlert, ErrorHandler, SuccessHandler ]
 
