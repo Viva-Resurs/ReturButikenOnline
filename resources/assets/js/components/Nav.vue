@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        div.ui.inverted.pointing.menu.tablet.mobile.only.grid.attached
+        div.ui.inverted.menu.tablet.mobile.only.grid.attached
             div.toc.item
                 a.ui.button.launch.black.icon( @click="menuToggle" )
                     i.content.icon
@@ -17,6 +17,18 @@
                     div.menu
                         div.item Profil
                         a.item( @click="$root.exitUser()" ) Logout
+
+        div.ui.left.vertical.inverted.sidebar.labeled.menu
+            div( @click="menuToggle()" )
+                router-link.item( to="/" exact )
+                    div.ui.container.center.aligned
+                        h3.ui.inverted.header {{ $root.settings.title }}
+                template( v-if="user" )
+                    router-link.item( to="/sections" exact ) Avdelningar
+                    router-link.item( to="/articles" exact ) Arkiv
+                    router-link.item( to="/articles/create" exact ) Publicera
+                    router-link.item( to="/categories" exact ) Kategorier
+                    router-link.item( to="/users" exact ) Användare
 
         div.ui.grid.fluid.menu.computer.only.attached
             router-link.item( to="/" exact ) {{ $root.settings.title }}
@@ -38,17 +50,6 @@
                         div.menu
                             div.item Profil
                             a.item( @click="$root.exitUser()" ) Logout
-
-        div.ui.left.vertical.inverted.sidebar.labeled.menu
-            div( @click="menuToggle()" )
-                router-link.item( to="/" exact )
-                    div.ui.container.center.aligned
-                        h3.ui.inverted.header {{ $root.settings.title }}
-                router-link.item( to="/sections" exact ) Avdelningar
-                router-link.item( to="/articles" exact ) Arkiv
-                router-link.item( to="/articles/create" exact ) Publicera
-                router-link.item( to="/categories" exact ) Kategorier
-                router-link.item( to="/users" exact ) Användare
 </template>
 
 <script lang="coffee">
