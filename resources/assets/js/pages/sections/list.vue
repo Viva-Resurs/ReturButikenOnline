@@ -67,7 +67,7 @@
                         @$nextTick ->
                             $('#section_content').trigger('updated',section.id)
 
-                    (response) => bus.$emit('error', response)
+                    (response) => bus.$emit('error', response.data)
                 );
 
             editItem: (item) ->
@@ -88,7 +88,7 @@
                         Vue.set section, 'updated_at', response.data.updated_at
                         @$nextTick ->
                             $('#section_content').trigger('updated',section.id)
-                    (response) => bus.$emit('error', response)
+                    (response) => bus.$emit('error', response.data)
                 );
 
             attemptRemove: (section) ->
@@ -108,7 +108,7 @@
                         $('tbody').trigger('removed',section.id, ->
                             Vue.set section, 'removed', true
                         )
-                    (response) => bus.$emit('error', response)
+                    (response) => bus.$emit('error', response.data)
                 );
 
             getSections: () ->
@@ -118,7 +118,7 @@
                         @items = response.data
                         @$root.loading = false
                     (response) =>
-                        bus.$emit('error', response)
+                        bus.$emit('error', response.data)
                         @$root.loading = false
                 );
 

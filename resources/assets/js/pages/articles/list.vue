@@ -106,7 +106,7 @@
                     (response) =>
                         bus.$emit('success','removed_article')
                         Vue.set article, 'removed', true;
-                    (response) => bus.$emit('error',response)
+                    (response) => bus.$emit('error',response.data)
                 );
 
             attemptUpdate: (article) ->
@@ -117,7 +117,7 @@
                 @$http.put('articles/'+article.id,article).then(
                     (response) =>
                         bus.$emit('success','updated_article')
-                    (response) => bus.$emit('error',response)
+                    (response) => bus.$emit('error',response.data)
                 );
 
             getArticles: () ->
@@ -127,7 +127,7 @@
                         @items = response.data
                         @$root.loading = false;
                     (response) =>
-                        bus.$emit('error',response)
+                        bus.$emit('error',response.data)
                         @$root.loading = false;
                 );
 

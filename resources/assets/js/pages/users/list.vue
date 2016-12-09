@@ -54,7 +54,7 @@
                     (response) =>
                         bus.$emit('success','removed_user')
                         Vue.set user, 'removed', true;
-                    (response) => bus.$emit('error',response)
+                    (response) => bus.$emit('error',response.data)
                 );
 
             getUsers: () ->
@@ -64,7 +64,7 @@
                         @items = response.data
                         @$root.loading = false;
                     (response) =>
-                        bus.$emit('error',response)
+                        bus.$emit('error',response.data)
                         @$root.loading = false;
                 );
 

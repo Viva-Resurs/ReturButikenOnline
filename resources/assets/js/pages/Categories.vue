@@ -3,10 +3,6 @@
         router-view
 </template>
 
-<script>
-    export default {
-
-        name: 'Categories'
-
-    }
+<script lang="coffee">
+    module.exports = { name: 'Categories' }
 </script>

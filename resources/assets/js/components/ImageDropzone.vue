@@ -69,7 +69,7 @@
                         bus.$emit('image_added',response.data)
 
                     (response) =>
-                        bus.$emit('error', response);
+                        bus.$emit('error', response.data);
                         @buffer.pop( file )
 
                 );

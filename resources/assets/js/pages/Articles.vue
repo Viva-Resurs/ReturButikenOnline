@@ -1,12 +1,8 @@
 <template lang="pug">
     div
-        router-view    
+        router-view
 </template>
 
-<script>
-    export default {
-
-        name: 'Articles'
-
-    }
+<script lang="coffee">
+    module.exports = { name: 'Articles' }
 </script>

@@ -168,7 +168,7 @@
                         this.categories = response.data;
 
                     (response) =>
-                        bus.$emit('error', response);
+                        bus.$emit('error', response.data);
                         this.categories = []
 
                 );

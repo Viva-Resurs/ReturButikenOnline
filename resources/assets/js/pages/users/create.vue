@@ -18,7 +18,7 @@
                         bus.$emit('success',response)
                         this.$router.push({ path: '/users' });
 
-                    (response) => bus.$emit('error',response)
+                    (response) => bus.$emit('error',response.data)
                 );
 
         created: ->

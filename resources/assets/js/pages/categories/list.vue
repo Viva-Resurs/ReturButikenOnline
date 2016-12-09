@@ -66,7 +66,7 @@
                         @$nextTick ->
                             $('#category_content').trigger('updated',category.id)
 
-                    (response) => bus.$emit('error', response)
+                    (response) => bus.$emit('error', response.data)
                 );
 
             editItem: (item) ->
@@ -87,7 +87,7 @@
                         Vue.set category, 'updated_at', response.data.updated_at
                         @$nextTick ->
                             $('#category_content').trigger('updated',category.id)
-                    (response) => bus.$emit('error', response)
+                    (response) => bus.$emit('error', response.data)
                 );
 
             attemptRemove: (category) ->
@@ -107,7 +107,7 @@
                         $('tbody').trigger('removed',category.id, ->
                             Vue.set category, 'removed', true
                         )
-                    (response) => bus.$emit('error', response)
+                    (response) => bus.$emit('error', response.data)
                 );
 
             getCategories: () ->
@@ -117,7 +117,7 @@
                         @items = response.data
                         @$root.loading = false
                     (response) =>
-                        bus.$emit('error', response)
+                        bus.$emit('error', response.data)
                         @$root.loading = false
                 );
 
