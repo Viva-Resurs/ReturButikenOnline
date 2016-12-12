@@ -16,9 +16,9 @@ class Article extends Model
         'bidding_interval'
     ];
 
-    public function owner()
+    public function contacts()
     {
-        return $this->belongsTo(User::class, 'articles_owner');
+        return $this->belongsToMany(User::class, 'articles_contact');
     }
 
     public function categories()

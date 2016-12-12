@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
 use App\Image;
+use App\User;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -34,7 +35,8 @@ class ArticleController extends Controller
                 'bidding_interval' => $article->bidding_interval,
                 'public' => $article->public,
                 'selected_categories' => $article->categories,
-                'selected_images' => $article->images
+                'selected_images' => $article->images,
+                'selected_contacts' => $article->contacts
             ]);
 
         return $result;
@@ -61,11 +63,15 @@ class ArticleController extends Controller
             'bidding_interval' => $article->bidding_interval,
             'public' => $article->public,
             'selected_categories' => [],
-            'selected_images' => []
+            'selected_images' => [],
+            'selected_contacts' => []
         ];
 
         foreach ($article->categories as $category)
             array_push($result['selected_categories'],$category->id);
+
+        foreach ($article->contacts as $contact)
+            array_push($result['selected_contacts'],$contact->id);
 
         foreach ($article->images as $image)
             array_push($result['selected_images'], [
@@ -108,6 +114,13 @@ class ArticleController extends Controller
             foreach ($request['selected_images'] as $image){
                 $im = Image::find($image['id']);
                 $article->images()->save($im);
+            }
+
+        // Attach Contact
+        if ($request['selected_contacts'])
+            foreach ($request['selected_contacts'] as $contact){
+                $u = User::find($contact['id']);
+                $article->contacts()->save($u);
             }
 
         return $this->show($article->id);
@@ -189,6 +202,18 @@ class ArticleController extends Controller
                 $article->images()->save($image);
             }
         }
+
+        // Clear Contacts
+        if ($article->contacts)
+            foreach( $article->contacts as $u)
+                $article->contacts()->detach($u->id);
+
+        // Attach Contacts
+        if ($request['selected_contacts'])
+            foreach ($request['selected_contacts'] as $contact){
+                $u = User::find($contact);
+                $article->contacts()->save($u);
+            }
 
         $article->save();
 

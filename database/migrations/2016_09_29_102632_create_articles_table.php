@@ -26,10 +26,10 @@ class CreateArticlesTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('articles_owner', function (Blueprint $table) {
+        Schema::create('articles_contact', function (Blueprint $table) {
 
-            $table->integer('owner_id')->unsigned()->index();
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer('user_id')->unsigned()->index();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('article_id')->unsigned()->index();
             $table->foreign('article_id')->references('id')->on('articles')->onDelete('cascade');
 

@@ -32,9 +32,6 @@ class UserController extends Controller
         if (!$me)
             abort(401,'Not logged in');
 
-        if (!$me->hasRole('admin') && !$me->hasRole('sectionadmin'))
-            abort(401,'Not allowed to list users');
-
         $results = [];
         foreach (User::all() as $user){
             $u = [
@@ -357,6 +354,21 @@ class UserController extends Controller
                 'id' => $role->id,
                 'name' => $role->name
             ]);
+
+        return $results;
+    }
+
+    /**
+     * Get contacts
+     */
+    public function contacts(){
+        $results = [];
+
+        foreach ($this->index() as $user){
+            $u = User::find($user['id']);
+            if ($u->hasRole('sectionadmin'))
+                array_push($results,$user);
+        }
 
         return $results;
     }

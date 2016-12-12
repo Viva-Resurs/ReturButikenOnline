@@ -96,18 +96,35 @@
                         )
                         label Publicera för allmänheten
 
-            div.field
-                div.two.fields
-                    div.field
-                        label Namn kontaktperson:
-                        input( type="text" id="fullname" placeholder="Ditt namn" )
-                    div.field
-                        label Telefon kontaktperson:
-                        input( type="text" id="phone" placeholder="Ditt nummer" )
+            div.ui.divider
 
-                label E-post kontaktperson:
-                input#email( type="email" placeholder="Din epost" )
-
+            div.two.fields( v-if="contacts" )
+                div.field
+                    label Kontakt:
+                    div.field( v-if="article.selected_contacts")
+                        div.ui.fluid.card( v-for="contact in selectedContacts" )
+                            div.content
+                                div.header {{ contact.fullname }}
+                                div.description
+                                    p Telefon:&nbsp;
+                                        b {{ contact.phone }}
+                                    p E-post:&nbsp;
+                                        b {{ contact.email }}
+                div.field( v-if="article.selected_contacts && contacts.length>1" )
+                    label Välj kontakt:
+                    div.ui.fluid.selection.dropdown#contact(
+                        v-if="contacts"
+                        name="contacts"
+                        v-dropdown=""
+                        ":data-selected"="article.selected_contacts"
+                    )
+                        i.dropdown.icon
+                        div.default.text Select Contact
+                        div.menu
+                            div.item(
+                                v-for="contact in contacts"
+                                ":data-value"="contact.id"
+                            ) {{contact.name}}
             div.field
                 button.ui.right.floated.button.primary(
                     type="submit"
@@ -142,13 +159,27 @@
                 bidding_interval: ''
                 selected_categories: []
                 selected_images: []
+                selected_contacts: []
             categories:
+                null
+            contacts:
                 null
             settings:
                 publish_interval: false
                 bidding_interval: false
             myform: []
         }
+
+        computed:
+            selectedContacts: () ->
+                @contacts
+                    .filter(
+                        (contact) =>
+                            for selected in @article.selected_contacts
+                                if (Number(contact.id) == Number(selected))
+                                    return true
+                                return false
+                    )
 
         methods:
 
@@ -171,7 +202,20 @@
                         bus.$emit('error', response.data);
                         this.categories = []
 
-                );
+                )
+
+            getContactList: ->
+                this.$http.get('contacts').then(
+                    (response) =>
+                        list = response.data;
+                        if (list.length > 0)
+                            if (@article.selected_contacts.length == 0)
+                                @article.selected_contacts.push( list[0].id );
+                        @contacts = response.data;
+                    (response) =>
+                        bus.$emit('error', response.data);
+                        @contacts = []
+                )
 
         created: ->
 
@@ -202,6 +246,14 @@
 
             # Get categories
             @getCategoryList()
+
+            # Listen for changes in Contacts
+            bus.$on('contacts_changed', (id,new_value) =>
+                this.article.selected_contacts = new_value;
+            );
+
+            # Get section-admins
+            @getContactList()
 
             # Images
             bus.$on('image_added', (image) =>
