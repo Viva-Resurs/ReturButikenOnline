@@ -12,10 +12,6 @@ module.exports = {
             component: require('./pages/auth/login.vue')
         },
         {
-            path: '/auth/register',
-            component: require('./pages/auth/register.vue')
-        },
-        {
             path: '/articles',
             component: require('./pages/Articles.vue'),
             children: [
