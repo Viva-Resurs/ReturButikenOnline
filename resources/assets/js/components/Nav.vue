@@ -19,12 +19,12 @@
                 div.item
                     div.ui.container.center.aligned
                         h3.ui.inverted.header {{ $root.settings.title }}
-                div.item
+                div.item( v-if="$root.isAdmin()" )
                     div.header Avdelningar
                     div.menu
                         router-link.item( to="/sections" exact ) Lista
                             i.icon.browser
-                div.item
+                div.item( v-if="$root.isAdmin(2)" )
                     div.header Användare
                     div.menu
                         router-link.item( to="/users" exact ) Lista
@@ -36,7 +36,7 @@
                             i.icon.browser
                         router-link.item( to="/articles/create" exact ) Publicera
                             i.icon.write
-                div.item
+                div.item( v-if="$root.isAdmin()" )
                     div.header Kategorier
                     div.menu
                         router-link.item( to="/categories" exact ) Lista
@@ -62,10 +62,10 @@
                         router-link.item( to="/help" exact ) Hjälp
 
                     template( v-if="user" )
-                        router-link.item( to="/sections" exact )
+                        router-link.item( to="/sections" exact v-if="$root.isAdmin()" )
                             i.icon.building
                             |  Avdelningar
-                        router-link.item( to="/users" exact )
+                        router-link.item( to="/users" exact v-if="$root.isAdmin(2)" )
                             i.icon.users
                             |  Användare
                         router-link.item( to="/articles/create" exact )
@@ -74,7 +74,7 @@
                         router-link.item( to="/articles" exact )
                             i.icon.browser
                             |  Arkiv
-                        router-link.item( to="/categories" exact )
+                        router-link.item( to="/categories" v-if="$root.isAdmin()" exact )
                             i.icon.tags
                             |  Kategorier
 
