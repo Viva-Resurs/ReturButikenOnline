@@ -14,6 +14,7 @@ module.exports = {
         {
             path: '/articles',
             component: require('./pages/Articles.vue'),
+            meta: { requiresAuth: true },
             children: [
                 {
                   path: '/',
@@ -32,6 +33,7 @@ module.exports = {
         {
             path: '/categories',
             component: require('./pages/Categories.vue'),
+            meta: { requiresAuth: true },
             children: [
                 {
                   path: '/',
@@ -42,6 +44,7 @@ module.exports = {
         {
             path: '/sections',
             component: require('./pages/Sections.vue'),
+            meta: { requiresAuth: true },
             children: [
                 {
                   path: '/',
@@ -52,6 +55,7 @@ module.exports = {
         {
             path: '/users',
             component: require('./pages/Users.vue'),
+            meta: { requiresAuth: true },
             children: [
                 {
                   path: '/',

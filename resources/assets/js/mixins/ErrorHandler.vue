@@ -9,13 +9,13 @@
                     message: message.details
                 });
 
+                # Refresh token if needed
                 if (message.error=='TokenMismatch')
                     this.getToken()
 
-                # TODO: only do this when on a auth-route
+                # Unauthorized, logout / exit
                 else if (message.error=='Unauthorized')
-                    bus.$emit('user_changed', false );
-                    this.$router.push({ path: '/auth/login' })
+                    this.exitUser('unauthorized');
         }
         mounted: () ->
             # Listen for errors

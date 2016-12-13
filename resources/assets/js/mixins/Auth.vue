@@ -5,70 +5,80 @@
             data(){
                 return {
                     user: false,
+                    loginCheck: false
                 }
+            },
+            isAdmin(level) {
+                if (this.user && this.user.roles)
+                    for (var i=0 ; i<this.user.roles.length ; i++){
+                        if (this.user.roles[i].name == 'admin')
+                            return true;
+                        if (this.user.roles[i].name == 'sectionadmin' && level==2)
+                            return true;
+                    }
+                return false;
             },
             setUser(payload) {
                 sessionStorage.token = payload.token;
                 this.user = payload.user;
                 bus.$emit('user_changed', payload.user );
             },
-            isAdmin(level) {
-                for (var i=0 ; i<this.user.roles.length ; i++){
-                    if (this.user.roles[i].name == 'admin')
-                        return true;
-                    if (this.user.roles[i].name == 'sectionadmin' && level==2)
-                        return true;
-                }
-
-                return false;
-            },
             clearUser() {
                 sessionStorage.token = false;
                 this.user = false;
                 bus.$emit('user_changed', false );
             },
-            getUser(mode) {
+            getUser() {
                 this.$http.get('user').then(
                     (response) => {
-
+                        // Update username & token
                         this.setUser(response.data);
 
-                        // Set timer to check login-status
-                        if (this.loginCheck)
-                            clearInterval(this.loginCheck);
-                        this.loginCheck = false;
-                        this.loginCheck = setInterval( this.getUser, 1000*30 );
-
+                        // Set timer to keep track of login-status
+                        if (!this.loginCheck)
+                            this.loginCheck = setInterval( this.getUser, 1000*30 );
                     },
-                    (response) => bus.$emit('error',response.data)
+                    (response) => {
+                        // Go through matched routes and check requiresAuth
+                        for (var i=0 ; i<this.$route.matched.length ; i++)
+                            if (this.$route.matched[i].meta.requiresAuth){
+                                // Current route needs authorization, kick user
+                                this.exitUser('unauthorized');
+                                // Notify
+                                bus.$emit('show_message',{
+                                    type: 'info',
+                                    title: 'Utloggad',
+                                    message: 'Du har blivigt utloggad'
+                                });
+                            }
+                    }
                 );
             },
-            exitUser() {
+            exitUser(mode) {
+                // Post a logout to server
                 this.$http.post('logout').then(
-                    (response) => {
-
-                        this.clearUser();
-
-                        // Clear login-status check
-                        if (this.loginCheck)
-                            clearInterval(this.loginCheck);
-                        this.loginCheck = false;
-
-                        // Go to home
-                        this.$router.push({ path: '/' });
-
-                    },
-                    (response) => bus.$emit('error',response)
+                    () => { return true; },
+                    () => { return false; }
                 );
+
+                // Remove associated data about user
+                this.clearUser();
+
+                // Clear timer for login-status
+                if (this.loginCheck)
+                    clearInterval(this.loginCheck);
+                this.loginCheck = false;
+
+                // Go to login-page if unauthorized, else home
+                if (mode=='unauthorized')
+                    this.$router.push({ path: '/auth/login' })
+                else
+                    this.$router.push({ path: '/' });
             }
         },
         mounted: function() {
             this.getUser();
             bus.$on('login_ok', (response) => {
-                this.getUser();
-                this.$router.push({ path: '/' });
-            });
-            bus.$on('register_ok', (response) => {
                 this.getUser();
                 this.$router.push({ path: '/' });
             });
