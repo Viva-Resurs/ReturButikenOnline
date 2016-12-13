@@ -32,7 +32,6 @@
     Auth = require './mixins/Auth.vue'
     ErrorHandler = require './mixins/ErrorHandler.vue'
     SuccessHandler = require './mixins/SuccessHandler.vue'
-    SweetAlert = require './mixins/SweetAlert.vue'
 
     module.exports = {
 
