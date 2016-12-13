@@ -30,15 +30,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Article association
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function articles() {
-        return $this->hasMany(Article::class);
-    }
-
-    /**
      * Role association
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -54,6 +45,19 @@ class User extends Authenticatable
      */
     public function sections() {
         return $this->belongsToMany(Section::class,'sections_user');
+    }
+
+    /**
+     * Check if the User is in a given section
+     *
+     * @param $section
+     * @return bool
+     */
+    public function inSection($section) {
+        if (is_string($section))
+            return $this->sections->contains('name', $section);
+
+        return !!$section->intersect($this->sections)->count();
     }
 
     /**

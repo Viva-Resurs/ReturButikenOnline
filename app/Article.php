@@ -21,6 +21,10 @@ class Article extends Model
         return $this->belongsToMany(User::class, 'articles_contact');
     }
 
+    public function sections() {
+        return $this->belongsToMany(Section::class,'articles_section');
+    }
+
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'articles_category');

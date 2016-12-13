@@ -25,19 +25,22 @@ class ArticleController extends Controller
             abort(401,'Not allowed to list articles');
 
         $result = [];
-        foreach (Article::all() as $article)
-            array_push($result,[
-                'id' => $article->id,
-                'name' => $article->name,
-                'desc' => $article->desc,
-                'updated_at' => $article->updated_at->format('Y-m-d h:m:s'),
-                'publish_interval' => $article->publish_interval,
-                'bidding_interval' => $article->bidding_interval,
-                'public' => $article->public,
-                'selected_categories' => $article->categories,
-                'selected_images' => $article->images,
-                'selected_contacts' => $article->contacts
-            ]);
+        foreach (Article::all() as $article){
+            if ($user->hasRole('admin') || $user->inSection($article->sections))
+                array_push($result,[
+                    'id' => $article->id,
+                    'name' => $article->name,
+                    'desc' => $article->desc,
+                    'updated_at' => $article->updated_at->format('Y-m-d h:m:s'),
+                    'publish_interval' => $article->publish_interval,
+                    'bidding_interval' => $article->bidding_interval,
+                    'public' => $article->public,
+                    'sections' => $article->sections,
+                    'selected_categories' => $article->categories,
+                    'selected_images' => $article->images,
+                    'selected_contacts' => $article->contacts
+                ]);
+        }
 
         return $result;
     }
@@ -62,6 +65,7 @@ class ArticleController extends Controller
             'publish_interval' => $article->publish_interval,
             'bidding_interval' => $article->bidding_interval,
             'public' => $article->public,
+            'sections' => $article->sections,
             'selected_categories' => [],
             'selected_images' => [],
             'selected_contacts' => []
@@ -116,11 +120,13 @@ class ArticleController extends Controller
                 $article->images()->save($im);
             }
 
-        // Attach Contact
+        // Attach Contact & Section
         if ($request['selected_contacts'])
-            foreach ($request['selected_contacts'] as $contact){
-                $u = User::find($contact['id']);
+            foreach ($request['selected_contacts'] as $contact_id){
+                $u = User::find($contact_id);
                 $article->contacts()->save($u);
+                foreach ($u->sections as $section)
+                    $article->sections()->save($section);
             }
 
         return $this->show($article->id);
@@ -207,12 +213,19 @@ class ArticleController extends Controller
         if ($article->contacts)
             foreach( $article->contacts as $u)
                 $article->contacts()->detach($u->id);
+        // Clear Sections
+        if ($article->sections)
+            foreach( $article->sections as $s)
+                $article->sections()->detach($s->id);
 
-        // Attach Contacts
+        // Attach Contacts & Sections
         if ($request['selected_contacts'])
-            foreach ($request['selected_contacts'] as $contact){
-                $u = User::find($contact);
+            foreach ($request['selected_contacts'] as $contact_id){
+                $u = User::find($contact_id);
                 $article->contacts()->save($u);
+                foreach( $u->sections as $section){
+                    $article->sections()->save($section);
+                }
             }
 
         $article->save();

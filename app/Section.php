@@ -20,6 +20,6 @@ class Section extends Model
 
     public function articles()
     {
-        return $this->belongsToMany(Article::class, 'sections_articles');
+        return $this->belongsToMany(Article::class, 'articles_section');
     }
 }
