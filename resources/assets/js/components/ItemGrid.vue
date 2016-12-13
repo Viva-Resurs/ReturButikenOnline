@@ -56,7 +56,7 @@
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
-
+                // TODO: Dropdown for sort options
                 div.mobile.tablet.only.row(v-if="card")
                     div.ui.fluid.raised.card( v-for="(item, index) in filterItems" )
                         div.content
@@ -174,7 +174,7 @@
             limitOff: false
             limitOffBtn: false
 
-            order: ''
+            order: 'updated_at'
             desc: -1
             headers :
                 name : "ui icon"
