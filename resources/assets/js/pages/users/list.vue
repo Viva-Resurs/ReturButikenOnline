@@ -2,12 +2,16 @@
     item-grid(
         header="Användare"
         ":columns"="columns"
-        ":toolsRow"=`[
+        ":toolsRow"=`
+            (($root.isAdmin()) ? [
                 $options.components.Edit,
                 $options.components.Remove
-            ]`
+            ] : [
+                $options.components.Edit
+            ])
+        `
         ":toolsBottom"=`[
-                $options.components.Add
+            $options.components.Add
         ]`
         ":items"="items" )
 </template>
@@ -45,7 +49,6 @@
                     class: 'link'
 
         methods:
-            # TODO: Only use remove-tool when admin level 1 ($root.isAdmin())
             attemptRemove: (user) ->
                 # Are you sure?
                 @removeUser(user);
