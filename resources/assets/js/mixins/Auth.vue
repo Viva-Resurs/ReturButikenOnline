@@ -12,10 +12,14 @@
                 this.user = payload.user;
                 bus.$emit('user_changed', payload.user );
             },
-            isAdmin() {
-                for (var i=0 ; i<this.user.roles.length ; i++)
+            isAdmin(level) {
+                for (var i=0 ; i<this.user.roles.length ; i++){
                     if (this.user.roles[i].name == 'admin')
                         return true;
+                    if (this.user.roles[i].name == 'sectionadmin' && level==2)
+                        return true;
+                }
+
                 return false;
             },
             clearUser() {
