@@ -39,7 +39,7 @@
 
         components: { Navigation, SemanticDialog },
 
-        mixins: [ Auth, SweetAlert, ErrorHandler, SuccessHandler ]
+        mixins: [ Auth, ErrorHandler, SuccessHandler ]
 
         data: ->
             loading: true,
