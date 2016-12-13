@@ -49,7 +49,7 @@
                                             span(v-if="column_index != item[column.key].length -1") ,
 
                                     div.center.aligned( v-if="column.type=='checkbox'" )
-                                        i( ":class"="'ui icon ' + ((item[column.key]==1) ? 'checkmark box' : 'square outline')"
+                                        i( ":class"="'ui icon ' + ((item[column.key]==1) ? 'green checkmark' : 'red remove')"
                                             v-tooltip="" ":data-html"="((item[column.key]==1) ? column.checkbox_true : column.checkbox_false)" )
 
                                 td.collapsing
@@ -92,8 +92,10 @@
                         div.extra.content
                             div.meta.left.floated
                                 br
-                                div( v-for="extra in card.extra" ":class"="extra.class" )
+                                div( v-for="extra in card.extra" ":class"="extra.class" )                                    
+                                    i( ":class"="'ui icon ' + ((item[extra.key]==1) ? 'green checkmark' : 'red remove')")
                                     span( v-if="extra.type=='boolean'" ) {{ (item[extra.key] == 1) ? extra.true : extra.false }}
+
 
 
                             div.ui.icon.basic.buttons.meta.right.floated
