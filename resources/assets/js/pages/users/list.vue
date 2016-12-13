@@ -45,6 +45,7 @@
                     class: 'link'
 
         methods:
+            # TODO: Only use remove-tool when admin level 1 ($root.isAdmin())
             attemptRemove: (user) ->
                 # Are you sure?
                 @removeUser(user);
