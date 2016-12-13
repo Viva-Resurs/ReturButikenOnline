@@ -34,7 +34,7 @@
                     div.menu
                         router-link.item( to="/articles" exact ) Lista
                             i.icon.browser
-                        router-link.item( to="/articles/create" exact ) Publicera
+                        router-link.item( to="/articles/create" exact ) Lägg till vara
                             i.icon.write
                 div.item( v-if="$root.isAdmin()" )
                     div.header Kategorier
@@ -70,7 +70,7 @@
                             |  Användare
                         router-link.item( to="/articles/create" exact )
                             i.icon.write
-                            |  Publicera
+                            |  Lägg till vara
                         router-link.item( to="/articles" exact )
                             i.icon.browser
                             |  Arkiv
