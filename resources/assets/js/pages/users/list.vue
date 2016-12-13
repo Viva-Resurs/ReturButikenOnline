@@ -40,10 +40,10 @@
                     default_sort: true
                     tooltip: 'desc'
                     class: 'link'
-                role:
+                roles:
                     label: 'Roles'
                     key: 'roles'
-                    type: 'string'
+                    type: 'array'
                     search: true
                     sort: true
                     class: 'link'
