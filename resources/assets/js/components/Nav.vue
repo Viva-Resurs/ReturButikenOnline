@@ -4,16 +4,15 @@
             div.item
             router-link.item( to="/" exact ) {{ $root.settings.title }}
             a.item( v-if="user" @click="menuToggle" )
-                div.column.right.floated
-                    div.ui.container
-                        | Meny &nbsp;
-                        i.icon.content
+                div.ui.container.right.aligned
+                    | Meny &nbsp;
+                    i.icon.content
+                    | &nbsp;&nbsp;
             router-link.item( v-if="!user" to="/auth/login" exact )
-                div.column.right.floated
-                    div.ui.container
-                        | Logga in &nbsp;
-                        i.icon.sign.in
-
+                div.ui.container.right.aligned
+                    | Logga in &nbsp;
+                    i.icon.sign.in
+                    | &nbsp;&nbsp;
         div.ui.right.vertical.inverted.sidebar.labeled.menu
             div( v-if="user" @click="menuToggle()" )
                 div.item
