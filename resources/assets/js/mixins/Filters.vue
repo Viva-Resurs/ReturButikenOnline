@@ -38,10 +38,17 @@
 
                 var s = new RegExp(search,"gi");
 
-                for (var key in targets)
-                    if ( s.test(item[key]) )
-                        return true;
-
+                // Check targets
+                for (var key in targets){
+                    if (typeof item[key] == 'string' || typeof item[key] == 'number')
+                        if (s.test(item[key]))
+                            return true;
+                    if (typeof item[key] == 'object')
+                        for (var p in item[key]){
+                            if (s.test(item[key][p].name))
+                                return true;
+                        }
+                }
                 return false;
             },
 
@@ -79,6 +86,37 @@
                             return 1 * scope.desc;
                     }
                     return 0;
+                }
+
+                // Compare arrays
+                if (typeof checkA == 'object'){
+
+                    // Compare lengths
+                    if (checkA.length != checkB.length)
+                        return (checkA.length - checkB.length) * this.desc;
+
+                    // Compare contents (.name)
+                    for (var k=0 ; k<checkA.length ; k++){
+                        // Nothing to compare
+                        if (!checkA[k].name && !checkB[k].name)
+                            return 0;
+
+                        // Equal
+                        if (checkA[k].name == checkB[k].name)
+                            return 0;
+
+                        // Char by char
+                        for (var c=0 ; c<checkA[k].name.length ; c++){
+                            if (checkA[k].name[c] < checkB[k].name[c])
+                                return -1 * this.desc;
+                            if (checkA[k].name[c] > checkB[k].name[c])
+                                return 1 * this.desc;
+                        }
+
+                        return 0;
+
+                    }
+
                 }
 
             },
