@@ -126,6 +126,7 @@
                                 ":data-value"="contact.id"
                             ) {{contact.name}}
             div.field
+                // TODO: Always go to preview first, then publish from there
                 button.ui.right.floated.button.primary(
                     type="submit"
                     @keydown.enter.prevent="attemptSave"
