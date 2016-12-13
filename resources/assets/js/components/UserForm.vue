@@ -13,7 +13,7 @@
                 input#name(
                     type="text"
                     "v-model"="user.name"
-                    placeholder="Varunamn"
+                    placeholder="Användarnamn"
                 )
 
             div.field
@@ -73,14 +73,14 @@
                             type="text"
                             id="fullname"
                             "v-model"="user.fullname"
-                            placeholder="Ditt namn"
+                            placeholder="Namn"
                         )
                     div.field
                         label Telefon:
                         input(
                             type="text"
                             id="phone"
-                            placeholder="Ditt nummer"
+                            placeholder="Telefon"
                             "v-model"="user.phone"
                         )
 
@@ -88,7 +88,7 @@
                 input#email(
                     type="email"
                     "v-model"="user.email"
-                    placeholder="Din epost"
+                    placeholder="Epost"
                 )
 
             div.field
