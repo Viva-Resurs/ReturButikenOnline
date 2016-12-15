@@ -118,7 +118,7 @@
 
 
 
-                            div.ui.icon.basic.buttons.meta.right.floated
+                            div.ui.icon.basic.buttons.right.floated
                                 component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
                 div.row( v-if="!card" )
