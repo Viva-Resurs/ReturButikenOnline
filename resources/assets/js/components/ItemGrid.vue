@@ -17,9 +17,13 @@
                         div.ui.selection.dropdown( v-dropdown="" )
                             input( type="hidden" name="sort_dropdown")
                             i.dropdown.icon
-                            div.default.text Sort articles by
+                            div.default.text Sort by
                             div.menu
-                                div.item( v-for="option in sort_options" @click="(option.sort) ? setSortBy(option.sort) : false" data-value="option.data_value" ) {{option.name}}
+                                div.item(
+                                    v-for="column in columns"
+                                    v-if="column.sort"
+                                    @click="(column.key) ? setSortBy(column.key) : false"
+                                    data-value="column.key" ) {{column.label}}
 
             div.ui.padded.grid
                 div.row( v-if="columns && card && countItems==0" )
@@ -186,16 +190,6 @@
 
             limitOff: false
             limitOffBtn: false
-
-            sort_options :
-                updated_at:
-                    name: 'Updated at'
-                    sort: 'updated_at'
-                    data_value: 0
-                name :
-                    name: 'Article name'
-                    sort: 'name'
-                    data_value: 1
 
             order: 'updated_at'
             desc: -1
