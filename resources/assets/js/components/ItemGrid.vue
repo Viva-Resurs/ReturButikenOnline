@@ -6,9 +6,20 @@
             loading
 
         div.ui.attached( v-else="" )
-            div.ui.icon.input
-                input.prompt( v-focus="" v-model="search" class="prompt" placeholder="Type to search" )
-                i.search.icon
+            div.ui.grid.two.columns
+                div.column.floated.left
+                    div.ui.icon.input
+                        input.prompt( v-focus="" v-model="search" class="prompt" placeholder="Type to search" )
+                        i.search.icon
+
+                // TODO: Missing: correctly selected sort option by default
+                div.column.right.floated.right.aligned.mobile.tablet.only
+                        div.ui.selection.dropdown( v-dropdown="" )
+                            input( type="hidden" name="sort_dropdown")
+                            i.dropdown.icon
+                            div.default.text Sort articles by
+                            div.menu
+                                div.item( v-for="option in sort_options" @click="(option.sort) ? setSortBy(option.sort) : false" data-value="option.data_value" ) {{option.name}}
 
             div.ui.padded.grid
                 div.row( v-if="columns && card && countItems==0" )
@@ -56,8 +67,9 @@
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
-                // TODO: Dropdown for sort options
+
                 div.mobile.tablet.only.row(v-if="card")
+
                     div.ui.fluid.raised.card( v-for="(item, index) in filterItems" )
                         div.content
 
@@ -82,7 +94,6 @@
                                     div.top.attached.ui.secondary.label
                                         i.image.icon
                                         | Images
-
 
                                     div( v-for="meta in card.meta" ":class"="meta.class" v-if="meta.type=='image' && item[meta.key].length")
                                         div.ui.image( v-for="image in item[meta.key]" )
@@ -123,17 +134,10 @@
                                     v-tooltip="" ":data-html"="formatTooltip(item[column.tooltip])" )
 
                                     div.ui.input.fluid( v-if="item.edit && column.type=='string'" )
-                                        input(
-                                            v-model="item[column.key+'_new']"
-                                            ":placeholder"="'Type ' + column.label"
-                                            v-focus="" )
+                                        input( v-model="item[column.key+'_new']" ":placeholder"="'Type ' + column.label"
+                                        v-focus="" )
 
-                                    div( v-if="!item.edit" )
-                                        span( v-if="column.type=='string' || column.type=='number' || column.type==''" )
-                                            | {{item[column.key]}}
-                                        div(v-if="column.type=='array'")
-                                            div( v-for="(post, column_index) in item[column.key]") {{ post.name }}
-                                                span(v-if="column_index != item[column.key].length -1") ,
+                                    div( v-else="") {{item[column.key]}}
 
                                 td.collapsing
                                     div.ui.icon.basic.buttons
@@ -183,6 +187,16 @@
             limitOff: false
             limitOffBtn: false
 
+            sort_options :
+                updated_at:
+                    name: 'Updated at'
+                    sort: 'updated_at'
+                    data_value: 0
+                name :
+                    name: 'Article name'
+                    sort: 'name'
+                    data_value: 1
+
             order: 'updated_at'
             desc: -1
             headers :
@@ -192,8 +206,6 @@
                 category_icon : 'sort'
                 updated_at : 'ui icon'
                 updated_at_icon : 'sort'
-                roles : 'ui icon'
-                roles_icon : 'sort'
 
             offset: 0
             maxItems: 10
@@ -256,9 +268,6 @@
                         if (column.type == 'number')
                             this.setOrder(key,column.desc)
                             selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
-                        if (column.type == 'array')
-                            this.setOrder(key,column.desc)
-                            selectedHeader = if (this.desc == 1) then "sort content ascending icon" else "sort content descending icon"
 
                 this.headers[headingTitle+'_icon'] = selectedHeader
 
