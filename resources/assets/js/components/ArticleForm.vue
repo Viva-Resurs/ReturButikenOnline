@@ -1,10 +1,10 @@
 <template lang="pug">
-    div.ui.container.segment#articleForm
+    div.ui.container.segment.attached#articleForm
 
         div.ui.dividing.header Publicera
 
         form.ui.form(
-            "v-on:submit.prevent"="attemptSave"
+            "v-on:submit.prevent"="previewArticle"
             role="form"
         )
 
@@ -126,13 +126,9 @@
                                 ":data-value"="contact.id"
                             ) {{contact.name}}
             div.field
-                // TODO: Always go to preview first, then publish from there
-                button.ui.right.floated.button.primary(
-                    type="submit"
-                    @keydown.enter.prevent="attemptSave"
-                ) Publicera
                 button.ui.right.floated.button(
                     type="submit"
+                    @keydown.enter.prevent="previewArticle"
                 ) Förhandsgranska
 
             br
@@ -184,15 +180,14 @@
 
         methods:
 
-            attemptSave: ->
+            previewArticle: ->
 
-                # Todo: test
                 if (this.settings.publish_interval == false)
                     this.article.publish_interval = '';
                 if (this.settings.bidding_interval == false)
                     this.article.bidding_interval = '';
 
-                bus.$emit( 'article_form_update', this.article );
+                bus.$emit( 'article_form_preview', this.article );
 
             getCategoryList: ->
                 this.$http.get('categories').then(

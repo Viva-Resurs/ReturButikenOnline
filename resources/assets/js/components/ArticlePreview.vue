@@ -1,7 +1,7 @@
 <template lang="pug">
-    div.ui.container.segment#preview
+    div.ui.container.segment.attached#preview
 
-        div.ui.dividing.header Publicera
+        div.ui.dividing.header Förhandsgranskning
 
         div.ui.fluid.raised.card
             div.content
@@ -65,8 +65,7 @@
                 ) Publish
 
                 div.ui.right.floated.button.red(
-                    type="submit"
-                    @keydown.enter.prevent="modifyArticle"
+                    @click="modifyArticle"
                 ) Modify
 </template>
 
@@ -76,39 +75,12 @@
 
         name: 'Preview'
 
-        props: [ 'original' ],
-
-        data: -> {
-            article:
-                name: ''
-                desc: ''
-                public: false
-                publish_interval: ''
-                bidding_interval: ''
-                selected_categories: []
-                selected_images: []
-                selected_contacts: []
-            categories:
-                null
-            contacts:
-                null
-            settings:
-                publish_interval: false
-                bidding_interval: false
-        }
+        props: [ 'article' ],
 
         methods:
             attemptPublish: ->
                 bus.$emit( 'article_form_update', this.article );
 
             modifyArticle: ->
-                # Change Route to article (Unsaved)
-
-        created: ->
-
-            # If a original is passed (Update-mode), fill the form
-            if (this.original)
-                this.article = this.original;
-
-
+                bus.$emit( 'article_form_modify' );
 </script>
