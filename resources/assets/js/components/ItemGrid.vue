@@ -12,18 +12,23 @@
                         input.prompt( v-focus="" v-model="search" class="prompt" placeholder="Type to search" )
                         i.search.icon
 
-                // TODO: Missing: correctly selected sort option by default
                 div.column.right.floated.right.aligned.mobile.tablet.only
-                        div.ui.selection.dropdown( v-dropdown="" )
-                            input( type="hidden" name="sort_dropdown")
+                        div.ui.selection.dropdown#order( v-dropdown="" )
+                            div.default.value( v-for="column in columns"
+                                v-if="order==column.key"
+                            ) {{ column.label }}
                             i.dropdown.icon
-                            div.default.text Sort by
                             div.menu
                                 div.item(
                                     v-for="column in columns"
                                     v-if="column.sort"
-                                    @click="(column.key) ? setSortBy(column.key) : false"
-                                    data-value="column.key" ) {{column.label}}
+                                    ":class"="(order==column.key)?'active':''"
+                                    @click="setSortBy(column.key)" )
+                                    | {{column.label}}
+                                    i.icon.label.sort.right.floated(
+                                        v-if="order==column.key"
+                                        ":class" = "(desc==1)?'ascending':'descending'"
+                                    )
 
             div.ui.padded.grid
                 div.row( v-if="columns && card && countItems==0" )
