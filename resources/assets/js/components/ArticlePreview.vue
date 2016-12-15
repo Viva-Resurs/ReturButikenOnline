@@ -60,8 +60,7 @@
                                 b {{ contact.email }}
 
                 div.ui.right.floated.button.primary(
-                    type="submit"
-                    @keydown.enter.prevent="attemptPublish"
+                    @click="attemptPublish"
                 ) Publish
 
                 div.ui.right.floated.button.red(
