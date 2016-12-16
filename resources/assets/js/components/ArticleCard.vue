@@ -9,12 +9,11 @@
                 div(
                     style="margin-top: -25px"
                     ) {{item.name}}
-                    //div.ui.black.horizontal.label(
+                    div.ui.black.horizontal.label(
                         style="position: relative; top: -2px; left: 15px;"
-                        v-if="card.meta.categories"
-                        v-for="category in item[card.meta.categories.key]"
+                        v-for="category in item.selected_categories"
                         )
-                        | {{ item.selected_categories }}
+                        | {{ category.name }}
 
             div.ui.divider( style="margin-bottom: 5px;" )
             div.description
@@ -23,7 +22,7 @@
                         | Beskrivning
                     p {{ item.desc }}
 
-                //div( v-if="item.selected_images.length>0" ).ui.vertical.segment.basic
+                div( v-if="item.selected_images.length>0" ).ui.vertical.segment.basic
                     h4.ui.sub.header
                         | Bilder
                     p

@@ -145,7 +145,7 @@
 
         components: { DateInterval, ImageDropzone },
 
-        props: [ 'original', 'article', 'categories', 'contacts' ],
+        props: [ 'original', 'categories', 'contacts' ],
 
         data: -> {
             settings:
