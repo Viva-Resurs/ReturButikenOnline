@@ -9,14 +9,13 @@
 </template>
 
 <script lang="coffee">
-    module.exports = {
+    module.exports =
         name: 'Save'
         props: [ 'item', 'from' ]
         methods:
             save: (item) ->
                 if (item.id)
-                    bus.$emit(@from+'_item_changed',item)
+                    bus.$emit @from + '_item_changed', item
                 else
-                    bus.$emit(@from+'_item_created',item)
-    }
+                    bus.$emit @from + '_item_created', item
 </script>

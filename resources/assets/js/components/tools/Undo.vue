@@ -9,11 +9,10 @@
 </template>
 
 <script lang="coffee">
-    module.exports = {
+    module.exports =
         name: 'Undo'
         props: [ 'item', 'from' ]
         methods:
             undo: (item) ->
-                bus.$emit(@from+'_item_revert',item)
-    }
+                bus.$emit @from + '_item_revert', item
 </script>

@@ -8,11 +8,10 @@
 </template>
 
 <script lang="coffee">
-    module.exports = {
+    module.exports =
         name: 'Add'
         props: [ 'from' ]
         methods:
-            add: () ->
-                bus.$emit(@from+'_item_add')
-    }
+            add: ->
+                bus.$emit @from + '_item_add'
 </script>

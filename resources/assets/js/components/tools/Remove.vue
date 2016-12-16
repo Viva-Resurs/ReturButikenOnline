@@ -9,11 +9,10 @@
 </template>
 
 <script lang="coffee">
-    module.exports = {
+    module.exports =
         name: 'Remove'
         props: [ 'item', 'from' ]
         methods:
             remove: (item) ->
-                bus.$emit(@from+'_item_remove',item)
-    }
+                bus.$emit @from + '_item_remove', item
 </script>
