@@ -13,19 +13,21 @@
                         i.search.icon
 
                 div.column.right.floated.right.aligned.mobile.tablet.only
-                        div.ui.selection.dropdown#order( v-dropdown="" )
+                        div.ui.floated.basic.button.dropdown#order( v-dropdown="" )
                             div.default.value( v-for="column in columns"
                                 v-if="order==column.key"
-                            ) {{ column.label }}
-                            i.dropdown.icon
+                            ) {{ column.label }} &nbsp;
+                                i.icon.label.sort.right.floated(
+                                    ":class" = "(desc==1)?'ascending':'descending'"
+                                )
                             div.menu
                                 div.item(
                                     v-for="column in columns"
                                     v-if="column.sort"
                                     ":class"="(order==column.key)?'active':''"
                                     @click="setSortBy(column.key)" )
-                                    | {{column.label}}
-                                    i.icon.label.sort.right.floated(
+                                    | {{column.label}} &nbsp;
+                                    i.icon.label.sort(
                                         v-if="order==column.key"
                                         ":class" = "(desc==1)?'ascending':'descending'"
                                     )
@@ -43,8 +45,10 @@
                                 th(v-for="column in columns"
                                     ":class"="column.class"
                                     @click="(column.sort) ? setOrder(column.key) : false" ) {{column.label}}
-
-                                    i( v-if="column.sort" ":class"="[headers[column.key], headers[column.key+'_icon']]" )
+                                    i.icon.label.sort(
+                                        v-if="order==column.key"
+                                        ":class" = "(desc==1)?'ascending':'descending'"
+                                    )
 
                                 th.collapsing.center.aligned Tools
 
@@ -130,12 +134,13 @@
                         thead
                             tr
                                 th.center.aligned.collapsing #
-                                th( v-for="column in columns"
+                                th(v-for="column in columns"
                                     ":class"="column.class"
-                                    @click="(column.sort) ? setSortBy(column.key) : false" ) {{column.label}}
-
-                                    i( v-if="column.sort" ":class"="[headers[column.key], headers[column.key+'_icon']]" )
-
+                                    @click="(column.sort) ? setOrder(column.key) : false" ) {{column.label}}
+                                    i.icon.label.sort(
+                                        v-if="order==column.key"
+                                        ":class" = "(desc==1)?'ascending':'descending'"
+                                    )
                                 th.collapsing.center.aligned Tools
 
                         tbody( v-item="")
@@ -208,13 +213,6 @@
 
             order: 'updated_at'
             desc: -1
-            headers :
-                name : "ui icon"
-                name_icon : 'sort'
-                selected_categories : 'ui icon'
-                selected_categories_icon : 'sort'
-                updated_at : 'ui icon'
-                updated_at_icon : 'sort'
 
             offset: 0
             maxItems: 10
@@ -261,32 +259,6 @@
                     return ''
                 formated = info.replace(/\n/g,'<br>')
                 return formated;
-
-            setSortBy: (headingTitle) ->
-                # Set correct sort icon to the header (ascending, descending)
-                selectedHeader = ''
-
-                for key, column of @columns
-                    if (headingTitle=='' && column.default_sort)
-                        this.setOrder(key,column.desc)
-                        selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
-                    if (key == headingTitle)
-                        if (column.type == 'string')
-                            this.setOrder(key,column.desc)
-                            selectedHeader = if (this.desc == 1) then "sort alphabet ascending icon" else "sort alphabet descending icon"
-                        if (column.type == 'number')
-                            this.setOrder(key,column.desc)
-                            selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
-                        if (column.type == 'array')
-                            this.setOrder(key,column.desc)
-                            selectedHeader = if (this.desc == 1) then "sort amount ascending icon" else "sort amount descending icon"
-
-                this.headers[headingTitle+'_icon'] = selectedHeader
-
-                # Change the other (not sorted by) icons to a generic sort icon
-                for key, column of @columns
-                    if (key != headingTitle)
-                        @headers[key+'_icon'] = "sort"
 
         created: ->
             @setSortBy()
