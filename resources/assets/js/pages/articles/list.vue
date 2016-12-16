@@ -44,7 +44,7 @@
                         label: 'Image'
                         key: 'selected_images'
                         type: 'image'
-                        class: 'ui center aligned tiny images'
+                        class: 'ui tiny images'
 
                 description:
                     key: 'desc'
@@ -84,7 +84,7 @@
                     key: 'selected_categories'
                     type: 'array'
                     search: true
-                    sort: false
+                    sort: true
                     class: 'link'
                 public:
                     label: 'Public'

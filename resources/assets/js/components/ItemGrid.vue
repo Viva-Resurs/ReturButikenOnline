@@ -42,7 +42,7 @@
                                 th.center.aligned.collapsing #
                                 th(v-for="column in columns"
                                     ":class"="column.class"
-                                    @click="(column.sort) ? setSortBy(column.key) : false" ) {{column.label}}
+                                    @click="(column.sort) ? setOrder(column.key) : false" ) {{column.label}}
 
                                     i( v-if="column.sort" ":class"="[headers[column.key], headers[column.key+'_icon']]" )
 
@@ -86,34 +86,38 @@
                                 div.ui.right.ribbon.label
                                     i.checked.calendar.icon
                                     | {{ item[card.meta.updated_at.key]+' ' }}
-                                div(style="margin-top: -25px") {{item[card.header.label]}}
-                                div( v-for="meta in card.meta" ":class"="meta.class" v-if="meta.type=='array'")
-                                    div.ui.black.horizontal.label( v-for="(post, card_index) in item[meta.key]") {{ post.name }}
+                                div(
+                                    style="margin-top: -25px"
+                                    ) {{item[card.header.label]}}
+                                    div.ui.black.horizontal.label(
+                                        style="position: relative; top: -2px; left: 15px;"
+                                        v-if="card.meta.categories"
+                                        v-for="category in item[card.meta.categories.key]"
+                                        )
+                                        | {{ category.name }}
 
-                            div.ui.divider
+                            div.ui.divider( style="margin-bottom: 5px;" )
                             div.description
-                                div.ui.padded.segment
-                                    div.top.attached.ui.secondary.label
-                                        i.tag.icon
-                                        | Description
+                                div.ui.vertical.segment.basic
+                                    h4.ui.sub.header
+                                        | Beskrivning
                                     p {{item[card.description.key]}}
 
-                                div.ui.secondary.padded.segment
 
-                                    div.top.attached.ui.secondary.label
-                                        i.image.icon
-                                        | Images
-
-                                    div( v-for="meta in card.meta" ":class"="meta.class" v-if="meta.type=='image' && item[meta.key].length")
-                                        div.ui.image( v-for="image in item[meta.key]" )
-                                            img.ui.tiny.rounded.image( ":src"="image.thumb_path" )
+                                div( v-if="item[card.meta.image.key].length>0" ).ui.vertical.segment.basic
+                                    h4.ui.sub.header
+                                        | Bilder
+                                    p
+                                        div( ":class" = "card.meta.image.class" )
+                                            div.ui.image( v-for="image in item[card.meta.image.key]" )
+                                                img.ui.tiny.rounded.image( ":src"="image.thumb_path" )
 
 
                         div.extra.content
                             div.meta.left.floated
                                 br
                                 div( v-for="extra in card.extra" ":class"="extra.class" )
-                                    i( ":class"="'ui icon ' + ((item[extra.key]==1) ? 'green checkmark' : 'red remove')")
+                                    i( ":class"="'ui icon ' + ((item[extra.key]==1) ? 'green world' : 'red industry')")
                                     span( v-if="extra.type=='boolean'" ) {{ (item[extra.key] == 1) ? extra.true : extra.false }}
 
 
@@ -146,7 +150,13 @@
                                         input( v-model="item[column.key+'_new']" ":placeholder"="'Type ' + column.label"
                                         v-focus="" )
 
-                                    div( v-else="") {{item[column.key]}}
+                                    div( v-else="" )
+                                        span( v-if="column.type=='string' || column.type=='number' || column.type==''") {{item[column.key]}}
+
+                                    div(v-if="column.type=='array'")
+                                        div( v-for="(post, column_index) in item[column.key]") {{ post.name }}
+                                            span(v-if="column_index != item[column.key].length -1") ,
+
 
                                 td.collapsing
                                     div.ui.icon.basic.buttons
@@ -201,8 +211,8 @@
             headers :
                 name : "ui icon"
                 name_icon : 'sort'
-                category : 'ui icon'
-                category_icon : 'sort'
+                selected_categories : 'ui icon'
+                selected_categories_icon : 'sort'
                 updated_at : 'ui icon'
                 updated_at_icon : 'sort'
 
@@ -267,6 +277,9 @@
                         if (column.type == 'number')
                             this.setOrder(key,column.desc)
                             selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
+                        if (column.type == 'array')
+                            this.setOrder(key,column.desc)
+                            selectedHeader = if (this.desc == 1) then "sort amount ascending icon" else "sort amount descending icon"
 
                 this.headers[headingTitle+'_icon'] = selectedHeader
 
