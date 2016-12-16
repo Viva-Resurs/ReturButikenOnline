@@ -25,7 +25,7 @@
                                     v-for="column in columns"
                                     v-if="column.sort"
                                     ":class"="(order==column.key)?'active':''"
-                                    @click="setSortBy(column.key)" )
+                                    @click="setOrder(column.key)" )
                                     | {{column.label}} &nbsp;
                                     i.icon.label.sort(
                                         v-if="order==column.key"
@@ -261,7 +261,6 @@
                 return formated;
 
         created: ->
-            @setSortBy()
             # Listen for changes in data by components
             bus.$on('offset_changed', (new_offset) => this.offset = new_offset)
             bus.$on('limit_changed', (new_limit) => this.maxItems = new_limit)
