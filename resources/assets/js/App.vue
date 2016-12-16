@@ -11,46 +11,41 @@
 <script lang="coffee">
 
     # Create a event-central
-    window.bus = new Vue();
+    window.bus = new Vue()
 
     # Define global components
-    Vue.component('loading', require('./components/Loading.vue'));
+    Vue.component 'loading', require './components/Loading.vue'
 
     # Define global directives
-    Vue.directive('tooltip', require('./directives/tooltip.vue'));
-    Vue.directive('accordion', require('./directives/accordion.vue'));
-    Vue.directive('dropdown', require('./directives/dropdown.vue'));
-    Vue.directive('checkbox', require('./directives/checkbox.vue'));
-    Vue.directive('focus', require('./directives/focus.vue'));
-    Vue.directive('item', require('./directives/item.vue'));
-    Vue.directive('image', require('./directives/image.vue'));
+    Vue.directive 'tooltip', require './directives/tooltip.vue'
+    Vue.directive 'accordion', require './directives/accordion.vue'
+    Vue.directive 'dropdown', require './directives/dropdown.vue'
+    Vue.directive 'checkbox', require './directives/checkbox.vue'
+    Vue.directive 'focus', require './directives/focus.vue'
+    Vue.directive 'item', require './directives/item.vue'
+    Vue.directive 'image', require './directives/image.vue'
 
     # Export the root-instance options
-    Navigation = require './components/Nav.vue'
-    SemanticDialog = require './components/SemanticDialog.vue'
+    module.exports =
+        name: 'App'
 
-    Auth = require './mixins/Auth.vue'
-    ErrorHandler = require './mixins/ErrorHandler.vue'
-    SuccessHandler = require './mixins/SuccessHandler.vue'
+        components:
+            Navigation: require './components/Nav.vue'
+            SemanticDialog: require './components/SemanticDialog.vue'
 
-    module.exports = {
-
-        name: 'App',
-
-        components: { Navigation, SemanticDialog },
-
-        mixins: [ Auth, ErrorHandler, SuccessHandler ]
+        mixins: [
+            require './mixins/Auth.vue'
+            require './mixins/ErrorHandler.vue'
+            require './mixins/SuccessHandler.vue'
+        ]
 
         data: ->
-            loading: true,
-
+            loading: true
             settings:
                 title: 'ReturButikenOnline'
 
         created: ->
             # Log a reference to this App
-            console.log(this)
+            console.log this
 
-
-    }
 </script>
