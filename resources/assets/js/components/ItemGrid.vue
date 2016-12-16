@@ -123,49 +123,13 @@
                                         component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
 
                 div.mobile.tablet.only.row( v-if="card" )
-
-                    div.ui.fluid.raised.card( v-for="(item, index) in filterItems" )
-                        div.content
-
-                            div.header.left.aligned
-                                div.ui.right.ribbon.label
-                                    i.checked.calendar.icon
-                                    | {{ item[card.meta.updated_at.key]+' ' }}
-                                div(
-                                    style="margin-top: -25px"
-                                    ) {{item[card.header.label]}}
-                                    div.ui.black.horizontal.label(
-                                        style="position: relative; top: -2px; left: 15px;"
-                                        v-if="card.meta.categories"
-                                        v-for="category in item[card.meta.categories.key]"
-                                        )
-                                        | {{ category.name }}
-
-                            div.ui.divider( style="margin-bottom: 5px;" )
-                            div.description
-                                div.ui.vertical.segment.basic
-                                    h4.ui.sub.header
-                                        | Beskrivning
-                                    p {{item[card.description.key]}}
-
-                                div( v-if="item[card.meta.image.key].length>0" ).ui.vertical.segment.basic
-                                    h4.ui.sub.header
-                                        | Bilder
-                                    p
-                                        div( ":class" = "card.meta.image.class" )
-                                            div.ui.image( v-for="image in item[card.meta.image.key]" )
-                                                img.ui.tiny.rounded.image( ":src"="image.thumb_path" )
-
-                        div.extra.content
-                            div.meta.left.floated
-                                br
-                                div( v-for="extra in card.extra" ":class"="extra.class" )
-                                    i( ":class"="'ui icon ' + ((item[extra.key]==1) ? 'green world' : 'red industry')")
-                                    span( v-if="extra.type=='boolean'" ) {{ (item[extra.key] == 1) ? extra.true : extra.false }}
-
-                            div.ui.icon.basic.buttons.right.floated
-                                component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
-
+                    component(
+                        v-for="(item, index) in filterItems"
+                        ":is"="card"
+                        ":item"="item"
+                        ":tools"="toolsRow"
+                        ":from"="from"
+                        )
 
         pagination.ui.bottom.attached(
             ":total"="countItems"

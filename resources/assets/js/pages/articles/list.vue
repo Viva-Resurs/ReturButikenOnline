@@ -2,7 +2,7 @@
     item-grid(
         header="Arkiv"
         ":columns"="columns"
-        ":card"="card"
+        ":card"="$options.components.ArticleCard"
         ":toolsRow"=`[
               $options.components.PublishInterval,
               $options.components.BiddingInterval,
@@ -19,6 +19,7 @@
 
         components: {
             ItemGrid: require '../../components/ItemGrid.vue'
+            ArticleCard: require '../../components/ArticleCard.vue'
             PublishInterval: require '../../components/tools/PublishInterval.vue'
             BiddingInterval: require '../../components/tools/BiddingInterval.vue'
             Remove: require '../../components/tools/Remove.vue'
@@ -27,35 +28,7 @@
 
         data: ->
             items: []
-            card:
-                header:
-                    label: 'name'
-                meta:
-                    updated_at:
-                        label: 'Updated'
-                        key: 'updated_at'
-                        class: 'left floated time'
-                    categories:
-                        label: 'Categories'
-                        key: 'selected_categories'
-                        class: 'categories'
-                        type: 'array'
-                    image:
-                        label: 'Image'
-                        key: 'selected_images'
-                        type: 'image'
-                        class: 'ui tiny images'
 
-                description:
-                    key: 'desc'
-
-                extra:
-                    public:
-                        key: 'public'
-                        class: ''
-                        type: 'boolean'
-                        true: 'Publicerad för allmänheten'
-                        false: 'Publicerad på kommunens intranät'
             columns:
                 image:
                     label: 'Image'
