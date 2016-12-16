@@ -117,7 +117,7 @@
                             div.meta.left.floated
                                 br
                                 div( v-for="extra in card.extra" ":class"="extra.class" )
-                                    i( ":class"="'ui icon ' + ((item[extra.key]==1) ? 'green checkmark' : 'red remove')")
+                                    i( ":class"="'ui icon ' + ((item[extra.key]==1) ? 'green world' : 'red industry')")
                                     span( v-if="extra.type=='boolean'" ) {{ (item[extra.key] == 1) ? extra.true : extra.false }}
 
 
@@ -150,7 +150,13 @@
                                         input( v-model="item[column.key+'_new']" ":placeholder"="'Type ' + column.label"
                                         v-focus="" )
 
-                                    div( v-else="") {{item[column.key]}}
+                                    div( v-else="" )
+                                        span( v-if="column.type=='string' || column.type=='number' || column.type==''") {{item[column.key]}}
+
+                                    div(v-if="column.type=='array'")
+                                        div( v-for="(post, column_index) in item[column.key]") {{ post.name }}
+                                            span(v-if="column_index != item[column.key].length -1") ,
+
 
                                 td.collapsing
                                     div.ui.icon.basic.buttons
