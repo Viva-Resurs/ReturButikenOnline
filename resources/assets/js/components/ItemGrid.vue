@@ -42,7 +42,7 @@
                                 th.center.aligned.collapsing #
                                 th(v-for="column in columns"
                                     ":class"="column.class"
-                                    @click="(column.sort) ? setSortBy(column.key) : false" ) {{column.label}}
+                                    @click="(column.sort) ? setOrder(column.key) : false" ) {{column.label}}
 
                                     i( v-if="column.sort" ":class"="[headers[column.key], headers[column.key+'_icon']]" )
 
@@ -211,8 +211,8 @@
             headers :
                 name : "ui icon"
                 name_icon : 'sort'
-                category : 'ui icon'
-                category_icon : 'sort'
+                selected_categories : 'ui icon'
+                selected_categories_icon : 'sort'
                 updated_at : 'ui icon'
                 updated_at_icon : 'sort'
 
@@ -277,6 +277,9 @@
                         if (column.type == 'number')
                             this.setOrder(key,column.desc)
                             selectedHeader = if (this.desc == 1) then "sort numeric ascending icon" else "sort numeric descending icon"
+                        if (column.type == 'array')
+                            this.setOrder(key,column.desc)
+                            selectedHeader = if (this.desc == 1) then "sort amount ascending icon" else "sort amount descending icon"
 
                 this.headers[headingTitle+'_icon'] = selectedHeader
 
