@@ -145,22 +145,9 @@
 
         components: { DateInterval, ImageDropzone },
 
-        props: [ 'original' ],
+        props: [ 'original', 'article', 'categories', 'contacts' ],
 
         data: -> {
-            article:
-                name: ''
-                desc: ''
-                public: false
-                publish_interval: ''
-                bidding_interval: ''
-                selected_categories: []
-                selected_images: []
-                selected_contacts: []
-            categories:
-                null
-            contacts:
-                null
             settings:
                 publish_interval: false
                 bidding_interval: false
@@ -189,29 +176,7 @@
 
                 bus.$emit( 'article_form_preview', this.article );
 
-            getCategoryList: ->
-                this.$http.get('categories').then(
-                    (response) =>
-                        this.categories = response.data;
 
-                    (response) =>
-                        bus.$emit('error', response.data);
-                        this.categories = []
-
-                )
-
-            getContactList: ->
-                this.$http.get('contacts').then(
-                    (response) =>
-                        list = response.data;
-                        if (list.length > 0)
-                            if (@article.selected_contacts.length == 0)
-                                @article.selected_contacts.push( list[0].id );
-                        @contacts = response.data;
-                    (response) =>
-                        bus.$emit('error', response.data);
-                        @contacts = []
-                )
 
         created: ->
 
@@ -240,16 +205,10 @@
                 this.article.selected_categories = new_value;
             );
 
-            # Get categories
-            @getCategoryList()
-
             # Listen for changes in Contacts
             bus.$on('contacts_changed', (id,new_value) =>
                 this.article.selected_contacts = new_value;
             );
-
-            # Get section-admins
-            @getContactList()
 
             # Images
             bus.$on('image_added', (image) =>
