@@ -2,6 +2,7 @@
     div
         article-form(
             v-show = "!preview"
+            ":original" = "article"
             ":categories" = "categories"
             ":contacts" = "contacts"
         )
