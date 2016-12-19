@@ -22,6 +22,10 @@
             message: 'Empty'
 
         methods:
+            # TODO: Confirm method needed
+            confirm: (message,cb) ->
+                # do something with message
+                # yes = run cb(), no = just close
             handleMessage: (message) ->
                 switch message.type
                     when "error" then @icon = 'massive circle warning icon'
