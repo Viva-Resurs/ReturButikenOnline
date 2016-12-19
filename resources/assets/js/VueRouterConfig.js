@@ -73,6 +73,10 @@ module.exports = {
             ]
         },
         {
+            path: '/:id',
+            component: require('./pages/articles/show.vue'),
+        },
+        {
             path: '*',
             component: require('./pages/404.vue')
         }
