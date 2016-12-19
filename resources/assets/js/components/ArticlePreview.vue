@@ -1,22 +1,21 @@
 <template lang="pug">
-    div.ui.container.segment.attached#preview
+    div.ui.padded.container.segment.attached#preview
 
         div.ui.dividing.header Förhandsgranskning
 
         div.ui.fluid.raised.card
             div.content
                 div.ui.basic.segment
-                    div.center.aligned
-                        img.ui.fluid.image(v-if="selected_image" ":src"="selected_image.path")
-
+                    div.center.aligned.preview( v-show="selected_image"  )
+                        //img.ui.fluid.centered.image( ":src"="selected_image.path" )
                     br
 
-                    div.ui.tiny.images
+                    div.ui.tiny.center.aligned.images
                         img.ui.image(
                             ":src"="image.thumb_path"
                             v-for="image in article.selected_images"
                             @click="setSelectedImage(image)"
-                            ":class" = "(image.path == selected_image.path) ? 'bordered disabled' : '' ")
+                            ":class" = "(image.path == selected_image.path) ? 'active' : 'disabled' ")
 
 
                 div.ui.basic.segment
@@ -96,6 +95,31 @@
 
             setSelectedImage: ( image ) ->
                 @selected_image = image
-                console.log @selected_image.path
-
+                $('.preview').css('background-image',"url('"+image.path+"')")
+        mounted: ->
+            if @article.selected_images.length > 0
+                @setSelectedImage @article.selected_images[0]
+            $('body').scrollTop(0)
 </script>
+
+<style lang="scss">
+    #preview {
+        .preview {
+            height: 400px;
+            width: 100%;
+            background-image:url('');
+            background-size: contain;
+            background-repeat:no-repeat;
+            background-position:center;
+        }
+
+        img.disabled {
+            opacity: 0.8 !important;
+        }
+
+        img.active {
+            outline: 2px solid #25f;
+            box-shadow: 0px 0px 9px 5px rgba(50,70,255,0.6) !important;
+        }
+    }
+</style>
