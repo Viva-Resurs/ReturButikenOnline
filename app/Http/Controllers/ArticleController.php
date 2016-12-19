@@ -255,4 +255,21 @@ class ArticleController extends Controller
 
         $article->delete();
     }
+
+    /**
+     * Show article by article-nr.
+     *
+     * Numbers are used like this:
+     * SSS AAA
+     * SSS = Section-id with three digits
+     * AAA = Article-id with three digits
+     *
+     * @return Array
+     */
+    public function showByArticleNr($artnr){
+        $section_id = substr($artnr,0,3);
+        $article_id = substr($artnr,3,3);
+        
+        return $this->show($article_id);
+    }
 }

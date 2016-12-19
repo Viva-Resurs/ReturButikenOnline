@@ -23,6 +23,8 @@ Route::group(['prefix' => 'api'], function () {
 
     Route::resource('articles', 'ArticleController');
 
+    Route::get('artnr/{artnr}', 'ArticleController@showByArticleNr');
+
     Route::resource('categories', 'CategoryController');
 
     Route::resource('images', 'ImageController');
