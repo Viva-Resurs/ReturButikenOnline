@@ -61,7 +61,7 @@
                     label: 'Public'
                     key: 'public'
                     search: false
-                    sort: false
+                    sort: true
                     type: 'checkbox'
                     checkbox_true: 'Publicerad för allmänheten'
                     checkbox_false: 'Publicerad på kommunens intranät'
