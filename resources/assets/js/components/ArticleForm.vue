@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.container.segment.attached#articleForm
+    div.ui.padded.container.segment.attached#articleForm
 
         div.ui.dividing.header Publicera
 
