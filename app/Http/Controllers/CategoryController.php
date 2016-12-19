@@ -18,8 +18,8 @@ class CategoryController extends Controller
 
 		$user = Auth::user();
 
-        if (!$user)
-			abort(401,'Not allowed to list categories');
+        //if (!$user)
+		//	abort(401,'Not allowed to list categories');
 
         return Category::all();
     }
