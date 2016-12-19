@@ -1,9 +1,9 @@
 <template lang="pug">
     div.ui.padded.container.segment.attached#preview
 
-        div.ui.dividing.header Förhandsgranskning
+        div.ui.dividing.header( v-if="mode!='show'" ) Förhandsgranskning
 
-        div.ui.fluid.raised.card
+        div.ui.fluid.raised.card( v-if="article!=-1" )
             div.content
                 div.ui.basic.segment
                     div.center.aligned.preview_header( v-show="selected_image"  )
@@ -26,32 +26,40 @@
 
                 div.ui.top.attached.segment
                     div.top.attached.ui.secondary.label Övrig information
-                    h4.ui.sub.header Kategorier
-                    div(v-for="orig_category in categories")
-                        div( v-for="selected_category in article.selected_categories")
-                            p(v-if="(orig_category.id == selected_category)") {{ orig_category.name }}
-                    br
-                    div.ui.grid.two.columns
-                        div.column
-                            h4.ui.sub.header Publicerings intervall
-                            p {{ article.publish_interval }}
 
-                        div.column
-                            h4.ui.sub.header Budgivningsintervall
-                            p {{ article.bidding_interval }}
+                    div.ui.basic.segment
+                        h4.ui.sub.header Kategorier
+                        p
+                            template(v-for="(orig_category, index) in categories")
+                                template( v-for="selected_category in article.selected_categories")
+                                    span(v-if="(orig_category.id == selected_category)")
+                                        i.ui.icon.tag( v-if="index==0" )
+                                        span( v-if="index!=0 && article.selected_categories.length>1" )
+                                            | {{ ', ' + orig_category.name }}
+                                        span( v-else="" )
+                                            | {{ orig_category.name }}
 
-                    br
+                    div.ui.basic.segment( v-if="article.publish_interval" )
+                        h4.ui.sub.header Publicerings intervall
+                        i.ui.icon.time
+                        span  {{ article.publish_interval }}
 
-                    h4.ui.sub.header Område
-                    div(v-if="article.public")
+                    div.ui.basic.segment( v-if="article.bidding_interval" )
+                        h4.ui.sub.header Budgivningsintervall
+                        i.ui.icon.time
+                        span  {{ article.bidding_interval }}
+
+                    div.ui.basic.segment(v-if="article.public")
+                        h4.ui.sub.header Område
+                        i.ui.icon.green.world
                         | Publicerad externt
-                    div(v-else)
+                    div.ui.basic.segment(v-if="!article.public")
+                        h4.ui.sub.header Område
+                        i.ui.icon.red.industry
                         | Publicerad på kommunens intranät
 
-                    br
-                    div.ui.divider
-                    div( v-if="article.selected_contacts")
-                        h4.ui.sub.header Kontakter
+                    div.ui.basic.segment(v-if="article.selected_contacts")
+                        h4.ui.sub.header Kontakt
                         div(v-for="orig_contact in contacts")
                             div( v-for="selected_contact in article.selected_contacts")
                                 div.ui.card(v-if="(orig_contact.id == selected_contact)")
@@ -65,7 +73,7 @@
                                             p Email
                                             b {{ orig_contact.email }}
 
-            div.extra.content
+            div.extra.content( v-if="mode!='show'" )
                 div.ui.right.floated.button.primary(
                     @click="attemptPublish"
                 ) Publish
@@ -73,6 +81,8 @@
                 div.ui.right.floated.button.red(
                     @click="modifyArticle"
                 ) Modify
+        div( v-if="article==-1" )
+            | Artikeln hittades inte
 </template>
 
 <script lang="coffee">
@@ -81,7 +91,7 @@
 
         name: 'Preview'
 
-        props: [ 'article', 'categories', 'contacts' ],
+        props: [ 'mode', 'article', 'categories', 'contacts' ],
 
         data: ->
             selected_image: false;
@@ -97,7 +107,7 @@
                 @selected_image = image
                 $('.preview_header').css('background-image',"url('/"+image.path+"')")
         mounted: ->
-            if @article.selected_images.length > 0
+            if @article.selected_images and @article.selected_images.length > 0
                 @setSelectedImage @article.selected_images[0]
             $('body').scrollTop(0)
 </script>
