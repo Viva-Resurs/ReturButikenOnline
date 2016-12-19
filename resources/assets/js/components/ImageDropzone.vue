@@ -1,8 +1,8 @@
 <template lang="pug">
     div.ui.segment.bottom.attached#dropZone
         input#files( type='file' name='files[]' hidden multiple)
-        div.ui.eight.doubling.stackable.cards
-            div.ui.dimmable.blurring.fluid.card( v-for="image in images" v-image="" )
+        div.ui.five.doubling.cards
+            div.ui.dimmable.blurring.card( v-for="image in images" v-image="" )
                 div.ui.dimmer
                     div.content
                         div.center
@@ -15,8 +15,7 @@
                                 div.header {{image.name}}
 
                                 div.image.content
-                                    div.image
-                                        img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
+                                    img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
 
                             div.ui.inverted.red.button.icon( @click="remove(image)" )
                                 i.delete.icon
