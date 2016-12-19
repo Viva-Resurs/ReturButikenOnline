@@ -49,8 +49,8 @@ class ArticleController extends Controller
 
         $user = Auth::user();
 
-        if (!$user)
-            abort(401,'Not allowed to show articles');
+        //if (!$user)
+        //    abort(401,'Not allowed to show articles');
 
         $article = Article::find($id);
 
@@ -68,14 +68,22 @@ class ArticleController extends Controller
             'sections' => $article->sections,
             'selected_categories' => [],
             'selected_images' => [],
-            'selected_contacts' => []
+            'selected_contacts' => [],
+            'public_contacts' => []
         ];
 
         foreach ($article->categories as $category)
             array_push($result['selected_categories'],$category->id);
 
-        foreach ($article->contacts as $contact)
+        foreach ($article->contacts as $contact){
             array_push($result['selected_contacts'],$contact->id);
+            array_push($result['public_contacts'],[
+                'id' => $contact->id,
+                'fullname' => $contact->fullname,
+                'phone' => $contact->phone,
+                'email' => $contact->email
+            ]);
+        }
 
         foreach ($article->images as $image)
             array_push($result['selected_images'], [
