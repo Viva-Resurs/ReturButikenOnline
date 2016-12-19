@@ -37,6 +37,8 @@
                 @$http.get( 'articles/'+id ).then(
                     (response) =>
                         @article = response.data
+                        @getCategoryList()
+                        @getContactList()
                         @$root.loading = false
                     (response) =>
                         bus.$emit 'error', response.data
@@ -80,8 +82,6 @@
 
         created: ->
             @getArticle @$route.params.id
-            @getCategoryList()
-            @getContactList()
             bus.$on 'article_form_preview', (payload) => @previewArticle payload
             bus.$on 'article_form_modify', => @modifyArticle()
             bus.$on 'article_form_update', (payload) => @updateArticle payload
