@@ -17,20 +17,34 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::resource('sections', 'SectionController');
+Route::group(['prefix' => 'api'], function () {
 
-Route::resource('articles', 'ArticleController');
+    Route::resource('sections', 'SectionController');
 
-Route::resource('categories', 'CategoryController');
+    Route::resource('articles', 'ArticleController');
 
-Route::resource('images', 'ImageController');
+    Route::resource('categories', 'CategoryController');
 
-Route::resource('users', 'UserController');
+    Route::resource('images', 'ImageController');
 
-Route::get('/user', 'UserController@me');
+    Route::resource('users', 'UserController');
 
-Route::get('/contacts', 'UserController@contacts');
+    Route::get('user', 'UserController@me');
 
-Route::get('/roles', 'UserController@rolesList');
+    Route::get('contacts', 'UserController@contacts');
 
-Route::get('/token', 'UserController@token');
+    Route::get('roles', 'UserController@rolesList');
+
+    Route::get('token', 'UserController@token');
+
+    // let API know that the route wasn´t found
+    Route::any( '{catchall}', function ( $page ) {
+        abort(404, $page . ' not found' );
+    } )->where('catchall', '(.*)');
+
+});
+
+// Let index handle further routing
+Route::any( '{catchall}', function ( $page ) {
+    return view('index');
+} )->where('catchall', '(.*)');

@@ -29,7 +29,7 @@
                 bus.$emit('user_changed', false );
             },
             getUser() {
-                this.$http.get('user').then(
+                this.$http.get('/api/user').then(
                     (response) => {
                         // Update username & token
                         this.setUser(response.data);

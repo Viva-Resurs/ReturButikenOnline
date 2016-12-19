@@ -34,13 +34,13 @@
             myform: []
         methods:
             attemptLogin: (tries) ->
-                @$http.post('login',@login).then(
+                @$http.post('/login',@login).then(
                     (response) =>
                         bus.$emit('login_ok')
                     (response) =>
                         # If login fails on token, try one more time
                         if (tries!=2 && response.data.error == 'TokenMismatch')
-                            @$http.get('token').then(
+                            @$http.get('/api/token').then(
                                 (response) =>
                                     # New token ready, try to login again
                                     sessionStorage.token = response.data.token;

@@ -73,7 +73,7 @@
                 @removeArticle article
 
             removeArticle: (article) ->
-                @$http.delete( 'articles/'+article.id ).then(
+                @$http.delete( '/api/articles/'+article.id ).then(
                     (response) =>
                         bus.$emit 'success', 'removed_article'
                         Vue.set article, 'removed', true
@@ -85,7 +85,7 @@
                 @updateArticle article
 
             updateArticle: (article) ->
-                @$http.put( 'articles/'+article.id, article ).then(
+                @$http.put( '/api/articles/'+article.id, article ).then(
                     (response) =>
                         bus.$emit 'success', 'updated_article'
                     (response) => bus.$emit 'error', response.data
@@ -93,7 +93,7 @@
 
             getArticles: () ->
                 @$root.loading = true
-                @$http.get( 'articles' ).then(
+                @$http.get( '/api/articles' ).then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false

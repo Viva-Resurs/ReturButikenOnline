@@ -6,13 +6,13 @@
         div.ui.fluid.raised.card
             div.content
                 div.ui.basic.segment
-                    div.center.aligned.preview( v-show="selected_image"  )
-                        //img.ui.fluid.centered.image( ":src"="selected_image.path" )
+                    div.center.aligned.preview_header( v-show="selected_image"  )
+                        //img.ui.fluid.centered.image( ":src"="'/'+selected_image.path" )
                     br
 
                     div.ui.tiny.center.aligned.images
                         img.ui.image(
-                            ":src"="image.thumb_path"
+                            ":src"="'/'+image.thumb_path"
                             v-for="image in article.selected_images"
                             @click="setSelectedImage(image)"
                             ":class" = "(image.path == selected_image.path) ? 'active' : 'disabled' ")
@@ -95,7 +95,7 @@
 
             setSelectedImage: ( image ) ->
                 @selected_image = image
-                $('.preview').css('background-image',"url('"+image.path+"')")
+                $('.preview_header').css('background-image',"url('/"+image.path+"')")
         mounted: ->
             if @article.selected_images.length > 0
                 @setSelectedImage @article.selected_images[0]
@@ -104,7 +104,7 @@
 
 <style lang="scss">
     #preview {
-        .preview {
+        .preview_header {
             height: 400px;
             width: 100%;
             background-image:url('');

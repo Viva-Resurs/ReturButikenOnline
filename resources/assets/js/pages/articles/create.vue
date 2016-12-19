@@ -52,7 +52,7 @@
                 @preview = false
 
             createArticle: (article) ->
-                @$http.post( 'articles', article ).then(
+                @$http.post( '/api/articles', article ).then(
                     (response) =>
                         @$router.push path: '/articles'
                     (response) =>
@@ -60,7 +60,7 @@
                 )
 
             getCategoryList: ->
-                @$http.get( 'categories' ).then(
+                @$http.get( '/api/categories' ).then(
                     (response) =>
                         this.categories = response.data
                     (response) =>
@@ -68,7 +68,7 @@
                 )
 
             getContactList: ->
-                @$http.get( 'contacts' ).then(
+                @$http.get( '/api/contacts' ).then(
                     (response) =>
                         @contacts = response.data ? null
                         if @contacts.length > 0 and

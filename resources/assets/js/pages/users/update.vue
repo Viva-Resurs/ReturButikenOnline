@@ -19,7 +19,7 @@
             getUser: (id) ->
                 @$root.loading = true;
 
-                @$http.get('users/'+id).then(
+                @$http.get('/api/users/'+id).then(
                     (response) =>
                         @user = response.data;
                         @$root.loading = false;
@@ -30,7 +30,7 @@
                 );
 
             updateUser: (user) ->
-                @$http.put('users/'+user.id,user).then(
+                @$http.put('/api/users/'+user.id,user).then(
                     (response) =>
                         @$router.push({ path: '/users' });
 

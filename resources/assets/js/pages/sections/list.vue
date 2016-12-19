@@ -59,7 +59,7 @@
                 @createSection(section)
 
             createSection: (new_section) ->
-                @$http.post('sections', new_section).then(
+                @$http.post('/api/sections', new_section).then(
                     (response) =>
                         @attemptRemove(new_section)
                         section = response.data
@@ -83,7 +83,7 @@
                 for key, column of @columns
                     Vue.set section, key, section[key+'_new']
 
-                @$http.put('sections/' + section.id, section).then(
+                @$http.put('/api/sections/' + section.id, section).then(
                     (response) =>
                         Vue.set section, 'updated_at', response.data.updated_at
                         @$nextTick ->
@@ -102,7 +102,7 @@
                 @removeSection(section)
 
             removeSection: (section) ->
-                @$http.delete('sections/' + section.id).then(
+                @$http.delete('/api/sections/' + section.id).then(
                     (response) =>
                         bus.$emit('success', 'removed_category')
                         $('tbody').trigger('removed',section.id, ->
@@ -113,7 +113,7 @@
 
             getSections: () ->
                 @$root.loading = true;
-                @$http.get('sections').then(
+                @$http.get('/api/sections').then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false

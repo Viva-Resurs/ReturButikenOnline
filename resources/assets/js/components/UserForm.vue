@@ -130,7 +130,7 @@
                 bus.$emit( 'user_form_update', this.user );
 
             getRoleList: ->
-                this.$http.get('roles').then(
+                this.$http.get('/api/roles').then(
                     (response) =>
                         console.log 'roles ready'
                         this.roles = response.data;
@@ -141,7 +141,7 @@
 
                 );
             getSectionList: ->
-                this.$http.get('sections').then(
+                this.$http.get('/api/sections').then(
                     (response) =>
                         this.sections = response.data;
 

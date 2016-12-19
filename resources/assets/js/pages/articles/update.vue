@@ -34,7 +34,7 @@
 
             getArticle: (id) ->
                 @$root.loading = true
-                @$http.get( 'articles/'+id ).then(
+                @$http.get( '/api/articles/'+id ).then(
                     (response) =>
                         @article = response.data
                         @getCategoryList()
@@ -46,7 +46,7 @@
                 )
 
             getCategoryList: ->
-                @$http.get( 'categories' ).then(
+                @$http.get( '/api/categories' ).then(
                     (response) =>
                         this.categories = response.data
                     (response) =>
@@ -54,7 +54,7 @@
                 )
 
             getContactList: ->
-                @$http.get( 'contacts' ).then(
+                @$http.get( '/api/contacts' ).then(
                     (response) =>
                         @contacts = response.data ? null
                         if @contacts.length > 0 and
@@ -73,7 +73,7 @@
                 @preview = false
 
             updateArticle: (article) ->
-                @$http.put( 'articles/'+article.id, article ).then(
+                @$http.put( '/articles/'+article.id, article ).then(
                     (response) =>
                         @$router.push path: '/articles'
 

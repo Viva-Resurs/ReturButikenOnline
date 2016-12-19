@@ -1,6 +1,7 @@
 module.exports = {
 
     linkActiveClass: 'active',
+    mode: 'history',
 
     routes : [
         {

@@ -58,7 +58,7 @@
                 @createCategory(category)
 
             createCategory: (new_category) ->
-                @$http.post('categories', new_category).then(
+                @$http.post('/api/categories', new_category).then(
                     (response) =>
                         @attemptRemove(new_category)
                         category = response.data
@@ -82,7 +82,7 @@
                 for key, column of @columns
                     Vue.set category, key, category[key+'_new']
 
-                @$http.put('categories/' + category.id, category).then(
+                @$http.put('/api/categories/' + category.id, category).then(
                     (response) =>
                         Vue.set category, 'updated_at', response.data.updated_at
                         @$nextTick ->
@@ -101,7 +101,7 @@
                 @removeCategory(category)
 
             removeCategory: (category) ->
-                @$http.delete('categories/' + category.id).then(
+                @$http.delete('/api/categories/' + category.id).then(
                     (response) =>
                         bus.$emit('success', 'removed_category')
                         $('tbody').trigger('removed',category.id, ->
@@ -112,7 +112,7 @@
 
             getCategories: () ->
                 @$root.loading = true;
-                @$http.get('categories').then(
+                @$http.get('/api/categories').then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false

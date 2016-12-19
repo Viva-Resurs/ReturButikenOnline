@@ -54,7 +54,7 @@
                 @removeUser(user);
 
             removeUser: (user) ->
-                @$http.delete('users/'+user.id).then(
+                @$http.delete('/api/users/'+user.id).then(
                     (response) =>
                         bus.$emit('success','removed_user')
                         Vue.set user, 'removed', true;
@@ -63,7 +63,7 @@
 
             getUsers: () ->
                 @$root.loading = true;
-                @$http.get('users').then(
+                @$http.get('/api/users').then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false;
