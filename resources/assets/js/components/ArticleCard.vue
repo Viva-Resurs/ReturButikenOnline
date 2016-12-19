@@ -26,8 +26,10 @@
                     h4.ui.sub.header
                         | Bilder
                     p
-                        div.ui.image( v-for="image in item.selected_images" )
-                            img.ui.tiny.rounded.image( ":src"="image.thumb_path" )
+                        div.ui.tiny.images
+                            img.ui.rounded.image(
+                                v-for="image in item.selected_images"
+                                ":src"="image.thumb_path" )
 
         div.extra.content
             div.ui.bottom.aligned.two.column.grid
