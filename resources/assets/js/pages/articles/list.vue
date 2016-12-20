@@ -69,8 +69,14 @@
 
         methods:
             attemptRemove: (article) ->
-                # Are you sure?
-                @removeArticle article
+                bus.$emit('show_message',
+                    {
+                        title:'Confirm',
+                        message:'Do you want to remove the article?',
+                        type:'confirm',
+                        cb: => this.removeArticle(article)
+                    }
+                );
 
             removeArticle: (article) ->
                 @$http.delete( '/api/articles/'+article.id ).then(
