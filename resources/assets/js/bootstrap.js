@@ -27,6 +27,13 @@ window.moment = require('moment');
 require('./vendor/semantic-ui-daterangepicker.1.3.21.js');
 
 /**
+ * Semantic-UI-Calendar
+ * https://github.com/mdehoog/Semantic-UI-Calendar
+ */
+require('./vendor/calendar.min.js');
+
+
+/**
  * Vue is a modern JavaScript library for building interactive web interfaces
  * using reactive data binding and reusable components. Vue's API is clean
  * and simple, leaving you to focus on building your next great project.
@@ -49,7 +56,7 @@ window.Vue.use(VueRouter);
 
 Vue.http.interceptors.push((request, next) => {
     request.headers['X-CSRF-TOKEN'] = sessionStorage.token;
-    
+
     next();
 });
 
