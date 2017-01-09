@@ -5,7 +5,7 @@
         ":card"="$options.components.ArticleCard"
         ":toolsRow"=`[
               $options.components.PublishInterval,
-              $options.components.BiddingInterval,
+              $options.components.BiddingInterval2,
               $options.components.Edit,
               $options.components.Remove
             ]`
@@ -20,7 +20,7 @@
             ItemGrid: require '../../components/ItemGrid.vue'
             ArticleCard: require '../../components/ArticleCard.vue'
             PublishInterval: require '../../components/tools/PublishInterval.vue'
-            BiddingInterval: require '../../components/tools/BiddingInterval.vue'
+            BiddingInterval2: require '../../components/tools/BiddingInterval2.vue'
             Remove: require '../../components/tools/Remove.vue'
             Edit: require '../../components/tools/Edit.vue'
 

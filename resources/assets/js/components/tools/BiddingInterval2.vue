@@ -3,7 +3,7 @@
         div.ui.icon.button.hover-default(
             v-tooltip     = ""
             ":data-html"  = "displayInterval(item.bidding_interval)"
-            name          = "Bidding Interval"
+            name          = "bidding_interval"
             ":id"         = "item.id"
             ":data-value" = "item.bidding_interval"
             @click        = "showRangePicker"
@@ -12,21 +12,21 @@
                 (activeInterval(item.bidding_interval)) ? 'active-interval':''
             ` )
 
-        div.ui.basic.modal(":id"='biddingId()')
+        div.ui.basic.modal(":id"='biddingID')
             div.header Bidding interval
             div.ui.segment
                 div.ui.form
                     div.two.stackable.fields
                         div.field
                             h4.ui.sub.header Start date
-                            div.ui.small.calendar#rangestart
+                            div.ui.small.calendar(":id"="biddingID+'_start'")
                                 div.ui.input.left.icon
                                     i.calendar.icon
                                     input( type="text" placeholder="Start" )
 
                         div.field
                             h4.ui.sub.header End date
-                            div.ui.calendar#rangeend
+                            div.ui.calendar(":id"="biddingID+'_end'")
                                 div.ui.input.left.icon
                                     i.calendar.icon
                                     input( type="text" placeholder="End" )
@@ -41,11 +41,11 @@
     module.exports =
         name: 'BiddingInterval2'
         props: [ 'item' ]
+        computed:
+            biddingID: ->
+                return 'bidding_' + @item.id
 
         methods:
-            biddingId: () ->
-                return 'bidding_'+@item.id;
-
             displayInterval: (interval) ->
                 if interval.indexOf '|' < 0
                     return 'Click to set interval'
@@ -64,22 +64,35 @@
                     return false
                 return moment().isBefore interval.split('|')[1]
 
-            showRangePicker: () ->
+            showRangePicker: ->
+                id = @biddingID
+                el_start = $('#'+id+'_start')
+                el_end = $('#'+id+'_end')
 
-                if ($('#rangestart').data("moduleCalendar") == undefined)
-                    $('#rangestart').calendar({
-                      ampm: false,
-                      inline: true,
-                      endCalendar: $('#rangeend')
-                    });
+                if el_start.data("moduleCalendar") == undefined
+                    el_start.calendar({
+                        debug: true
+                        ampm: false
+                        inline: true
+                        endCalendar: el_end
+                    })
 
-                if ($('#rangeend').data("moduleCalendar") == undefined)
-                    $('#rangeend').calendar({
-                      ampm: false,
-                      inline: true,
-                      startCalendar: $('#rangestart')
-                    });
+                if el_end.data("moduleCalendar") == undefined
+                    el_end.calendar
+                        ampm: false
+                        inline: true
+                        startCalendar: el_start
 
-                modalContainer = '#'+'bidding_'+@item.id
-                $(modalContainer).modal('show')
+                $( '#'+id ).modal
+                    onApprove: ->
+                        start = new moment( el_start.calendar('get date') );
+                        end   = new moment( el_end.calendar('get date') );
+                        bus.$emit(
+                            this.getAttribute('name')+'_changed',
+                            this.getAttribute('id'),
+                            start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
+                        );
+                        console.log start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
+
+                $( '#'+id ).modal 'show'
 </script>
