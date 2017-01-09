@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.basic.small.modal.event-modal
         div.content
-            div(v-if("message.type" == "calendar"))
+            div( v-if = "type == 'calendar'" )
                 div.ui.form
                     div.two.stackable.fields
                         div.field
@@ -18,7 +18,7 @@
                                     i.calendar.icon
                                     input( type="text" placeholder="End" )
 
-            div(v-else)
+            div( v-else )
                 div(":class"="[selected_action.class]")
                     i(":class"="[selected_action.icon]")
                     div.class.content
@@ -88,11 +88,13 @@
 
             title: 'Empty'
             message: 'Empty'
+            type: 'Empty'
 
         methods:
             handleMessage: (message) ->
                 @title = message.title
                 @message = message.message
+                @type = message.type
                 console.log message
 
                 switch message.type
@@ -107,30 +109,29 @@
 
                         })
                     when "calendar"
-                        if el_start.data("moduleCalendar") == undefined
-                            el_start.calendar({
+                        if $('#interval_start').data("moduleCalendar") == undefined
+                            $('#interval_start').calendar({
                                 debug: true
                                 ampm: false
                                 inline: true
-                                endCalendar: el_end
+                                endCalendar: $('#interval_end')
                             })
 
-                        if el_end.data("moduleCalendar") == undefined
-                            el_end.calendar
+                        if $('#interval_end').data("moduleCalendar") == undefined
+                            $('#interval_end').calendar
                                 ampm: false
                                 inline: true
-                                startCalendar: el_start
+                                startCalendar: $('#interval_start')
 
-                        $( '#'+id ).modal
+                        $('#interval_start').calendar('set date',message.start)
+                        $('#interval_end').calendar('set date',message.end)
+
+                        $('.modal').modal({
+                            closable: false
                             onApprove: ->
-                                start = new moment( el_start.calendar('get date') );
-                                end   = new moment( el_end.calendar('get date') );
-                                bus.$emit(
-                                    this.getAttribute('name')+'_changed',
-                                    this.getAttribute('id'),
-                                    start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
-                                );
-                                console.log start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
+                                return message.cb( new moment( $('#interval_start').calendar('get date') ), new moment( $('#interval_end').calendar('get date') ) )
+                        })
+
                     else
                         @selected_action = @actions['default']
 
