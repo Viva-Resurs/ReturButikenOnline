@@ -24,7 +24,7 @@ window.moment = require('moment');
  * Semantic-UI-Calendar
  * https://github.com/mdehoog/Semantic-UI-Calendar
  */
-require('./vendor/calendar.min.js');
+require('semantic-ui-calendar/dist/calendar.min.js');
 
 
 /**
