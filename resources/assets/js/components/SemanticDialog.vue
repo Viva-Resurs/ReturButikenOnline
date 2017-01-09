@@ -1,11 +1,30 @@
 <template lang="pug">
     div.ui.basic.small.modal.event-modal
         div.content
-            div(":class"="[selected_action.class]")
-                i(":class"="[selected_action.icon]")
-                div.class.content
-                    div.header {{ title }}
-                    p {{ message }}
+            div(v-if("message.type" == "calendar"))
+                div.ui.form
+                    div.two.stackable.fields
+                        div.field
+                            h4.ui.sub.header Start date
+                            div.ui.small.calendar#interval_start
+                                div.ui.input.left.icon
+                                    i.calendar.icon
+                                    input( type="text" placeholder="Start" )
+
+                        div.field
+                            h4.ui.sub.header End date
+                            div.ui.calendar#interval_end
+                                div.ui.input.left.icon
+                                    i.calendar.icon
+                                    input( type="text" placeholder="End" )
+
+            div(v-else)
+                div(":class"="[selected_action.class]")
+                    i(":class"="[selected_action.icon]")
+                    div.class.content
+                        div.header {{ title }}
+                        p {{ message }}
+
             div.ui.grid.component.padded( style="position: relative; top: -11px;" )
                 div.center.aligned.column.actions( style="background: rgba(0,0,0,0.1);")
                     div(v-for="button in selected_action.buttons"
@@ -52,6 +71,21 @@
                             label: 'Confirm'
                         },
                     ]
+
+                calendar:
+                    class: ''
+                    icon: ''
+                    buttons: [
+                        {
+                            class: 'ui deny inverted red button',
+                            label: 'Abort'
+                        },
+                        {
+                            class: 'ui approve inverted green button',
+                            label: 'Confirm'
+                        },
+                    ]
+
             title: 'Empty'
             message: 'Empty'
 
@@ -72,6 +106,31 @@
                                 return message.cb();
 
                         })
+                    when "calendar"
+                        if el_start.data("moduleCalendar") == undefined
+                            el_start.calendar({
+                                debug: true
+                                ampm: false
+                                inline: true
+                                endCalendar: el_end
+                            })
+
+                        if el_end.data("moduleCalendar") == undefined
+                            el_end.calendar
+                                ampm: false
+                                inline: true
+                                startCalendar: el_start
+
+                        $( '#'+id ).modal
+                            onApprove: ->
+                                start = new moment( el_start.calendar('get date') );
+                                end   = new moment( el_end.calendar('get date') );
+                                bus.$emit(
+                                    this.getAttribute('name')+'_changed',
+                                    this.getAttribute('id'),
+                                    start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
+                                );
+                                console.log start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
                     else
                         @selected_action = @actions['default']
 
