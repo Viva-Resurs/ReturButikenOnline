@@ -21,12 +21,6 @@ require('../../../semantic/dist/semantic.min.js');
 window.moment = require('moment');
 
 /**
- * daterangepicker
- * https://www.npmjs.com/package/semantic-ui-daterangepicker
- */
-require('./vendor/semantic-ui-daterangepicker.1.3.21.js');
-
-/**
  * Semantic-UI-Calendar
  * https://github.com/mdehoog/Semantic-UI-Calendar
  */
