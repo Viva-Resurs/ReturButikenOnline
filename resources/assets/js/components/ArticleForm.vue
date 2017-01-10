@@ -63,18 +63,28 @@
                         label Aktivera budgivning
 
             div.two.fields
-                div.field
-                    date-interval(
-                        v-show="settings.publish_interval"
-                        interval="publish_interval_form"
-                        ":date"="article.publish_interval"
-                    )
-                div.field
-                    date-interval(
-                        v-show="settings.bidding_interval"
-                        interval="bidding_interval_form"
-                        ":date"="article.bidding_interval"
-                    )
+                div.field( v-show="settings.publish_interval" )
+                    h4.ui.sub.header publish_interval
+                    div.ui.input.left.icon
+                        i.calendar.icon
+                        input(
+                            type="text"
+                            name="publish_interval"
+                            placeholder="????-??-??"
+                            @click="showRangePicker"
+                            v-model="article.publish_interval"
+                        )
+                div.field( v-show="settings.bidding_interval" )
+                    h4.ui.sub.header bidding_interval
+                    div.ui.input.left.icon
+                        i.calendar.icon
+                        input(
+                            type="text"
+                            name="bidding_interval"
+                            placeholder="????-??-??"
+                            @click="showRangePicker"
+                            v-model="article.bidding_interval"
+                        )
 
             div.two.fields
                 div.field
@@ -136,14 +146,13 @@
 </template>
 
 <script lang="coffee">
-    DateInterval = require './DateInterval.vue'
     ImageDropzone = require './ImageDropzone.vue'
 
     module.exports =
 
         name: 'ArticleForm'
 
-        components: { DateInterval, ImageDropzone },
+        components: { ImageDropzone },
 
         props: [ 'original', 'categories', 'contacts' ],
 
@@ -176,7 +185,20 @@
 
                 bus.$emit( 'article_form_preview', this.article );
 
+            showRangePicker: (e) ->
+                article = @article
+                key = e.target.name
+                range = e.target.value or ''
 
+                bus.$emit('show_message', {
+                    title:'Välj datum',
+                    message:'',
+                    start: range.split('|')[0],
+                    end: range.split('|')[1]
+                    type:'calendar',
+                    cb: ( start, end ) =>
+                        article[key] = start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
+                });
 
         created: ->
 
@@ -191,14 +213,6 @@
             # Check if using bidding_interval
             if (this.article.bidding_interval!='')
                 this.settings.bidding_interval = true;
-
-            # Listen for changes in DateInterval
-            bus.$on('publish_interval_form_changed', (id,new_value) =>
-                this.article.publish_interval = new_value;
-            );
-            bus.$on('bidding_interval_form_changed', (id,new_value) =>
-                this.article.bidding_interval = new_value;
-            );
 
             # Listen for changes in Categories
             bus.$on('categories_changed', (id,new_value) =>
@@ -223,7 +237,8 @@
             )
 
         beforeDestroy: ->
-            bus.$off('publish_interval_form_changed');
-            bus.$off('bidding_interval_form_changed');
+            bus.$off('contacts_changed');
+            bus.$off('image_added');
+            bus.$off('image_removed');
 
 </script>
