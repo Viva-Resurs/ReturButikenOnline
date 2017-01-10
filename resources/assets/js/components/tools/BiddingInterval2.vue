@@ -17,10 +17,6 @@
     module.exports =
         name: 'BiddingInterval2'
         props: [ 'item' ]
-        computed:
-            biddingID: ->
-                return 'bidding_' + @item.id
-
         methods:
             displayInterval: (interval) ->
                 if interval.indexOf '|' < 0
@@ -41,9 +37,7 @@
                 return moment().isBefore interval.split('|')[1]
 
             showRangePicker: ->
-                id = @biddingID
                 item = @item
-
                 bus.$emit('show_message', {
                     title:'Välj datum',
                     message:'',
@@ -52,10 +46,9 @@
                     type:'calendar',
                     cb: ( start, end ) =>
                         bus.$emit(
-                            this.getAttribute('name')+'_changed',
-                            this.getAttribute('id'),
+                            'bidding_interval_changed',
+                            item.id,
                             start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
                         );
-                        console.log start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
                 });
 </script>
