@@ -118,15 +118,16 @@
 
             bus.$on 'publish_interval_changed', (id,new_value) =>
                 for item in this.items
-                    if Number item.id == Number id
+                    if Number(item.id) == Number(id)
                         Vue.set item, 'publish_interval', new_value
-                        bus.$emit 'item_changed', item
+                        bus.$emit 'articles_item_changed', item
 
             bus.$on 'bidding_interval_changed', (id,new_value) =>
+
                 for item in this.items
-                    if Number item.id == Number id
+                    if Number(item.id) == Number(id)
                         Vue.set item, 'bidding_interval', new_value
-                        bus.$emit 'item_changed', item
+                        bus.$emit 'articles_item_changed', item
 
         beforeDestroy: ->
             bus.$off 'articles_item_edit'
