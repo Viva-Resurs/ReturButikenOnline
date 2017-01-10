@@ -73,7 +73,7 @@
                 @preview = false
 
             updateArticle: (article) ->
-                @$http.put( '/articles/'+article.id, article ).then(
+                @$http.put( '/api/articles/'+article.id, article ).then(
                     (response) =>
                         @$router.push path: '/articles'
 
