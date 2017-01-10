@@ -24,6 +24,7 @@
     Vue.directive 'focus', require './directives/focus.vue'
     Vue.directive 'item', require './directives/item.vue'
     Vue.directive 'image', require './directives/image.vue'
+    Vue.directive 'calendar', require './directives/calendar.vue'
 
     # Export the root-instance options
     module.exports =

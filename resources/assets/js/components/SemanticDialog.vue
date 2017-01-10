@@ -1,24 +1,24 @@
 <template lang="pug">
     div.ui.basic.small.modal.event-modal
         div.content
-            div( v-if = "type == 'calendar'" )
+            div( v-show="type=='calendar'" )
                 div.ui.form
                     div.two.stackable.fields
                         div.field
                             h4.ui.sub.header Start date
-                            div.ui.small.calendar#interval_start
+                            div.ui.small.calendar#interval_start( v-calendar="" )
                                 div.ui.input.left.icon
                                     i.calendar.icon
                                     input( type="text" placeholder="Start" )
 
                         div.field
                             h4.ui.sub.header End date
-                            div.ui.calendar#interval_end
+                            div.ui.calendar#interval_end( v-calendar="" )
                                 div.ui.input.left.icon
                                     i.calendar.icon
                                     input( type="text" placeholder="End" )
 
-            div( v-else )
+            div( v-show="type!='calendar'" )
                 div(":class"="[selected_action.class]")
                     i(":class"="[selected_action.icon]")
                     div.class.content
@@ -109,25 +109,14 @@
 
                         })
                     when "calendar"
-                        if $('#interval_start').data("moduleCalendar") == undefined
-                            $('#interval_start').calendar({
-                                debug: true
-                                ampm: false
-                                inline: true
-                                endCalendar: $('#interval_end')
-                            })
+                        @selected_action = @actions['calendar']
 
-                        if $('#interval_end').data("moduleCalendar") == undefined
-                            $('#interval_end').calendar
-                                ampm: false
-                                inline: true
-                                startCalendar: $('#interval_start')
-
-                        $('#interval_start').calendar('set date',message.start)
-                        $('#interval_end').calendar('set date',message.end)
+                        $('#interval_start').find('input').val(message.start)
+                        #$('#interval_start').calendar('set date',message.start)
+                        #$('#interval_end').calendar('set date',message.end)
 
                         $('.modal').modal({
-                            closable: false
+                            closable: true
                             onApprove: ->
                                 return message.cb( new moment( $('#interval_start').calendar('get date') ), new moment( $('#interval_end').calendar('get date') ) )
                         })
