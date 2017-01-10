@@ -1,32 +1,28 @@
 <template lang="pug">
     div.ui.basic.small.modal.event-modal
         div.content
-            div( v-show="type=='calendar'" )
-                div.ui.form
-                    div.two.stackable.fields
-                        div.field
-                            h4.ui.sub.header Start date
-                            div.ui.small.calendar#interval_start( v-calendar="" )
-                                div.ui.input.left.icon
-                                    i.calendar.icon
-                                    input( type="text" placeholder="Start" )
-
-                        div.field
-                            h4.ui.sub.header End date
-                            div.ui.calendar#interval_end( v-calendar="" )
-                                div.ui.input.left.icon
-                                    i.calendar.icon
-                                    input( type="text" placeholder="End" )
-
-            div( v-show="type!='calendar'" )
-                div(":class"="[selected_action.class]")
-                    i(":class"="[selected_action.icon]")
-                    div.class.content
-                        div.header {{ title }}
+            div(":class"="[selected_action.class]").attached
+                i(":class"="[selected_action.icon]")
+                div.class.content
+                    div.header
+                        h3 {{ title }}
                         p {{ message }}
-
-            div.ui.grid.component.padded( style="position: relative; top: -11px;" )
-                div.center.aligned.column.actions( style="background: rgba(0,0,0,0.1);")
+                    div.ui.form( v-show="type=='calendar'" )
+                        div.two.stackable.fields
+                            div.field
+                                h4.ui.sub.header Start date
+                                div.ui.calendar#interval_start( v-calendar="" )
+                                    div.ui.input.left.icon.bottom.attached
+                                        i.calendar.icon
+                                        input( type="text" placeholder="Start" )
+                            div.field
+                                h4.ui.sub.header End date
+                                div.ui.calendar#interval_end( v-calendar="" )
+                                    div.ui.input.left.icon
+                                        i.calendar.icon
+                                        input( type="text" placeholder="End" )
+            div.ui.grid.segment.bottom.attached
+                div.center.aligned.column.actions
                     div(v-for="button in selected_action.buttons"
                     ":class"="[button.class]") {{button.label}}
 </template>
@@ -39,49 +35,49 @@
 
             actions:
                 default:
-                    class: 'ui info icon message'
+                    class: 'ui icon message'
                     icon: 'huge center aligned circular info icon'
                     buttons: [
                         {
-                            class: 'ui deny inverted blue button',
+                            class: 'ui deny primary button',
                             label: 'Close'
                         },
                     ]
 
                 error:
-                    class: 'ui warning icon message'
+                    class: 'ui negative icon message'
                     icon: 'huge center aligned circular red warning icon'
                     buttons: [
                         {
-                            class: 'ui deny inverted red button',
+                            class: 'ui deny red button',
                             label: 'Close'
                         },
                     ]
 
                 confirm:
-                    class: 'ui positive icon message'
-                    icon: 'huge center aligned circular blue question icon'
+                    class: 'ui warning icon message raised'
+                    icon: 'huge center aligned circular warning question icon'
                     buttons: [
                         {
-                            class: 'ui deny inverted red button',
+                            class: 'ui deny button',
                             label: 'Abort'
                         },
                         {
-                            class: 'ui approve inverted green button',
+                            class: 'ui approve primary button',
                             label: 'Confirm'
                         },
                     ]
 
                 calendar:
-                    class: ''
+                    class: 'ui message'
                     icon: ''
                     buttons: [
                         {
-                            class: 'ui deny inverted red button',
+                            class: 'ui deny button',
                             label: 'Abort'
                         },
                         {
-                            class: 'ui approve inverted green button',
+                            class: 'ui approve primary button',
                             label: 'Confirm'
                         },
                     ]
@@ -103,6 +99,7 @@
                     when "confirm"
                         @selected_action = @actions['confirm']
                         $('.modal').modal({
+                            observeChanges: true
                             closable: false
                             onApprove: ->
                                 return message.cb();
@@ -111,13 +108,13 @@
                     when "calendar"
                         @selected_action = @actions['calendar']
 
-                        #$('#interval_start').find('input').val(message.start)
                         $('#interval_start').calendar('set date',message.start)
                         $('#interval_start').calendar('set mode','day')
                         $('#interval_end').calendar('set date',message.end)
                         $('#interval_end').calendar('set mode','day')
 
                         $('.modal').modal({
+                            observeChanges: true
                             closable: true
                             onApprove: ->
                                 return message.cb( new moment( $('#interval_start').calendar('get date') ), new moment( $('#interval_end').calendar('get date') ) )
@@ -127,7 +124,7 @@
                     else
                         @selected_action = @actions['default']
 
-                $('.modal').modal('toggle');
+                $('.modal').modal('show');
 
         mounted: ->
             bus.$on('show_message', (message) => @handleMessage(message) );
