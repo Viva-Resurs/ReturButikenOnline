@@ -111,9 +111,11 @@
                     when "calendar"
                         @selected_action = @actions['calendar']
 
-                        $('#interval_start').find('input').val(message.start)
-                        #$('#interval_start').calendar('set date',message.start)
-                        #$('#interval_end').calendar('set date',message.end)
+                        #$('#interval_start').find('input').val(message.start)
+                        $('#interval_start').calendar('set date',message.start)
+                        $('#interval_start').calendar('set mode','day')
+                        $('#interval_end').calendar('set date',message.end)
+                        $('#interval_end').calendar('set mode','day')
 
                         $('.modal').modal({
                             closable: true
@@ -121,10 +123,11 @@
                                 return message.cb( new moment( $('#interval_start').calendar('get date') ), new moment( $('#interval_end').calendar('get date') ) )
                         })
 
+
                     else
                         @selected_action = @actions['default']
 
-                $('.modal').modal('show');
+                $('.modal').modal('toggle');
 
         mounted: ->
             bus.$on('show_message', (message) => @handleMessage(message) );
