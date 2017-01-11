@@ -41,6 +41,14 @@
                 )
 
             div.field
+                label Pris:
+                input#price(
+                    type="number"
+                    v-model="article.price"
+                    placeholder="Ange ditt pris här"
+                )
+
+            div.field
                 label Bilder:
                 image-dropzone( ":images"="article.selected_images" )
 
