@@ -11,9 +11,11 @@ class Article extends Model
     protected $fillable = [
         'name',
         'desc',
+        'price',
         'public',
         'publish_interval',
-        'bidding_interval'
+        'bidding_interval',
+
     ];
 
     public function contacts()
