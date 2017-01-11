@@ -30,6 +30,7 @@
             article:
                 name: ''
                 desc: ''
+                price: ''
                 public: false
                 publish_interval: ''
                 bidding_interval: ''
