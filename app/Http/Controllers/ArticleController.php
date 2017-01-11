@@ -31,6 +31,7 @@ class ArticleController extends Controller
                     'id' => $article->id,
                     'name' => $article->name,
                     'desc' => $article->desc,
+                    'price' => $article->price,
                     'updated_at' => $article->updated_at->format('Y-m-d h:m:s'),
                     'publish_interval' => $article->publish_interval,
                     'bidding_interval' => $article->bidding_interval,
@@ -61,6 +62,7 @@ class ArticleController extends Controller
             'id' => $article->id,
             'name' => $article->name,
             'desc' => $article->desc,
+            'price' => $article->price,
             'updated_at' => $article->updated_at,
             'publish_interval' => $article->publish_interval,
             'bidding_interval' => $article->bidding_interval,
@@ -106,6 +108,7 @@ class ArticleController extends Controller
         $article = new Article([
             'name' => ($request->has('name')) ? $request['name'] : '',
             'desc' => ($request->has('desc')) ? $request['desc'] : '',
+            'price' => ($request->has('price')) ? $request['price'] : '',
             'public' => $request['public'] || false,
             'publish_interval' => ($request->has('publish_interval')) ? $request['publish_interval'] : '',
             'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : '',
@@ -165,6 +168,9 @@ class ArticleController extends Controller
 
         if ($request->has('desc') && $request['desc']!='')
             $article->desc = $request['desc'];
+
+        if ($request->has('price') && $request['price']!='')
+            $article->price = $request['price'];
 
         $article->public = $request['public'] || 0;
 
@@ -269,7 +275,7 @@ class ArticleController extends Controller
     public function showByArticleNr($artnr){
         $section_id = substr($artnr,0,3);
         $article_id = substr($artnr,3,3);
-        
+
         return $this->show($article_id);
     }
 }
