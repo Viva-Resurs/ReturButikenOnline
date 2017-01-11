@@ -23,6 +23,11 @@
                         div.sub.header Artikelnummer: XXXXXXXXXXXXXX
                     div.description {{ article.desc }}
 
+                    div.ui.basic.segment.right.aligned.right.floated
+                        h3 Pris : {{article.price}} kr
+                    br
+                    br
+                    br
 
                 div.ui.top.attached.segment
                     div.top.attached.ui.secondary.label Övrig information
@@ -72,6 +77,7 @@
 
                                             p Email
                                             b {{ orig_contact.email }}
+
 
             div.extra.content( v-if="mode!='show'" )
                 div.ui.right.floated.button.primary(
