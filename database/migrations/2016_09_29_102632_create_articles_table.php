@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string('name');
             $table->string('desc');
             $table->integer('public');
-
+            $table->string('price');
             $table->string('publish_interval');
             $table->string('bidding_interval');
 
