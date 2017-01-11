@@ -22,6 +22,11 @@
                         | Beskrivning
                     p {{ item.desc }}
 
+                div.ui.vertical.segment.basic.right.floated.center.aligned
+                    h4.ui.sub.header
+                        | Pris
+                    p {{ item.price }} kr
+
                 div( v-if="item.selected_images.length>0" ).ui.vertical.segment.basic
                     h4.ui.sub.header
                         | Bilder
