@@ -53,6 +53,7 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->words($nb = 4, $asText = true),
         'desc' => $faker->paragraph,
+        'price' => $faker->numberBetween($min = 50, $max = 1000),
         'public' => $faker->numberBetween($min = 0, $max = 1),
         'publish_interval' => $publish_interval,
         'bidding_interval' => $bidding_interval
