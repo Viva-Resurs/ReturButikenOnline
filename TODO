@@ -7,3 +7,13 @@ TODO: Profile page
 TODO: Dashboard / Start
 
 TODO: Help page
+
+TODO : Preview button in article list for each article
+
+TODO : ArticlePreview looks weird on lower resolutions/ devices , needs adjustment
+
+TODO : ArticlePreview : Should be able to hide detail information and only show article
+
+TODO : ArticlePreview : Route to show a preview of a article , for example : /articles/show/1
+
+TODO : After adding images, multiple modals are displayed when opening calendar (bidding interval, etc)
