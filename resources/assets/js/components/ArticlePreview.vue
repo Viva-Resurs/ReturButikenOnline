@@ -45,21 +45,21 @@
                                         span( v-else="" )
                                             | {{ orig_category.name }}
 
-                    div.ui.basic.segment( v-if="article.publish_interval" )
+                    div.ui.basic.segment( v-if="article.publish_interval && mode!='show'" )
                         h4.ui.sub.header Publicerings intervall
                         i.ui.icon.time
                         span  {{ article.publish_interval }}
 
-                    div.ui.basic.segment( v-if="article.bidding_interval" )
+                    div.ui.basic.segment( v-if="article.bidding_interval && mode!='show'" )
                         h4.ui.sub.header Budgivningsintervall
                         i.ui.icon.time
                         span  {{ article.bidding_interval }}
 
-                    div.ui.basic.segment(v-if="article.public")
+                    div.ui.basic.segment(v-if="article.public && mode!='show'")
                         h4.ui.sub.header Område
                         i.ui.icon.green.world
                         | Publicerad externt
-                    div.ui.basic.segment(v-if="!article.public")
+                    div.ui.basic.segment(v-if="!article.public && mode!='show'")
                         h4.ui.sub.header Område
                         i.ui.icon.red.industry
                         | Publicerad på kommunens intranät
@@ -99,24 +99,20 @@
 </template>
 
 <script lang="coffee">
-
     module.exports =
-
         name: 'Preview'
-
-        props: [ 'mode', 'article', 'categories', 'contacts' ],
-
+        props: [ 'mode', 'article', 'categories', 'contacts' ]
         data: ->
-            selected_image: false;
+            selected_image: false
 
         methods:
             attemptPublish: ->
-                bus.$emit( 'article_form_update', this.article );
+                bus.$emit( 'article_form_update', this.article )
 
             modifyArticle: ->
-                bus.$emit( 'article_form_modify' );
+                bus.$emit( 'article_form_modify' )
 
-            setSelectedImage: ( image ) ->
+            setSelectedImage: (image) ->
                 @selected_image = image
                 $('.preview_header').css('background-image',"url('/"+image.path+"')")
         mounted: ->
