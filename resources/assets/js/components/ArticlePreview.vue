@@ -6,21 +6,22 @@
         div.ui.fluid.raised.card( v-if="article!=-1" )
             div.content
                 div.ui.basic.segment
-                    div.center.aligned.preview_header( v-show="selected_image"  )
+                    div.center.aligned.tertiary.inverted.ui.segment.attached.preview_header( v-show="selected_image"  )
                         //img.ui.fluid.centered.image( ":src"="'/'+selected_image.path" )
-                    br
+                    
 
-                    div.ui.tiny.center.aligned.images
-                        img.ui.image(
-                            ":src"="'/'+image.thumb_path"
-                            v-for="image in article.selected_images"
-                            @click="setSelectedImage(image)"
-                            ":class" = "(image.path == selected_image.path) ? 'active' : 'disabled' ")
+                    div.ui.basic.segment.bottom.attached
+                        div.ui.tiny.center.aligned.images
+                            img.ui.image(
+                                ":src"="'/'+image.thumb_path"
+                                v-for="image in article.selected_images"
+                                @click="setSelectedImage(image)"
+                                ":class" = "(image.path == selected_image.path) ? 'active' : 'disabled' ")
 
 
                 div.ui.basic.segment
                     h2.ui.header {{ article.name }}
-                        div.sub.header Artikelnummer: XXXXXXXXXXXXXX
+                        div.sub.header Artikelnr: {{article.id}}
                     div.description {{ article.desc }}
 
                     div.ui.basic.segment.right.aligned.right.floated
