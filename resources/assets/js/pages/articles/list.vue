@@ -6,6 +6,7 @@
         ":toolsRow"=`[
               $options.components.PublishInterval,
               $options.components.BiddingInterval,
+              $options.components.Preview,
               $options.components.Edit,
               $options.components.Remove
             ]`
@@ -21,6 +22,7 @@
             ArticleCard: require '../../components/ArticleCard.vue'
             PublishInterval: require '../../components/tools/PublishInterval.vue'
             BiddingInterval: require '../../components/tools/BiddingInterval.vue'
+            Preview: require '../../components/tools/Preview.vue'
             Remove: require '../../components/tools/Remove.vue'
             Edit: require '../../components/tools/Edit.vue'
 
@@ -96,6 +98,9 @@
                         bus.$emit 'success', 'updated_article'
                     (response) => bus.$emit 'error', response.data
                 )
+            
+            previewArticle: (article) ->             
+                @$router.push('/'+article.id);              
 
             getArticles: () ->
                 @$root.loading = true
@@ -112,6 +117,7 @@
             @getArticles()
 
             bus.$on 'articles_item_remove', (item) => @attemptRemove item
+            bus.$on 'articles_item_preview', (item) => @previewArticle item
             bus.$on 'articles_item_changed', (payload) => @attemptUpdate payload
             bus.$on 'articles_item_edit', (item) =>
                 @$router.push path: '/articles/'+item.id
@@ -133,6 +139,7 @@
             bus.$off 'articles_item_edit'
             bus.$off 'articles_item_remove'
             bus.$off 'articles_item_changed'
+            bus.$off 'articles_item_preview'
             bus.$off 'publish_interval_changed'
             bus.$off 'bidding_interval_changed'
 </script>
