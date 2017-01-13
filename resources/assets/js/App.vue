@@ -26,6 +26,9 @@
     Vue.directive 'image', require './directives/image.vue'
     Vue.directive 'calendar', require './directives/calendar.vue'
 
+    # Define global mixins
+    Vue.mixin require './mixins/GoBack.vue'
+
     # Export the root-instance options
     module.exports =
         name: 'App'

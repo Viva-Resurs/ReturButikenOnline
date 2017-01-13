@@ -8,7 +8,7 @@
                 div.ui.basic.segment
                     div.center.aligned.tertiary.inverted.ui.segment.attached.preview_header( v-show="selected_image"  )
                         //img.ui.fluid.centered.image( ":src"="'/'+selected_image.path" )
-                    
+
 
                     div.ui.basic.segment.bottom.attached
                         div.ui.tiny.center.aligned.images
@@ -88,6 +88,12 @@
                 div.ui.right.floated.button.red(
                     @click="modifyArticle"
                 ) Modify
+
+            div.extra.content( v-if="mode=='show'" )
+                div.ui.right.floated.button.secondary(
+                    @click="goBack()"
+                ) Back
+
         div( v-if="article==-1" )
             | Artikeln hittades inte
 </template>
