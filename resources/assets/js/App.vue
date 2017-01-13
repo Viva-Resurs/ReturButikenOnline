@@ -25,6 +25,7 @@
     Vue.directive 'item', require './directives/item.vue'
     Vue.directive 'image', require './directives/image.vue'
     Vue.directive 'calendar', require './directives/calendar.vue'
+    Vue.directive 'swipe', require './directives/swipe.vue'
 
     # Define global mixins
     Vue.mixin require './mixins/GoBack.vue'

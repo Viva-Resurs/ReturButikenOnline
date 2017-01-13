@@ -3,20 +3,22 @@
 
         div.ui.dividing.header( v-if="mode!='show'" ) Förhandsgranskning
 
-        div.ui.fluid.raised.card( v-if="article!=-1" )
+        div( v-if="article!=-1" ":class"="(mode!='show')?'ui card fluid raised':''" )
             div.content
-                div.ui.basic.segment
-                    div.center.aligned.tertiary.inverted.ui.segment.attached.preview_header( v-show="selected_image"  )
-                        //img.ui.fluid.centered.image( ":src"="'/'+selected_image.path" )
+                div.ui.basic.segment.center.aligned.preview_header( v-show="selected_image" v-swipe="article.selected_images" )
 
-
-                    div.ui.basic.segment.bottom.attached
-                        div.ui.tiny.center.aligned.images
+                div.ui.basic.segment.center.aligned.preview_thumbs
+                    div.ui.buttons
+                        //button.ui.button.icon.black
+                            i.icon.angle.left
+                        div.ui.tiny.left.aligned.images
                             img.ui.image(
                                 ":src"="'/'+image.thumb_path"
                                 v-for="image in article.selected_images"
                                 @click="setSelectedImage(image)"
                                 ":class" = "(image.path == selected_image.path) ? 'active' : 'disabled' ")
+                        //button.ui.button.icon.black.right.floated
+                            i.icon.angle.right
 
 
                 div.ui.basic.segment
@@ -89,8 +91,10 @@
                     @click="modifyArticle"
                 ) Modify
 
-            div.extra.content( v-if="mode=='show'" )
-                div.ui.right.floated.button.secondary(
+        div.ui.container( v-if="mode=='show'" )
+            div.ui.hidden.divider
+            div.ui.container.right.aligned
+                div.ui.button.secondary(
                     @click="goBack()"
                 ) Back
 
@@ -124,12 +128,24 @@
 <style lang="scss">
     #preview {
         .preview_header {
+            background-color: rgba(0,0,0,0.4);
             height: 400px;
             width: 100%;
+            padding: 0px;
             background-image:url('');
             background-size: contain;
             background-repeat:no-repeat;
             background-position:center;
+            margin-bottom: 0px;
+        }
+        .preview_thumbs {
+            margin-top: 0px;
+            background-color: rgba(0,0,0,0.1);
+        }
+        .ui.images {
+            img.image {
+                //margin: 0px;
+            }
         }
 
         img.disabled {
