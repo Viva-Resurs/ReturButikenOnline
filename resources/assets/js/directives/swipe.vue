@@ -2,47 +2,39 @@
     module.exports =
         inserted: (el,binding) ->
 
-            ###
-                TODO: Update width/height on resize
-            ###
+            # Setup
+            height = 0
+            width = 0
+            active_image = 0
+            images = binding.value
 
-            # Get current width
-            width = Number( $(el).width() )
-            height = Number( $(el).height() )
             $(el).css
                 'overflow-x': 'scroll'
                 'overflow-y': 'hidden'
 
-            # Grab images
-            images = binding.value
-
             # Setup slides-wrapper
             slides = document.createElement 'div'
-            slides.width = width * images.length;
-            slides.style.width = (width * images.length) + 'px';
             slides.style.padding = '0px';
-            slides.height = height;
+            slides.refs = []
 
             # Create slides from images
             for image in images
                 slide = document.createElement 'div'
-
-                slide.style.height = height + 'px';
-                slide.height = height
-
-                slide.style.width = width + 'px';
-                slide.width = width;
                 slide.style.cssFloat = 'left';
                 slide.style.background = '#ff0'
                 slide.style.backgroundImage = "url('" + image.path + "')"
                 slide.style.backgroundSize = 'cover'
-
+                slides.refs.push(slide) # Save reference
                 slides.appendChild slide # Add slide into wrapper
-
-            active_image = 0
 
             # Insert slides
             $(el).append(slides)
+
+
+
+
+
+
 
             checkActive = ->
                 #total = slides.width - width
@@ -105,5 +97,56 @@
             $(el).on( "mousemove", handleMove )
             bus.$on 'snapTo', (index) =>
                 snapTo index
+
+
+
+
+
+
+
+            timer = false
+            setDimensions = ->
+                if (timer)
+                    clearTimeout(timer)
+                    timer = false
+                if (!timer)
+                    timer = setTimeout () ->
+                        console.log 'resized'
+                        # Get current height - padding and take up half
+                        height = (window.innerHeight-60)/2
+                        $(el).height(height)
+
+                        width = Number( $(el).width() )
+
+                        slides.width = width * images.length;
+                        slides.style.width = (width * images.length) + 'px';
+                        slides.height = height;
+                        for slide in slides.refs
+                            slide.style.height = height + 'px';
+                            slide.height = height
+
+                            slide.style.width = width + 'px';
+                            slide.width = width;
+
+                        snapTo()
+                        timer = false
+                    , 200
+
+            window.addEventListener("resize", setDimensions);
+            setDimensions()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </script>

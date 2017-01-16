@@ -125,7 +125,7 @@
     #preview {
         .preview_header {
             background-color: rgba(0,0,0,0.4);
-            height: 400px;
+
             width: 100%;
             padding: 0px;
             background-image:url('');
