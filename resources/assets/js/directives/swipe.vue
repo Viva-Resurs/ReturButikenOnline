@@ -6,7 +6,6 @@
                 TODO: Snap to nearest image
                 TODO: Update width/height on resize
                 TODO: ScrollTo a specifyed image
-                TODO: Prevent 'drag-and-drop' actions (or use it instead of mousemove?)
             ###
 
             # Get current width
@@ -63,11 +62,14 @@
 
             # Handle pointer-events
             handleDown = (e) ->
+                e.preventDefault()
                 setPosition e.clientX, e.clientY
                 active = true
             handleUp   = (e) ->
+                e.preventDefault()
                 active = false
             handleMove = (e) ->
+                e.preventDefault()
                 if active == false
                     return
                 delta =
