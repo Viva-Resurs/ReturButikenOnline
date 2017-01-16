@@ -2,10 +2,6 @@
     module.exports =
         inserted: (el,binding) ->
 
-            ###
-                TODO: Transitions
-            ###
-
             # Setup
             height = 0
             width = 0
@@ -56,8 +52,9 @@
             snapTo = (index) ->
                 if typeof index == 'number'
                     active_image = index
-                el.scrollLeft = active_image * width
-                checkActive()
+                $(el).animate
+                    scrollLeft: active_image * width
+                , 200, checkActive
 
             # Pointer position
             active = false
