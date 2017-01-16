@@ -12,9 +12,8 @@
             active_image = 0
             images = binding.value
 
-            $(el).css
-                'overflow-x': 'scroll'
-                'overflow-y': 'hidden'
+            el.style.overflowX = 'scroll'
+            el.style.overflorY = 'hidden'
 
             # Setup slides-wrapper
             slides = document.createElement 'div'
@@ -34,21 +33,15 @@
                 slide.image.src = image.path
                 slide.style.backgroundImage = "url('" + image.path + "')"
                 slide.style.backgroundSize = 'cover'
-                slides.refs.push(slide) # Save reference
-                slides.appendChild slide # Add slide into wrapper
+                slides.refs.push(slide) # Save reference in wrapper
+                slides.appendChild slide # Add slide element into wrapper
 
             # Insert slides
-            $(el).append(slides)
+            el.appendChild(slides)
 
-
-
-
-
-
-
+            # Set active image by determine position in wrapper
             checkActive = ->
-                #total = slides.width - width
-                pos = $(el).scrollLeft()+width/2
+                pos = el.scrollLeft + width/2
                 active_image = Math.floor pos/width
                 for image, index in images
                     Vue.set image, 'selected', false
@@ -57,16 +50,14 @@
 
             # Swipe/scroll in wrapper
             swipeTo = (offset) ->
-                $(el).scrollLeft( $(el).scrollLeft()+offset )
+                el.scrollLeft = el.scrollLeft + offset
                 checkActive()
 
             snapTo = (index) ->
                 if typeof index == 'number'
                     active_image = index
-                $(el).scrollLeft( active_image*width )
+                el.scrollLeft = active_image * width
                 checkActive()
-
-
 
             # Pointer position
             active = false
@@ -97,23 +88,19 @@
                     x: position.x - e.clientX
                     y: position.y - e.clientY
 
-                swipeTo delta.x*2
+                swipeTo delta.x * 2
                 setPosition e.clientX, e.clientY
 
-            # Register event listeners
+            # Interact with pointer
             el.addEventListener "mousedown", handleDown
             el.addEventListener "mouseup", handleUp
             el.addEventListener "mouseleave", handleUp
             el.addEventListener "mousemove", handleMove
 
+            # Interact programmatically
             bus.$on 'snapTo', (index) => snapTo index
 
-
-
-
-
-
-
+            # Resize wrapper and slides
             timer = false
             setDimensions = ->
                 # Give browser some time in the event storm
@@ -128,7 +115,7 @@
                         # Get current width & set
                         width = el.width = el.offsetWidth
 
-                        # Resize slides
+                        # Resize wrapper
                         slides.style.width = (width * images.length) + 'px';
                         for slide in slides.refs
                             # Resize slide
@@ -162,22 +149,7 @@
                         snapTo()
                         timer = false
                     , 200
-
+            # When browser is resized
             window.addEventListener "resize", setDimensions
-            setDimensions()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            setDimensions() # Resize once
 </script>
