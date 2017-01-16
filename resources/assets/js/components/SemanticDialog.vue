@@ -21,7 +21,11 @@
                                     div.ui.input.left.icon
                                         i.calendar.icon
                                         input( type="text" placeholder="End" )
-            div.ui.grid.segment.bottom.attached
+                    div.ui.fluid.basic.segment( v-show="type=='image'" )                        
+                        div.image.content(v-if="image")
+                            img.ui.fluid.rounded.image( ":src"="'/'+image.path" ":id"="image.id" )
+
+            div.ui.grid.segment.bottom.inverted.attached
                 div.center.aligned.column.actions
                     div(v-for="button in selected_action.buttons"
                     ":class"="[button.class]") {{button.label}}
@@ -82,9 +86,20 @@
                         },
                     ]
 
+                image:
+                    class: 'ui floated inverted basic segment'
+                    icon: ''
+                    buttons: [              
+                        {
+                            class: 'ui approve primary button',
+                            label: 'Ok'
+                        },
+                    ]
+
             title: 'Empty'
             message: 'Empty'
             type: 'Empty'
+            image: 'Empty'
 
         methods:
             handleMessage: (message) ->
@@ -118,6 +133,14 @@
                             closable: true
                             onApprove: ->
                                 return message.cb( new moment( $('#interval_start').calendar('get date') ), new moment( $('#interval_end').calendar('get date') ) )
+                        });
+
+                    when "image"
+                        @selected_action = @actions['image']
+                        @image = message.image
+                        $('.modal').modal({
+                            observeChanges: true
+                            closable: true               
                         })
 
 
