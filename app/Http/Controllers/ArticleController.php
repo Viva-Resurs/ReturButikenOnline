@@ -91,6 +91,7 @@ class ArticleController extends Controller
             array_push($result['selected_images'], [
                 'id' => $image->id,
                 'name' => $image->name,
+                'original_name' => $image->original_name,
                 'path' => $image->path,
                 'thumb_path' => $image->thumb_path
             ]);

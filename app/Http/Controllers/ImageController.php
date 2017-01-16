@@ -23,7 +23,20 @@ class ImageController extends Controller
         if (!$user || !$user->hasRole('admin'))
             abort(401,'Not allowed to list images');
 
-        return Image::all();
+        $result = [];
+        foreach (Image::all() as $image){
+            array_push($result,[
+                'id' => $image->id,
+                'name' => $image->name,
+                'original_name' => $image->original_name,
+                'path' => $image->path,
+                'thumb_path' => $image->thumb_path,
+                'created_at' => $image->created_at->format('Y-m-d h:m:s'),
+                'updated_at' => $image->updated_at->format('Y-m-d h:m:s')
+            ]);
+        }
+
+        return $result;
     }
 
     public function store(Request $request){
