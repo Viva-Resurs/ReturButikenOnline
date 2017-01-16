@@ -2,6 +2,12 @@
     module.exports =
         inserted: (el,binding) ->
 
+            ###
+                TODO: Fix dimensions
+                TODO: Transitions
+                TODO: Start and End padding (when images are below 100% in width)
+            ###
+
             # Setup
             height = 0
             width = 0
