@@ -3,9 +3,7 @@
         inserted: (el,binding) ->
 
             ###
-                TODO: Snap to nearest image
                 TODO: Update width/height on resize
-                TODO: ScrollTo a specifyed image
             ###
 
             # Get current width
@@ -41,12 +39,32 @@
 
                 slides.appendChild slide # Add slide into wrapper
 
+            active_image = 0
+
             # Insert slides
             $(el).append(slides)
+
+            checkActive = ->
+                #total = slides.width - width
+                pos = $(el).scrollLeft()+width/2
+                active_image = Math.floor pos/width
+                for image, index in images
+                    Vue.set image, 'selected', false
+                    if index == active_image
+                        Vue.set image, 'selected', true
 
             # Swipe/scroll in wrapper
             swipeTo = (offset) ->
                 $(el).scrollLeft( $(el).scrollLeft()+offset )
+                checkActive()
+
+            snapTo = (index) ->
+                if typeof index == 'number'
+                    active_image = index
+                $(el).scrollLeft( active_image*width )
+                checkActive()
+
+
 
             # Pointer position
             active = false
@@ -67,6 +85,7 @@
                 active = true
             handleUp   = (e) ->
                 e.preventDefault()
+                snapTo()
                 active = false
             handleMove = (e) ->
                 e.preventDefault()
@@ -84,5 +103,7 @@
             $(el).on( "mouseup", handleUp )
             $(el).on( "mouseleave", handleUp )
             $(el).on( "mousemove", handleMove )
+            bus.$on 'snapTo', (index) =>
+                snapTo index
 
 </script>

@@ -5,7 +5,7 @@
 
         div( v-if="article!=-1" ":class"="(mode!='show')?'ui card fluid raised':''" )
             div.content
-                div.ui.basic.segment.center.aligned.preview_header( v-show="selected_image" v-swipe="article.selected_images" )
+                div.ui.basic.segment.center.aligned.preview_header( v-swipe="article.selected_images" )
 
                 div.ui.basic.segment.center.aligned.preview_thumbs
                     div.ui.buttons
@@ -14,9 +14,9 @@
                         div.ui.tiny.left.aligned.images
                             img.ui.image(
                                 ":src"="'/'+image.thumb_path"
-                                v-for="image in article.selected_images"
-                                @click="setSelectedImage(image)"
-                                ":class" = "(image.path == selected_image.path) ? 'active' : 'disabled' ")
+                                v-for="(image, index) in article.selected_images"
+                                @click="setActiveImage(index)"
+                                ":class" = "(image.selected) ? 'active' : 'disabled' ")
                         //button.ui.button.icon.black.right.floated
                             i.icon.angle.right
 
@@ -106,8 +106,6 @@
     module.exports =
         name: 'Preview'
         props: [ 'mode', 'article', 'categories', 'contacts' ]
-        data: ->
-            selected_image: false
 
         methods:
             attemptPublish: ->
@@ -116,12 +114,10 @@
             modifyArticle: ->
                 bus.$emit( 'article_form_modify' )
 
-            setSelectedImage: (image) ->
-                @selected_image = image
-                $('.preview_header').css('background-image',"url('/"+image.path+"')")
+            setActiveImage: (index) ->
+                bus.$emit('snapTo', index );
+
         mounted: ->
-            if @article.selected_images and @article.selected_images.length > 0
-                @setSelectedImage @article.selected_images[0]
             $('body').scrollTop(0)
 </script>
 
