@@ -3,9 +3,7 @@
         inserted: (el,binding) ->
 
             ###
-                TODO: Fix dimensions
                 TODO: Transitions
-                TODO: Start and End padding (when images are below 100% in width)
             ###
 
             # Setup
@@ -27,7 +25,13 @@
             for image in images
                 slide = document.createElement 'div'
                 slide.style.cssFloat = 'left';
-                slide.style.background = '#ff0'
+                slide.style.backgroundRepeat = 'no-repeat'
+                slide.image = document.createElement 'img'
+                slide.image.onload = ->
+                    # Save original size for later calculations
+                    this.originalHeight = slide.image.height
+                    this.originalWidth = slide.image.width
+                slide.image.src = image.path
                 slide.style.backgroundImage = "url('" + image.path + "')"
                 slide.style.backgroundSize = 'cover'
                 slides.refs.push(slide) # Save reference
@@ -96,13 +100,13 @@
                 swipeTo delta.x*2
                 setPosition e.clientX, e.clientY
 
-            # Register
-            $(el).on( "mousedown", handleDown )
-            $(el).on( "mouseup", handleUp )
-            $(el).on( "mouseleave", handleUp )
-            $(el).on( "mousemove", handleMove )
-            bus.$on 'snapTo', (index) =>
-                snapTo index
+            # Register event listeners
+            el.addEventListener "mousedown", handleDown
+            el.addEventListener "mouseup", handleUp
+            el.addEventListener "mouseleave", handleUp
+            el.addEventListener "mousemove", handleMove
+
+            bus.$on 'snapTo', (index) => snapTo index
 
 
 
@@ -112,33 +116,54 @@
 
             timer = false
             setDimensions = ->
-                if (timer)
-                    clearTimeout(timer)
+                # Give browser some time in the event storm
+                if timer
+                    clearTimeout timer
                     timer = false
-                if (!timer)
-                    timer = setTimeout () ->
-                        console.log 'resized'
-                        # Get current height - padding and take up half
-                        height = (window.innerHeight-60)/2
-                        $(el).height(height)
+                if !timer
+                    timer = setTimeout ->
+                        # Get current height & set
+                        height = el.height = (window.innerHeight-60)/2
 
-                        width = Number( $(el).width() )
+                        # Get current width & set
+                        width = el.width = el.offsetWidth
 
-                        slides.width = width * images.length;
+                        # Resize slides
                         slides.style.width = (width * images.length) + 'px';
-                        slides.height = height;
                         for slide in slides.refs
+                            # Resize slide
                             slide.style.height = height + 'px';
-                            slide.height = height
-
                             slide.style.width = width + 'px';
-                            slide.width = width;
+
+                            # Set initial values for image
+                            w = slide.image.originalWidth
+                            h = slide.image.originalHeight
+                            x = 0
+                            y = 0
+
+                            # Make images fit while keeping aspect reatio
+                            if w > width
+                                h = width/w * h
+                                w = width
+                            if h > height
+                                w = height/h * w
+                                h = height
+
+                            # Add offset to center image
+                            if h < height
+                                y = (height-h)/2
+                            if w < width
+                                x = (width-w)/2
+
+                            # Update css
+                            slide.style.backgroundSize = w + 'px ' + h + 'px'
+                            slide.style.backgroundPosition = x + 'px ' + y + 'px'
 
                         snapTo()
                         timer = false
                     , 200
 
-            window.addEventListener("resize", setDimensions);
+            window.addEventListener "resize", setDimensions
             setDimensions()
 
 
