@@ -8,15 +8,7 @@
                         div.center
                             div.ui.inverted.standard.button.icon( @click="show(image)" )
                                 i.eye.icon
-
-                            div.ui.modal( ":id"="'imageModal'+image.id" )
-                                i.close.icon
-
-                                div.header {{image.name}}
-
-                                div.image.content
-                                    img.ui.fluid.rounded.image( ":src"="'/'+image.path" ":id"="image.id" )
-
+                            
                             div.ui.inverted.red.button.icon( @click="remove(image)" )
                                 i.delete.icon
 
@@ -44,10 +36,8 @@
             buffer: []
 
         methods:
-            show: (image) ->
-                # Show image
-                $('#imageModal'+image.id)
-                        .modal('show');
+            show: (image) ->                
+                bus.$emit('show_message',{title: image.original_name, type: 'image', image: image});
 
             remove: (image) ->
                 bus.$emit('image_removed',image)
