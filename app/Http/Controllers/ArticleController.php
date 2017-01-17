@@ -92,8 +92,8 @@ class ArticleController extends Controller
                 'id' => $image->id,
                 'name' => $image->name,
                 'original_name' => $image->original_name,
-                'path' => $image->path,
-                'thumb_path' => $image->thumb_path
+                'path' => $image->path . '?',
+                'thumb_path' => $image->thumb_path . '?'
             ]);
 
         return $result;
