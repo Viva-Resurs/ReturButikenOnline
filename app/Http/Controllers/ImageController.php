@@ -54,9 +54,14 @@ class ImageController extends Controller
 
             $ext = substr( $file_path, strripos( $file_path, '.' )+1 );
 
-            $thumb_path = 'uploads/_'.$name.'.'.$ext;
+            $thumb_path = 'uploads/_'.$name.'.png';
 
-            $tmb = ImageGenerator::make($file_path)->fit(200)->save($thumb_path);
+            $tmb = ImageGenerator::canvas(200, 200, array(255, 255, 255, 0.0) );
+            $img  = ImageGenerator::make($file_path)->resize(200, 200, function($constraint)
+            {
+               $constraint->aspectRatio();
+            });
+            $tmb->insert($img, 'center')->save($thumb_path);
 
             $exists = Image::where('path',$file_path)->count();
 
