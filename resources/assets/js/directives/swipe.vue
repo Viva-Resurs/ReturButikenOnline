@@ -8,7 +8,7 @@
             active_image = 0
             images = binding.value
 
-            el.style.overflowX = 'scroll'
+            el.style.overflowX = 'hidden'
             el.style.overflorY = 'hidden'
 
             # Setup slides-wrapper
@@ -17,16 +17,20 @@
             slides.refs = []
 
             # Create slides from images
-            for image in images
+            for image, index in images
                 slide = document.createElement 'div'
                 slide.style.cssFloat = 'left';
                 slide.style.backgroundRepeat = 'no-repeat'
-                slide.image = document.createElement 'img'
-                slide.image.onload = ->
+                slide.ready = false
+                img = document.createElement 'img'
+                img.slideID = index
+                img.onload = ->
                     # Save original size for later calculations
-                    this.originalHeight = slide.image.height
-                    this.originalWidth = slide.image.width
-                slide.image.src = image.path
+                    slides.refs[this.slideID].imageHeight = this.height
+                    slides.refs[this.slideID].imageWidth = this.width
+                    slides.refs[this.slideID].ready = true
+                    console.debug "IMG: #{this.slideID}: #{this.width} #{this.height}"
+                img.src = image.path
                 slide.style.backgroundImage = "url('" + image.path + "')"
                 slide.style.backgroundSize = 'cover'
                 slides.refs.push(slide) # Save reference in wrapper
@@ -114,14 +118,14 @@
 
                         # Resize wrapper
                         slides.style.width = (width * images.length) + 'px';
-                        for slide in slides.refs
+                        for slide, index in slides.refs
                             # Resize slide
                             slide.style.height = height + 'px';
                             slide.style.width = width + 'px';
 
                             # Set initial values for image
-                            w = slide.image.originalWidth
-                            h = slide.image.originalHeight
+                            w = slide.imageWidth
+                            h = slide.imageHeight
                             x = 0
                             y = 0
 
@@ -132,6 +136,9 @@
                             if h > height
                                 w = height/h * w
                                 h = height
+                            if w > width
+                                h = width/w * h
+                                w = width
 
                             # Add offset to center image
                             if h < height
@@ -143,10 +150,22 @@
                             slide.style.backgroundSize = w + 'px ' + h + 'px'
                             slide.style.backgroundPosition = x + 'px ' + y + 'px'
 
+                            # Debug
+                            # console.debug "Slide[#{index}] width: #{width} height: #{height} w: #{w} h: #{h}"
+
                         snapTo()
                         timer = false
                     , 200
             # When browser is resized
             window.addEventListener "resize", setDimensions
-            setDimensions() # Resize once
+
+            # Wait while loading slides
+            loader = setInterval ->
+                for slide in slides.refs
+                    if !slide.ready
+                        return false
+                # Ready
+                clearInterval(loader)
+                setDimensions()
+            , 200
 </script>
