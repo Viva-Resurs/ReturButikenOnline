@@ -30,8 +30,8 @@
                     slides.refs[this.slideID].imageWidth = this.width
                     slides.refs[this.slideID].ready = true
                     console.debug "IMG: #{this.slideID}: #{this.width} #{this.height}"
-                img.src = image.path
-                slide.style.backgroundImage = "url('" + image.path + "')"
+                img.src = '/' + image.path
+                slide.style.backgroundImage = "url('/" + image.path + "')"
                 slide.style.backgroundSize = 'cover'
                 slides.refs.push(slide) # Save reference in wrapper
                 slides.appendChild slide # Add slide element into wrapper
