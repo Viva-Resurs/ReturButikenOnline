@@ -1,18 +1,16 @@
 <template lang="pug">
     div
-        div.ui.inverted.menu.tablet.mobile.only.grid.attached.three.item
-            div.item
-            router-link.item( to="/" exact ) {{ $root.settings.title }}
-            a.item( v-if="user" @click="menuToggle" )
-                div.ui.container.right.aligned
-                    | Meny &nbsp;
-                    i.icon.content
-                    | &nbsp;&nbsp;
-            router-link.item( v-if="!user" to="/auth/login" exact )
-                div.ui.container.right.aligned
-                    | Logga in &nbsp;
-                    i.icon.sign.in
-                    | &nbsp;&nbsp;
+        div.ui.inverted.menu.tablet.mobile.only.grid.attached.borderless
+            a.item.left.floated
+                router-link( to="/" exact ) {{ $root.settings.title }}
+            a.item.right.floated( v-if="user" @click="menuToggle" )
+                | Meny &nbsp;
+                i.icon.content
+                | &nbsp;&nbsp;
+            router-link.item.right.floated( v-if="!user" to="/auth/login" exact )
+                | Logga in &nbsp;
+                i.icon.sign.in
+                | &nbsp;&nbsp;
         div.ui.right.vertical.inverted.sidebar.labeled.menu
             div( v-if="user" @click="menuToggle()" )
                 div.item
