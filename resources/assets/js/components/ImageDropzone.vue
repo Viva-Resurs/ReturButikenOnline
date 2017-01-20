@@ -8,11 +8,14 @@
                         div.center
                             div.ui.inverted.standard.button.icon( @click="show(image)" )
                                 i.eye.icon
-                            
+
                             div.ui.inverted.red.button.icon( @click="remove(image)" )
                                 i.delete.icon
 
-                img.ui.fluid.rounded.image( ":src"="'/'+image.thumb_path" ":id"="image.id" )
+                img.ui.fluid.rounded.image(
+                    ":src"="'/'+image.thumb_path"
+                    ":id"="image.id"
+                )
 
             div.ui.fluid.card( v-for="waiting in buffer" )
                 div.ui.loader.centered.inline.active
@@ -36,7 +39,7 @@
             buffer: []
 
         methods:
-            show: (image) ->                
+            show: (image) ->
                 bus.$emit('show_message',{title: image.original_name, type: 'image', image: image});
 
             remove: (image) ->
@@ -63,6 +66,9 @@
                 );
 
             handleFileSelect: (e) ->
+                # Exit if drop doesn´t involve files
+                if e.dataTransfer && e.dataTransfer.types[0] != 'Files'
+                    return
                 e.stopPropagation()
                 e.preventDefault()
                 $('#dropZone').dimmer('hide')
@@ -74,6 +80,9 @@
                     @handleFile file
 
             handleDragOver: (e) ->
+                # Exit if dragover doesn´t involve files
+                if e.dataTransfer && e.dataTransfer.types[0]!='Files'
+                    return
                 e.stopPropagation()
                 e.preventDefault()
                 e.dataTransfer.dropEffect = 'copy'
