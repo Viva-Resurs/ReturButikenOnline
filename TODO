@@ -6,3 +6,11 @@ TODO: Profile page
 TODO: Dashboard / Start
 
 TODO: Help page
+
+TODO: Use labels on ImageDropzone to make edit-buttons work together with drag-and-drop ordering
+
+TODO: Save order after reordering images
+
+TODO: Fix layout on article-cards tools (not enough width), article-cards search/sorting (use stackable?)
+
+TODO: Fix table layout on smaller screens (Users, Sections, Categories)
