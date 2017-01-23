@@ -73,7 +73,7 @@ module.exports = {
             ]
         },
         {
-            path: '/:id',
+            path: '/:artnr',
             component: require('./pages/articles/show.vue'),
         },
         {

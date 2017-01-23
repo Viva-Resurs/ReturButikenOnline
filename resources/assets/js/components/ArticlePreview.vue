@@ -17,7 +17,7 @@
 
             div.ui.basic.segment
                 h2.ui.header {{ article.name }}
-                    div.sub.header Artikelnr: {{article.id}}
+                    div.sub.header Artikelnr: {{ $root.displayArtNR(article) }}
                 div.description {{ article.desc }}
 
                 br

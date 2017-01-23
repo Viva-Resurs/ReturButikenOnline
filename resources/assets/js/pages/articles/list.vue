@@ -98,9 +98,9 @@
                         bus.$emit 'success', 'updated_article'
                     (response) => bus.$emit 'error', response.data
                 )
-            
-            previewArticle: (article) ->             
-                @$router.push('/'+article.id);              
+
+            previewArticle: (article) ->
+                @$router.push '/'+@$root.encodeArtNR article;
 
             getArticles: () ->
                 @$root.loading = true
@@ -129,7 +129,6 @@
                         bus.$emit 'articles_item_changed', item
 
             bus.$on 'bidding_interval_changed', (id,new_value) =>
-
                 for item in this.items
                     if Number(item.id) == Number(id)
                         Vue.set item, 'bidding_interval', new_value

@@ -42,6 +42,7 @@
             require './mixins/Auth.vue'
             require './mixins/ErrorHandler.vue'
             require './mixins/SuccessHandler.vue'
+            require './mixins/ArticleNumber.vue'
         ]
 
         data: ->

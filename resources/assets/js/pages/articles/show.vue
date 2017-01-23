@@ -11,17 +11,14 @@
 <script lang="coffee">
     module.exports =
         name: 'Show'
-
         components:
             ArticlePreview : require '../../components/ArticlePreview.vue'
-
         data: ->
             article: null
             categories: null
-            contacts: null
-
         methods:
-
+            getArticleByArtNR: (articleNR) ->
+                @getArticle @$root.decodeArtNR articleNR
             getArticle: (id) ->
                 @$root.loading = true
                 @$http.get( '/api/articles/'+id ).then(
@@ -31,10 +28,8 @@
                         @$root.loading = false
                     (response) =>
                         @article=-1
-                        #bus.$emit 'error', response.data
                         @$root.loading = false
                 )
-
             getCategoryList: ->
                 @$http.get( '/api/categories' ).then(
                     (response) =>
@@ -42,24 +37,6 @@
                     (response) =>
                         #bus.$emit 'error', response.data
                 )
-
-            previewArticle: (article) ->
-                @preview_article = article
-                @preview = true
-
-            modifyArticle: ->
-                @preview_article = null
-                @preview = false
-
-            updateArticle: (article) ->
-                @$http.put( '/articles/'+article.id, article ).then(
-                    (response) =>
-                        @$router.push path: '/articles'
-
-                    (response) => bus.$emit 'error', response.data
-                )
-
         created: ->
-            @getArticle @$route.params.id
-
+            @getArticleByArtNR @$route.params.artnr
 </script>
