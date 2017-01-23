@@ -44,7 +44,7 @@
                         | Inloggad som
 
                     div.vertical.menu
-                        router-link.item( to="/auth/profile" exact ) Profil
+                        router-link.item( to="/users/profile" exact ) Profil
                             i.icon.user
                         a.item( @click="$root.exitUser()" ) Logga ut
                             i.icon.sign.out
@@ -78,7 +78,7 @@
                         div.ui.dropdown.item( v-dropdown="" ) {{ user.name }}
                             i.dropdown.icon
                             div.menu
-                                div.item
+                                router-link.item( to="/users/profile" exact )
                                     i.icon.user
                                     |  Profil
                                 a.item( @click="$root.exitUser()" )

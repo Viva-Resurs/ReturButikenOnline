@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Role;
 use App\Section;
+use App\Image;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -41,7 +42,8 @@ class UserController extends Controller
                 'email' => $user->email,
                 'phone' => $user->phone,
                 'roles' => [],
-                'sections' => []
+                'sections' => [],
+                'images' => []
             ];
 
             foreach ($user->roles as $role)
@@ -54,6 +56,15 @@ class UserController extends Controller
                 array_push($u['sections'],[
                     'id' => $section->id,
                     'name' => $section->name
+                ]);
+
+            foreach ($user->images as $image)
+                array_push($u['images'], [
+                    'id' => $image->id,
+                    'name' => $image->name,
+                    'original_name' => $image->original_name,
+                    'path' => $image->path . '?',
+                    'thumb_path' => $image->thumb_path . '?'
                 ]);
 
             if ($me->hasRole('admin') || $this->sameSections($me,$u))
@@ -94,7 +105,8 @@ class UserController extends Controller
             'email' => $user->email,
             'phone' => $user->phone,
             'selected_roles' => [],
-            'selected_sections' => []
+            'selected_sections' => [],
+            'selected_images' => []
         ];
 
         foreach ($user->roles as $role)
@@ -107,6 +119,15 @@ class UserController extends Controller
             array_push($result['selected_sections'],[
                 'id' => $section->id,
                 'name' => $section->name
+            ]);
+
+        foreach ($user->images as $image)
+            array_push($result['selected_images'], [
+                'id' => $image->id,
+                'name' => $image->name,
+                'original_name' => $image->original_name,
+                'path' => $image->path . '?',
+                'thumb_path' => $image->thumb_path . '?'
             ]);
 
         return $result;
@@ -222,6 +243,36 @@ class UserController extends Controller
         if ($request->has('password') && $request['password']!='')
             $user->password = bcrypt($request['password']);
 
+        // Clear removed Images
+        foreach($user->images as $old_image){
+            $keep = false;
+            if ($request['selected_images'])
+                foreach ($request['selected_images'] as $selected_image)
+                    if ($old_image->id == $selected_image['id'])
+                        $keep = true;
+            if (!$keep){
+                // Attached image could not be found in selection, detach it
+                $user->images()->detach($old_image->id);
+                // Delete it
+                $old_image->delete();
+            }
+        }
+
+        // Attach new Images
+        foreach ($request['selected_images'] as $selected_image){
+            $new = true;
+            if ($user->images)
+                foreach( $user->images as $old_image)
+                    if ($old_image->id == $selected_image['id'])
+                        $new = false;
+            if ($new) {
+                // Image could not be found in currently attached images
+                $image = Image::find($selected_image['id']);
+                // Attach it
+                $user->images()->save($image);
+            }
+        }
+
         // Admin can change roles
         if ($me->hasRole('admin')) {
             // Clear Roles
@@ -322,13 +373,23 @@ class UserController extends Controller
             'email' => $me->email,
             'phone' => $me->phone,
             'roles' => [],
-            'sections' => []
+            'sections' => [],
+            'images' => []
         ];
 
         foreach ($me->roles as $role)
             array_push($result['roles'],[
                 'id' => $role->id,
                 'name' => $role->name
+            ]);
+
+        foreach ($me->images as $image)
+            array_push($result['images'], [
+                'id' => $image->id,
+                'name' => $image->name,
+                'original_name' => $image->original_name,
+                'path' => $image->path . '?',
+                'thumb_path' => $image->thumb_path . '?'
             ]);
 
         foreach ($me->sections as $section)

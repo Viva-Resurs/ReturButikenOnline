@@ -67,6 +67,10 @@ module.exports = {
                   component: require('./pages/users/create.vue')
                 },
                 {
+                  path: 'profile',
+                  component: require('./pages/users/profile.vue')
+                },
+                {
                   path: ':id',
                   component: require('./pages/users/update.vue')
                 }

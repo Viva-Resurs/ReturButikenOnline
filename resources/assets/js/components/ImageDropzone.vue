@@ -2,7 +2,7 @@
     div.ui.segment.bottom.attached#dropZone
         input#files( type='file' name='files[]' hidden multiple)
         div.ui.five.doubling.cards
-            div.ui.dimmable.blurring.card( v-for="image in images" v-image="" )
+            div.ui.dimmable.blurring.card( v-for="(image, index) in images" v-image="" )
                 div.ui.dimmer
                     div.content
                         div.center
@@ -15,6 +15,7 @@
                 img.ui.fluid.rounded.image(
                     ":src"="'/'+image.thumb_path"
                     ":id"="image.id"
+                    ":class"="(mode == 'usefirst' && index==0)?'active':''"
                 )
 
             div.ui.fluid.card( v-for="waiting in buffer" )
@@ -34,7 +35,7 @@
 <script lang="coffee">
     module.exports = {
         name: 'Dropzone'
-        props: ['images']
+        props: ['images','mode']
         data: () ->
             buffer: []
 
@@ -108,3 +109,10 @@
 
     }
 </script>
+
+<style lang="scss">
+    img.active {
+        outline: 2px solid #25f;
+        box-shadow: 0px 0px 9px 5px rgba(50,70,255,0.6) !important;
+    }
+</style>

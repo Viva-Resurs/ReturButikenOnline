@@ -48,6 +48,15 @@ class User extends Authenticatable
     }
 
     /**
+     * Image association
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function images() {
+        return $this->belongsToMany(Image::class,'images_user');
+    }
+
+    /**
      * Check if the User is in a given section
      *
      * @param $section
