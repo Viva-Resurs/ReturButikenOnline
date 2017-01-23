@@ -2,21 +2,16 @@
     div.ui.segment.bottom.attached#dropZone
         input#files( type='file' name='files[]' hidden multiple)
         div.ui.five.doubling.cards
-            div.ui.dimmable.blurring.card( v-for="(image, index) in images" v-image="" )
-                div.ui.dimmer
-                    div.content
-                        div.center
-                            div.ui.inverted.standard.button.icon( @click="show(image)" )
-                                i.eye.icon
-
-                            div.ui.inverted.red.button.icon( @click="remove(image)" )
-                                i.delete.icon
-
+            div.ui.card( v-for="(image, index) in images" v-image="" )
                 img.ui.fluid.rounded.image(
                     ":src"="'/'+image.thumb_path"
                     ":id"="image.id"
                     ":class"="(mode == 'usefirst' && index==0)?'active':''"
                 )
+                a.ui.white.tiny.left.corner.label( @click="show(image)" )
+                    i.eye.icon
+                a.ui.red.tiny.right.corner.label( @click="remove(image)" )
+                    i.delete.icon
 
             div.ui.fluid.card( v-for="waiting in buffer" )
                 div.ui.loader.centered.inline.active
@@ -111,6 +106,12 @@
 </script>
 
 <style lang="scss">
+    // CSS-hack to keep pointer-cursor on corner-buttons.
+    a.ui.corner.label {
+        i.icon {
+            cursor: pointer;
+        }
+    }
     img.active {
         outline: 2px solid #25f;
         box-shadow: 0px 0px 9px 5px rgba(50,70,255,0.6) !important;
