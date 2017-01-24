@@ -4,16 +4,18 @@
         div.ui.dividing.header( v-if="mode!='show'" ) Förhandsgranskning
 
         div( v-if="article!=-1" )
-            div.ui.basic.segment.center.aligned.preview_header( v-swipe="article.selected_images" )
+            div( v-if="article.selected_images && article.selected_images.length>0" )
+                div.ui.basic.segment.center.aligned.preview_header(
+                    v-swipe="article.selected_images")
 
-            div.ui.basic.segment.center.aligned.preview_thumbs
-                div.ui.buttons
-                    div.ui.tiny.left.aligned.images
-                        img.ui.image(
-                            ":src"="'/'+image.thumb_path"
-                            v-for="(image, index) in article.selected_images"
-                            @click="setActiveImage(index)"
-                            ":class" = "(image.selected) ? 'active' : 'disabled' ")
+                div.ui.basic.segment.center.aligned.preview_thumbs
+                    div.ui.buttons
+                        div.ui.tiny.left.aligned.images
+                            img.ui.image(
+                                ":src"="'/'+image.thumb_path"
+                                v-for="(image, index) in article.selected_images"
+                                @click="setActiveImage(index)"
+                                ":class" = "(image.selected) ? 'active' : 'disabled'")
 
             div.ui.basic.segment
                 h2.ui.header {{ article.name }}
@@ -24,7 +26,7 @@
                 br
                 div.ui.grid.bottom.aligned.stackable
                     div.two.column.row
-                        div.left.aligned.left.floated.column(v-if="article.selected_contacts")
+                        div.left.aligned.left.floated.column(v-if="article.selected_contacts && article.selected_contacts.length>0")
                             h4.ui.sub.header Kontakt
                             div(v-for="contact in contacts")
                                 div( v-for="selected_contact in article.selected_contacts")
@@ -38,7 +40,7 @@
                                                 p
                                                     i.icon.mail
                                                     b {{ contact.email }}
-                        div.right.aligned.right.floated.column
+                        div.right.aligned.right.floated.column( v-if="article.price" )
                             h3 Pris : {{article.price}} kr
                 div.ui.hidden.divider
                 div.ui.segment( v-if="mode!='show'" )
