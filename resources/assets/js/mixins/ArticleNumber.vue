@@ -43,7 +43,8 @@
                 if typeof article == 'object'
                     if article.sections and article.sections.length>0
                         s = toString2 article.sections[0].id
-                    n = toString6 article.id
+                    if article.id
+                        n = toString6 article.id
 
                 if typeof section == 'number'
                     s = toString2 section
