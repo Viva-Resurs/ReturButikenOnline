@@ -29,8 +29,19 @@
                 bus.$emit('user_changed', false );
             },
             getUser() {
+                var validate = function(r) {
+                    console.log('checking r.data')
+                    console.log(r)
+                    if (typeof r.data != 'object')
+                        try {
+                            r.data = JSON.parse(r.data)
+                        } catch (e) {
+                            console.error(e)
+                        }
+                }
                 this.$http.get('/api/user').then(
                     (response) => {
+                        validate(response)
                         // Update username & token
                         this.setUser(response.data);
 
@@ -39,6 +50,7 @@
                             this.loginCheck = setInterval( this.getUser, 1000*30 );
                     },
                     (response) => {
+                        validate(response)
                         // Go through matched routes and check requiresAuth
                         for (var i=0 ; i<this.$route.matched.length ; i++)
                             if (this.$route.matched[i].meta.requiresAuth){
