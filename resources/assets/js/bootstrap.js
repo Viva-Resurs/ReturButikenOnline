@@ -58,16 +58,14 @@ Vue.http.interceptors.push((request, next) => {
  * This will try to parse every response.data into JSON if not done allready.
  */
 Vue.http.interceptors.push((request, next) => {
-    // modify request
-    if (typeof request.data != 'object'){
-        try{
-            request.data = JSON.parse(request.data);
-        } catch (e){
-
+    next((response) => {
+        if (typeof response.data != 'object'){
+            try{
+                response.data = JSON.parse(response.data);
+            } catch (e){
+            }
         }
-    }
-    // continue to next interceptor
-    next();
+    });
 });
 
 /**
