@@ -55,6 +55,22 @@ Vue.http.interceptors.push((request, next) => {
 });
 
 /**
+ * This will try to parse every response.data into JSON if not done allready.
+ */
+Vue.http.interceptors.push((request, next) => {
+    // modify request
+    if (typeof request.data != 'object'){
+        try{
+            request.data = JSON.parse(request.data);
+        } catch (e){
+
+        }
+    }
+    // continue to next interceptor
+    next();
+});
+
+/**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
  * allows your team to easily build robust real-time web applications.
