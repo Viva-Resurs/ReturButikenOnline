@@ -16,6 +16,9 @@
                 s = "000"
                 n = "000.000"
 
+                if typeof article == 'undefined'
+                    return s+'-'+n
+
                 toString2 = (nr) ->
                     if nr < 10
                         return '0'+nr
@@ -38,7 +41,7 @@
                     return String nr
 
                 if typeof article == 'object'
-                    if article.sections.length>0
+                    if article.sections and article.sections.length>0
                         s = toString2 article.sections[0].id
                     n = toString6 article.id
 
