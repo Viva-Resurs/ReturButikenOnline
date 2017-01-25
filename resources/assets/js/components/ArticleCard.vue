@@ -37,7 +37,7 @@
                                 ":src"="image.thumb_path" )
 
         div.extra.content
-            div.ui.bottom.aligned.two.column.grid
+            div.ui.bottom.aligned.two.column.grid.stackable
                 div.column.meta.left.aligned
                     i.ui.icon(
                         ":class"="(item.public==1)?'green world':'red industry'"
