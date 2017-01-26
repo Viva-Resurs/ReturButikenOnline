@@ -1,5 +1,4 @@
 <template lang="pug">
-    div
         div.ui.icon.button.hover-default(
             v-tooltip     = ""
             ":data-html"  = "displayInterval(item.bidding_interval)"
