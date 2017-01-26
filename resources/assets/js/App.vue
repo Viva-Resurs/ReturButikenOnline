@@ -39,6 +39,7 @@
             SemanticDialog: require './components/SemanticDialog.vue'
 
         mixins: [
+            require './mixins/Debug.vue'
             require './mixins/Auth.vue'
             require './mixins/ErrorHandler.vue'
             require './mixins/SuccessHandler.vue'
@@ -52,7 +53,8 @@
 
         created: ->
             # Log a reference to this App
-            console.log this
+            if @DEBUG
+                console.log this
 
 </script>
 
