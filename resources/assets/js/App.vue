@@ -57,16 +57,3 @@
                 console.log this
 
 </script>
-
-<style lang="scss">
-    @media screen and (max-width: 768px) {
-        .ui.container {
-            margin-left: 0 !important;
-            margin-right: 0 !important;
-        }
-        .ui.attached .ui.dividing.header {
-            margin-left: -6px !important;
-            margin-right: -6px !important;
-        }
-    }
-</style>
