@@ -12,7 +12,7 @@ window.$ = window.jQuery = require('jquery');
 /**
  * Semantic UI
  */
-require('../../../semantic/dist/semantic.min.js');
+require('semantic-ui-css/semantic.min.js');
 
 /**
  * moment

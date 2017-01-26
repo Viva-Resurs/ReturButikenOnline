@@ -30,6 +30,6 @@ npm install
 # build css & js for production
 npm run build
 
-# watch files, build changes and reload components while developing
+# watch files, build on changes and reload components while developing
 npm run watch
 ```
