@@ -6,8 +6,9 @@
         div.ui.basic.segment
             div.ui.card.centered
                 div.content
-                    div.image.center.aligned( v-if="user.selected_images && user.selected_images[0]" )
-                        img.ui.circular.image( ":src"="'/'+user.selected_images[0].path" )
+                    div.center.aligned.profile_img(
+                        v-if="user.selected_images && user.selected_images[0]"
+                        ":style"="'background-image:url(\"/'+user.selected_images[0].path+'\");'" )
                     h2.ui.center.aligned.icon.header
                         i.circular.icon.user( v-if="!user.selected_images || !user.selected_images[0]" )
                         | {{ user.fullname }}
@@ -224,3 +225,15 @@
             @getSectionList()
 
 </script>
+
+<style lang="scss">
+    .profile_img {
+        background-size:cover;
+        width:200px;
+        height:200px;
+        background-position: 50% 50%;
+        border-radius: 100px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
