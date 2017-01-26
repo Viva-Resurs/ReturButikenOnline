@@ -13,10 +13,10 @@
 
         methods:
             createUser: (user) ->
-                this.$http.post('/api/users',user).then(
+                this.$http.post('api/users',user).then(
                     (response) =>
                         bus.$emit('success',response)
-                        this.$router.push({ path: '/users' });
+                        this.$router.push({ path: 'users' });
 
                     (response) => bus.$emit('error',response.data)
                 );

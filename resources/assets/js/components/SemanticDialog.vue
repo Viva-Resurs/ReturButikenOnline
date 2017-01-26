@@ -23,7 +23,7 @@
                                         input( type="text" placeholder="End" )
                     div.ui.fluid.basic.segment( v-show="type=='image'" )
                         div.image.content(v-if="image && image.path")
-                            img.ui.fluid.rounded.image( ":src"="'/'+image.path" ":id"="image.id" )
+                            img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
 
             div.ui.grid.segment.bottom.inverted.attached
                 div.center.aligned.column.actions

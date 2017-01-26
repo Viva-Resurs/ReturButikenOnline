@@ -4,7 +4,7 @@
         div.ui.five.doubling.cards
             div.ui.card( v-for="(image, index) in images" v-image="" )
                 img.ui.fluid.rounded.image(
-                    ":src"="'/'+image.thumb_path"
+                    ":src"="image.thumb_path"
                     ":id"="image.id"
                     ":class"="(mode == 'usefirst' && index==0)?'active':''"
                 )
@@ -50,7 +50,7 @@
                 data = new FormData()
                 data.append('files[]', file)
 
-                this.$http.post('/api/images',data).then(
+                this.$http.post('api/images',data).then(
                     (response) =>
                         @buffer.pop( file )
                         bus.$emit('image_added',response.data)

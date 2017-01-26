@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.padded.container.segment.attached#preview
+    div#preview
 
         div.ui.dividing.header( v-if="mode!='show'" ) Förhandsgranskning
 

@@ -1,11 +1,11 @@
 <template lang="pug">
-    div( v-if="article!=null" )
-        article-preview(
-            ":article" = "article"
-            "mode" = "show"
-            ":categories" = "categories"
-            ":contacts" = "article.public_contacts"
-        )
+    article-preview(
+        v-if="article!=null"
+        ":article" = "article"
+        "mode" = "show"
+        ":categories" = "categories"
+        ":contacts" = "article.public_contacts"
+    )
 </template>
 
 <script lang="coffee">
@@ -21,7 +21,7 @@
                 @getArticle @$root.decodeArtNR articleNR
             getArticle: (id) ->
                 @$root.loading = true
-                @$http.get( '/api/articles/'+id ).then(
+                @$http.get( 'api/articles/'+id ).then(
                     (response) =>
                         @article = response.data
                         @getCategoryList()
@@ -31,7 +31,7 @@
                         @$root.loading = false
                 )
             getCategoryList: ->
-                @$http.get( '/api/categories' ).then(
+                @$http.get( 'api/categories' ).then(
                     (response) =>
                         this.categories = response.data
                     (response) =>

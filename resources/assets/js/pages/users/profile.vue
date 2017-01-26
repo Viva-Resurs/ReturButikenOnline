@@ -12,7 +12,7 @@
         methods:
             getUser: (user) ->
                 @$root.loading = true
-                @$http.get('/api/users/'+user.id).then(
+                @$http.get('api/users/'+user.id).then(
                     (response) =>
                         @user = response.data
                         @$root.loading = false
@@ -21,9 +21,9 @@
                         @$root.loading = false
                 )
             updateUser: (user) ->
-                @$http.put('/api/users/'+user.id,user).then(
+                @$http.put('api/users/'+user.id,user).then(
                     (response) =>
-                        @$router.push({ path: '/users' })
+                        @$router.push({ path: 'users' })
                     (response) =>
                         bus.$emit 'error', response.data
                 )

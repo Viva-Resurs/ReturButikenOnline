@@ -1,3 +1,3 @@
 <template lang="pug">
-    div 404 - Route Not found
+    div.ui.padded.container.segment 404 - Route Not found
 </template>

@@ -8,7 +8,7 @@
                 div.content
                     div.center.aligned.profile_img(
                         v-if="user.selected_images && user.selected_images[0]"
-                        ":style"="'background-image:url(\"/'+user.selected_images[0].path+'\");'" )
+                        ":style"="'background-image:url(\"'+user.selected_images[0].path+'\");'" )
                     h2.ui.center.aligned.icon.header
                         i.circular.icon.user( v-if="!user.selected_images || !user.selected_images[0]" )
                         | {{ user.fullname }}
@@ -170,7 +170,7 @@
                 bus.$emit( 'user_form_update', this.user );
 
             getRoleList: ->
-                this.$http.get('/api/roles').then(
+                this.$http.get('api/roles').then(
                     (response) =>
                         console.log 'roles ready'
                         this.roles = response.data;
@@ -181,7 +181,7 @@
 
                 );
             getSectionList: ->
-                this.$http.get('/api/sections').then(
+                this.$http.get('api/sections').then(
                     (response) =>
                         this.sections = response.data;
 

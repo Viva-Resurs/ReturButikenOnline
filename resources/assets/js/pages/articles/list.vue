@@ -81,7 +81,7 @@
                 );
 
             removeArticle: (article) ->
-                @$http.delete( '/api/articles/'+article.id ).then(
+                @$http.delete( 'api/articles/'+article.id ).then(
                     (response) =>
                         bus.$emit 'success', 'removed_article'
                         Vue.set article, 'removed', true
@@ -93,18 +93,18 @@
                 @updateArticle article
 
             updateArticle: (article) ->
-                @$http.put( '/api/articles/'+article.id, article ).then(
+                @$http.put( 'api/articles/'+article.id, article ).then(
                     (response) =>
                         bus.$emit 'success', 'updated_article'
                     (response) => bus.$emit 'error', response.data
                 )
 
             previewArticle: (article) ->
-                @$router.push '/'+@$root.encodeArtNR article;
+                @$router.push @$root.encodeArtNR article;
 
             getArticles: () ->
                 @$root.loading = true
-                @$http.get( '/api/articles' ).then(
+                @$http.get( 'api/articles' ).then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false
@@ -120,7 +120,7 @@
             bus.$on 'articles_item_preview', (item) => @previewArticle item
             bus.$on 'articles_item_changed', (payload) => @attemptUpdate payload
             bus.$on 'articles_item_edit', (item) =>
-                @$router.push path: '/articles/'+item.id
+                @$router.push path: 'articles/'+item.id
 
             bus.$on 'publish_interval_changed', (id,new_value) =>
                 for item in this.items

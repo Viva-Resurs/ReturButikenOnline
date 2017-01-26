@@ -1,5 +1,5 @@
 <template lang="pug">
-    div
+    div( v-if="article!=null" ).ui.padded.container.segment
         article-form(
             v-show = "!preview"
             ":original" = "article"
@@ -53,7 +53,7 @@
                 @preview = false
 
             createArticle: (article) ->
-                @$http.post( '/api/articles', article ).then(
+                @$http.post( 'api/articles', article ).then(
                     (response) =>
                         @$router.push path: '/articles'
                     (response) =>
@@ -61,7 +61,7 @@
                 )
 
             getCategoryList: ->
-                @$http.get( '/api/categories' ).then(
+                @$http.get( 'api/categories' ).then(
                     (response) =>
                         this.categories = response.data
                     (response) =>
@@ -69,7 +69,7 @@
                 )
 
             getContactList: ->
-                @$http.get( '/api/contacts' ).then(
+                @$http.get( 'api/contacts' ).then(
                     (response) =>
                         @contacts = response.data ? null
                         if @contacts.length > 0 and
