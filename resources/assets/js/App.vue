@@ -2,10 +2,7 @@
     div.pusher
         navigation
         semantic-dialog
-        div.ui.container
-            router-view
-        div.offset_container
-        div.ui.page.dimmer
+        router-view
 </template>
 
 <script lang="coffee">

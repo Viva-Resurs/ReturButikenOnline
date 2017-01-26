@@ -1,8 +1,7 @@
 <template lang="pug">
-    div
-        router-view
+    router-view
 </template>
 
 <script lang="coffee">
-    module.exports = { name: 'Articles' }
+    module.exports = name: 'Articles'
 </script>

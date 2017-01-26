@@ -1,7 +1,7 @@
 <template lang="pug">
-    div Welcome
+    div.ui.padded.container.segment Welcome
 </template>
 
 <script lang="coffee">
-    module.exports = { name: 'Welcome' }
+    module.exports = name: 'Welcome'
 </script>
