@@ -8,39 +8,48 @@
         div.ui.attached( v-else="" )
 
             // Top tools
-            div.ui.grid.two.columns
-                div.column.floated.left
-                    div.ui.icon.input
-                        input.prompt(
-                            v-focus=""
-                            v-model="search"
-                            placeholder="Type to search"
-                            )
-                        i.search.icon
-                div.column.right.floated.right.aligned( v-if="card"
-                    ":class"="(card)?'mobile tablet only':''"
-                    )
-                    div.ui.floated.basic.button.dropdown#order( v-dropdown="" )
-                        div.default.value(
-                            v-for="column in columns"
-                            v-if="order==column.key"
-                            )
-                            | {{ column.label }} &nbsp;
-                            i.icon.label.sort.right.floated(
-                                ":class" = "(desc==1)?'ascending':'descending'"
-                            )
-                        div.menu
-                            div.item(
+            div.ui.equal.width.grid
+                div.row
+                    div.column.grid.mobile.tablet.only
+                        div.ui.icon.input.fluid
+                            input.prompt(
+                                v-focus=""
+                                v-model="search"
+                                placeholder="Type to search"
+                                )
+                            i.search.icon
+                    div.column.grid.computer.only
+                        div.ui.icon.input
+                            input.prompt(
+                                v-focus=""
+                                v-model="search"
+                                placeholder="Type to search"
+                                )
+                            i.search.icon
+                    div.column.right.aligned( v-if="card"
+                        ":class"="(card)?'mobile tablet only':''"
+                        )
+                        div.ui.floated.basic.button.dropdown#order( v-dropdown="" )
+                            div.default.value(
                                 v-for="column in columns"
-                                v-if="column.sort"
-                                ":class"="(order==column.key)?'active':''"
-                                @click="setOrder(column.key)"
+                                v-if="order==column.key"
                                 )
-                                | {{column.label}} &nbsp;
-                                i.icon.label.sort(
-                                    v-if="order==column.key"
-                                    ":class" = "(desc)?'ascending':'descending'"
+                                | {{ column.label }} &nbsp;
+                                i.icon.label.sort.right.floated(
+                                    ":class" = "(desc==1)?'ascending':'descending'"
                                 )
+                            div.menu
+                                div.item(
+                                    v-for="column in columns"
+                                    v-if="column.sort"
+                                    ":class"="(order==column.key)?'active':''"
+                                    @click="setOrder(column.key)"
+                                    )
+                                    | {{column.label}} &nbsp;
+                                    i.icon.label.sort(
+                                        v-if="order==column.key"
+                                        ":class" = "(desc)?'ascending':'descending'"
+                                    )
 
             // Data
             div.ui.padded.grid
