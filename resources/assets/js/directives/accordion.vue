@@ -1,7 +1,5 @@
-<script>
-    export default {
-        inserted: function(el){
-            $(el).accordion();
-        }
-    };
+<script lang="coffee">
+    module.exports =
+        inserted: (el) ->
+            $(el).accordion()
 </script>

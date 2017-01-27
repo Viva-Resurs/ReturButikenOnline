@@ -13,13 +13,13 @@
 
             # Setup slides-wrapper
             slides = document.createElement 'div'
-            slides.style.padding = '0px';
+            slides.style.padding = '0px'
             slides.refs = []
 
             # Create slides from images
             for image, index in images
                 slide = document.createElement 'div'
-                slide.style.cssFloat = 'left';
+                slide.style.cssFloat = 'left'
                 slide.style.backgroundRepeat = 'no-repeat'
                 slide.ready = false
                 img = document.createElement 'img'
@@ -31,13 +31,13 @@
                     slides.refs[this.slideID].ready = true
                     console.debug "IMG: #{this.slideID}: #{this.width} #{this.height}"
                 img.src = image.path
-                slide.style.backgroundImage = "url('" + image.path + "')"
+                slide.style.backgroundImage = "url('#{image.path}')"
                 slide.style.backgroundSize = 'cover'
-                slides.refs.push(slide) # Save reference in wrapper
+                slides.refs.push slide # Save reference in wrapper
                 slides.appendChild slide # Add slide element into wrapper
 
             # Insert slides
-            el.appendChild(slides)
+            el.appendChild slides
 
             # Set active image by determine position in wrapper
             checkActive = ->
@@ -165,7 +165,7 @@
                     if !slide.ready
                         return false
                 # Ready
-                clearInterval(loader)
+                clearInterval loader
                 setDimensions()
             , 200
 </script>

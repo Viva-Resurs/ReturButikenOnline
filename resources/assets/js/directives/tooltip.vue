@@ -1,9 +1,7 @@
-<script>
-    export default {
-        inserted: function(el){
-            $(el).popup({
-                variation:"inverted"
-            });
-        }
-    };
+<script lang="coffee">
+    module.exports =
+        inserted: (el) ->
+            $(el).popup(
+                variation: "inverted"
+            )
 </script>

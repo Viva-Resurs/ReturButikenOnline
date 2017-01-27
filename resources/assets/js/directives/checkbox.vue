@@ -1,7 +1,5 @@
-<script>
-    export default {
-        inserted: function(el){
-            $(el).checkbox();
-        }
-    };
+<script lang="coffee">
+    module.exports =
+        inserted: (el) ->
+            $(el).checkbox()
 </script>
