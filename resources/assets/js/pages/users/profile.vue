@@ -3,10 +3,10 @@
 </template>
 
 <script lang="coffee">
-    UserForm = require '../../components/UserForm.vue'
     module.exports =
         name: 'Profile'
-        components: { UserForm }
+        components:
+            UserForm: require '../../components/UserForm.vue'
         data: ->
             user: null
         methods:
@@ -23,7 +23,7 @@
             updateUser: (user) ->
                 @$http.put('api/users/'+user.id,user).then(
                     (response) =>
-                        @$router.push({ path: '/users' })
+                        @$router.push path: '/users'
                     (response) =>
                         bus.$emit 'error', response.data
                 )
@@ -33,7 +33,6 @@
             else
                 bus.$on 'user_changed', @getUser
             bus.$on 'user_form_update', (payload) => @updateUser payload
-
         beforeDestroy: ->
             bus.$off 'user_form_update'
             bus.$off 'user_changed', @getUser

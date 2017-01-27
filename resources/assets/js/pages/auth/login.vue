@@ -1,5 +1,5 @@
 <template lang="pug">
-    div#articleForm
+    div.ui.padded.container.segment#articleForm
 
         div.ui.dividing.header Inloggning
 
@@ -24,9 +24,9 @@
 </template>
 
 <script lang="coffee">
-    module.exports = {
+    module.exports =
         name: 'Login'
-        data: () ->
+        data: ->
             login:
                 name: '',
                 email: '',
@@ -36,20 +36,19 @@
             attemptLogin: (tries) ->
                 @$http.post('login',@login).then(
                     (response) =>
-                        bus.$emit('login_ok')
+                        bus.$emit 'login_ok'
                     (response) =>
                         # If login fails on token, try one more time
-                        if (tries!=2 && response.data.error == 'TokenMismatch')
+                        if tries != 2 && response.data.error == 'TokenMismatch'
                             @$http.get('api/token').then(
                                 (response) =>
                                     # New token ready, try to login again
                                     sessionStorage.token = response.data.token;
-                                    @attemptLogin(2);
+                                    @attemptLogin 2
                                 (response) =>
-                                    bus.$emit('error',response)
-                            );
+                                    bus.$emit 'error', response
+                            )
                         else
-                            bus.$emit('error',response.data)
-                );
-    }
+                            bus.$emit 'error', response.data
+                )
 </script>

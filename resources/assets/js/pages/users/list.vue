@@ -17,17 +17,13 @@
 </template>
 
 <script lang="coffee">
-    module.exports = {
-
+    module.exports =
         name: 'List'
-
-        components: {
+        components:
             ItemGrid: require '../../components/ItemGrid.vue'
             Remove: require '../../components/tools/Remove.vue'
             Edit: require '../../components/tools/Edit.vue'
             Add: require '../../components/tools/Add.vue'
-        }
-
         data: ->
             items: []
             columns:
@@ -47,40 +43,37 @@
                     search: true
                     sort: true
                     class: 'link'
-
         methods:
             attemptRemove: (user) ->
-                # Are you sure?
-                @removeUser(user);
-
+                bus.$emit 'show_message',
+                    title: 'Confirm'
+                    message: 'Do you want to remove the user?'
+                    type: 'confirm'
+                    cb: => @removeUser user
             removeUser: (user) ->
                 @$http.delete('api/users/'+user.id).then(
                     (response) =>
-                        bus.$emit('success','removed_user')
-                        Vue.set user, 'removed', true;
-                    (response) => bus.$emit('error',response.data)
-                );
-
-            getUsers: () ->
-                @$root.loading = true;
+                        bus.$emit 'success', 'removed_user'
+                        Vue.set user, 'removed', true
+                    (response) => bus.$emit 'error', response.data
+                )
+            getUsers: ->
+                @$root.loading = true
                 @$http.get('api/users').then(
                     (response) =>
                         @items = response.data
-                        @$root.loading = false;
+                        @$root.loading = false
                     (response) =>
-                        bus.$emit('error',response.data)
-                        @$root.loading = false;
-                );
-
+                        bus.$emit 'error', response.data
+                        @$root.loading = false
+                )
         created: ->
-            this.getUsers();
-            bus.$on('users_item_add', () => @$router.push({ path: '/users/create' }) )
-            bus.$on('users_item_remove', (item) => @attemptRemove(item) )
-            bus.$on('users_item_edit', (item) => @$router.push({ path: '/users/'+item.id }) )
-
+            @getUsers()
+            bus.$on 'users_item_add', => @$router.push path: '/users/create'
+            bus.$on 'users_item_remove', (item) => @attemptRemove item
+            bus.$on 'users_item_edit', (item) => @$router.push path: '/users/'+item.id
         beforeDestroy: ->
-            bus.$off('users_item_add');
-            bus.$off('users_item_edit');
-            bus.$off('users_item_remove');
-    }
+            bus.$off 'users_item_add'
+            bus.$off 'users_item_edit'
+            bus.$off 'users_item_remove'
 </script>

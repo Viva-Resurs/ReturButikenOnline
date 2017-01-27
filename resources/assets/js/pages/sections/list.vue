@@ -19,16 +19,15 @@
 </template>
 
 <script lang="coffee">
-    module.exports = {
+    module.exports =
         name: 'List'
-        components: {
+        components:
             ItemGrid: require '../../components/ItemGrid.vue'
             Remove: require '../../components/tools/Remove.vue'
             Save: require '../../components/tools/Save.vue'
             Undo: require '../../components/tools/Undo.vue'
             Edit: require '../../components/tools/Edit.vue'
             Add: require '../../components/tools/Add.vue'
-        }
         data: ->
             items: []
             itemsNew: []
@@ -49,10 +48,9 @@
                     search: true
                     sort: true
                     class: 'collapsing'
-
         methods:
-            addItem: () ->
-                @itemsNew.push({id_new:@itemsNew.length})
+            addItem: ->
+                @itemsNew.push id_new: @itemsNew.length
 
             attemptCreate: (section) ->
                 # Validation
@@ -61,14 +59,13 @@
             createSection: (new_section) ->
                 @$http.post('api/sections', new_section).then(
                     (response) =>
-                        @attemptRemove(new_section)
+                        @attemptRemove new_section
                         section = response.data
-                        @items.push(section)
+                        @items.push section
                         @$nextTick ->
-                            $('#section_content').trigger('updated',section.id)
-
-                    (response) => bus.$emit('error', response.data)
-                );
+                            $('#section_content').trigger 'updated', section.id
+                    (response) => bus.$emit 'error', response.data
+                )
 
             editItem: (item) ->
                 Vue.set item, 'edit', true
@@ -82,61 +79,57 @@
                 Vue.set section, 'edit', false
                 for key, column of @columns
                     Vue.set section, key, section[key+'_new']
-
-                @$http.put('api/sections/' + section.id, section).then(
+                @$http.put('api/sections/'+section.id, section).then(
                     (response) =>
                         Vue.set section, 'updated_at', response.data.updated_at
                         @$nextTick ->
-                            $('#section_content').trigger('updated',section.id)
-                    (response) => bus.$emit('error', response.data)
-                );
+                            $('#section_content').trigger 'updated', section.id
+                    (response) => bus.$emit 'error', response.data
+                )
 
             attemptRemove: (section) ->
                 # Remove new items that are not yet created
-                if (!section.id)
+                if !section.id
                     for index, ob of @itemsNew
-                        if (Number ob.id_new == Number section.id_new)
-                            return @itemsNew.splice(index,1)
+                        if Number(ob.id_new) == Number(section.id_new)
+                            return @itemsNew.splice index, 1
                     return false
                 # Are you sure?
-                @removeSection(section)
+                @removeSection section
 
             removeSection: (section) ->
-                @$http.delete('api/sections/' + section.id).then(
+                @$http.delete('api/sections/'+section.id).then(
                     (response) =>
-                        bus.$emit('success', 'removed_category')
-                        $('tbody').trigger('removed',section.id, ->
+                        bus.$emit 'success', 'removed_category'
+                        $('tbody').trigger 'removed', section.id, ->
                             Vue.set section, 'removed', true
-                        )
-                    (response) => bus.$emit('error', response.data)
-                );
+                    (response) => bus.$emit 'error', response.data
+                )
 
-            getSections: () ->
-                @$root.loading = true;
+            getSections: ->
+                @$root.loading = true
                 @$http.get('api/sections').then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false
                     (response) =>
-                        bus.$emit('error', response.data)
+                        bus.$emit 'error', response.data
                         @$root.loading = false
-                );
+                )
 
         created: ->
             @getSections()
-            bus.$on('sections_item_add', () => @addItem() )
-            bus.$on('sections_item_edit', (item) => @editItem(item) )
-            bus.$on('sections_item_revert', (item) => @revertItem(item) )
-            bus.$on('sections_item_remove', (item) => @attemptRemove(item) )
-            bus.$on('sections_item_changed', (item) => @attemptUpdate(item) )
-            bus.$on('sections_item_created', (item) => @attemptCreate(item) )
-
+            bus.$on 'sections_item_add', => @addItem()
+            bus.$on 'sections_item_edit', (item) => @editItem item
+            bus.$on 'sections_item_revert', (item) => @revertItem item
+            bus.$on 'sections_item_remove', (item) => @attemptRemove item
+            bus.$on 'sections_item_changed', (item) => @attemptUpdate item
+            bus.$on 'sections_item_created', (item) => @attemptCreate item
         beforeDestroy: ->
-            bus.$off('sections_item_add')
-            bus.$off('sections_item_edit')
-            bus.$off('sections_item_revert')
-            bus.$off('sections_item_remove')
-            bus.$off('sections_item_changed')
-            bus.$off('sections_item_created')
-    }
+            bus.$off 'sections_item_add'
+            bus.$off 'sections_item_edit'
+            bus.$off 'sections_item_revert'
+            bus.$off 'sections_item_remove'
+            bus.$off 'sections_item_changed'
+            bus.$off 'sections_item_created'
 </script>

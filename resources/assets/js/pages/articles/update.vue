@@ -18,23 +18,19 @@
 <script lang="coffee">
     module.exports =
         name: 'Update'
-
         components:
             ArticleForm    : require '../../components/ArticleForm.vue'
             ArticlePreview : require '../../components/ArticlePreview.vue'
-
         data: ->
             preview_article: false
             preview: false
             article: null
             categories: null
             contacts: null
-
         methods:
-
             getArticle: (id) ->
                 @$root.loading = true
-                @$http.get( 'api/articles/'+id ).then(
+                @$http.get('api/articles/'+id).then(
                     (response) =>
                         @article = response.data
                         @getCategoryList()
@@ -46,7 +42,7 @@
                 )
 
             getCategoryList: ->
-                @$http.get( 'api/categories' ).then(
+                @$http.get('api/categories').then(
                     (response) =>
                         this.categories = response.data
                     (response) =>
@@ -54,7 +50,7 @@
                 )
 
             getContactList: ->
-                @$http.get( 'api/contacts' ).then(
+                @$http.get('api/contacts').then(
                     (response) =>
                         @contacts = response.data ? null
                         if @contacts.length > 0 and
@@ -73,11 +69,10 @@
                 @preview = false
 
             updateArticle: (article) ->
-                @$http.put( 'api/articles/'+article.id, article ).then(
+                @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
                         console.log 'sent OK'
                         @$router.push path: '/articles'
-
                     (response) => bus.$emit 'error', response.data
                 )
 
@@ -86,7 +81,6 @@
             bus.$on 'article_form_preview', (payload) => @previewArticle payload
             bus.$on 'article_form_modify', => @modifyArticle()
             bus.$on 'article_form_update', (payload) => @updateArticle payload
-
         beforeDestroy: ->
             bus.$off 'article_form_preview'
             bus.$off 'article_form_modify'

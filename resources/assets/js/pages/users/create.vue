@@ -3,31 +3,21 @@
 </template>
 
 <script lang="coffee">
-    UserForm = require '../../components/UserForm.vue';
-
-    module.exports = {
-
+    module.exports =
         name: 'Create'
-
-        components: { UserForm }
-
+        components:
+            UserForm: require '../../components/UserForm.vue'
         methods:
             createUser: (user) ->
-                @$http.post('api/users',user).then(
+                @$http.post('api/users', user).then(
                     (response) =>
-                        bus.$emit('success',response)
-                        @$router.push({ path: '/users' });
+                        bus.$emit 'success', response
+                        @$router.push path: '/users'
 
-                    (response) => bus.$emit('error',response.data)
+                    (response) => bus.$emit 'error', response.data
                 );
-
         created: ->
-            bus.$on('user_form_update', (payload) => @createUser(payload) )
-
-
+            bus.$on 'user_form_update', (payload) => @createUser payload
         beforeDestroy: ->
-            bus.$off('user_form_update');
-
-
-    }
+            bus.$off 'user_form_update'
 </script>

@@ -3,49 +3,32 @@
 </template>
 
 <script lang="coffee">
-    UserForm = require '../../components/UserForm.vue';
-
-    module.exports = {
-
+    module.exports =
         name: 'Update'
-
-        components: { UserForm }
-
+        components:
+            UserForm: require '../../components/UserForm.vue'
         data: ->
             user: null
-
-        methods: {
-
+        methods:
             getUser: (id) ->
-                @$root.loading = true;
-
+                @$root.loading = true
                 @$http.get('api/users/'+id).then(
                     (response) =>
-                        @user = response.data;
-                        @$root.loading = false;
-
+                        @user = response.data
+                        @$root.loading = false
                     (response) =>
-                        bus.$emit('error',response.data);
-                        @$root.loading = false;
-                );
-
+                        bus.$emit 'error', response.data
+                        @$root.loading = false
+                )
             updateUser: (user) ->
                 @$http.put('api/users/'+user.id,user).then(
                     (response) =>
-                        @$router.push({ path: '/users' });
-
-                    (response) => bus.$emit('error',response.data)
-                );
-
-        },
-
+                        @$router.push path: '/users'
+                    (response) => bus.$emit 'error', response.data
+                )
         created: ->
-            this.getUser(this.$route.params.id);
-
-            bus.$on('user_form_update', (payload) => this.updateUser(payload) )
-
+            @getUser @$route.params.id
+            bus.$on 'user_form_update', (payload) => @updateUser payload
         beforeDestroy: ->
-            bus.$off('user_form_update');
-
-    }
+            bus.$off 'user_form_update'
 </script>

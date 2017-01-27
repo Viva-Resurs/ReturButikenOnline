@@ -16,7 +16,6 @@
 <script lang="coffee">
     module.exports =
         name: 'List'
-
         components:
             ItemGrid: require '../../components/ItemGrid.vue'
             ArticleCard: require '../../components/ArticleCard.vue'
@@ -25,10 +24,8 @@
             Preview: require '../../components/tools/Preview.vue'
             Remove: require '../../components/tools/Remove.vue'
             Edit: require '../../components/tools/Edit.vue'
-
         data: ->
             items: []
-
             columns:
                 image:
                     label: 'Image'
@@ -68,20 +65,16 @@
                     checkbox_true: 'Publicerad för allmänheten'
                     checkbox_false: 'Publicerad på kommunens intranät'
                     class: 'center aligned collapsing'
-
         methods:
             attemptRemove: (article) ->
-                bus.$emit('show_message',
-                    {
-                        title:'Confirm',
-                        message:'Do you want to remove the article?',
-                        type:'confirm',
-                        cb: => this.removeArticle(article)
-                    }
-                );
+                bus.$emit 'show_message',
+                    title:'Confirm'
+                    message:'Do you want to remove the article?'
+                    type:'confirm'
+                    cb: => this.removeArticle article
 
             removeArticle: (article) ->
-                @$http.delete( 'api/articles/'+article.id ).then(
+                @$http.delete('api/articles/'+article.id).then(
                     (response) =>
                         bus.$emit 'success', 'removed_article'
                         Vue.set article, 'removed', true
@@ -93,18 +86,18 @@
                 @updateArticle article
 
             updateArticle: (article) ->
-                @$http.put( 'api/articles/'+article.id, article ).then(
+                @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
                         bus.$emit 'success', 'updated_article'
                     (response) => bus.$emit 'error', response.data
                 )
 
             previewArticle: (article) ->
-                @$router.push @$root.encodeArtNR article;
+                @$router.push @$root.encodeArtNR article
 
-            getArticles: () ->
+            getArticles: ->
                 @$root.loading = true
-                @$http.get( 'api/articles' ).then(
+                @$http.get('api/articles').then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false
@@ -115,25 +108,21 @@
 
         created: ->
             @getArticles()
-
             bus.$on 'articles_item_remove', (item) => @attemptRemove item
             bus.$on 'articles_item_preview', (item) => @previewArticle item
             bus.$on 'articles_item_changed', (payload) => @attemptUpdate payload
             bus.$on 'articles_item_edit', (item) =>
                 @$router.push path: '/articles/'+item.id
-
-            bus.$on 'publish_interval_changed', (id,new_value) =>
-                for item in this.items
+            bus.$on 'publish_interval_changed', (id, new_value) =>
+                for item in @items
                     if Number(item.id) == Number(id)
                         Vue.set item, 'publish_interval', new_value
                         bus.$emit 'articles_item_changed', item
-
-            bus.$on 'bidding_interval_changed', (id,new_value) =>
-                for item in this.items
+            bus.$on 'bidding_interval_changed', (id, new_value) =>
+                for item in @items
                     if Number(item.id) == Number(id)
                         Vue.set item, 'bidding_interval', new_value
                         bus.$emit 'articles_item_changed', item
-
         beforeDestroy: ->
             bus.$off 'articles_item_edit'
             bus.$off 'articles_item_remove'

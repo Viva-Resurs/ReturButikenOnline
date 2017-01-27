@@ -18,16 +18,15 @@
 </template>
 
 <script lang="coffee">
-    module.exports = {
+    module.exports =
         name: 'List'
-        components: {
+        components:
             ItemGrid: require '../../components/ItemGrid.vue'
             Remove: require '../../components/tools/Remove.vue'
             Save: require '../../components/tools/Save.vue'
             Undo: require '../../components/tools/Undo.vue'
             Edit: require '../../components/tools/Edit.vue'
             Add: require '../../components/tools/Add.vue'
-        }
         data: ->
             items: []
             itemsNew: []
@@ -50,24 +49,23 @@
                     class: 'collapsing'
 
         methods:
-            addItem: () ->
-                @itemsNew.push({id_new:@itemsNew.length})
+            addItem: ->
+                @itemsNew.push id_new: @itemsNew.length
 
             attemptCreate: (category) ->
                 # Validation
-                @createCategory(category)
+                @createCategory category
 
             createCategory: (new_category) ->
                 @$http.post('api/categories', new_category).then(
                     (response) =>
-                        @attemptRemove(new_category)
+                        @attemptRemove new_category
                         category = response.data
-                        @items.push(category)
+                        @items.push category
                         @$nextTick ->
-                            $('#category_content').trigger('updated',category.id)
-
-                    (response) => bus.$emit('error', response.data)
-                );
+                            $('#category_content').trigger 'updated', category.id
+                    (response) => bus.$emit 'error', response.data
+                )
 
             editItem: (item) ->
                 Vue.set item, 'edit', true
@@ -82,60 +80,57 @@
                 for key, column of @columns
                     Vue.set category, key, category[key+'_new']
 
-                @$http.put('api/categories/' + category.id, category).then(
+                @$http.put('api/categories/'+category.id, category).then(
                     (response) =>
                         Vue.set category, 'updated_at', response.data.updated_at
                         @$nextTick ->
-                            $('#category_content').trigger('updated',category.id)
-                    (response) => bus.$emit('error', response.data)
-                );
+                            $('#category_content').trigger 'updated', category.id
+                    (response) => bus.$emit 'error', response.data
+                )
 
             attemptRemove: (category) ->
                 # Remove new items that are not yet created
-                if (!category.id)
+                if !category.id
                     for index, ob of @itemsNew
-                        if (Number ob.id_new == Number category.id_new)
-                            return @itemsNew.splice(index,1)
+                        if Number(ob.id_new) == Number(category.id_new)
+                            return @itemsNew.splice index, 1
                     return false
                 # Are you sure?
-                @removeCategory(category)
+                @removeCategory category
 
             removeCategory: (category) ->
-                @$http.delete('api/categories/' + category.id).then(
+                @$http.delete('api/categories/'+category.id).then(
                     (response) =>
-                        bus.$emit('success', 'removed_category')
-                        $('tbody').trigger('removed',category.id, ->
+                        bus.$emit 'success', 'removed_category'
+                        $('tbody').trigger 'removed', category.id, ->
                             Vue.set category, 'removed', true
-                        )
-                    (response) => bus.$emit('error', response.data)
-                );
+                    (response) => bus.$emit 'error', response.data
+                )
 
-            getCategories: () ->
+            getCategories: ->
                 @$root.loading = true;
                 @$http.get('api/categories').then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false
                     (response) =>
-                        bus.$emit('error', response.data)
+                        bus.$emit 'error', response.data
                         @$root.loading = false
-                );
+                )
 
         created: ->
             @getCategories()
-            bus.$on('categories_item_add', () => @addItem() )
-            bus.$on('categories_item_edit', (item) => @editItem(item) )
-            bus.$on('categories_item_revert', (item) => @revertItem(item) )
-            bus.$on('categories_item_remove', (item) => @attemptRemove(item) )
-            bus.$on('categories_item_changed', (item) => @attemptUpdate(item) )
-            bus.$on('categories_item_created', (item) => @attemptCreate(item) )
-
+            bus.$on 'categories_item_add', => @addItem()
+            bus.$on 'categories_item_edit', (item) => @editItem item
+            bus.$on 'categories_item_revert', (item) => @revertItem item
+            bus.$on 'categories_item_remove', (item) => @attemptRemove item
+            bus.$on 'categories_item_changed', (item) => @attemptUpdate item
+            bus.$on 'categories_item_created', (item) => @attemptCreate item
         beforeDestroy: ->
-            bus.$off('categories_item_add')
-            bus.$off('categories_item_edit')
-            bus.$off('categories_item_revert')
-            bus.$off('categories_item_remove')
-            bus.$off('categories_item_changed')
-            bus.$off('categories_item_created')
-    }
+            bus.$off 'categories_item_add'
+            bus.$off 'categories_item_edit'
+            bus.$off 'categories_item_revert'
+            bus.$off 'categories_item_remove'
+            bus.$off 'categories_item_changed'
+            bus.$off 'categories_item_created'
 </script>
