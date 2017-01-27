@@ -6,7 +6,7 @@
         methods:
             decodeArtNR: (artnr) ->
                 articleID = Number artnr.split('-')[1].replace(/[ _.]/gi,'')
-                return if !isNaN(articleID) then articleID else 0
+                return if !isNaN articleID then articleID else 0
 
             displayArtNR: (article,section) ->
                 artnr = @encodeArtNR article, section

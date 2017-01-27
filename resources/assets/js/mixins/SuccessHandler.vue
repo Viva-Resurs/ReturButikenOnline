@@ -1,15 +1,13 @@
 <script lang="coffee">
-    module.exports = {
+    module.exports =
         name: 'SuccessHandler'
         methods:
             handleSuccess: (message) ->
-                bus.$emit('show_message',{
-                    type: 'success',
-                    title: message.title,
+                bus.$emit 'show_message',
+                    type: 'success'
+                    title: message.title
                     message: message.details
-                });
-        mounted: () ->
+        mounted: ->
             # Listen for success
-            bus.$on('success', this.handleSuccess );
-    }
+            bus.$on 'success', @handleSuccess
 </script>
