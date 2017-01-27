@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.container.segment#articleForm
+    div#articleForm
 
         div.ui.dividing.header Inloggning
 

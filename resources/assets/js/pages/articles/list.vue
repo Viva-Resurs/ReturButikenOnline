@@ -120,7 +120,7 @@
             bus.$on 'articles_item_preview', (item) => @previewArticle item
             bus.$on 'articles_item_changed', (payload) => @attemptUpdate payload
             bus.$on 'articles_item_edit', (item) =>
-                @$router.push path: 'articles/'+item.id
+                @$router.push path: '/articles/'+item.id
 
             bus.$on 'publish_interval_changed', (id,new_value) =>
                 for item in this.items

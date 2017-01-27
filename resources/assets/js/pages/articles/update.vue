@@ -1,5 +1,5 @@
 <template lang="pug">
-    div( v-if="article!=null" ).ui.padded.container.segment
+    div( v-if="article!=null" )
         article-form(
             v-show = "!preview"
             ":original"="article"
@@ -75,7 +75,8 @@
             updateArticle: (article) ->
                 @$http.put( 'api/articles/'+article.id, article ).then(
                     (response) =>
-                        @$router.push path: 'articles'
+                        console.log 'sent OK'
+                        @$router.push path: '/articles'
 
                     (response) => bus.$emit 'error', response.data
                 )

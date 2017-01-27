@@ -23,7 +23,7 @@
             updateUser: (user) ->
                 @$http.put('api/users/'+user.id,user).then(
                     (response) =>
-                        @$router.push({ path: 'users' })
+                        @$router.push({ path: '/users' })
                     (response) =>
                         bus.$emit 'error', response.data
                 )

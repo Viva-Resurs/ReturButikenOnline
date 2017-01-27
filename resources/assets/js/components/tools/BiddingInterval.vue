@@ -1,13 +1,13 @@
 <template lang="pug">
-        div.ui.icon.button.hover-default(
-            v-tooltip     = ""
-            ":data-html"  = "displayInterval(item.bidding_interval)"
-            ":data-value" = "item.bidding_interval"
-            @click        = "showRangePicker"
-        )
-            i.ui.icon.legal( ":class" = `
-                (activeInterval(item.bidding_interval)) ? 'active-interval':''
-            ` )
+    div.ui.icon.button.hover-default(
+        v-tooltip     = ""
+        ":data-html"  = "displayInterval(item.bidding_interval)"
+        ":data-value" = "item.bidding_interval"
+        @click        = "showRangePicker"
+    )
+        i.ui.icon.legal( ":class" = `
+            (activeInterval(item.bidding_interval)) ? 'active-interval':''
+        ` )
 </template>
 
 <script lang="coffee">

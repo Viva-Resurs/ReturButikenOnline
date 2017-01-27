@@ -12,7 +12,7 @@
                     div.ui.buttons
                         div.ui.tiny.left.aligned.images
                             img.ui.image(
-                                ":src"="'/'+image.thumb_path"
+                                ":src"="image.thumb_path"
                                 v-for="(image, index) in article.selected_images"
                                 @click="setActiveImage(index)"
                                 ":class" = "(image.selected) ? 'active' : 'disabled'")

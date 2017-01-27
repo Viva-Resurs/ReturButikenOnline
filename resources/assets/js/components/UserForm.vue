@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.container.segment#userForm
+    div#userForm
 
         div.ui.dividing.header Användare
 

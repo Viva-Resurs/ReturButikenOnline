@@ -1,5 +1,5 @@
 <template lang="pug">
-    div( v-if="article!=null" ).ui.padded.container.segment
+    div( v-if="article!=null" )
         article-form(
             v-show = "!preview"
             ":original" = "article"
