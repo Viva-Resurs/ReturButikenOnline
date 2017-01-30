@@ -36,6 +36,13 @@
                     default_sort: true
                     tooltip: 'desc'
                     class: 'link'
+                section:
+                    label: 'Section'
+                    key: 'sections'
+                    type: 'array'
+                    search: true
+                    sort: true
+                    class: 'link'
                 roles:
                     label: 'Roles'
                     key: 'roles'

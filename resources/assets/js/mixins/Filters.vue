@@ -98,9 +98,9 @@
                         # Char by char
                         for index of checkA[key].name
                             if checkA[key].name[index] < checkB[key].name[index]
-                                return -1 * scope.desc;
+                                return -1 * desc;
                             if checkA[key].name[index] > checkB[key].name[index]
-                                return 1 * scope.desc
+                                return 1 * desc
                         return 0
 
             # Set order & toggle desc

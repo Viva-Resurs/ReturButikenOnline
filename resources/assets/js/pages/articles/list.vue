@@ -64,7 +64,7 @@
                     type: 'checkbox'
                     checkbox_true: 'Publicerad för allmänheten'
                     checkbox_false: 'Publicerad på kommunens intranät'
-                    class: 'center aligned collapsing'
+                    class: 'link center aligned collapsing'
         methods:
             attemptRemove: (article) ->
                 bus.$emit 'show_message',

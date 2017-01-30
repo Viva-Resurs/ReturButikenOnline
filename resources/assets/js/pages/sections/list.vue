@@ -47,7 +47,7 @@
                     default_sort: true
                     search: true
                     sort: true
-                    class: 'collapsing'
+                    class: 'link collapsing'
         methods:
             addItem: ->
                 @itemsNew.push id_new: @itemsNew.length
