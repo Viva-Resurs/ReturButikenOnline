@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.icon.button.hover-primary(
+    div.ui.icon.button.hover-default(
         v-tooltip = ""
         data-html = "Preview"
         @click    = "preview(item)"
