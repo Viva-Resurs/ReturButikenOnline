@@ -43,7 +43,7 @@
                                     v-for="column in columns"
                                     v-if="column.sort"
                                     ":class"="(order==column.key)?'active':''"
-                                    @click="setOrder(column.key)"
+                                    @click="setOrder(column.key,column.desc)"
                                     )
                                     | {{column.label}} &nbsp;
                                     i.icon.label.sort(
@@ -67,7 +67,7 @@
                                 th( v-for="column in columns"
                                     ":class"="column.class"
                                     @click=`
-                                        (column.sort) ? setOrder(column.key) : false
+                                        (column.sort) ? setOrder(column.key,column.desc) : false
                                     ` )
                                     | {{column.label}}
                                     i.icon.label.sort(
@@ -189,7 +189,7 @@
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterBy item, @search, @columns
-                    .sort (a, b) => @shallowSort a[@order], b[@order], this
+                    .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
 
             countItems: ->
