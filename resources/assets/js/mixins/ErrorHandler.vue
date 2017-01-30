@@ -1,8 +1,12 @@
 <script lang="coffee">
     module.exports =
         name: 'ErrorHandler'
-        methods:
-            handleError: (message) ->
+        mounted: ->
+            # Listen for errors
+            bus.$on 'error', (message) ->
+                if !message
+                    return
+                
                 bus.$emit 'show_message',
                     type: 'error'
                     title: message.error
@@ -15,8 +19,6 @@
                 # Unauthorized, logout / exit
                 else if message.error == 'Unauthorized'
                     @exitUser 'unauthorized'
-
-        mounted: ->
-            # Listen for errors
-            bus.$on 'error', @handleError
+        beforeDestroy: ->
+            bus.$off 'error'
 </script>

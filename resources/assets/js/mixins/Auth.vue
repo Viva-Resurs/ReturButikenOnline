@@ -44,8 +44,6 @@
                                     type: 'info'
                                     title: 'Utloggad'
                                     message: 'Du har blivigt utloggad'
-
-
                 )
 
             exitUser: (mode) ->
@@ -74,4 +72,6 @@
             bus.$on 'login_ok', (response) =>
                 @getUser()
                 @$router.push path: '/'
+        beforeDestroy: ->
+            bus.$off 'login_ok'
 </script>
