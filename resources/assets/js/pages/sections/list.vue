@@ -39,6 +39,13 @@
                     search: true
                     sort: true
                     class: 'link'
+                users:
+                    label: 'Users'
+                    key: 'users'
+                    type: 'array'
+                    search: true
+                    sort: true
+                    class: 'link'
                 updated_at:
                     label: 'Updated'
                     key: 'updated_at'

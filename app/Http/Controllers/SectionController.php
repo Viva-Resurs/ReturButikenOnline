@@ -28,17 +28,27 @@ class SectionController extends Controller
         if (!$me)
             abort(401,'Not logged in');
 
-        if ($me->hasRole('admin'))
-            return Section::all();
-
         $results = [];
-        foreach (Section::all() as $section) {
-            foreach ($me->sections as $user_section) {
-                if ($user_section->id == $section->id)
-                    array_push( $results, [
-                        'id' => $section->id,
-                        'name' => $section->name
-                    ]);
+
+        if ($me->hasRole('admin')){
+            foreach (Section::all() as $section) {
+                array_push( $results, [
+                    'id' => $section->id,
+                    'name' => $section->name,
+                    'users' => $section->users
+                ]);
+            }
+        }
+        else {
+            foreach (Section::all() as $section) {
+                foreach ($me->sections as $user_section) {
+                    if ($user_section->id == $section->id)
+                        array_push( $results, [
+                            'id' => $section->id,
+                            'name' => $section->name,
+                            'users' => $section->users
+                        ]);
+                }
             }
         }
 

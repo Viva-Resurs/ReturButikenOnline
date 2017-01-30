@@ -113,8 +113,11 @@
                                     )
 
                                     div(v-if="column.type=='array'")
-                                        div( v-for="(post, column_index) in item[column.key]") {{ post.name }}
-                                            span(v-if="column_index != item[column.key].length -1") ,
+                                        span( v-for="(post, column_index) in item[column.key]")
+                                            router-link.item( v-if="column.key=='users'"
+                                            ":to"="'/users/'+post.id" exact ) {{post.name}}
+                                            span( v-else ) {{post.name}}
+                                            span( v-if="(column_index != item[column.key].length -1)") ,&nbsp;
 
                                     div.center.aligned( v-if="column.type=='checkbox'" )
                                         i( ":class"="'ui icon ' + ((item[column.key]==1) ? 'green checkmark' : 'red remove')"
