@@ -71,7 +71,7 @@
                     title:'Confirm'
                     message:'Do you want to remove the article?'
                     type:'confirm'
-                    cb: => this.removeArticle article
+                    cb: => @removeArticle article
 
             removeArticle: (article) ->
                 @$http.delete('api/articles/'+article.id).then(
@@ -124,10 +124,10 @@
                         Vue.set item, 'bidding_interval', new_value
                         bus.$emit 'articles_item_changed', item
         beforeDestroy: ->
-            bus.$off 'articles_item_edit'
             bus.$off 'articles_item_remove'
-            bus.$off 'articles_item_changed'
             bus.$off 'articles_item_preview'
+            bus.$off 'articles_item_changed'
+            bus.$off 'articles_item_edit'
             bus.$off 'publish_interval_changed'
             bus.$off 'bidding_interval_changed'
 </script>

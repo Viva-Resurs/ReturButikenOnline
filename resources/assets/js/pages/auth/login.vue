@@ -1,26 +1,21 @@
 <template lang="pug">
     div.ui.padded.container.segment#articleForm
-
         div.ui.dividing.header Inloggning
-
         form.ui.form( v-on:submit.prevent="attemptLogin" role="form" name="myform" )
-
-            div.field
+            div.field.sixteen.wide
                 label E-post:
                 input#name(
                     type="email"
                     v-model="login.email"
                     placeholder="name@domain.com" )
-
-            div.field
+            div.field.sixteen.wide
                 label Lösenord:
                 input#password(
                     type="password"
                     v-model="login.password" )
-
-            button.ui.right.floated.button.primary( type="submit" @keydown.enter.prevent="attemptLogin" ) Login
-            br
-            br
+            div.field.sixteen.wide.right.aligned
+                div.ui.container.right.aligned.fluid
+                    button.ui.right.attached.aligned.button.primary( type="submit" @keydown.enter.prevent="attemptLogin" ) Login
 </template>
 
 <script lang="coffee">

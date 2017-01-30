@@ -33,7 +33,7 @@
             getCategoryList: ->
                 @$http.get('api/categories').then(
                     (response) =>
-                        this.categories = response.data
+                        @categories = response.data
                     (response) =>
                         #bus.$emit 'error', response.data
                 )

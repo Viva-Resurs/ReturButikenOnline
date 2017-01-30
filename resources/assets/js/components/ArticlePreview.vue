@@ -47,7 +47,7 @@
                     div.ui.top.attached.label( @click="toggleDetails()" )
                         h4.ui.sub.header Mer information
                     div.ui.grid.equal.width.stackable#details
-                        div.row( v-if="article.selected_categories.length>0" )
+                        div.row( v-if="article.selected_categories && article.selected_categories.length>0" )
                             div.column
                                 h4.ui.sub.header Kategorier
                                 p
