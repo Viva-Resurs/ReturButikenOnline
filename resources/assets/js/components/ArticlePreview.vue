@@ -30,8 +30,11 @@
                             h4.ui.sub.header Kontakt
                             div(v-for="contact in contacts")
                                 div( v-for="selected_contact in article.selected_contacts")
-                                    div.ui.card(v-if="(contact.id == selected_contact)")
+                                    div.ui.card.fluid(v-if="(contact.id == selected_contact)")
                                         div.content
+                                            img.right.floated.ui.mini.image(
+                                                v-if="contact.images && contact.images.length>0"
+                                                ":src"="contact.images[0].thumb_path" )
                                             div.header {{ contact.fullname }}
                                             div.description
                                                 p

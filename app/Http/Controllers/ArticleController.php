@@ -80,7 +80,8 @@ class ArticleController extends Controller
                 'id' => $contact->id,
                 'fullname' => $contact->fullname,
                 'phone' => $contact->phone,
-                'email' => $contact->email
+                'email' => $contact->email,
+                'images' => User::find($contact->id)->images
             ]);
         }
 
