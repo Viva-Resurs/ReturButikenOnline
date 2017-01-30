@@ -2,20 +2,20 @@
     div.ui.padded.container.segment#articleForm
         div.ui.dividing.header Inloggning
         form.ui.form( v-on:submit.prevent="attemptLogin" role="form" name="myform" )
-            div.field.sixteen.wide
+            div.field
                 label E-post:
                 input#name(
                     type="email"
                     v-model="login.email"
                     placeholder="name@domain.com" )
-            div.field.sixteen.wide
+            div.field
                 label Lösenord:
                 input#password(
                     type="password"
                     v-model="login.password" )
-            div.field.sixteen.wide.right.aligned
+            div.field
                 div.ui.container.right.aligned.fluid
-                    button.ui.right.attached.aligned.button.primary( type="submit" @keydown.enter.prevent="attemptLogin" ) Login
+                    button.ui.right.aligned.button.primary( type="submit" @keydown.enter.prevent="attemptLogin" ) Login
 </template>
 
 <script lang="coffee">
