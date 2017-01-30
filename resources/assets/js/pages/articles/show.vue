@@ -1,11 +1,12 @@
 <template lang="pug">
-    article-preview(
-        v-if="article!=null"
-        ":article" = "article"
-        "mode" = "show"
-        ":categories" = "categories"
-        ":contacts" = "article.public_contacts"
-    )
+    div.ui.padded.container.segment
+        article-preview(
+            v-if="article!=null"
+            ":article" = "article"
+            "mode" = "show"
+            ":categories" = "categories"
+            ":contacts" = "article.public_contacts"
+        )
 </template>
 
 <script lang="coffee">
