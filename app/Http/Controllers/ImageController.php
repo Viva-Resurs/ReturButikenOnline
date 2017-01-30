@@ -43,7 +43,7 @@ class ImageController extends Controller
 
         $user = Auth::user();
 
-        if (!$user || !$user->hasRole('admin'))
+        if (!$user)
             abort(401,'Not allowed to create images');
 
         foreach ($request->file('files') as $file) {
@@ -90,7 +90,7 @@ class ImageController extends Controller
 
         $user = Auth::user();
 
-        if (!$user || !$user->hasRole('admin'))
+        if (!$user)
             abort(401,'Not allowed to remove images');
 
         $image = Image::find($id);
