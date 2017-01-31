@@ -3,10 +3,10 @@
         name: 'ErrorHandler'
         mounted: ->
             # Listen for errors
-            bus.$on 'error', (message) ->
+            bus.$on 'error', (message) =>
                 if !message
                     return
-                
+
                 bus.$emit 'show_message',
                     type: 'error'
                     title: message.error
