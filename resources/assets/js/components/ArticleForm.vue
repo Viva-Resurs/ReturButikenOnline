@@ -194,12 +194,12 @@
                                 type: 'empty'
                                 prompt: 'Please select a role'
                             ]
-                        validate_categories:
-                            identifier: 'validate_categories'
-                            rules: [
-                                type: 'empty'
-                                prompt: 'Please select a category'
-                            ]
+                        #validate_categories:
+                        #    identifier: 'validate_categories'
+                        #    rules: [
+                        #        type: 'empty'
+                        #        prompt: 'Please select a category'
+                        #    ]
                         price:
                             identifier: 'price'
                             rules: [
