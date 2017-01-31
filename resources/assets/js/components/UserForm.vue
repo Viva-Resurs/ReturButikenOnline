@@ -32,6 +32,7 @@
 
 
         form.ui.form(
+            v-validator="form_settings"
             "v-on:submit.prevent"="attemptSave"
             role="form"
         )
@@ -45,6 +46,7 @@
                         div.field
                             label Användarnamn:
                             input#name(
+                                name="name"
                                 type="text"
                                 "v-model"="user.name"
                                 placeholder="Användarnamn"
@@ -69,14 +71,15 @@
 
                         div.field( v-if="$root.isAdmin()" )
                             label Välj roll:
+
                             div.ui.fluid.selection.dropdown#role(
                                 v-if="roles"
-                                name="roles"
                                 v-dropdown=""
                                 ":data-selected"="(user.selected_roles.length) ? user.selected_roles[0].id : user.selected_roles"
                             )
-                                i.dropdown.icon
+                                input(type="hidden" name="validate_roles")
                                 div.default.text Select Roles
+                                i.dropdown.icon
                                 div.menu
                                     div.item(
                                         v-for="role in roles"
@@ -91,8 +94,9 @@
                                 v-dropdown=""
                                 ":data-selected"="(user.selected_sections.length) ? user.selected_sections[0].id : user.selected_sections"
                             )
-                                i.dropdown.icon
+                                input(type="hidden" name="validate_sections")
                                 div.default.text Select Sections
+                                i.dropdown.icon
                                 div.menu
                                     div.item(
                                         v-for="section in sections"
@@ -133,7 +137,6 @@
                             type="submit"
                             @keydown.enter.prevent="attemptSave"
                         ) Spara
-
             br
             br
 </template>
@@ -149,7 +152,7 @@
                 name: ''
                 password: false
                 email: ''
-                fullname: false
+                fullname: ''
                 phone: ''
                 selected_roles: []
                 selected_sections: []
@@ -160,7 +163,53 @@
                 false
             settings:
                 change_password: false
-            myform: []
+
+            form_settings:
+                inline: true
+                on: 'blur'
+                fields:
+                    name:
+                        identifier: 'name'
+                        rules: [
+                            type: 'empty',
+                            prompt: 'Please enter your name'
+                        ]
+                    validate_roles:
+                        identifier: 'validate_roles'
+                        rules: [
+                            type: 'empty',
+                            prompt: 'Please select a role'
+                        ]
+
+                    validate_sections:
+                        identifier: 'validate_sections'
+                        rules: [
+                            type: 'empty',
+                            prompt: 'Please select a section'
+                        ]
+
+                    fullname:
+                        identifier: 'fullname'
+                        rules: [
+                            type: 'empty',
+                            prompt: 'Please enter your full name'
+                        ]
+
+                    phone:
+                        identifer: 'phone'
+                        rules: [
+                            type: 'empty',
+                            prompt: 'Please enter your phone number'
+                        ]
+
+                    email:
+                        identifier: 'email'
+                        rules: [
+                            type: 'email',
+                            prompt: 'Please enter your email-adress'
+                        ]
+
+
         }
 
         methods:
