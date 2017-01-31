@@ -3,7 +3,7 @@
 
         div.ui.dividing.header Publicera
 
-        form.ui.form(
+        form.ui.form#article_form(
             "v-on:submit.prevent"="previewArticle"
             role="form"
         )
@@ -24,8 +24,9 @@
                         v-dropdown=""
                         ":data-selected"="article.selected_categories"
                     )
-                        i.dropdown.icon
+                        input#validate_categories(type="hidden")
                         div.default.text Select Category
+                        i.dropdown.icon
                         div.menu
                             div.item(
                                 v-for="category in categories"
@@ -169,10 +170,43 @@
         props: [ 'original', 'categories', 'contacts' ],
 
         data: -> {
+            ready: false
             settings:
                 publish_interval: false
                 bidding_interval: false
-            myform: []
+                form:
+                    inline: true
+                    on: 'blur'
+                    onSuccess: =>
+                        console.log 'validated'
+                        bus.$emit 'article_form_preview', @article
+
+                    fields:
+                        name:
+                            identifier: 'name'
+                            rules: [
+                                type: 'empty'
+                                prompt: 'Please enter article name'
+                            ]
+                        desc:
+                            identifier: 'desc'
+                            rules: [
+                                type: 'empty'
+                                prompt: 'Please select a role'
+                            ]
+                        validate_categories:
+                            identifier: 'validate_categories'
+                            rules: [
+                                type: 'empty'
+                                prompt: 'Please select a category'
+                            ]
+                        price:
+                            identifier: 'price'
+                            rules: [
+                                type: 'integer'
+                                prompt: 'Please enter price'
+                            ]
+
         }
 
         computed:
@@ -195,7 +229,11 @@
                 if (this.settings.bidding_interval == false)
                     this.article.bidding_interval = '';
 
-                bus.$emit( 'article_form_preview', this.article );
+                if !@ready
+                    $('#article_form').form(@settings.form).form 'validate form'
+                    @ready = true
+                else
+                    $('#article_form').form 'validate form'
 
             showRangePicker: (e) ->
                 article = @article
