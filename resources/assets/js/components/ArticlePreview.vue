@@ -1,13 +1,10 @@
 <template lang="pug">
     div#preview
-
         div.ui.dividing.header( v-if="mode!='show'" ) Förhandsgranskning
-
         div( v-if="article!=-1" )
             div( v-if="article.selected_images && article.selected_images.length>0" )
                 div.ui.basic.segment.center.aligned.preview_header(
                     v-swipe="article.selected_images")
-
                 div.ui.basic.segment.center.aligned.preview_thumbs
                     div.ui.buttons
                         div.ui.tiny.left.aligned.images
@@ -18,22 +15,28 @@
                                 ondrag="false"
                                 dragable="false"
                                 ":class" = "(image.selected) ? 'active' : 'disabled'")
-
             div.ui.basic.segment
                 h2.ui.header {{ article.name }}
-                    div.sub.header Artikelnr: {{ $root.displayArtNR(article) }}
-                div.description {{ article.desc }}
-
-                br
-                br
-                div.ui.grid.bottom.aligned.stackable
-                    div.two.column.row
-                        div.left.aligned.left.floated.column(v-if="article.selected_contacts && article.selected_contacts.length>0")
+                    div.ui.black.horizontal.label(
+                        style="position: relative; top: -2px; left: 15px;"
+                        v-for="selected_category in article.selected_categories"
+                        )
+                        template(
+                            v-for="category in categories"
+                            v-if="category.id == selected_category" )
+                            | {{ category.name }}
+                div.ui.hidden.divider
+                div.ui.grid.stackable
+                    div.row
+                        div.ten.wide.left.aligned.column
+                            div.description {{ article.desc }}
+                            h3( v-if="article.price" ) Pris : {{article.price}} kr
+                        div.six.wide.center.aligned.column(v-if="article.selected_contacts && article.selected_contacts.length>0")
                             h4.ui.sub.header Kontakt
-                            div(v-for="contact in contacts")
-                                div( v-for="selected_contact in article.selected_contacts")
+                            template(v-for="contact in contacts")
+                                template( v-for="selected_contact in article.selected_contacts")
                                     div.ui.card.fluid(v-if="(contact.id == selected_contact)")
-                                        div.content
+                                        div.content.left.aligned
                                             img.right.floated.ui.mini.image(
                                                 v-if="contact.images && contact.images.length>0"
                                                 ":src"="contact.images[0].thumb_path" )
@@ -45,47 +48,47 @@
                                                 p
                                                     i.icon.mail
                                                     b {{ contact.email }}
-                        div.right.aligned.right.floated.column( v-if="article.price" )
-                            h3 Pris : {{article.price}} kr
+                div.ui.divider
+                div.ui.grid.padded
+                    span
+                        i( v-if="article.updated_at" )
+                            b Ändrad:
+                            | &nbsp;&nbsp;{{ formatDate(article.updated_at.date) }}
+                        i( v-if="!article.updated_at && article.created_at" )
+                            | Publicerad {{ formatDate(article.created_at.date) }}
+                        i( v-if="!article.updated_at && !article.created_at" )
+                            | Publicerad YYYY-MM-DD HH:MM
+                    span
+                        b Artikelnr:
+                        | &nbsp;&nbsp;{{ $root.displayArtNR(article) }}
                 div.ui.hidden.divider
                 div.ui.segment( v-if="mode!='show'" )
                     div.ui.top.attached.label( @click="toggleDetails()" )
                         h4.ui.sub.header Information om publicering
                     div.ui.grid.equal.width.stackable#details
-                        div.row( v-if="article.selected_categories && article.selected_categories.length>0" )
-                            div.column
-                                h4.ui.sub.header Kategorier
-                                p
-                                    template(v-for="(orig_category, index) in categories")
-                                        template( v-for="selected_category in article.selected_categories")
-                                            span(v-if="(orig_category.id == selected_category)")
-                                                i.ui.icon.tag( v-if="index==0" )
-                                                span( v-if="index!=0 && article.selected_categories.length>1" )
-                                                    | {{ ', ' + orig_category.name }}
-                                                span( v-else="" )
-                                                    | {{ orig_category.name }}
                         div.row
                             div.column( v-if="article.publish_interval" )
-                                h4.ui.sub.header Publicerings intervall
+                                h4.ui.sub.header Publiceringsintervall
                                 i.ui.icon.time
-                                span  {{ formatInterval(article.publish_interval) }}
-
+                                span {{ formatInterval(article.publish_interval) }}
                             div.column( v-if="article.bidding_interval" )
                                 h4.ui.sub.header Budgivningsintervall
                                 i.ui.icon.time
-                                span  {{ formatInterval(article.bidding_interval) }}
+                                span {{ formatInterval(article.bidding_interval) }}
+                            div.column( v-if="!article.publish_interval && !article.bidding_interval" )
+                                h4.ui.sub.header
+                                i.ui.icon.warning
+                                i Artikeln har varken publiceringsintervall eller budgivningsintervall
                         div.row
-                            div.column(v-if="article.public")
-                                h4.ui.sub.header Område
+                            div.column(v-if="article.public==true")
+                                h4.ui.sub.header Publiceras för
                                 i.ui.icon.green.world
-                                | Publicerad externt
-                            div.column(v-if="!article.public")
-                                h4.ui.sub.header Område
+                                | Allmänheten
+                            div.column(v-if="article.public!=true")
+                                h4.ui.sub.header Publiceras för
                                 i.ui.icon.red.industry
-                                | Publicerad på kommunens intranät
-
+                                | Kommunens intranät
         div.ui.container
-            div.ui.hidden.divider
             div.ui.container.right.aligned
                 div.ui.button.secondary( v-if="mode=='show'"
                     @click="goBack()"
@@ -96,8 +99,6 @@
                 div.ui.button.primary( v-if="mode!='show'"
                     @click="attemptPublish"
                 ) Publish
-
-
         div( v-if="article==-1" )
             | Artikeln hittades inte
 </template>
@@ -119,7 +120,13 @@
 
             formatInterval: (interval) ->
                 dates = String(interval).split '|'
-                return dates[0] + ' - ' + dates[1]
+                dates[0] = dates[0].substr 0, dates[0].lastIndexOf ':'
+                dates[1] = dates[1].substr 0, dates[1].lastIndexOf ':'
+                return "#{dates[0]} - #{dates[1]}"
+
+            formatDate: (d) ->
+                date = String d
+                return date.substr 0, date.lastIndexOf ':'
 
             attemptPublish: ->
                 bus.$emit( 'article_form_update', this.article )
