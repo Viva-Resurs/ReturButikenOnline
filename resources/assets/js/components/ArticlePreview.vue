@@ -15,6 +15,8 @@
                                 ":src"="image.thumb_path"
                                 v-for="(image, index) in article.selected_images"
                                 @click="setActiveImage(index)"
+                                ondrag="false"
+                                dragable="false"
                                 ":class" = "(image.selected) ? 'active' : 'disabled'")
 
             div.ui.basic.segment

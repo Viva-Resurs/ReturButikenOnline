@@ -114,10 +114,17 @@
                             "v-model"="user.email"
                             placeholder="Epost" )
                 div.sixteen.wide.column
-                    div.field
-                        button.ui.right.floated.button.primary(
-                            type="submit"
-                            @keydown.enter.prevent="attemptSave" ) Spara
+                    div.ui.container
+                        div.ui.hidden.divider
+                        div.ui.container.right.aligned
+                            div.ui.button.secondary(
+                                @click="goBack()"
+                            ) Back
+                            div.ui.button.primary(
+                                type="submit"
+                                @keydown.enter.prevent="attemptSave"
+                                @click="attemptSave"
+                            ) Spara
 </template>
 
 <script lang="coffee">

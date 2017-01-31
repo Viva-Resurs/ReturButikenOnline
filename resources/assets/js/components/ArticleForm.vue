@@ -143,14 +143,18 @@
                                 v-for="contact in contacts"
                                 ":data-value"="contact.id"
                             ) {{contact.name}}
-            div.field
-                button.ui.right.floated.button(
-                    type="submit"
-                    @keydown.enter.prevent="previewArticle"
-                ) Förhandsgranska
-
-            br
-            br
+            div.sixteen.wide.column
+                div.ui.container
+                    div.ui.hidden.divider
+                    div.ui.container.right.aligned
+                        div.ui.button.secondary(
+                            @click="goBack()"
+                        ) Back
+                        div.ui.button.primary(
+                            type="submit"
+                            @keydown.enter.prevent="previewArticle"
+                            @click="previewArticle"
+                        ) Förhandsgranska
 </template>
 
 <script lang="coffee">
