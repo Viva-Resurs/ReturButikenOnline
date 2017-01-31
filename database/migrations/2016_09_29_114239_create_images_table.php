@@ -20,6 +20,7 @@ class CreateImagesTable extends Migration
             $table->string('original_name');
             $table->string('path');
             $table->string('thumb_path');
+            $table->integer('order')->nullable();
 
             $table->timestamps();
         });

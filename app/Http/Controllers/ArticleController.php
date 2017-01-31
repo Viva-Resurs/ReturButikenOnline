@@ -85,13 +85,14 @@ class ArticleController extends Controller
             ]);
         }
 
-        foreach ($article->images as $image)
+        foreach ($article->images()->orderBy('order') as $image)
             array_push($result['selected_images'], [
                 'id' => $image->id,
                 'name' => $image->name,
                 'original_name' => $image->original_name,
                 'path' => $image->path . '?',
-                'thumb_path' => $image->thumb_path . '?'
+                'thumb_path' => $image->thumb_path . '?',
+                'order' => $image->order
             ]);
 
         return $result;
