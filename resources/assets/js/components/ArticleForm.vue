@@ -200,6 +200,13 @@
                         article[key] = start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
                 )
 
+            updateImageOrder: ->
+                # Apply current order if any
+                @article.images = @article.images.sort (a, b) => a.order-b.order
+                # Then set it
+                for image, index in @article.images
+                    image.order = index
+
         created: ->
             # If a original is passed (Update-mode), fill the form
             if @original
@@ -210,19 +217,25 @@
             # Check if using bidding_interval
             if @article.bidding_interval != ''
                 @settings.bidding_interval = true
+            # Refresh Image ordering
+            @updateImageOrder()
             # Listen for changes in Categories
             bus.$on 'categories_changed', (id, new_value) =>
                 @article.selected_categories = new_value
             # Listen for changes in Contacts
             bus.$on 'contacts_changed', (id, new_value) =>
                 @article.selected_contacts = new_value
-            # Images
+            # Listen for changes in Images
             bus.$on 'image_added', (image) =>
                 @article.images.push image
+                @updateImageOrder()
             bus.$on 'image_removed', (image) =>
                 for index, img of @article.images
                     if Number(img.id) == Number(image.id)
                         @article.images.splice index, 1
+                @updateImageOrder()
+            bus.$on 'image_reorder', =>
+                @updateImageOrder()
         beforeDestroy: ->
             bus.$off 'categories_changed'
             bus.$off 'contacts_changed'
