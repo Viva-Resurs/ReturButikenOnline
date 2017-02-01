@@ -17,8 +17,8 @@
                                 ":class" = "(image.selected) ? 'active' : 'disabled'")
             div.ui.basic.segment
                 h2.ui.header {{ article.name }}
-                    div.ui.black.horizontal.label(
-                        style="position: relative; top: -2px; left: 15px;"
+                    div.ui.black.horizontal.label.small(
+                        style="position: relative; left: 15px;"
                         v-for="selected_category in article.selected_categories"
                         )
                         template(
@@ -26,12 +26,11 @@
                             v-if="category.id == selected_category" )
                             | {{ category.name }}
                 div.ui.hidden.divider
-                div.ui.grid.stackable
-                    div.row
-                        div.ten.wide.left.aligned.column
-                            div.description {{ article.desc }}
-                            h3( v-if="article.price" ) Pris : {{article.price}} kr
-                        div.six.wide.center.aligned.column(v-if="article.selected_contacts && article.selected_contacts.length>0")
+                div.description {{ article.desc }}
+                div.ui.hidden.divider
+                div.ui.grid.bottom.aligned.stackable
+                    div.two.column.row
+                        div.left.aligned.left.floated.column(v-if="article.selected_contacts && article.selected_contacts.length>0")
                             h4.ui.sub.header Kontakt
                             template(v-for="contact in contacts")
                                 template( v-for="selected_contact in article.selected_contacts")
@@ -48,6 +47,9 @@
                                                 p
                                                     i.icon.mail
                                                     b {{ contact.email }}
+                        div.right.floated.right.aligned.column
+
+                            h3( v-if="article.price" ) Pris : {{article.price}} kr
                 div.ui.divider
                 div.ui.grid.padded
                     span
