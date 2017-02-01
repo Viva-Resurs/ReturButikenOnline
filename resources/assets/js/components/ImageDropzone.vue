@@ -1,26 +1,36 @@
 <template lang="pug">
-    div.ui.segment.bottom.attached#dropZone
-        input#files( type='file' name='files[]' hidden multiple)
-        div.ui.five.doubling.cards
-            div.ui.card( v-for="(image, index) in images" v-image="" )
-                img.ui.fluid.rounded.image(
-                    ":src"="image.thumb_path"
-                    ":id"="image.id"
-                    ":class"="(mode == 'usefirst' && index==0)?'active':''" )
-                a.ui.white.tiny.left.corner.label( @click="show(image)" )
-                    i.eye.icon
-                a.ui.red.tiny.right.corner.label( @click="remove(image)" )
-                    i.delete.icon
-            div.ui.fluid.card( v-for="waiting in buffer" )
-                div.ui.loader.centered.inline.active
-            div.ui.fluid.card
-                div.ui.icon.massive.fluid.button( @click="openDialog()" )
-                    i.upload.icon
-        div.ui.dimmer
-            div.content
-                div.center
-                    h2.ui.inverted.icon.header
-                        i.upload.icon Drop Files
+    div
+        div.ui.attached.right.aligned.menu( v-if="images.length>0" )
+            a.item( @click="openDialog()" )
+                i.upload.icon
+                | Upload
+        div.ui.segment.bottom.attached#dropZone
+            input#files( type='file' name='files[]' hidden multiple)
+            div.ui.five.doubling.cards(
+                v-show="buffer.length>0 || images.length>0" )
+                div.ui.card( v-for="(image, index) in images" v-image="" )
+                    img.ui.fluid.rounded.image(
+                        ":src"="image.thumb_path"
+                        ":id"="image.id"
+                        ":class"="(mode=='usefirst' && index==0)?'active':''" )
+                    a.ui.white.tiny.left.corner.label( @click="show(image)" )
+                        i.eye.icon
+                    a.ui.red.tiny.right.corner.label( @click="remove(image)" )
+                        i.delete.icon
+                div.ui.fluid.card( v-for="waiting in buffer" )
+                    div.ui.loader.centered.inline.active
+            div.ui.padded.eight.wide.grid(
+                v-show="buffer.length==0 && images.length==0" )
+                div.center.aligned.column.link(
+                    @click="openDialog()"
+                    style="border: 1px dashed #999; border-radius: 10px; cursor:pointer;")
+                    i.circular.icon.info
+                    p Dra bilder hit eller tryck för att bläddra
+            div.ui.dimmer
+                div.content
+                    div.center
+                        h2.ui.inverted.icon.header
+                            i.upload.icon Drop Files
 </template>
 
 <script lang="coffee">
