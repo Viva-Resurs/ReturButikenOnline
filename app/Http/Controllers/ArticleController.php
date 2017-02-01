@@ -223,6 +223,13 @@ class ArticleController extends Controller
             }
         }
 
+        // Update Images order
+        foreach($request['images'] as $image){
+            $article_image = Image::find($image['id']);
+            $article_image->order = $image['order'];
+            $article_image->save();
+        }
+
         // Clear Contacts
         if ($article->contacts)
             foreach( $article->contacts as $u)
