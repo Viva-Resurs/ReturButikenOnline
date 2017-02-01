@@ -32,7 +32,7 @@
                 publish_interval: ''
                 bidding_interval: ''
                 selected_categories: []
-                selected_images: []
+                images: []
                 selected_contacts: []
             categories:
                 null

@@ -38,7 +38,7 @@ class ArticleController extends Controller
                     'public' => $article->public,
                     'sections' => $article->sections,
                     'selected_categories' => $article->categories,
-                    'selected_images' => $article->images,
+                    'images' => $article->images,
                     'selected_contacts' => $article->contacts
                 ]);
         }
@@ -66,7 +66,7 @@ class ArticleController extends Controller
             'public' => $article->public,
             'sections' => $article->sections,
             'selected_categories' => [],
-            'selected_images' => [],
+            'images' => [],
             'selected_contacts' => [],
             'public_contacts' => []
         ];
@@ -85,8 +85,8 @@ class ArticleController extends Controller
             ]);
         }
 
-        foreach ($article->images()->orderBy('order') as $image)
-            array_push($result['selected_images'], [
+        foreach ($article->images()->orderBy('order')->get() as $image)
+            array_push($result['images'], [
                 'id' => $image->id,
                 'name' => $image->name,
                 'original_name' => $image->original_name,
@@ -125,8 +125,8 @@ class ArticleController extends Controller
             }
 
         // Attach Images
-        if ($request['selected_images'])
-            foreach ($request['selected_images'] as $image){
+        if ($request['images'])
+            foreach ($request['images'] as $image){
                 $im = Image::find($image['id']);
                 $article->images()->save($im);
             }
@@ -193,9 +193,9 @@ class ArticleController extends Controller
         // Clear removed Images
         foreach($article->images as $old_image){
             $keep = false;
-            if ($request['selected_images'])
-                foreach ($request['selected_images'] as $selected_image)
-                    if ($old_image->id == $selected_image['id'])
+            if ($request['images'])
+                foreach ($request['images'] as $image)
+                    if ($old_image->id == $image['id'])
                         $keep = true;
             if (!$keep){
                 // Attached image could not be found in selection, detach it
@@ -209,15 +209,15 @@ class ArticleController extends Controller
         }
 
         // Attach new Images
-        foreach ($request['selected_images'] as $selected_image){
+        foreach ($request['images'] as $image){
             $new = true;
             if ($article->images)
                 foreach( $article->images as $old_image)
-                    if ($old_image->id == $selected_image['id'])
+                    if ($old_image->id == $image['id'])
                         $new = false;
             if ($new) {
                 // Image could not be found in currently attached images
-                $image = Image::find($selected_image['id']);
+                $image = Image::find($image['id']);
                 // Attach it
                 $article->images()->save($image);
             }

@@ -2,15 +2,15 @@
     div#preview
         div.ui.dividing.header( v-if="mode!='show'" ) Förhandsgranskning
         div( v-if="article!=-1" )
-            div( v-if="article.selected_images && article.selected_images.length>0" )
+            div( v-if="article.images && article.images.length>0" )
                 div.ui.basic.segment.center.aligned.preview_header(
-                    v-swipe="article.selected_images")
+                    v-swipe="article.images")
                 div.ui.basic.segment.center.aligned.preview_thumbs
                     div.ui.buttons
                         div.ui.tiny.left.aligned.images
                             img.ui.image(
                                 ":src"="image.thumb_path"
-                                v-for="(image, index) in article.selected_images"
+                                v-for="(image, index) in article.images"
                                 @click="setActiveImage(index)"
                                 ondrag="false"
                                 dragable="false"

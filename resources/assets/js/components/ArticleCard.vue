@@ -27,13 +27,13 @@
                         | Pris
                     p {{ item.price }} kr
 
-                div( v-if="item.selected_images.length>0" ).ui.vertical.segment.basic
+                div( v-if="item.images.length>0" ).ui.vertical.segment.basic
                     h4.ui.sub.header
                         | Bilder
                     p
                         div.ui.tiny.images
                             img.ui.rounded.image(
-                                v-for="image in item.selected_images"
+                                v-for="image in item.images"
                                 ":src"="image.thumb_path" )
 
         div.extra.content

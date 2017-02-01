@@ -29,7 +29,7 @@
             columns:
                 image:
                     label: 'Image'
-                    key: 'selected_images'
+                    key: 'images'
                     type: 'image'
                     class: 'center aligned collapsing'
                 name:
