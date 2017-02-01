@@ -120,15 +120,15 @@
             div.two.fields( v-if="contacts" )
                 div.field
                     label Kontakt:
-                    div.field( v-if="article.selected_contacts")
-                        div.ui.fluid.card( v-for="contact in selectedContacts" )
-                            div.content
-                                div.header {{ contact.fullname }}
-                                div.description
-                                    p Telefon:&nbsp;
-                                        b {{ contact.phone }}
-                                    p E-post:&nbsp;
-                                        b {{ contact.email }}
+                    div.field( v-if="article.selected_contacts" )
+                        user-card.fluid(
+                            ":user"="contact"
+                            ":roles"="contact.roles"
+                            ":sections"="contact.sections"
+                            "detailed"="true"
+                            v-for="contact in selectedContacts"
+                            )
+
                 div.field( v-if="article.selected_contacts && contacts.length>1" )
                     label Välj kontakt:
                     div.ui.fluid.selection.dropdown#contact(
@@ -160,12 +160,13 @@
 
 <script lang="coffee">
     ImageDropzone = require './ImageDropzone.vue'
+    UserCard = require './UserCard.vue'
 
     module.exports =
 
         name: 'ArticleForm'
 
-        components: { ImageDropzone },
+        components: { ImageDropzone, UserCard },
 
         props: [ 'original', 'categories', 'contacts' ],
 
