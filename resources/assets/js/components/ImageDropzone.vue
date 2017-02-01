@@ -8,11 +8,13 @@
             input#files( type='file' name='files[]' hidden multiple)
             div.ui.five.doubling.cards(
                 v-show="buffer.length>0 || images.length>0" )
-                div.ui.card( v-for="(image, index) in images" v-image="" )
+                div.ui.card( v-for="(image, index) in images" v-image="image" )
                     img.ui.fluid.rounded.image(
                         ":src"="image.thumb_path"
                         ":id"="image.id"
                         ":class"="(mode=='usefirst' && index==0)?'active':''" )
+                    div.ui.bottom.attached.label.center.aligned
+                        | {{ image.order }}
                     a.ui.white.tiny.left.corner.label( @click="show(image)" )
                         i.eye.icon
                     a.ui.red.tiny.right.corner.label( @click="remove(image)" )
