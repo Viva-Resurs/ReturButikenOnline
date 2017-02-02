@@ -2,23 +2,23 @@
     div#preview
         div.ui.dividing.header( v-if="mode!='show'" ) Förhandsgranskning
         div( v-if="article!=-1" )
-            div( v-if="article.images && article.images.length>0" )
+            div( v-if="article.selected_images && article.selected_images.length>0" )
                 div.ui.basic.segment.center.aligned.preview_header(
-                    v-swipe="article.images")
+                    v-swipe="article.selected_images")
                 div.ui.basic.segment.center.aligned.preview_thumbs
                     div.ui.buttons
                         div.ui.tiny.left.aligned.images
                             img.ui.image(
                                 ":src"="image.thumb_path"
-                                v-for="(image, index) in article.images"
+                                v-for="(image, index) in article.selected_images"
                                 @click="setActiveImage(index)"
                                 ondrag="false"
                                 dragable="false"
                                 ":class" = "(image.selected) ? 'active' : 'disabled'")
             div.ui.basic.segment
                 h2.ui.header {{ article.name }}
-                    div.ui.black.horizontal.label.small(
-                        style="position: relative; left: 15px;"
+                    div.ui.black.horizontal.label(
+                        style="position: relative; top: -2px; left: 15px;"
                         v-for="selected_category in article.selected_categories"
                         )
                         template(
@@ -26,30 +26,18 @@
                             v-if="category.id == selected_category" )
                             | {{ category.name }}
                 div.ui.hidden.divider
-                div.description {{ article.desc }}
-                div.ui.hidden.divider
-                div.ui.grid.bottom.aligned.stackable
-                    div.two.column.row
-                        div.left.aligned.left.floated.column(v-if="article.selected_contacts && article.selected_contacts.length>0")
+                div.ui.grid.stackable
+                    div.row
+                        div.ten.wide.left.aligned.column
+                            div.description {{ article.desc }}
+                            h3( v-if="article.price" ) Pris : {{article.price}} kr
+                        div.six.wide.center.aligned.column(v-if="article.selected_contacts && article.selected_contacts.length>0")
                             h4.ui.sub.header Kontakt
                             template(v-for="contact in contacts")
                                 template( v-for="selected_contact in article.selected_contacts")
-                                    div.ui.card.fluid(v-if="(contact.id == selected_contact)")
-                                        div.content.left.aligned
-                                            img.right.floated.ui.mini.image(
-                                                v-if="contact.images && contact.images.length>0"
-                                                ":src"="contact.images[0].thumb_path" )
-                                            div.header {{ contact.fullname }}
-                                            div.description
-                                                p
-                                                    i.icon.phone
-                                                    b &nbsp;{{ contact.phone }}
-                                                p
-                                                    i.icon.mail
-                                                    b {{ contact.email }}
-                        div.right.floated.right.aligned.column
-
-                            h3( v-if="article.price" ) Pris : {{article.price}} kr
+                                    user-card.fluid(
+                                        ":user"="contact"
+                                        )                            
                 div.ui.divider
                 div.ui.grid.padded
                     span
@@ -111,6 +99,9 @@
         props: [ 'mode', 'article', 'categories', 'contacts' ]
         data: ->
             expandDetails: @mode
+        components:
+            UserCard: require './UserCard.vue'
+
         methods:
             toggleDetails: ->
                 $('#details').transition
