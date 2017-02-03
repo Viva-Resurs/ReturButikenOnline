@@ -8,10 +8,12 @@
             input#files( type='file' name='files[]' hidden multiple)
             div.ui.five.doubling.cards(
                 v-show="buffer.length>0 || images.length>0" )
-                div.ui.card( v-for="(image, index) in images" v-image="image" )
+                div.ui.card(
+                    v-for="(image, index) in images"
+                    v-image="image"
+                    ":id"="image.id" )
                     img.ui.fluid.rounded.image(
-                        ":src"="image.thumb_path"
-                        ":id"="image.id"
+                        ":src"="image.thumb_path"    
                         ":class"="(mode=='usefirst' && index==0)?'active':''" )
                     div.ui.bottom.attached.label.center.aligned
                         | {{ '#'+image.id }} order{{ image.order }}
@@ -41,6 +43,7 @@
         props: ['images', 'mode']
         data: ->
             buffer: []
+            order: []
         methods:
             show: (image) ->
                 bus.$emit 'show_message',
@@ -92,6 +95,15 @@
                 $('#dropZone').dimmer 'hide'
 
         mounted: ->
+            bus.$on 'image_order_changed', (id, order) =>
+                console.log 'order changed'
+                for image in @images
+                    if Number(image.id) == Number(id)
+                        console.log image
+                        Vue.set image, 'order', order
+                        #bus.$emit 'image_reorder'
+
+
             # Check for the various File API support.
             if !window.File || !window.FileReader || !window.FileList || !window.Blob
                 return console.error 'No File API'
