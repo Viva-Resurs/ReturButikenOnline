@@ -7,13 +7,14 @@
         div.ui.segment.bottom.attached#dropZone
             input#files( type='file' name='files[]' hidden multiple)
             div.ui.five.doubling.cards(
-                v-show="buffer.length>0 || images.length>0" )
+                v-show="buffer.length>0 || images.length>0"
+                v-images="images"
+                )
                 div.ui.card(
                     v-for="(image, index) in images"
-                    v-image="image"
                     ":id"="image.id" )
                     img.ui.fluid.rounded.image(
-                        ":src"="image.thumb_path"    
+                        ":src"="image.thumb_path"
                         ":class"="(mode=='usefirst' && index==0)?'active':''" )
                     div.ui.bottom.attached.label.center.aligned
                         | {{ '#'+image.id }} order{{ image.order }}
