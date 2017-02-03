@@ -100,9 +100,7 @@
                     label Kontakt:
                     div.field( v-if="article.selected_contacts" )
                         user-card.fluid(
-                            ":user"="contact"
-                            ":roles"="contact.roles"
-                            ":sections"="contact.sections"
+                            ":user"="contact"                            
                             "detailed"="true"
                             v-for="contact in selectedContacts" )
                 div.field( v-if="article.selected_contacts && contacts.length>1" )
@@ -174,6 +172,7 @@
                         if Number(contact.id) == Number(selected)
                             return true
                         return false
+
         methods:
             previewArticle: ->
                 if @settings.publish_interval == false

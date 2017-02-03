@@ -3,12 +3,10 @@
         div.ui.dividing.header Användare
         div.ui.basic.segment
             user-card.centered(
-                ":user"="user"
-                ":roles"="roles"
-                ":sections"="sections"
-                "detailed"=true                
+                ":user"="cardContact"
+                "picture"="true"
+                "detailed"="true"
                 )
-
         form.ui.form#user_form(
             "v-on:submit.prevent"="attemptSave"
             role="form"
@@ -113,6 +111,21 @@
         components:
             ImageDropzone: require './ImageDropzone.vue'
             UserCard: require './UserCard.vue'
+
+
+        computed:
+            cardContact: ->
+                return {
+                    name: @user.name
+                    email: @user.email
+                    fullname: @user.fullname
+                    phone: @user.phone
+                    roles: @user.selected_roles
+                    sections: @user.selected_sections
+                    images: @user.selected_images
+                }
+
+
         data: ->
             ready: false
             user:
@@ -225,6 +238,7 @@
 
             # Get sections
             @getSectionList()
+
 </script>
 
 <style lang="scss">
