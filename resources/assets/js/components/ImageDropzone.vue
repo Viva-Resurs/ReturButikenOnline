@@ -11,7 +11,7 @@
                 v-images="images"
                 )
                 div.ui.card(
-                    v-for="(image, index) in images"
+                    v-for="(image, index) in sortImages"
                     ":id"="image.id" )
                     img.ui.fluid.rounded.image(
                         ":src"="image.thumb_path"
@@ -42,6 +42,9 @@
     module.exports =
         name: 'Dropzone'
         props: ['images', 'mode']
+        computed:
+            sortImages: ->
+                return @images.sort (a, b) => a.order-b.order
         data: ->
             buffer: []
             order: []
@@ -96,15 +99,6 @@
                 $('#dropZone').dimmer 'hide'
 
         mounted: ->
-            bus.$on 'image_order_changed', (id, order) =>
-                console.log 'order changed'
-                for image in @images
-                    if Number(image.id) == Number(id)
-                        console.log image
-                        Vue.set image, 'order', order
-                        #bus.$emit 'image_reorder'
-
-
             # Check for the various File API support.
             if !window.File || !window.FileReader || !window.FileList || !window.Blob
                 return console.error 'No File API'
