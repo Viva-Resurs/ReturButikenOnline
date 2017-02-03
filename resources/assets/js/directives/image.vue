@@ -1,10 +1,11 @@
 <script lang="coffee">
     module.exports =
+        update: (el, binding) ->
+            console.log binding.value.id+' updated'
+            #document.getElementById(binding.value.id).dataset.order = binding.value.order
         inserted: (el, binding) ->
-            # Not done here...
             # Set elements image data-order to current order
-            # Then access it and refresh it...
-            el.getElementById(binding.value.id).dataset.order = binding.value.order
+            document.getElementById(binding.value.id).dataset.order = binding.value.order
 
             #el.addEventListener 'mouseover', (e) ->
                 #$(el).dimmer 'show'
@@ -14,41 +15,47 @@
                 #if $(el).find(e.toElement).length==0
                 #    $(el).dimmer 'hide'
 
-            # When element is dropped
+            # When element is dropped upon
             el.addEventListener 'drop', (e) ->
-                sourceIMG = document.getElementById e.dataTransfer.getData "text"
-                targetIMG = e.target
-                order_old = sourceIMG.dataset.order
-                order_new = targetIMG.dataset.order
-                console.log order_old + ' -> ' + order_new
-                sourceIMG.dataset.order = order_new
-                targetIMG.dataset.order = order_old
-                #binding.value.order = el.dataset.order
                 e.preventDefault()
                 e.target.style.border = "";
+                # Get elements current data-order
+                source = document.getElementById e.dataTransfer.getData "text"
+                targetIMG = e.target
+                order_old = source.dataset.order
+                order_new = e.target.dataset.order
+                console.debug 'drop e:'+e.target.id+' b:'+binding.value.id+' order:'+order_new+'->'+order_old
+                source.dataset.order = order_new
+                e.target.dataset.order = order_old
+                # Update this value
+                binding.value.order = e.target.dataset.order
                 #bus.$emit 'image_reorder'
 
 
-            # When element is hovered
+            # When hovering, just return (say it´s ok to drop here)
             el.addEventListener 'dragover', (e) ->
                 e.preventDefault()
 
+            # When drag enters
             el.addEventListener 'dragenter', (e) ->
                 e.preventDefault()
                 e.target.style.border = "3px dotted red"
 
+            # When drag leaves
             el.addEventListener 'dragleave', (e) ->
                 e.target.style.border = ""
 
-            # When starting to drag
+            # When starting to drag (store current id)
             el.addEventListener 'dragstart', (e) ->
                 e.dataTransfer.setData "Text", e.target.id
-                el.style.opacity = '0.5'
+                e.target.style.opacity = '0.5'
 
             # When element is finished draging
             el.addEventListener 'dragend', (e) ->
-                el.style.opacity = '1.0'
-                #binding.value.order = el.dataset.order
-                #bus.$emit 'image_reorder'
+                e.target.style.opacity = '1.0'
+                console.debug 'dragend e:'+e.target.id+' b:'+binding.value.id+' order:'+binding.value.order+'->'+e.target.dataset.order
+                # Update this value
+                binding.value.order = e.target.dataset.order
+                bus.$emit 'image_reorder'
 
 </script>
