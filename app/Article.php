@@ -14,9 +14,13 @@ class Article extends Model
         'price',
         'public',
         'publish_interval',
-        'bidding_interval',
-
+        'bidding_interval'
     ];
+
+    public function creator()
+    {
+        return $this->belongsToMany(User::class, 'articles_creator');
+    }
 
     public function contacts()
     {

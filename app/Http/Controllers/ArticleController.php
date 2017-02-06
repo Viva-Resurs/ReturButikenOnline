@@ -39,7 +39,8 @@ class ArticleController extends Controller
                     'sections' => $article->sections,
                     'selected_categories' => $article->categories,
                     'images' => $article->images,
-                    'selected_contacts' => $article->contacts
+                    'selected_contacts' => $article->contacts,
+                    'created_by' => $article->creator
                 ]);
         }
 
@@ -111,10 +112,13 @@ class ArticleController extends Controller
             'price' => ($request->has('price')) ? $request['price'] : '',
             'public' => $request['public'] || false,
             'publish_interval' => ($request->has('publish_interval')) ? $request['publish_interval'] : '',
-            'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : '',
+            'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : ''
         ]);
 
         $article->save();
+
+        // Attach Creator
+        $article->creator()->save( User::find($user->id) );
 
         // Attach Categories
         if ($request['selected_categories'])
