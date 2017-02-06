@@ -37,7 +37,7 @@ class CreateSectionsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sections');
-        Schema::drop('sections_user');
+        Schema::dropIfExists('sections');
+        Schema::dropIfExists('sections_user');
     }
 }
