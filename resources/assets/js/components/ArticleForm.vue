@@ -17,7 +17,7 @@
                         v-if="categories"
                         name="categories"
                         v-dropdown=""
-                        ":data-selected"="article.selected_categories" )
+                        ":data-selected"="selectedCategories" )
                         input#validate_categories( type="hidden" )
                         div.default.text Select Category
                         i.dropdown.icon
@@ -172,8 +172,19 @@
                         if Number(contact.id) == Number(selected)
                             return true
                         return false
+            selectedCategories: ->
+                results = []
+                for category in @article.categories
+                    results.push category
+                return results
 
         methods:
+            changeCategories: (selected_categories) ->
+                Vue.set @article, 'categories', []
+                for category in @categories
+                    for selected_category in selected_categories
+                        if Number(category.id) == Number(selected_category)
+                            @article.contacts.push category
             previewArticle: ->
                 if @settings.publish_interval == false
                     @article.publish_interval = ''
@@ -220,7 +231,7 @@
             @updateImageOrder()
             # Listen for changes in Categories
             bus.$on 'categories_changed', (id, new_value) =>
-                @article.selected_categories = new_value
+                @changeCategories(new_value)
             # Listen for changes in Contacts
             bus.$on 'contacts_changed', (id, new_value) =>
                 @article.selected_contacts = new_value
