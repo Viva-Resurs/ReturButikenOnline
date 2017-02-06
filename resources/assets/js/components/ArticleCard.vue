@@ -11,7 +11,7 @@
                     ) {{item.name}}
                     div.ui.black.horizontal.label(
                         style="position: relative; top: -2px; left: 15px;"
-                        v-for="category in item.selected_categories"
+                        v-for="category in item.categories"
                         )
                         | {{ category.name }}
 
