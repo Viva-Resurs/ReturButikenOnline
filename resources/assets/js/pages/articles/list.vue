@@ -51,7 +51,7 @@
                     class: 'link'
                 category:
                     label: 'Categories'
-                    key: 'selected_categories'
+                    key: 'categories'
                     type: 'array'
                     search: true
                     sort: true
@@ -76,7 +76,9 @@
             removeArticle: (article) ->
                 @$http.delete('api/articles/'+article.id).then(
                     (response) =>
-                        bus.$emit 'success', 'removed_article'
+                        bus.$emit 'success',
+                            title: 'Success'
+                            details: 'Article removed'
                         Vue.set article, 'removed', true
                     (response) => bus.$emit 'error', response.data
                 )
@@ -88,7 +90,9 @@
             updateArticle: (article) ->
                 @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
-                        bus.$emit 'success', 'updated_article'
+                        bus.$emit 'success',
+                            title: 'Success'
+                            details: 'Article updated'
                     (response) => bus.$emit 'error', response.data
                 )
 

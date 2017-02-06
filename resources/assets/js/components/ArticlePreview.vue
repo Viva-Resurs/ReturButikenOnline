@@ -19,11 +19,8 @@
                 h2.ui.header {{ article.name }}
                     div.ui.black.horizontal.label(
                         style="position: relative; top: -2px; left: 15px;"
-                        v-for="selected_category in article.selected_categories"
+                        v-for="category in article.categories"
                         )
-                        template(
-                            v-for="category in categories"
-                            v-if="category.id == selected_category" )
                             | {{ category.name }}
                 div.ui.hidden.divider
 
@@ -31,13 +28,10 @@
                 div.ui.hidden.divider
                 div.ui.bottom.aligned.stackable.grid
                     div.two.column.row
-                        div.left.aligned.left.floated.column(v-if="article.selected_contacts && article.selected_contacts.length>0")
+                        div.left.aligned.left.floated.column
                             h4.ui.sub.header Kontakt
-                            template(v-for="contact in contacts")
-                                template( v-for="selected_contact in article.selected_contacts")
-                                    user-card(
-                                        ":user"="contact"
-                                        )
+                            template( v-for="contact in article.contacts" )
+                                user-card( ":user"="contact" )
                         div.right.aligned.right.floated.column
                             h3( v-if="article.price" ) Pris : {{article.price}} kr
                 div.ui.divider
@@ -98,7 +92,7 @@
 <script lang="coffee">
     module.exports =
         name: 'Preview'
-        props: [ 'mode', 'article', 'categories', 'contacts' ]
+        props: [ 'mode', 'article' ]
         data: ->
             expandDetails: @mode
         components:

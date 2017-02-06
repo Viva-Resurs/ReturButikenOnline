@@ -4,8 +4,6 @@
             v-if="article!=null"
             ":article" = "article"
             "mode" = "show"
-            ":categories" = "categories"
-            ":contacts" = "article.public_contacts"
         )
 </template>
 
@@ -25,18 +23,10 @@
                 @$http.get('api/articles/'+id).then(
                     (response) =>
                         @article = response.data
-                        @getCategoryList()
                         @$root.loading = false
                     (response) =>
                         @article = -1
                         @$root.loading = false
-                )
-            getCategoryList: ->
-                @$http.get('api/categories').then(
-                    (response) =>
-                        @categories = response.data
-                    (response) =>
-                        #bus.$emit 'error', response.data
                 )
         created: ->
             @getArticleByArtNR @$route.params.artnr

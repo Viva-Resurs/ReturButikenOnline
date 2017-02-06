@@ -37,9 +37,8 @@ class ArticleController extends Controller
                     'bidding_interval' => $article->bidding_interval,
                     'public' => $article->public,
                     'sections' => $article->sections,
-                    'selected_categories' => $article->categories,
+                    'categories' => $article->categories,
                     'images' => $article->images,
-                    'selected_contacts' => $article->contacts,
                     'created_by' => $article->creator
                 ]);
         }
@@ -66,10 +65,11 @@ class ArticleController extends Controller
             'bidding_interval' => $article->bidding_interval,
             'public' => $article->public,
             'sections' => $article->sections,
-            'selected_categories' => [],
+            'categories' => $article->categories,
+            'contacts' => [],
             'images' => [],
-            'selected_contacts' => [],
-            'public_contacts' => []
+            'selected_categories' => [],
+            'selected_contacts' => []
         ];
 
         foreach ($article->categories as $category)
@@ -77,7 +77,7 @@ class ArticleController extends Controller
 
         foreach ($article->contacts as $contact){
             array_push($result['selected_contacts'],$contact->id);
-            array_push($result['public_contacts'],[
+            array_push($result['contacts'],[
                 'id' => $contact->id,
                 'fullname' => $contact->fullname,
                 'phone' => $contact->phone,
@@ -147,14 +147,6 @@ class ArticleController extends Controller
         return $this->show($article->id);
     }
 
-    public function saveItems($request, $selection, $type, $collection){
-        if ($request[$selection])
-            foreach ($request[$selection] as $item){
-                $ob = $type::find($item);
-                $collection->save($ob);
-            }
-    }
-
     public function update(Request $request, $id){
 
         $user = Auth::user();
@@ -187,7 +179,7 @@ class ArticleController extends Controller
             foreach( $article->categories as $c)
                 $article->categories()->detach($c->id);
 
-        // Attach Categories
+        // Attach selected Categories
         if ($request['selected_categories'])
             foreach ($request['selected_categories'] as $category){
                 $c = Category::find($category);
