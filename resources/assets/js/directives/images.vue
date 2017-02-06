@@ -40,10 +40,8 @@
                             remover.onclick = ->
                                 # Remove this card
                                 bus.$emit 'image_removed', @card.vmData
-                                # When DOM is ready
-                                Vue.nextTick ->
-                                    # Setup cards again
-                                    setupCards()
+                                # When DOM is ready, setup cards again
+                                Vue.nextTick -> setupCards()
                     # Set current position
                     card.image.position = index
                     # When element is dropped upon
@@ -86,4 +84,8 @@
                         clearStates()
             # Run setup now
             setupCards()
+            # Listen for 'refresh' (when adding new images, rebuild cards)
+            $(el).on 'refresh', ->
+                # When DOM is ready, setup cards again
+                Vue.nextTick -> setupCards()
 </script>

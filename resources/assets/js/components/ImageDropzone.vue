@@ -6,7 +6,7 @@
                 | Upload
         div.ui.segment.bottom.attached#dropZone
             input#files( type='file' name='files[]' hidden multiple)
-            div.ui.five.doubling.cards(
+            div#images.ui.five.doubling.cards(
                 v-show="buffer.length>0 || images.length>0"
                 v-images="images"
                 )
@@ -57,6 +57,7 @@
                     (response) =>
                         @buffer.pop file
                         bus.$emit 'image_added', response.data
+                        $('#images').trigger 'refresh'
                     (response) =>
                         bus.$emit 'error', response.data
                         @buffer.pop file

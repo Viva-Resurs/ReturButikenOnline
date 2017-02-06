@@ -100,7 +100,7 @@
                     label Kontakt:
                     div.field( v-if="article.selected_contacts" )
                         user-card.fluid(
-                            ":user"="contact"                            
+                            ":user"="contact"
                             "detailed"="true"
                             v-for="contact in selectedContacts" )
                 div.field( v-if="article.selected_contacts && contacts.length>1" )
@@ -226,6 +226,7 @@
                 @article.selected_contacts = new_value
             # Listen for changes in Images
             bus.$on 'image_added', (image) =>
+                image.order = @article.images.length-1
                 @article.images.push image
                 @updateImageOrder()
             bus.$on 'image_removed', (image) =>
