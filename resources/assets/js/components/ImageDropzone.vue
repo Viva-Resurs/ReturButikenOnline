@@ -18,9 +18,7 @@
                         ":class"="(mode=='usefirst' && index==0)?'active':''" )
                     div.ui.bottom.attached.label.center.aligned
                         | {{ '#'+image.id }} order{{ image.order }}
-                    a.ui.white.tiny.left.corner.label( @click="show(image)" )
-                        i.eye.icon
-                    a.ui.red.tiny.right.corner.label( @click="remove(image)" )
+                    a.ui.red.tiny.right.corner.label
                         i.delete.icon
                 div.ui.fluid.card( v-for="waiting in buffer" )
                     div.ui.loader.centered.inline.active
@@ -48,15 +46,6 @@
         data: ->
             buffer: []
         methods:
-            show: (image) ->
-                bus.$emit 'show_message',
-                    title: image.original_name
-                    type: 'image'
-                    image: image
-
-            remove: (image) ->
-                bus.$emit 'image_removed', image
-
             openFilePicker: ->
                 $('#files').trigger 'click'
 

@@ -2,6 +2,10 @@
     module.exports =
         inserted: (el, binding) ->
             dragged = false # Currently dragged element
+            clearStates = ->
+                for element in el.childNodes
+                    element.style.opacity = '1.0'
+            el.onmouseup = clearStates
             setupCards = ->
                 # Setup each card
                 for card, index in el.childNodes
@@ -11,6 +15,35 @@
                         if element.tagName == 'IMG'
                             card.image = element # The image of card
                             element.card = card  # The card of image
+                            # Clear longpress state
+                            clearTimeout element.longpress_timer
+                            element.longpress = false
+                            # Set longpress timer to 200ms
+                            element.onmousedown = ->
+                                @longpress_timer = setTimeout =>
+                                    @longpress = true
+                                    @card.style.opacity = '0.5'
+                                , 200
+                            element.onmouseup = ->
+                                # If not longpress, treat as normal click
+                                if !@longpress
+                                    bus.$emit 'show_message',
+                                        title: @card.vmData.original_name
+                                        type: 'image'
+                                        image: @card.vmData
+                                # Reset
+                                clearTimeout @longpress_timer
+                                @longpress = false
+                        if element.tagName == 'A'
+                            remover = element # Remove button
+                            remover.card = card
+                            remover.onclick = ->
+                                # Remove this card
+                                bus.$emit 'image_removed', @card.vmData
+                                # When DOM is ready
+                                Vue.nextTick ->
+                                    # Setup cards again
+                                    setupCards()
                     # Set current position
                     card.image.position = index
                     # When element is dropped upon
@@ -24,7 +57,7 @@
                         target.position = temp
                         console.debug 'Position (d t): ' + dragged.position + ' ' + target.position
                         # Clear styles
-                        target.style.border = ""
+                        target.card.style.border = ""
                         # Update Vue-Data
                         Vue.set target.card.vmData, 'order', target.position
                         Vue.set dragged.card.vmData, 'order', dragged.position
@@ -40,17 +73,17 @@
                         e.preventDefault()
                     # When drag enters
                     card.image.ondragenter = (e) ->
-                        this.style.border = "3px dotted red"
+                        @card.style.border = "3px dotted red"
                     # When drag leaves
                     card.image.ondragleave = (e) ->
-                        this.style.border = ""
+                        @card.style.border = ""
                     # When starting to drag (set currently dragged element)
                     card.image.ondragstart = (e) ->
-                        this.style.opacity = '0.5'
+                        @card.style.opacity = '0.5'
                         dragged = this
                     # When element is finished draging
                     card.image.ondragend = (e) ->
-                        this.style.opacity = '1.0'
+                        clearStates()
             # Run setup now
             setupCards()
 </script>
