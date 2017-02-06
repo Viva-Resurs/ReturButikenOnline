@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         div.ui.attached.right.aligned.menu( v-if="images.length>0" )
-            a.item( @click="openDialog()" )
+            a.item( @click="openFilePicker()" )
                 i.upload.icon
                 | Upload
         div.ui.segment.bottom.attached#dropZone
@@ -27,7 +27,7 @@
             div.ui.padded.eight.wide.grid(
                 v-show="buffer.length==0 && images.length==0" )
                 div.center.aligned.column.link(
-                    @click="openDialog()"
+                    @click="openFilePicker()"
                     style="border: 1px dashed #999; border-radius: 10px; cursor:pointer;")
                     i.circular.icon.info
                     p Dra bilder hit eller tryck för att bläddra
@@ -47,7 +47,6 @@
                 return @images.sort (a, b) => a.order-b.order
         data: ->
             buffer: []
-            order: []
         methods:
             show: (image) ->
                 bus.$emit 'show_message',
@@ -58,7 +57,7 @@
             remove: (image) ->
                 bus.$emit 'image_removed', image
 
-            openDialog: ->
+            openFilePicker: ->
                 $('#files').trigger 'click'
 
             handleFile: (file) ->
@@ -75,7 +74,7 @@
                 )
 
             handleFileSelect: (e) ->
-                # Exit if drop doesn´t involve files
+                # Exit if drop doesn´t involve new files
                 if e.dataTransfer && e.dataTransfer.types[0] != 'Files'
                     return
                 e.stopPropagation()
@@ -87,7 +86,7 @@
                     @handleFile file
 
             handleDragOver: (e) ->
-                # Exit if dragover doesn´t involve files
+                # Exit if dragover doesn´t involve new files
                 if e.dataTransfer && e.dataTransfer.types[0] != 'Files'
                     return
                 e.stopPropagation()
