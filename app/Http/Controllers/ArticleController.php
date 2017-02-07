@@ -39,6 +39,7 @@ class ArticleController extends Controller
                     'sections' => $article->sections,
                     'categories' => $article->categories,
                     'images' => $article->images,
+                    'contacts' => $article->contacts,
                     'created_by' => $article->creator
                 ]);
         }
