@@ -170,37 +170,32 @@
                 results = ''
                 for contact, index in @article.contacts
                     results += contact.id
-                    if index<@article.contacts.length
+                    if index < @article.contacts.length
                         results += ','
                 return results
-                @contacts.filter (contact) =>
-                    for selected in @article.contacts
-                        if Number(contact.id) == Number(selected)
-                            return true
-                        return false
             selectedCategories: ->
                 results = ''
                 for category, index in @article.categories
                     results += category.id
-                    if index<@article.categories.length
+                    if index < @article.categories.length
                         results += ','
                 return results
 
         methods:
             changeCategories: (selection) ->
-                console.log selection
                 Vue.set @article, 'categories', []
                 for category in @categories
                     for selected in selection
                         if Number(category.id) == Number(selected)
                             @article.categories.push category
+
             changeContacts: (selection) ->
-                console.log selection
                 Vue.set @article, 'contacts', []
                 for contact in @contacts
                     for selected in selection
                         if Number(contact.id) == Number(selected)
                             @article.contacts.push contact
+
             previewArticle: ->
                 if @settings.publish_interval == false
                     @article.publish_interval = ''
@@ -246,11 +241,11 @@
             # Refresh Image ordering
             @updateImageOrder()
             # Listen for changes in Categories
-            bus.$on 'categories_changed', (id, new_value) =>
-                @changeCategories(new_value)
+            bus.$on 'categories_changed', (id, new_selection) =>
+                @changeCategories new_selection
             # Listen for changes in Contacts
-            bus.$on 'contacts_changed', (id, new_value) =>
-                @changeContacts(new_value)
+            bus.$on 'contacts_changed', (id, new_selection) =>
+                @changeContacts new_selection
             # Listen for changes in Images
             bus.$on 'image_added', (image) =>
                 image.order = @article.images.length-1
@@ -268,4 +263,5 @@
             bus.$off 'contacts_changed'
             bus.$off 'image_added'
             bus.$off 'image_removed'
+            bus.$off 'image_reorder'
 </script>

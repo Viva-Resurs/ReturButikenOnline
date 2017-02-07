@@ -1,17 +1,14 @@
 <template lang="pug">
     div( v-if="article!=null" )
         article-form(
-            v-show = "!preview"
+            v-show = "!preview_article"
             ":original" = "article"
             ":categories" = "categories"
             ":contacts" = "contacts"
         )
-
         article-preview(
-            v-if = "preview"
+            v-if = "preview_article"
             ":article" = "preview_article"
-            ":categories" = "categories"
-            ":contacts" = "contacts"
         )
 </template>
 
@@ -23,7 +20,6 @@
             ArticlePreview : require '../../components/ArticlePreview.vue'
         data: ->
             preview_article: false
-            preview: false
             article:
                 name: ''
                 desc: ''
@@ -31,9 +27,9 @@
                 public: false
                 publish_interval: ''
                 bidding_interval: ''
-                selected_categories: []
+                categories: []
                 images: []
-                selected_contacts: []
+                contacts: []
             categories:
                 null
             contacts:
@@ -41,11 +37,9 @@
         methods:
             previewArticle: (article) ->
                 @preview_article = article
-                @preview = true
 
             modifyArticle: ->
                 @preview_article = false
-                @preview = false
 
             createArticle: (article) ->
                 @$http.post('api/articles', article).then(
@@ -68,8 +62,8 @@
                     (response) =>
                         @contacts = response.data ? null
                         if @contacts.length > 0 and
-                            @article.selected_contacts.length == 0
-                                @article.selected_contacts.push @contacts[0].id
+                            @article.contacts.length == 0
+                                @article.contacts.push @contacts[0]
                     (response) =>
                         bus.$emit 'error', response.data
                 )

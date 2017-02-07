@@ -1,17 +1,14 @@
 <template lang="pug">
     div( v-if="article!=null" )
         article-form(
-            v-show = "!preview"
-            ":original"="article"
+            v-show = "!preview_article"
+            ":original" = "article"
             ":categories" = "categories"
             ":contacts" = "contacts"
         )
-
         article-preview(
-            v-if = "preview"
+            v-if = "preview_article"
             ":article" = "preview_article"
-            ":categories" = "categories"
-            ":contacts" = "contacts"
         )
 </template>
 
@@ -23,7 +20,6 @@
             ArticlePreview : require '../../components/ArticlePreview.vue'
         data: ->
             preview_article: false
-            preview: false
             article: null
             categories: null
             contacts: null
@@ -62,30 +58,16 @@
 
             previewArticle: (article) ->
                 @preview_article = article
-                # Get selected contacts ready
-                #Vue.set @preview_article, 'contacts', []
-                #for contact in @contacts
-                #    for selected_contact in article.selected_contacts
-                #        if Number(contact.id) == Number(selected_contact)
-                #            @preview_article.contacts.push contact
-                # Get selected categories ready
-                #Vue.set @preview_article, 'categories', []
-                #for category in @categories
-                #    for selected_category in article.selected_categories
-                #        if Number(category.id) == Number(selected_category)
-                #            @preview_article.categories.push category
-                @preview = true
 
             modifyArticle: ->
-                @preview_article = null
-                @preview = false
+                @preview_article = false
 
             updateArticle: (article) ->
                 @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
-                        console.log 'sent OK'
                         @$router.push path: '/articles'
-                    (response) => bus.$emit 'error', response.data
+                    (response) =>
+                        bus.$emit 'error', response.data
                 )
 
         created: ->
