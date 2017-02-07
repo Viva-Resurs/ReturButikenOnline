@@ -1,5 +1,12 @@
 <template lang="pug">
-    user-form( v-if="user!=null" ":original"="user" )
+    div
+        div.ui.attached( v-if="$root.loading" )
+            loading
+        user-form(
+            v-if="!$root.loading"
+            ":draft"="user"
+            ":roles"="roles"
+            ":sections"="sections" )
 </template>
 
 <script lang="coffee">
@@ -9,6 +16,8 @@
             UserForm: require '../../components/UserForm.vue'
         data: ->
             user: null
+            roles: false
+            sections: false
         methods:
             getUser: (id) ->
                 @$root.loading = true
@@ -20,6 +29,25 @@
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
+
+            getRoleList: ->
+                @$http.get('api/roles').then(
+                    (response) =>
+                        @roles = response.data
+                    (response) =>
+                        bus.$emit 'error', response
+                        @roles = []
+                )
+
+            getSectionList: ->
+                @$http.get('api/sections').then(
+                    (response) =>
+                        @sections = response.data
+                    (response) =>
+                        bus.$emit 'error', response
+                        @sections = []
+                )
+
             updateUser: (user) ->
                 @$http.put('api/users/'+user.id,user).then(
                     (response) =>
@@ -27,8 +55,14 @@
                     (response) => bus.$emit 'error', response.data
                 )
         created: ->
+            # Get user to edit
             @getUser @$route.params.id
+            # Listen for changes
             bus.$on 'user_form_update', (payload) => @updateUser payload
+            # Get roles
+            @getRoleList()
+            # Get sections
+            @getSectionList()
         beforeDestroy: ->
             bus.$off 'user_form_update'
 </script>

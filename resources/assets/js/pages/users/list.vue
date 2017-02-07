@@ -2,14 +2,10 @@
     item-grid(
         header="Användare"
         ":columns"="columns"
-        ":toolsRow"=`
-            (($root.isAdmin()) ? [
-                $options.components.Edit,
-                $options.components.Remove
-            ] : [
-                $options.components.Edit
-            ])
-        `
+        ":toolsRow"=`[
+            $options.components.Edit,
+            $options.components.Remove
+        ]`
         ":toolsBottom"=`[
             $options.components.Add
         ]`
@@ -60,7 +56,9 @@
             removeUser: (user) ->
                 @$http.delete('api/users/'+user.id).then(
                     (response) =>
-                        bus.$emit 'success', 'removed_user'
+                        bus.$emit 'success',
+                            title: 'Success'
+                            details: 'User removed'
                         Vue.set user, 'removed', true
                     (response) => bus.$emit 'error', response.data
                 )

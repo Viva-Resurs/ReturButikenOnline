@@ -107,40 +107,12 @@
 <script lang="coffee">
     module.exports =
         name: 'UserForm'
-        props: [ 'original' ]
+        props: [ 'draft', 'roles', 'sections' ]
         components:
             ImageDropzone: require './ImageDropzone.vue'
             UserCard: require './UserCard.vue'
-        computed:
-            selectedRoles: ->
-                results = ''
-                for role, index in @user.roles
-                    results += role.id
-                    if index < @user.roles.length
-                        results += ','
-                return results
-            selectedSections: ->
-                results = ''
-                for section, index in @user.sections
-                    results += section.id
-                    if index < @user.sections.length
-                        results += ','
-                return results
         data: ->
             ready: false
-            user:
-                name: ''
-                password: false
-                email: ''
-                fullname: ''
-                phone: ''
-                roles: []
-                sections: []
-                images: []
-            roles:
-                false
-            sections:
-                false
             settings:
                 change_password: false
             form_settings:
@@ -185,38 +157,31 @@
                             type: 'email'
                             prompt: 'Please enter your email-adress'
                         ]
+        computed:
+            selectedRoles: ->
+                results = ''
+                for role, index in @user.roles
+                    results += role.id
+                    if index < @user.roles.length
+                        results += ','
+                return results
+            selectedSections: ->
+                results = ''
+                for section, index in @user.sections
+                    results += section.id
+                    if index < @user.sections.length
+                        results += ','
+                return results
         methods:
             attemptSave: ->
+                # Skip password?
                 if !@settings.change_password
                     @user.password = false
                 # Validate form
-                if !@ready
-                    $('#user_form').form(@form_settings).form 'validate form'
-                    @ready = true
-
-            getRoleList: ->
-                @$http.get('api/roles').then(
-                    (response) =>
-                        @roles = response.data
-                    (response) =>
-                        bus.$emit 'error', response
-                        @roles = []
-                )
-
-            getSectionList: ->
-                @$http.get('api/sections').then(
-                    (response) =>
-                        @sections = response.data
-                    (response) =>
-                        bus.$emit 'error', response
-                        @sections = []
-                )
-
+                $('#user_form').form(@form_settings).form 'validate form'
         created: ->
-            # If a original is passed (Update-mode), fill the form
-            if @original
-                @user = @original
-
+            # Get the form ready
+            @user = @draft
             # Listen for changes in Roles
             bus.$on 'roles_changed', (id, selection) =>
                 Vue.set @user, 'roles', []
@@ -224,7 +189,6 @@
                     for selected in selection
                         if Number(role.id) == Number(selected)
                             @user.roles.push role
-
             # Listen for changes in Sections
             bus.$on 'sections_changed', (id, selection) =>
                 Vue.set @user, 'sections', []
@@ -232,21 +196,13 @@
                     for selected in selection
                         if Number(section.id) == Number(selected)
                             @user.sections.push section
-
             # Images
             bus.$on 'image_added', (image) =>
                 @user.images.push image
             bus.$on 'image_removed', (image) =>
                 for index, img of @user.images
                     if Number(img.id) == Number(image.id)
-                        @user.selected_images.splice index, 1
-
-            # Get roles
-            @getRoleList()
-
-            # Get sections
-            @getSectionList()
-
+                        @user.images.splice index, 1
 </script>
 
 <style lang="scss">
