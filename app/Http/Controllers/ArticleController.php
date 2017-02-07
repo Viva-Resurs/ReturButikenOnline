@@ -68,12 +68,8 @@ class ArticleController extends Controller
             'categories' => $article->categories,
             'contacts' => [],
             'images' => [],
-            'selected_categories' => [],
             'selected_contacts' => []
         ];
-
-        foreach ($article->categories as $category)
-            array_push($result['selected_categories'],$category->id);
 
         foreach ($article->contacts as $contact){
             array_push($result['selected_contacts'],$contact->id);
@@ -121,9 +117,9 @@ class ArticleController extends Controller
         $article->creator()->save( User::find($user->id) );
 
         // Attach Categories
-        if ($request['selected_categories'])
-            foreach ($request['selected_categories'] as $category){
-                $c = Category::find($category);
+        if ($request['categories'])
+            foreach ($request['categories'] as $category){
+                $c = Category::find($category['id']);
                 if ($c)
                     $article->categories()->save($c);
             }
@@ -179,10 +175,10 @@ class ArticleController extends Controller
             foreach( $article->categories as $c)
                 $article->categories()->detach($c->id);
 
-        // Attach selected Categories
-        if ($request['selected_categories'])
-            foreach ($request['selected_categories'] as $category){
-                $c = Category::find($category);
+        // Attach Categories
+        if ($request['categories'])
+            foreach ($request['categories'] as $category){
+                $c = Category::find($category['id']);
                 $article->categories()->save($c);
             }
 

@@ -173,18 +173,21 @@
                             return true
                         return false
             selectedCategories: ->
-                results = []
-                for category in @article.categories
-                    results.push category
+                results = ''
+                for category, index in @article.categories
+                    results += category.id
+                    if index<@article.categories.length
+                        results += ','
                 return results
 
         methods:
-            changeCategories: (selected_categories) ->
+            changeCategories: (selection) ->
+                console.log selection
                 Vue.set @article, 'categories', []
                 for category in @categories
-                    for selected_category in selected_categories
-                        if Number(category.id) == Number(selected_category)
-                            @article.contacts.push category
+                    for selected in selection
+                        if Number(category.id) == Number(selected)
+                            @article.categories.push category
             previewArticle: ->
                 if @settings.publish_interval == false
                     @article.publish_interval = ''

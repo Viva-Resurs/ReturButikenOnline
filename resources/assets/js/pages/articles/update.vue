@@ -69,11 +69,11 @@
                         if Number(contact.id) == Number(selected_contact)
                             @preview_article.contacts.push contact
                 # Get selected categories ready
-                Vue.set @preview_article, 'categories', []
-                for category in @categories
-                    for selected_category in article.selected_categories
-                        if Number(category.id) == Number(selected_category)
-                            @preview_article.categories.push category
+                #Vue.set @preview_article, 'categories', []
+                #for category in @categories
+                #    for selected_category in article.selected_categories
+                #        if Number(category.id) == Number(selected_category)
+                #            @preview_article.categories.push category
                 @preview = true
 
             modifyArticle: ->
