@@ -104,25 +104,25 @@ class UserController extends Controller
             'fullname' => $user->fullname,
             'email' => $user->email,
             'phone' => $user->phone,
-            'selected_roles' => [],
-            'selected_sections' => [],
-            'selected_images' => []
+            'roles' => [],
+            'sections' => [],
+            'images' => []
         ];
 
         foreach ($user->roles as $role)
-            array_push($result['selected_roles'],[
+            array_push($result['roles'],[
                 'id' => $role->id,
                 'name' => $role->name
             ]);
 
         foreach ($user->sections as $section)
-            array_push($result['selected_sections'],[
+            array_push($result['sections'],[
                 'id' => $section->id,
                 'name' => $section->name
             ]);
 
         foreach ($user->images as $image)
-            array_push($result['selected_images'], [
+            array_push($result['images'], [
                 'id' => $image->id,
                 'name' => $image->name,
                 'original_name' => $image->original_name,
@@ -166,17 +166,17 @@ class UserController extends Controller
         if ($me->hasRole('admin')) {
 
             // Attach Roles
-            if ($request['selected_roles'])
-                foreach ($request['selected_roles'] as $role){
-                    $r = Role::find($role);
+            if ($request['roles'])
+                foreach ($request['roles'] as $role){
+                    $r = Role::find($role['id']);
                     if ($r)
                         $user->roles()->save($r);
                 }
 
             // Attach Sections
-            if ($request['selected_sections'])
-                foreach ($request['selected_sections'] as $section){
-                    $s = Role::find($section);
+            if ($request['sections'])
+                foreach ($request['sections'] as $section){
+                    $s = Role::find($section['id']);
                     if ($s)
                         $user->sections()->save($s);
                 }
@@ -246,9 +246,9 @@ class UserController extends Controller
         // Clear removed Images
         foreach($user->images as $old_image){
             $keep = false;
-            if ($request['selected_images'])
-                foreach ($request['selected_images'] as $selected_image)
-                    if ($old_image->id == $selected_image['id'])
+            if ($request['images'])
+                foreach ($request['images'] as $image)
+                    if ($old_image->id == $image['id'])
                         $keep = true;
             if (!$keep){
                 // Attached image could not be found in selection, detach it
@@ -259,15 +259,15 @@ class UserController extends Controller
         }
 
         // Attach new Images
-        foreach ($request['selected_images'] as $selected_image){
+        foreach ($request['images'] as $image){
             $new = true;
             if ($user->images)
                 foreach( $user->images as $old_image)
-                    if ($old_image->id == $selected_image['id'])
+                    if ($old_image->id == $image['id'])
                         $new = false;
             if ($new) {
                 // Image could not be found in currently attached images
-                $image = Image::find($selected_image['id']);
+                $image = Image::find($image['id']);
                 // Attach it
                 $user->images()->save($image);
             }
@@ -280,9 +280,9 @@ class UserController extends Controller
                 $user->roles()->detach($role->id);
 
             // Attach Roles
-            if ($request['selected_roles'])
-                foreach ($request['selected_roles'] as $role){
-                    $r = Role::find($role);
+            if ($request['roles'])
+                foreach ($request['roles'] as $role){
+                    $r = Role::find($role['id']);
                     if ($r)
                         $user->roles()->save($r);
                 }
@@ -295,9 +295,9 @@ class UserController extends Controller
                 $user->sections()->detach($section->id);
 
             // Attach Sections
-            if ($request['selected_sections'])
-                foreach ($request['selected_sections'] as $section){
-                    $s = Section::find($section);
+            if ($request['sections'])
+                foreach ($request['sections'] as $section){
+                    $s = Section::find($section['id']);
                     if ($s)
                         $user->sections()->save($s);
                 }

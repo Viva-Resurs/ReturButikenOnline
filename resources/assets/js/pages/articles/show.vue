@@ -14,7 +14,6 @@
             ArticlePreview : require '../../components/ArticlePreview.vue'
         data: ->
             article: null
-            categories: null
         methods:
             getArticleByArtNR: (articleNR) ->
                 @getArticle @$root.decodeArtNR articleNR

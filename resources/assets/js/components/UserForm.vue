@@ -3,7 +3,7 @@
         div.ui.dividing.header Användare
         div.ui.basic.segment
             user-card.centered(
-                ":user"="cardContact"
+                ":user"="user"
                 "picture"="true"
                 "detailed"="true"
                 )
@@ -16,7 +16,7 @@
                     div.eight.wide.column.right.floated
                         label Profilfoto
                         image-dropzone(
-                            ":images"="user.selected_images"
+                            ":images"="user.images"
                             mode="usefirst" )
                     div.eight.wide.column.left.floated
                         div.field
@@ -44,7 +44,7 @@
                                 v-if="roles"
                                 name="roles"
                                 v-dropdown=""
-                                ":data-selected"="(user.selected_roles.length) ? user.selected_roles[0].id : 0" )
+                                ":data-selected"="selectedRoles" )
                                 input#validate_roles( type="hidden" )
                                 div.default.text Select Roles
                                 i.dropdown.icon
@@ -59,7 +59,7 @@
                                 v-if="sections"
                                 name="sections"
                                 v-dropdown=""
-                                ":data-selected"="(user.selected_sections.length) ? user.selected_sections[0].id : 0" )
+                                ":data-selected"="selectedSections" )
                                 input#validate_sections( type="hidden" )
                                 div.default.text Select Sections
                                 i.dropdown.icon
@@ -111,21 +111,21 @@
         components:
             ImageDropzone: require './ImageDropzone.vue'
             UserCard: require './UserCard.vue'
-
-
         computed:
-            cardContact: ->
-                return {
-                    name: @user.name
-                    email: @user.email
-                    fullname: @user.fullname
-                    phone: @user.phone
-                    roles: @user.selected_roles
-                    sections: @user.selected_sections
-                    images: @user.selected_images
-                }
-
-
+            selectedRoles: ->
+                results = ''
+                for role, index in @user.roles
+                    results += role.id
+                    if index < @user.roles.length
+                        results += ','
+                return results
+            selectedSections: ->
+                results = ''
+                for section, index in @user.sections
+                    results += section.id
+                    if index < @user.sections.length
+                        results += ','
+                return results
         data: ->
             ready: false
             user:
@@ -134,9 +134,9 @@
                 email: ''
                 fullname: ''
                 phone: ''
-                selected_roles: []
-                selected_sections: []
-                selected_images: []
+                roles: []
+                sections: []
+                images: []
             roles:
                 false
             sections:
@@ -218,18 +218,26 @@
                 @user = @original
 
             # Listen for changes in Roles
-            bus.$on 'roles_changed', (id, new_value) =>
-                @user.selected_roles = new_value
+            bus.$on 'roles_changed', (id, selection) =>
+                Vue.set @user, 'roles', []
+                for role in @roles
+                    for selected in selection
+                        if Number(role.id) == Number(selected)
+                            @user.roles.push role
 
             # Listen for changes in Sections
-            bus.$on 'sections_changed', (id, new_value) =>
-                @user.selected_sections = new_value
+            bus.$on 'sections_changed', (id, selection) =>
+                Vue.set @user, 'sections', []
+                for section in @sections
+                    for selected in selection
+                        if Number(section.id) == Number(selected)
+                            @user.sections.push section
 
             # Images
             bus.$on 'image_added', (image) =>
-                @user.selected_images.push image
+                @user.images.push image
             bus.$on 'image_removed', (image) =>
-                for index, img of @user.selected_images
+                for index, img of @user.images
                     if Number(img.id) == Number(image.id)
                         @user.selected_images.splice index, 1
 
