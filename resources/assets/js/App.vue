@@ -20,7 +20,6 @@
     Vue.directive 'checkbox', require './directives/checkbox.vue'
     Vue.directive 'focus', require './directives/focus.vue'
     Vue.directive 'item', require './directives/item.vue'
-    Vue.directive 'image', require './directives/image.vue'
     Vue.directive 'images', require './directives/images.vue'
     Vue.directive 'calendar', require './directives/calendar.vue'
     Vue.directive 'swipe', require './directives/swipe.vue'
