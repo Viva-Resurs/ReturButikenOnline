@@ -67,12 +67,10 @@ class ArticleController extends Controller
             'sections' => $article->sections,
             'categories' => $article->categories,
             'contacts' => [],
-            'images' => [],
-            'selected_contacts' => []
+            'images' => []
         ];
 
         foreach ($article->contacts as $contact){
-            array_push($result['selected_contacts'],$contact->id);
             array_push($result['contacts'],[
                 'id' => $contact->id,
                 'fullname' => $contact->fullname,
@@ -132,9 +130,9 @@ class ArticleController extends Controller
             }
 
         // Attach Contact & Section
-        if ($request['selected_contacts'])
-            foreach ($request['selected_contacts'] as $contact_id){
-                $u = User::find($contact_id);
+        if ($request['contacts'])
+            foreach ($request['contacts'] as $contact){
+                $u = User::find($contact['id']);
                 $article->contacts()->save($u);
                 foreach ($u->sections as $section)
                     $article->sections()->save($section);
@@ -232,9 +230,9 @@ class ArticleController extends Controller
                 $article->sections()->detach($s->id);
 
         // Attach Contacts & Sections
-        if ($request['selected_contacts'])
-            foreach ($request['selected_contacts'] as $contact_id){
-                $u = User::find($contact_id);
+        if ($request['contacts'])
+            foreach ($request['contacts'] as $contact){
+                $u = User::find($contact['id']);
                 $article->contacts()->save($u);
                 foreach( $u->sections as $section){
                     $article->sections()->save($section);

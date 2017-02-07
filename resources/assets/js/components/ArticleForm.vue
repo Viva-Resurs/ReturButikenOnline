@@ -98,18 +98,18 @@
             div.two.fields( v-if="contacts" )
                 div.field
                     label Kontakt:
-                    div.field( v-if="article.selected_contacts" )
+                    div.field( v-if="article.contacts" )
                         user-card.fluid(
                             ":user"="contact"
                             "detailed"="true"
-                            v-for="contact in selectedContacts" )
-                div.field( v-if="article.selected_contacts && contacts.length>1" )
+                            v-for="contact in article.contacts" )
+                div.field( v-if="contacts.length>1" )
                     label Välj kontakt:
                     div.ui.fluid.selection.dropdown#contact(
                         v-if="contacts"
                         name="contacts"
                         v-dropdown=""
-                        ":data-selected"="article.selected_contacts" )
+                        ":data-selected"="selectedContacts" )
                         i.dropdown.icon
                         div.default.text Select Contact
                         div.menu
@@ -167,8 +167,14 @@
                             ]
         computed:
             selectedContacts: ->
+                results = ''
+                for contact, index in @article.contacts
+                    results += contact.id
+                    if index<@article.contacts.length
+                        results += ','
+                return results
                 @contacts.filter (contact) =>
-                    for selected in @article.selected_contacts
+                    for selected in @article.contacts
                         if Number(contact.id) == Number(selected)
                             return true
                         return false
@@ -188,6 +194,13 @@
                     for selected in selection
                         if Number(category.id) == Number(selected)
                             @article.categories.push category
+            changeContacts: (selection) ->
+                console.log selection
+                Vue.set @article, 'contacts', []
+                for contact in @contacts
+                    for selected in selection
+                        if Number(contact.id) == Number(selected)
+                            @article.contacts.push contact
             previewArticle: ->
                 if @settings.publish_interval == false
                     @article.publish_interval = ''
@@ -237,7 +250,7 @@
                 @changeCategories(new_value)
             # Listen for changes in Contacts
             bus.$on 'contacts_changed', (id, new_value) =>
-                @article.selected_contacts = new_value
+                @changeContacts(new_value)
             # Listen for changes in Images
             bus.$on 'image_added', (image) =>
                 image.order = @article.images.length-1

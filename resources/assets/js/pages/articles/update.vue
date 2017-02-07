@@ -54,8 +54,8 @@
                     (response) =>
                         @contacts = response.data ? null
                         if @contacts.length > 0 and
-                            @article.selected_contacts.length == 0
-                                @article.selected_contacts.push @contacts[0].id
+                            @article.contacts.length == 0
+                                @article.contacts.push @contacts[0]
                     (response) =>
                         bus.$emit 'error', response.data
                 )
@@ -63,11 +63,11 @@
             previewArticle: (article) ->
                 @preview_article = article
                 # Get selected contacts ready
-                Vue.set @preview_article, 'contacts', []
-                for contact in @contacts
-                    for selected_contact in article.selected_contacts
-                        if Number(contact.id) == Number(selected_contact)
-                            @preview_article.contacts.push contact
+                #Vue.set @preview_article, 'contacts', []
+                #for contact in @contacts
+                #    for selected_contact in article.selected_contacts
+                #        if Number(contact.id) == Number(selected_contact)
+                #            @preview_article.contacts.push contact
                 # Get selected categories ready
                 #Vue.set @preview_article, 'categories', []
                 #for category in @categories
