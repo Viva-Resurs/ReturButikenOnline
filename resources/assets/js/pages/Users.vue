@@ -1,6 +1,5 @@
 <template lang="pug">
-    div.ui.padded.container.segment
-        router-view
+    router-view
 </template>
 
 <script lang="coffee">

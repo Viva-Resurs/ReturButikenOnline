@@ -2,7 +2,7 @@
     div.pusher
         navigation
         semantic-dialog
-        router-view
+        router-view.ui.padded.container.segment
 </template>
 
 <script lang="coffee">

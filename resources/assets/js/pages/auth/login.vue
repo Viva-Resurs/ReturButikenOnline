@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.padded.container.segment#articleForm
+    div#articleForm
         div.ui.dividing.header Inloggning
         form.ui.form( v-on:submit.prevent="attemptLogin" role="form" name="myform" )
             div.field

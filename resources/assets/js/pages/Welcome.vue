@@ -1,14 +1,13 @@
 <template lang="pug">
-    div.ui.padded.container.segment
-        div.ui.segments
-            div.ui.segment
-                div.ui.grid.two.columns.stackable
-                    div.column.ten.wide
-                        h2.header Welcome
-                    div.column.right.floated.six.wide
-                        user-card(v-if="user" ":user"="user" "detailed"="true" picture="true")
-            div.ui.secondary.segment(v-if="user")
-                start-details(":articles"="articles" ":sections"="sections" ":user"="user")
+    div.ui.segments
+        div.ui.segment
+            div.ui.grid.two.columns.stackable
+                div.column.ten.wide
+                    h2.header Welcome
+                div.column.right.floated.six.wide
+                    user-card(v-if="user" ":user"="user" "detailed"="true" picture="true")
+        div.ui.secondary.segment(v-if="user")
+            start-details(":articles"="articles" ":sections"="sections" ":user"="user")
 </template>
 
 <script lang="coffee">
