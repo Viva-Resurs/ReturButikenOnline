@@ -5,7 +5,7 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'Profile Redirect'
+        name: 'ProfileRedirect'
         methods:
             goToUpdate: ->
                 @$router.push path: '/users/'+@$root.user.id
