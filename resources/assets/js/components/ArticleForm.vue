@@ -1,9 +1,9 @@
 <template lang="pug">
     div#articleForm
-        div.ui.dividing.header Publicera
+        div.ui.dividing.header Artikel
         form.ui.form#article_form(
-            "v-on:submit.prevent"="previewArticle"
-            role="form" )
+            v-if="article"
+            "v-on:submit.prevent"="previewArticle" )
             div.fields
                 div.twelve.wide.field
                     label Varunamn:
@@ -18,7 +18,7 @@
                         name="categories"
                         v-dropdown=""
                         ":data-selected"="selectedCategories" )
-                        input#validate_categories( type="hidden" )
+                        input#categories( type="hidden" )
                         div.default.text Select Category
                         i.dropdown.icon
                         div.menu
@@ -59,23 +59,23 @@
             div.two.fields
                 div.field( v-show="settings.publish_interval" )
                     h4.ui.sub.header publish_interval
-                    div.ui.input.left.icon
-                        i.calendar.icon
+                    div.ui.input.left.icon( @click="showRangePicker" )
+                        i.link.calendar.icon
                         input(
                             type="text"
                             name="publish_interval"
                             placeholder="????-??-??"
-                            @click="showRangePicker"
                             v-model="article.publish_interval" )
+                div.field( v-show="!settings.publish_interval" )
+                    // Just to keep offset
                 div.field( v-show="settings.bidding_interval" )
                     h4.ui.sub.header bidding_interval
-                    div.ui.input.left.icon
-                        i.calendar.icon
+                    div.ui.input.left.icon( @click="showRangePicker" )
+                        i.link.calendar.icon
                         input(
                             type="text"
                             name="bidding_interval"
                             placeholder="????-??-??"
-                            @click="showRangePicker"
                             v-model="article.bidding_interval" )
             div.two.fields
                 div.field
@@ -83,7 +83,7 @@
                         input.hidden(
                             type="radio"
                             name="public"
-                            tabindex="0" value="0"
+                            value="0"
                             v-model="article.public" )
                         label Publicera på kommunens Intranät
                 div.field
@@ -91,7 +91,7 @@
                         input.hidden(
                             type="radio"
                             name="public"
-                            tabindex="1" value="1"
+                            value="1"
                             v-model="article.public" )
                         label Publicera för allmänheten
             div.ui.divider
@@ -100,9 +100,9 @@
                     label Kontakt:
                     div.field( v-if="article.contacts" )
                         user-card.fluid(
+                            v-for="contact in article.contacts"
                             ":user"="contact"
-                            "detailed"="true"
-                            v-for="contact in article.contacts" )
+                            "detailed"="true" )
                 div.field( v-if="contacts.length>1" )
                     label Välj kontakt:
                     div.ui.fluid.selection.dropdown#contact(
@@ -135,7 +135,7 @@
         components:
             ImageDropzone: require './ImageDropzone.vue'
             UserCard: require './UserCard.vue'
-        props: [ 'original', 'categories', 'contacts' ]
+        props: [ 'draft', 'categories', 'contacts' ]
         data: ->
             ready: false
             settings:
@@ -180,58 +180,40 @@
                     if index < @article.categories.length
                         results += ','
                 return results
-
         methods:
-            changeCategories: (selection) ->
-                Vue.set @article, 'categories', []
-                for category in @categories
-                    for selected in selection
-                        if Number(category.id) == Number(selected)
-                            @article.categories.push category
-
-            changeContacts: (selection) ->
-                Vue.set @article, 'contacts', []
-                for contact in @contacts
-                    for selected in selection
-                        if Number(contact.id) == Number(selected)
-                            @article.contacts.push contact
-
             previewArticle: ->
+                # Skip intervals not set
                 if @settings.publish_interval == false
                     @article.publish_interval = ''
                 if @settings.bidding_interval == false
                     @article.bidding_interval = ''
-                if !@ready
-                    $('#article_form').form(@settings.form).form 'validate form'
-                    @ready = true
-                else
-                    $('#article_form').form 'validate form'
-
+                # Validate form
+                $('#article_form').form(@settings.form).form 'validate form'
             showRangePicker: (e) ->
-                article = @article
-                key = e.target.name
-                range = e.target.value or ''
-                bus.$emit('show_message',
+                # Get the container where onClick exists
+                inputDIV = if e.target.nodeName != 'DIV' then e.target.parentNode else e.target
+                # Get the input element
+                for element in inputDIV.childNodes
+                    if element.nodeName == 'INPUT'
+                        input = element
+                key = input.name
+                range = input.value or ''
+                bus.$emit 'show_message',
                     title: 'Välj datum'
-                    message: ''
                     start: range.split('|')[0]
                     end: range.split('|')[1]
                     type: 'calendar'
                     cb: ( start, end ) =>
-                        article[key] = start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
-                )
-
+                        @article[key] = start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
             updateImageOrder: ->
                 # Apply current order if any
                 @article.images = @article.images.sort (a, b) => a.order-b.order
                 # Then set it
                 for image, index in @article.images
                     image.order = index
-
         created: ->
-            # If a original is passed (Update-mode), fill the form
-            if @original
-                @article = @original
+            # Get the form ready
+            @article = @draft
             # Check if using publish_interval
             if @article.publish_interval != ''
                 @settings.publish_interval = true
@@ -242,13 +224,21 @@
             @updateImageOrder()
             # Listen for changes in Categories
             bus.$on 'categories_changed', (id, new_selection) =>
-                @changeCategories new_selection
+                Vue.set @article, 'categories', []
+                for category in @categories
+                    for selected in new_selection
+                        if Number(category.id) == Number(selected)
+                            @article.categories.push category
             # Listen for changes in Contacts
             bus.$on 'contacts_changed', (id, new_selection) =>
-                @changeContacts new_selection
+                Vue.set @article, 'contacts', []
+                for contact in @contacts
+                    for selected in new_selection
+                        if Number(contact.id) == Number(selected)
+                            @article.contacts.push contact
             # Listen for changes in Images
             bus.$on 'image_added', (image) =>
-                image.order = @article.images.length-1
+                image.order = @article.images.length
                 @article.images.push image
                 @updateImageOrder()
             bus.$on 'image_removed', (image) =>
