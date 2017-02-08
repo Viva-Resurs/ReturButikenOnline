@@ -24,45 +24,39 @@
                 @$http.get('api/users/'+id).then(
                     (response) =>
                         @user = response.data
+                        @getRoleList()
+                        @getSectionList()
                         @$root.loading = false
                     (response) =>
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
-
             getRoleList: ->
                 @$http.get('api/roles').then(
                     (response) =>
-                        @roles = response.data
+                        @roles = response.data ? []
                     (response) =>
                         bus.$emit 'error', response
-                        @roles = []
                 )
-
             getSectionList: ->
                 @$http.get('api/sections').then(
                     (response) =>
-                        @sections = response.data
+                        @sections = response.data ? []
                     (response) =>
                         bus.$emit 'error', response
-                        @sections = []
                 )
-
             updateUser: (user) ->
                 @$http.put('api/users/'+user.id,user).then(
                     (response) =>
                         @$router.push path: '/users'
-                    (response) => bus.$emit 'error', response.data
+                    (response) =>
+                        bus.$emit 'error', response.data
                 )
         created: ->
-            # Get user to edit
+            # Get User to edit
             @getUser @$route.params.id
-            # Listen for changes
+            # When saving changes to User
             bus.$on 'user_form_update', (payload) => @updateUser payload
-            # Get roles
-            @getRoleList()
-            # Get sections
-            @getSectionList()
         beforeDestroy: ->
             bus.$off 'user_form_update'
 </script>

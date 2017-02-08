@@ -31,7 +31,6 @@
                         bus.$emit 'error', response
                         @roles = []
                 )
-
             getSectionList: ->
                 @$http.get('api/sections').then(
                     (response) =>
@@ -40,7 +39,6 @@
                         bus.$emit 'error', response
                         @sections = []
                 )
-
             createUser: (user) ->
                 @$http.post('api/users', user).then(
                     (response) =>
@@ -51,12 +49,12 @@
                     (response) => bus.$emit 'error', response.data
                 )
         created: ->
-            # Listen for changes
-            bus.$on 'user_form_update', (payload) => @createUser payload
             # Get roles
             @getRoleList()
             # Get sections
             @getSectionList()
+            # When saving the new User
+            bus.$on 'user_form_update', (payload) => @createUser payload
         beforeDestroy: ->
             bus.$off 'user_form_update'
 </script>
