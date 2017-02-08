@@ -32,7 +32,7 @@ class ArticleController extends Controller
                     'name' => $article->name,
                     'desc' => $article->desc,
                     'price' => $article->price,
-                    'updated_at' => $article->updated_at->format('Y-m-d h:m:s'),
+                    'updated_at' => $article->updated_at->format('Y-m-d H:i:s'),
                     'publish_interval' => $article->publish_interval,
                     'bidding_interval' => $article->bidding_interval,
                     'public' => $article->public,
