@@ -1,6 +1,5 @@
 <template lang="pug">
-    div.ui.attached
-        loading
+    loading
 </template>
 
 <script lang="coffee">

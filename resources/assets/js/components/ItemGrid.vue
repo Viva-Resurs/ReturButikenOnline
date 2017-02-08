@@ -2,8 +2,7 @@
     div
         div.ui.dividing.header {{ header }}
 
-        div.ui.attached( v-if="$root.loading" )
-            loading
+        loading( v-if="$root.loading" )
 
         div.ui.attached( v-else="" )
 

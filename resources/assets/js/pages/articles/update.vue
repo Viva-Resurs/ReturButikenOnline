@@ -1,7 +1,6 @@
 <template lang="pug">
     div
-        div.ui.attached( v-if="$root.loading" )
-            loading
+        loading( v-if="$root.loading" )
         div( v-if="!$root.loading" )
             article-form(
                 v-show = "!preview"

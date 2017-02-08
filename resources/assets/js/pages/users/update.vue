@@ -1,7 +1,6 @@
 <template lang="pug">
     div
-        div.ui.attached( v-if="$root.loading" )
-            loading
+        loading( v-if="$root.loading" )
         user-form(
             v-if="!$root.loading"
             ":draft"="user"

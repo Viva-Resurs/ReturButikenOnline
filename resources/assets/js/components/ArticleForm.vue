@@ -46,14 +46,12 @@
                     div.ui.checkbox( v-checkbox="" )
                         input.hidden(
                             type="checkbox"
-                            tabindex="0" value="0"
                             v-model="settings.publish_interval" )
                         label Publicera inom datumintervall
                 div.field
                     div.ui.checkbox( v-checkbox="" )
                         input.hidden(
                             type="checkbox"
-                            tabindex="1" value="1"
                             v-model="settings.bidding_interval" )
                         label Aktivera budgivning
             div.two.fields
@@ -137,7 +135,7 @@
             UserCard: require './UserCard.vue'
         props: [ 'draft', 'categories', 'contacts' ]
         data: ->
-            ready: false
+            article: false
             settings:
                 publish_interval: false
                 bidding_interval: false

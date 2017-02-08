@@ -1,7 +1,6 @@
 <template lang="pug">
     item-grid(
         header="Avdelningar"
-        form_name="section"
         ":columns"="columns"
         ":toolsRow"=
             `[

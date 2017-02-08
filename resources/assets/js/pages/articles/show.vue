@@ -1,13 +1,10 @@
 <template lang="pug">
     div
-        div.ui.attached( v-if="$root.loading" )
-            loading
+        loading( v-if="$root.loading" )
         div( v-if="!$root.loading" )
             article-preview(
-                v-if="article!=null"
                 ":article" = "article"
-                "mode" = "show"
-            )
+                "mode" = "show" )
 </template>
 
 <script lang="coffee">
