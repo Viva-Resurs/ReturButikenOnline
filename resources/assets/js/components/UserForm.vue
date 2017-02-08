@@ -5,12 +5,10 @@
             user-card.centered(
                 ":user"="user"
                 "picture"="true"
-                "detailed"="true"
-                )
+                "detailed"="true" )
         form.ui.form#user_form(
-            "v-on:submit.prevent"="attemptSave"
-            role="form"
-        )
+            v-if="user"
+            "v-on:submit.prevent"="attemptSave" )
             div.ui.grid
                 div.row.tablet.reversed.computer.reversed.stackable
                     div.eight.wide.column.right.floated
@@ -29,7 +27,6 @@
                             div.ui.checkbox( v-checkbox="" )
                                 input.hidden(
                                     type="checkbox"
-                                    tabindex="0" value="0"
                                     v-model="settings.change_password" )
                                 label Ändra lösenord
                         div.field( v-if="settings.change_password" )
@@ -40,12 +37,12 @@
                                 placeholder="***" )
                         div.field( v-if="$root.isAdmin()" )
                             label Välj roll:
-                            div.ui.fluid.selection.dropdown#roles(
+                            div.ui.fluid.selection.dropdown(
                                 v-if="roles"
                                 name="roles"
                                 v-dropdown=""
                                 ":data-selected"="selectedRoles" )
-                                input#validate_roles( type="hidden" )
+                                input#roles( type="hidden" )
                                 div.default.text Select Roles
                                 i.dropdown.icon
                                 div.menu
@@ -55,12 +52,12 @@
                                         | {{ role.name }}
                         div.field( v-if="roles && $root.isAdmin()" )
                             label Välj område:
-                            div.ui.fluid.selection.dropdown#sections(
+                            div.ui.fluid.selection.dropdown(
                                 v-if="sections"
                                 name="sections"
                                 v-dropdown=""
                                 ":data-selected"="selectedSections" )
-                                input#validate_sections( type="hidden" )
+                                input#sections( type="hidden" )
                                 div.default.text Select Sections
                                 i.dropdown.icon
                                 div.menu
@@ -112,7 +109,7 @@
             ImageDropzone: require './ImageDropzone.vue'
             UserCard: require './UserCard.vue'
         data: ->
-            ready: false
+            user: false
             settings:
                 change_password: false
             form_settings:
@@ -128,13 +125,13 @@
                             prompt: 'Please enter your name'
                         ]
                     validate_roles:
-                        identifier: 'validate_roles'
+                        identifier: 'roles'
                         rules: [
                             type: 'empty'
                             prompt: 'Please select a role'
                         ]
                     validate_sections:
-                        identifier: 'validate_sections'
+                        identifier: 'sections'
                         rules: [
                             type: 'empty'
                             prompt: 'Please select a section'
@@ -173,6 +170,12 @@
                         results += ','
                 return results
         methods:
+            updateImageOrder: ->
+                # Apply current order if any
+                @user.images = @user.images.sort (a, b) => a.order-b.order
+                # Then set it
+                for image, index in @user.images
+                    image.order = index
             attemptSave: ->
                 # Skip password?
                 if !@settings.change_password
@@ -182,6 +185,8 @@
         created: ->
             # Get the form ready
             @user = @draft
+            # Refresh Image ordering
+            @updateImageOrder()
             # Listen for changes in Roles
             bus.$on 'roles_changed', (id, selection) =>
                 Vue.set @user, 'roles', []
@@ -196,23 +201,22 @@
                     for selected in selection
                         if Number(section.id) == Number(selected)
                             @user.sections.push section
-            # Images
+            # Listen for changes in Images
             bus.$on 'image_added', (image) =>
+                image.order = @user.images.length
                 @user.images.push image
+                @updateImageOrder()
             bus.$on 'image_removed', (image) =>
                 for index, img of @user.images
                     if Number(img.id) == Number(image.id)
                         @user.images.splice index, 1
+                @updateImageOrder()
+            bus.$on 'image_reorder', =>
+                @updateImageOrder()
+        beforeDestroy: ->
+            bus.$off 'roles_changed'
+            bus.$off 'sections_changed'
+            bus.$off 'image_added'
+            bus.$off 'image_removed'
+            bus.$off 'image_reorder'
 </script>
-
-<style lang="scss">
-    .profile_img {
-        background-size:cover;
-        width:200px;
-        height:200px;
-        background-position: 50% 50%;
-        border-radius: 100px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-</style>
