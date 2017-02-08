@@ -1,10 +1,13 @@
 <template lang="pug">
-    div.ui.padded.container.segment
-        article-preview(
-            v-if="article!=null"
-            ":article" = "article"
-            "mode" = "show"
-        )
+    div
+        div.ui.attached( v-if="$root.loading" )
+            loading
+        div( v-if="!$root.loading" )
+            article-preview(
+                v-if="article!=null"
+                ":article" = "article"
+                "mode" = "show"
+            )
 </template>
 
 <script lang="coffee">

@@ -1,15 +1,16 @@
 <template lang="pug">
-    div( v-if="article!=null" )
-        article-form(
-            v-show = "!preview_article"
-            ":original" = "article"
-            ":categories" = "categories"
-            ":contacts" = "contacts"
-        )
-        article-preview(
-            v-if = "preview_article"
-            ":article" = "preview_article"
-        )
+    div
+        div.ui.attached( v-if="$root.loading" )
+            loading
+        div( v-if="!$root.loading" )
+            article-form(
+                v-show = "!preview"
+                ":draft" = "article"
+                ":categories" = "categories"
+                ":contacts" = "contacts" )
+            article-preview(
+                v-if = "preview"
+                ":article" = "preview" )
 </template>
 
 <script lang="coffee">
@@ -19,7 +20,7 @@
             ArticleForm    : require '../../components/ArticleForm.vue'
             ArticlePreview : require '../../components/ArticlePreview.vue'
         data: ->
-            preview_article: false
+            preview: false
             article: null
             categories: null
             contacts: null
@@ -36,15 +37,13 @@
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
-
             getCategoryList: ->
                 @$http.get('api/categories').then(
                     (response) =>
-                        @categories = response.data
+                        @categories = response.data ? null
                     (response) =>
                         bus.$emit 'error', response.data
                 )
-
             getContactList: ->
                 @$http.get('api/contacts').then(
                     (response) =>
@@ -55,13 +54,6 @@
                     (response) =>
                         bus.$emit 'error', response.data
                 )
-
-            previewArticle: (article) ->
-                @preview_article = article
-
-            modifyArticle: ->
-                @preview_article = false
-
             updateArticle: (article) ->
                 @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
@@ -69,12 +61,17 @@
                     (response) =>
                         bus.$emit 'error', response.data
                 )
-
         created: ->
+            # Get Article to edit
             @getArticle @$route.params.id
-            bus.$on 'article_form_preview', (payload) => @previewArticle payload
-            bus.$on 'article_form_modify', => @modifyArticle()
-            bus.$on 'article_form_update', (payload) => @updateArticle payload
+            # When previewing Article
+            bus.$on 'article_form_preview', (article) =>
+                @preview = article
+            # When modifying Article (Exit/Unset preview)
+            bus.$on 'article_form_modify', =>
+                @preview = false
+            # When saving changes to Article
+            bus.$on 'article_form_update', (article) => @updateArticle article
         beforeDestroy: ->
             bus.$off 'article_form_preview'
             bus.$off 'article_form_modify'
