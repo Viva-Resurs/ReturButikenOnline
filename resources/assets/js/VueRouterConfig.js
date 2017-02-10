@@ -6,7 +6,14 @@ module.exports = {
     routes : [
         {
             path: '/',
-            component: require('./pages/Welcome.vue')
+            component: require('./pages/Overview.vue'),
+            meta: { requiresAuth: true },
+            children: [
+                {
+                  path: '/',
+                  component: require('./pages/overview/list.vue')
+                }
+            ]
         },
         {
             path: '/auth/login',
