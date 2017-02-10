@@ -19,6 +19,8 @@ Auth::routes();
 
 Route::group(['prefix' => 'api'], function () {
 
+    Route::get('overview', 'OverviewController@getArticleTree');
+
     Route::resource('sections', 'SectionController');
 
     Route::resource('articles', 'ArticleController');
