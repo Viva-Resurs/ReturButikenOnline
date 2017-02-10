@@ -75,7 +75,7 @@
                                     )
                                 th.collapsing.center.aligned Tools
 
-                        tbody( v-item="" )
+                        tbody( v-item="$route.hash.substr(1)" )
 
                             tr( v-for="(item, index) in itemsNew" )
                                 td.center.aligned.warning.collapsing

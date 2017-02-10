@@ -37,6 +37,7 @@
                     type: 'string'
                     search: true
                     sort: true
+                    default_sort: true
                     class: 'link'
                 users:
                     label: 'Users'
@@ -45,15 +46,6 @@
                     search: true
                     sort: true
                     class: 'link'
-                updated_at:
-                    label: 'Updated'
-                    key: 'updated_at'
-                    type: 'number'
-                    desc: true
-                    default_sort: true
-                    search: true
-                    sort: true
-                    class: 'link collapsing'
         methods:
             addItem: ->
                 @itemsNew.push id_new: @itemsNew.length
@@ -69,7 +61,7 @@
                         section = response.data
                         @items.push section
                         @$nextTick ->
-                            $('#section_content').trigger 'updated', section.id
+                            $('tbody').trigger 'updated', section.id
                     (response) => bus.$emit 'error', response.data
                 )
 
@@ -89,7 +81,7 @@
                     (response) =>
                         Vue.set section, 'updated_at', response.data.updated_at
                         @$nextTick ->
-                            $('#section_content').trigger 'updated', section.id
+                            $('tbody').trigger 'updated', section.id
                     (response) => bus.$emit 'error', response.data
                 )
 

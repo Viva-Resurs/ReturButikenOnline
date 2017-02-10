@@ -63,7 +63,7 @@
                         category = response.data
                         @items.push category
                         @$nextTick ->
-                            $('#category_content').trigger 'updated', category.id
+                            $('tbody').trigger 'updated', category.id
                     (response) => bus.$emit 'error', response.data
                 )
 
@@ -84,7 +84,7 @@
                     (response) =>
                         Vue.set category, 'updated_at', response.data.updated_at
                         @$nextTick ->
-                            $('#category_content').trigger 'updated', category.id
+                            $('tbody').trigger 'updated', category.id
                     (response) => bus.$emit 'error', response.data
                 )
 
