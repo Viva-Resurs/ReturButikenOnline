@@ -199,6 +199,13 @@ class UserController extends Controller
 
         }
 
+        // Attach Images
+        if ($request['images'])
+            foreach ($request['images'] as $image){
+                $im = Image::find($image['id']);
+                $user->images()->save($im);
+            }
+
         return $this->show($user->id);
     }
 
