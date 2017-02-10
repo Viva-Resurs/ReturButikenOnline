@@ -275,6 +275,13 @@ class UserController extends Controller
             }
         }
 
+        // Update Images order
+        foreach($request['images'] as $image){
+            $user_image = Image::find($image['id']);
+            $user_image->order = $image['order'];
+            $user_image->save();
+        }
+
         // Admin can change roles
         if ($me->hasRole('admin')) {
             // Clear Roles
