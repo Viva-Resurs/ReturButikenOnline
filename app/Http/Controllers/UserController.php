@@ -63,6 +63,7 @@ class UserController extends Controller
                     'id' => $image->id,
                     'name' => $image->name,
                     'original_name' => $image->original_name,
+                    'order' => $image->order,
                     'path' => $image->path . '?',
                     'thumb_path' => $image->thumb_path . '?'
                 ]);
@@ -126,6 +127,7 @@ class UserController extends Controller
                 'id' => $image->id,
                 'name' => $image->name,
                 'original_name' => $image->original_name,
+                'order' => $image->order,
                 'path' => $image->path . '?',
                 'thumb_path' => $image->thumb_path . '?'
             ]);
