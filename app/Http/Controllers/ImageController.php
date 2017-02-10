@@ -29,10 +29,11 @@ class ImageController extends Controller
                 'id' => $image->id,
                 'name' => $image->name,
                 'original_name' => $image->original_name,
+                'order' => $image->order,
                 'path' => $image->path,
                 'thumb_path' => $image->thumb_path,
-                'created_at' => $image->created_at->format('Y-m-d h:m:s'),
-                'updated_at' => $image->updated_at->format('Y-m-d h:m:s')
+                'created_at' => $image->created_at->format('Y-m-d H:i:s'),
+                'updated_at' => $image->updated_at->format('Y-m-d H:i:s')
             ]);
         }
 
@@ -88,25 +89,13 @@ class ImageController extends Controller
 
     public function destroy($id){
 
-        $user = Auth::user();
+        if (!$user || !$user->hasRole('admin'))
+            abort(401,'Not allowed to list images');
 
         if (!$user)
             abort(401,'Not allowed to remove images');
 
         $image = Image::find($id);
-
-        dd($image->articles);
-
-        foreach ($image->article as $association);
-        //$image->article
-
-        foreach ($article->images as $image)
-            array_push($result['selected_images'], [
-                'id' => $image->id,
-                'thumb_path' => $image->thumb_path
-            ]);
-
-        $exists = Image::where('path',$file_path)->count();
 
         if (!$image)
             abort(404);
