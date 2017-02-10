@@ -11,7 +11,7 @@
             input#files( type='file' name='files[]' hidden multiple)
             div#images.ui.five.doubling.cards(
                 v-show="buffer.length>0 || images.length>0"
-                v-images="images"
+                v-images="sortImages"
                 )
                 div.ui.card(
                     v-for="(image, index) in sortImages"
@@ -21,6 +21,8 @@
                         ":class"="(mode=='usefirst' && index==0)?'active':''" )
                     a.ui.red.bottom.attached.label.center.aligned( v-if="deleting" )
                         i.remove.icon
+                    a.ui.bottom.attached.label.center.aligned( v-if="!deleting" )
+                        | {{ image.order }}
                 div.ui.fluid.card( v-for="waiting in buffer" )
                     div.ui.loader.centered.inline.active
             div.ui.padded.eight.wide.grid(
@@ -91,7 +93,6 @@
 
             handleDragLeave: ->
                 $('#dropZone').dimmer 'hide'
-
         mounted: ->
             # Check for the various File API support.
             if !window.File || !window.FileReader || !window.FileList || !window.Blob

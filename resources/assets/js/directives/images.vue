@@ -82,8 +82,8 @@
                     # When element is finished draging
                     card.image.ondragend = (e) ->
                         clearStates()
-            # Run setup now
-            setupCards()
+            # When DOM is ready, setup cards
+            Vue.nextTick -> setupCards()
             # Listen for 'refresh' (when adding new images, rebuild cards)
             $(el).on 'refresh', ->
                 # When DOM is ready, setup cards again
