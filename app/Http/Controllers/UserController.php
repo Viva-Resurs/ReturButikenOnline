@@ -21,8 +21,7 @@ class UserController extends Controller
      * List users.
      *
      * Admin can list all users
-     * Section-admin can list users within their sections
-     * Publishers cant list users at all
+     * Section-admins & publishers can list users within their sections
      *
      * @return Array
      */
