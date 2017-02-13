@@ -1,6 +1,8 @@
 <template lang="pug">
     div.ui.vertical.left.attached.menu
-        a.item(v-for="section in sections" @click="selectSection(section)") {{ section.name }}
+        a.item(
+            v-for="section in sections"
+            @click="selectSection(section)" ) {{ section.name }}
 </template>
 
 <script lang="coffee">
