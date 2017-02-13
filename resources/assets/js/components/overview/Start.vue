@@ -1,16 +1,16 @@
 <template lang="pug">
-    div
-        div.ui.grid.equal.width.celled.columns.stackable
-            div.ui.column( v-if="$root.isAdmin()" )
-                h4 Sections
-                section-overview( ":sections"="article_tree" )
-            div.ui.column(  v-if="$root.isAdmin(2)" )
-                h4 Contacts
-                contact-overview( ":contacts"="getContacts" )
-            div.ui.column
-                h4 Articles
-                    div.ui.label.circular 45
-                article-overview( ":articles"="getArticles" )
+    div.ui.equal.width.grid.stackable.steps
+        div.column.step(
+            v-if="$root.isAdmin()"
+            ":class"="!section ? 'active' : ''" )
+            section-overview( ":sections"="getSections" )
+        div.column.step(
+            v-if="$root.isAdmin(2)"
+            ":class"="section && !contact ? 'active' : ''" )
+            contact-overview( ":contacts"="getContacts" )
+        div.column.step(
+            ":class"="contact && !article ? 'active' : ''" )
+            article-overview( ":articles"="getArticles" )
 </template>
 
 <script lang="coffee">
@@ -25,7 +25,11 @@
         props: [ 'article_tree' ]
 
         computed:
+            getSections: ->
+                # ArticleTree is a list of sections
+                return @article_tree
             getContacts: ->
+                # Return section contacts or empty array
                 return if @section and @section.contacts then @section.contacts else []
             getArticles: ->
                 # If not any form of admin, article_tree is just articles
@@ -34,27 +38,46 @@
                 # Return selected contact articles or empty array
                 return if @contact and @contact.articles then @contact.articles else []
 
-            sectionExist:() ->
-                return @article_tree != false && @article_tree.length > 0
-
         data: ->
             section: false
             contact: false
-            article: []
+            article: false
 
         created: ->
             bus.$on 'section_changed', (section) =>
+                # Update selection
                 @section = section
-                @contact = false
-                @article = false
+                bus.$emit 'contact_changed', false
+                bus.$emit 'article_changed', false
+                # Update selected state
+                for s in @getSections
+                    Vue.set s, 'selected', false
+                if section
+                    Vue.set section, 'selected', true
             bus.$on 'contact_changed', (contact) =>
+                # Update selection
                 @contact = contact
-                @article = false
+                bus.$emit 'article_changed', false
+                # Update selected state
+                for c in @getContacts
+                    Vue.set c, 'selected', false
+                if contact
+                    Vue.set contact, 'selected', true
             bus.$on 'article_changed', (article) =>
+                # Update selection
                 @article = article
+                # Update selected state
+                for a in @getArticles
+                    Vue.set a, 'selected', false
+                if article
+                    Vue.set article, 'selected', true
 
         mounted: ->
+            # Select the first section avaiable
             if @$root.isAdmin(2)
-                @section = @article_tree[0]
+                bus.$emit 'section_changed', @article_tree[0]
+            # or Article
+            else
+                bus.$emit 'article_changed', @article_tree[0]
 
 </script>
