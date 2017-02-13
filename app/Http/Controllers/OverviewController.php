@@ -59,4 +59,19 @@ class overviewController extends Controller
 
         return $articleTree;
     }
+
+    public function getMyArticles(Request $request){
+
+        $me = Auth::user();
+
+        if (!$me)
+            abort(401,'Not logged in');
+
+        $articles = [];
+        foreach (Article::all() as $article)
+            foreach ($article->creator as $creator)
+                if ($creator->id == $me->id)
+                    array_push($articles, $article);
+        return $articles;
+    }
 }
