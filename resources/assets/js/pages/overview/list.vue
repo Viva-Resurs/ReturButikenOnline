@@ -10,7 +10,7 @@
                         ":user"="user"
                         "detailed"="true"
                         picture="true" )
-        div.ui.secondary.segment( v-if="user" )
+        div.ui.segment( v-if="user" )
             loading( v-if="$root.loading" )
             start-overview(
                 v-if="!$root.loading"

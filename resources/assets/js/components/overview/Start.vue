@@ -1,19 +1,16 @@
 <template lang="pug">
     div
-        div.ui.horizontal.segments( v-if="$root.isAdmin(2)" )
-            div.ui.segment( v-if="$root.isAdmin()" )
+        div.ui.grid.equal.width.celled.columns.stackable
+            div.ui.column( v-if="$root.isAdmin()" )
                 h4 Sections
                 section-overview( ":sections"="article_tree" )
-            div.ui.segment
+            div.ui.column(  v-if="$root.isAdmin(2)" )
                 h4 Contacts
                 contact-overview( ":contacts"="getContacts" )
-            div.ui.segment
+            div.ui.column
                 h4 Articles
+                    div.ui.label.circular 45
                 article-overview( ":articles"="getArticles" )
-
-        div.ui.segment( v-if="!$root.isAdmin(2)" )
-            h4 Articles
-            article-overview( ":articles"="getArticles" )
 </template>
 
 <script lang="coffee">

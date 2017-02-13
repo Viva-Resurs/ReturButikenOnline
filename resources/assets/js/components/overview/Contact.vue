@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.attached.vertical.menu
+    div.ui.vertical.fluid.menu
         a.item(
             v-for="contact in contacts"
             @click="selectContact(contact)" ) {{ contact.name }}

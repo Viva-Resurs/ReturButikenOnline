@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.vertical.right.attached.menu
+    div.ui.vertical.fluid.menu
         a.item(
             v-for="article in articles"
             @click="selectArticle(article)" ) {{ article.name }}

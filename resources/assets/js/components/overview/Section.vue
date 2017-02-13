@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.vertical.left.attached.menu
+    div.ui.vertical.fluid.menu
         a.item(
             v-for="section in sections"
             @click="selectSection(section)" ) {{ section.name }}
