@@ -1,31 +1,19 @@
 <template lang="pug">
-    div.ui.section(v-if="user")
-        div.ui.attached( v-if="$root.loading" )
-            loading
-
-        div.ui.attached( v-else="" )
-            div.ui.horizontal.segments(v-if="$root.isAdmin()")
-                div.ui.segment
-                    h4 Sections
-                    section-overview(":sections"="article_tree")
-                div.ui.segment
-                    h4 Contacts
-                    contact-overview(":section"="section")
-                div.ui.segment
-                    h4 Articles
-                    article-overview(":contact"="contact")
-
-            div.ui.horizontal.segments(v-if="$root.isAdmin(2) && !$root.isAdmin()")
-                div.ui.segment
-                    h4 Contacts
-                    contact-overview(":section"="section")
-                div.ui.segment
-                    h4 Articles
-                    article-overview(":contact"="contact")
-
-            div.ui.segment(v-if="!$root.isAdmin(2) && !$root.isAdmin()")
+    div
+        div.ui.horizontal.segments( v-if="$root.isAdmin(2)" )
+            div.ui.segment( v-if="$root.isAdmin()" )
+                h4 Sections
+                section-overview( ":sections"="article_tree" )
+            div.ui.segment
+                h4 Contacts
+                contact-overview( ":contacts"="getContacts" )
+            div.ui.segment
                 h4 Articles
-                article-overview(":contact"="contact")
+                article-overview( ":articles"="getArticles" )
+
+        div.ui.segment( v-if="!$root.isAdmin(2)" )
+            h4 Articles
+            article-overview( ":articles"="getArticles" )
 </template>
 
 <script lang="coffee">
@@ -37,30 +25,39 @@
             ContactOverview: require './Contact.vue'
             ArticleOverview: require './Article.vue'
 
-        props: [
-            'article_tree'
-            'user'
-        ]
+        props: [ 'article_tree' ]
 
         computed:
+            getContacts: ->
+                return if @section and @section.contacts then @section.contacts else []
+            getArticles: ->
+                # If not any form of admin, article_tree is just articles
+                if !@$root.isAdmin(2)
+                    return @article_tree
+                # Return selected contact articles or empty array
+                return if @contact and @contact.articles then @contact.articles else []
+
             sectionExist:() ->
                 return @article_tree != false && @article_tree.length > 0
 
         data: ->
             section: false
             contact: false
+            article: []
 
         created: ->
-            bus.$on 'section_changed', (section) => @section = section
-            bus.$on 'contact_changed', (contact) => @contact = contact
-            bus.$on 'article_changed', (article) => @article = article
+            bus.$on 'section_changed', (section) =>
+                @section = section
+                @contact = false
+                @article = false
+            bus.$on 'contact_changed', (contact) =>
+                @contact = contact
+                @article = false
+            bus.$on 'article_changed', (article) =>
+                @article = article
 
         mounted: ->
-            if @$root.isAdmin(2) && !@$root.isAdmin()
+            if @$root.isAdmin(2)
                 @section = @article_tree[0]
-
-            if !@$root.isAdmin() && !@$root.isAdmin(2)
-                console.log "setting to " + @article_tree
-                @contact = @article_tree
 
 </script>

@@ -5,13 +5,16 @@
                 div.column.ten.wide
                     h2.header Welcome
                 div.column.right.floated.six.wide
-                    user-card(v-if="user" ":user"="user" "detailed"="true" picture="true")
-
-        div.ui.secondary.segment(v-if="user")
+                    user-card(
+                        v-if="user"
+                        ":user"="user"
+                        "detailed"="true"
+                        picture="true" )
+        div.ui.secondary.segment( v-if="user" )
+            loading( v-if="$root.loading" )
             start-overview(
-                ":article_tree"="article_tree"
-                ":user"="user"
-                )
+                v-if="!$root.loading"
+                ":article_tree"="article_tree" )
 </template>
 
 <script lang="coffee">

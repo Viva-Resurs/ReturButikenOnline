@@ -3,5 +3,5 @@
 </template>
 
 <script lang="coffee">
-module.exports = name: 'Overview'
+    module.exports = name: 'Overview'
 </script>
