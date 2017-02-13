@@ -37,9 +37,24 @@
                         @$root.loading = false
                 )
 
+            getArticleOverview: ->
+                @$root.loading = true
+                @$http.get('api/overview/my').then(
+                    (response) =>
+                        @article_tree = response.data
+                        @$root.loading = false
+                    (response) =>
+                        bus.$emit 'error', response.data
+                        @$root.loading = false
+                )
+
             setUser: ->
                 @user = @$root.user
-                @getOverview()
+                if @$root.isAdmin() || @$root.isAdmin(2)
+                    @getOverview()
+                else
+                    @getArticleOverview()
+
                 bus.$off 'user_changed', @setUser
 
         created: ->
