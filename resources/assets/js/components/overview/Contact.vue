@@ -6,6 +6,9 @@
             v-for="contact in contacts"
             ":class"="contact.selected ? 'active':''"
             @click="selectContact(contact)" ) {{ contact.name }}
+            div.ui.tiny.label(
+                ":class"="contact.articles.length>0 ? 'black' : 'grey'" )
+                | {{ contact.articles.length }}
         i.item(
             v-if="contacts.length==0"
             ) empty...

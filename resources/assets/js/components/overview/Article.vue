@@ -2,8 +2,6 @@
     div.ui.vertical.fluid.menu
         div.item
             div.header Articles
-                div.ui.floating.label.black.circular( v-if="articles.length>0" )
-                    | {{ articles.length }}
         a.item(
             v-for="article in articles"
             ":class"="article.selected ? 'active':''"

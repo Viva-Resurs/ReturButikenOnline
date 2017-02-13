@@ -6,6 +6,9 @@
             v-for="section in sections"
             ":class"="section.selected ? 'active':''"
             @click="selectSection(section)" ) {{ section.name }}
+            div.ui.tiny.label(
+                ":class"="section.contacts.length>0 ? 'black' : 'grey'" )
+                | {{ section.contacts.length }}
         i.item(
             v-if="sections.length==0"
             ) empty...
