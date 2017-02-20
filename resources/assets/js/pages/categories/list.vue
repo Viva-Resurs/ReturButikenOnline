@@ -37,16 +37,8 @@
                     type: 'string'
                     search: true
                     sort: true
-                    class: 'link'
-                updated_at:
-                    label: 'Updated'
-                    key: 'updated_at'
-                    type: 'number'
-                    desc: true
                     default_sort: true
-                    search: true
-                    sort: true
-                    class: 'link collapsing'
+                    class: 'link'
 
         methods:
             addItem: ->
