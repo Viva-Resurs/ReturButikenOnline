@@ -5,6 +5,7 @@
             user-card.centered(
                 ":user"="user"
                 "picture"="true"
+                "type" = "vertical"
                 "detailed"="true" )
         form.ui.form#user_form(
             v-if="user"

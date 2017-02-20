@@ -8,6 +8,7 @@
                     user-card(
                         v-if="user"
                         ":user"="user"
+                        "type" = "vertical"
                         "detailed"="true"
                         picture="true" )
         div.ui.segment( v-if="user" )
