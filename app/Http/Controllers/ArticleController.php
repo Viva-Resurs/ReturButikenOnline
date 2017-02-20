@@ -77,7 +77,7 @@ class ArticleController extends Controller
                 'fullname' => $contact->fullname,
                 'phone' => $contact->phone,
                 'email' => $contact->email,
-                'images' => User::find($contact->id)->images
+                'images' => User::find($contact->id)->images()->orderBy('order')->get()
             ]);
         }
 
