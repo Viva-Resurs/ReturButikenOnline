@@ -1,6 +1,6 @@
 <template lang="pug">
     item-grid(
-        header="Arkiv"
+        header="Artiklar"
         ":columns"="columns"
         ":card"="$options.components.ArticleCard"
         ":toolsRow"=`[

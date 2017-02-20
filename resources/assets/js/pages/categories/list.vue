@@ -1,6 +1,6 @@
 <template lang="pug">
     item-grid(
-        header="Categories"
+        header="Kategorier"
         ":columns"="columns"
         ":toolsRow"=
             `[
