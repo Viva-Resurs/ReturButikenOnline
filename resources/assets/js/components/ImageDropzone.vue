@@ -21,8 +21,6 @@
                         ":class"="(mode=='usefirst' && index==0)?'active':''" )
                     a.ui.red.bottom.attached.label.center.aligned( v-if="deleting" )
                         i.remove.icon
-                    a.ui.bottom.attached.label.center.aligned( v-if="!deleting" )
-                        | {{ image.order }}
                 div.ui.fluid.card( v-for="waiting in buffer" )
                     div.ui.loader.centered.inline.active
             div.ui.padded.eight.wide.grid(
