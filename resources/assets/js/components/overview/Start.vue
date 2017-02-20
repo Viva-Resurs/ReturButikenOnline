@@ -1,16 +1,17 @@
 <template lang="pug">
-    div.ui.equal.width.grid.stackable.steps
-        div.column.step(
-            v-if="$root.isAdmin()"
-            ":class"="!section ? 'active' : ''" )
-            section-overview( ":sections"="getSections" )
-        div.column.step(
-            v-if="$root.isAdmin(2)"
-            ":class"="section && !contact ? 'active' : ''" )
-            contact-overview( ":contacts"="getContacts" )
-        div.column.step(
-            ":class"="contact && !article ? 'active' : ''" )
-            article-overview( ":articles"="getArticles" )
+    div
+        div.ui.equal.width.grid.stackable.steps
+            div.column.step(
+                v-if="$root.isAdmin()"
+                ":class"="!section ? 'active' : ''" )
+                section-overview( ":sections"="getSections" )
+            div.column.step(
+                v-if="$root.isAdmin(2)"
+                ":class"="section && !contact ? 'active' : ''" )
+                contact-overview( ":contacts"="getContacts" )
+            div.column.step(
+                ":class"="contact && !article ? 'active' : ''" )
+                article-overview( ":articles"="getArticles" )
 </template>
 
 <script lang="coffee">
@@ -45,6 +46,7 @@
 
         created: ->
             bus.$on 'section_changed', (section) =>
+                console.log section.name
                 # Update selection
                 @section = section
                 bus.$emit 'contact_changed', false
