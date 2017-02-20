@@ -57,28 +57,37 @@
                         p {{ (items.length != 0) ? 'No results' : 'Empty' }}
 
                 div.row( v-if="countItems > 0 || toolsBottom"
-                    ":class"="(card)?'computer only':'unstackable'"
+                    ":class"="(card)?'computer only':''"
                     )
                     table.ui.compact.celled.table.unstackable
                         thead
                             tr
-                                th.center.aligned.collapsing #
+                                th.collapsing #
                                 th( v-for="column in columns"
                                     ":class"="column.class"
                                     @click=`
                                         (column.sort) ? setOrder(column.key,column.desc) : false
                                     ` )
-                                    | {{column.label}}
-                                    i.icon.label.sort(
-                                        v-if="order==column.key"
-                                        ":class" = "(desc==1)?'ascending':'descending'"
-                                    )
-                                th.collapsing.center.aligned Tools
+                                    div.ui.small.secondary.menu.borderless
+                                        div.item
+                                            | {{column.label}}
+                                            i.icon(
+                                                ":class" = `
+                                                    (order==column.key) ?
+                                                        (desc==1) ?
+                                                            'sort ascending' :
+                                                            'sort descending'
+                                                        :
+                                                    ''
+                                                `
+                                            )
+
+                                th.collapsing Tools
 
                         tbody( v-item="$route.hash.substr(1)" )
 
                             tr( v-for="(item, index) in itemsNew" )
-                                td.center.aligned.warning.collapsing
+                                td.center.aligned.collapsing
                                 td( v-for="column in columns"
                                     ":class"="column.class"
                                     v-tooltip="" ":data-html"="formatTooltip(item[column.tooltip])" )
@@ -87,13 +96,16 @@
                                         input( v-model="item[column.key]" ":placeholder"="'Type ' + column.label"
                                         v-focus="" )
 
-                                td.collapsing
+                                td
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
-                            tr( v-for="(item, index) in filterItems" ":id"="item.id" )
-                                td.center.aligned.warning.collapsing
-                                    strong {{(index+1)+offset}}.
+                            tr(
+                                v-for="(item, index) in filterItems"
+                                ":id"="item.id"
+                                ":class"="item.edit ? 'active' : ''" )
+                                td.center.aligned
+                                    strong {{(index+1)+offset}}
 
                                 td( v-for="column in columns"
                                     ":class"="column.class"
@@ -101,10 +113,11 @@
 
                                     div.ui.input.fluid( v-if="item.edit && column.type=='string'" )
                                         input( v-model="item[column.key+'_new']" ":placeholder"="'Type ' + column.label"
-                                        v-focus="" )
+                                        v-focus="" ).collapsing
 
                                     div( v-else="" )
-                                        span( v-if="column.type=='string' || column.type=='number' || column.type==''") {{item[column.key]}}
+                                        span( v-if="column.type=='string' || column.type=='number' || column.type==''")
+                                            | {{item[column.key]}}
 
                                     img.ui.mini.fluid.rounded.image(
                                         v-if="column.type=='image' && item[column.key].length"
@@ -116,20 +129,20 @@
                                             router-link.item( v-if="column.key=='users'"
                                             ":to"="'/users/'+post.id" exact ) {{post.name}}
                                             span( v-else ) {{post.name}}
-                                            span( v-if="(column_index != item[column.key].length -1)") ,&nbsp;
+                                            span( v-if="(column_index != item[column.key].length -1)") ,{{ ' ' }}
 
                                     div.center.aligned( v-if="column.type=='checkbox'" )
                                         i( ":class"="'ui icon ' + ((item[column.key]==1) ? 'green checkmark' : 'red remove')"
                                             v-tooltip="" ":data-html"="((item[column.key]==1) ? column.checkbox_true : column.checkbox_false)" )
 
-                                td.collapsing
+                                td.right.aligned
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
                             tr( v-if="toolsBottom")
                                 td
                                 td( v-for="c in columns" )
-                                td
+                                td.right.aligned
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
 
@@ -211,14 +224,16 @@
 
         methods:
             formatTooltip: (info) ->
-                if !info
-                    return ''
-                return info.replace /\n/g, '<br>'
+                return if info then info.replace /\n/g, '<br>' else ''
 
         created: ->
             bus.$on 'offset_changed', (new_offset) => this.offset = new_offset
             bus.$on 'limit_changed', (new_limit) => this.maxItems = new_limit
-
+            # Set default order
+            for index, column of @columns
+                console.log column
+                if column.default_sort == true
+                    @setOrder column.key, column.desc
         beforeDestroy: ->
             bus.$off 'offset_changed'
             bus.$off 'limit_changed'
