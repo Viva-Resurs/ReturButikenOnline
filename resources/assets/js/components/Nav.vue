@@ -17,47 +17,42 @@
                     div.ui.container.center.aligned
                         h3.ui.inverted.header {{ $root.settings.title }}
                 div.item( v-if="$root.isAdmin()" )
+                    i.icon.building
                     div.header Avdelningar
                     div.menu
                         router-link.item( to="/sections" exact ) Lista
-                            i.icon.browser
                 div.item( v-if="$root.isAdmin(2)" )
+                    i.icon.users
                     div.header Användare
                     div.menu
                         router-link.item( to="/users" exact ) Lista
-                            i.icon.browser
                 div.item
+                    i.icon.cubes
                     div.header Artiklar
                     div.menu
                         router-link.item( to="/articles" exact ) Lista
-                            i.icon.browser
                         router-link.item( to="/articles/create" exact ) Lägg till vara
-                            i.icon.write
                 div.item( v-if="$root.isAdmin()" )
+                    i.icon.tags
                     div.header Kategorier
                     div.menu
                         router-link.item( to="/categories" exact ) Lista
-                            i.icon.browser
                 div.item
                     div.ui.label.grey {{ user.name }}
                     div.header
                         | Inloggad som
-
                     div.vertical.menu
                         router-link.item( to="/users/profile" exact ) Profil
                             i.icon.user
                         a.item( @click="$root.exitUser()" ) Logga ut
                             i.icon.sign.out
-
         div.ui.grid.fluid.inverted.menu.computer.only.attached
             div.ui.container
                 router-link.item( to="/" exact ) {{ $root.settings.title }}
-
                 div.ui.right.inverted.menu
                     template( v-if="!user" )
                         router-link.item( to="/auth/login" exact ) Login
                         router-link.item( to="/help" exact ) Hjälp
-
                     template( v-if="user" )
                         router-link.item( to="/sections" exact v-if="$root.isAdmin()" )
                             i.icon.building
@@ -65,16 +60,15 @@
                         router-link.item( to="/users" exact v-if="$root.isAdmin(2)" )
                             i.icon.users
                             |  Användare
-                        router-link.item( to="/articles/create" exact )
-                            i.icon.write
-                            |  Lägg till vara
-                        router-link.item( to="/articles" exact )
-                            i.icon.browser
-                            |  Arkiv
                         router-link.item( to="/categories" v-if="$root.isAdmin()" exact )
                             i.icon.tags
                             |  Kategorier
-
+                        router-link.item( to="/articles" exact )
+                            i.icon.cubes
+                            |  Artiklar
+                        router-link.item( to="/articles/create" exact )
+                            i.icon.write
+                            |  Lägg till vara
                         div.ui.dropdown.item( v-dropdown="" ) {{ user.name }}
                             i.dropdown.icon
                             div.menu
