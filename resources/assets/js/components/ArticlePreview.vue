@@ -26,14 +26,13 @@
 
                 div.description {{ article.desc }}
                 div.ui.hidden.divider
-                div.ui.bottom.aligned.stackable.grid
-                    div.two.column.row
-                        div.left.aligned.left.floated.column
-                            h4.ui.sub.header Kontakt
-                            template( v-for="contact in article.contacts" )
-                                user-card( ":user"="contact" )
-                        div.right.aligned.right.floated.column
-                            h3( v-if="article.price" ) Pris : {{article.price}} kr
+                div.ui.bottom.aligned.stackable.grid.mobile.reversed
+                    div.left.aligned.column.eight.wide
+                        h4.ui.sub.header Kontakt
+                        template( v-for="contact in article.contacts" )
+                            user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
+                    div.right.aligned.column.eight.wide
+                        h3( v-if="article.price" ) Pris : {{article.price}} kr
                 div.ui.divider
                 div.ui.grid.padded
                     span
