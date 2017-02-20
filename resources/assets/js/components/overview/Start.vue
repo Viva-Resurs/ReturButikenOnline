@@ -50,12 +50,14 @@
                 # Update selection
                 @section = section
                 bus.$emit 'contact_changed', false
-                bus.$emit 'article_changed', false
                 # Update selected state
                 for s in @getSections
                     Vue.set s, 'selected', false
                 if section
                     Vue.set section, 'selected', true
+                    $('#sections').dropdown 'set selected', section.id
+                else
+                    $('#contacts').dropdown 'restore placeholder text'
             bus.$on 'contact_changed', (contact) =>
                 # Update selection
                 @contact = contact
@@ -65,6 +67,10 @@
                     Vue.set c, 'selected', false
                 if contact
                     Vue.set contact, 'selected', true
+                    $('#contacts').dropdown 'set selected', contact.id
+                else
+                    $('#contacts').dropdown 'restore placeholder text'
+
             bus.$on 'article_changed', (article) =>
                 # Update selection
                 @article = article

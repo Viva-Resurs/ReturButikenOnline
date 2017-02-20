@@ -10,15 +10,18 @@
                 div.ui.small.label(
                     ":class"="section.contacts.length>0 ? 'black' : 'grey'" )
                     | {{ section.contacts.length }}
-            i.item(
-                v-if="sections.length==0"
-                ) empty...
-        div.ui.row.selection.dropdown.mobile.only(v-dropdown="" ":class"="sections.length > 0 ? '' : 'disabled'" )
-            //input(type="hidden" name="section_selection")
+            i.item( v-if="sections.length==0" ) empty...
+        div.ui.row.selection.dropdown.mobile.only#sections(
+            v-dropdown=""
+            ":class"="sections.length > 0 ? '' : 'disabled'" )
+            input(type="hidden" name="section_selection" )
             i.dropdown.icon
-            div.default.text Sections
+            div.default.text Section
             div.class.menu
-                div.item(v-for="section in sections" @click="selectSection(section)" ":class"="section.selected ? 'active':''") {{section.name}}
+                div.item(
+                    v-for="section in sections"
+                    @click="selectSection(section)"
+                    ":data-value"="section.id" ) {{section.name}}
 </template>
 
 <script lang="coffee">
@@ -28,7 +31,4 @@
         methods:
             selectSection: (section) ->
                 bus.$emit 'section_changed', section
-                @selected_contact = section.contacts[0]
-                bus.$emit 'contact_changed', section.contacts[0]
-
 </script>
