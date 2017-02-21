@@ -26,6 +26,7 @@
 
     # Define global mixins
     Vue.mixin require './mixins/GoBack.vue'
+    Vue.mixin require './mixins/Translation.vue'
 
     # Export the root-instance options
     module.exports =
@@ -47,8 +48,11 @@
             loading: true
             settings:
                 title: 'ReturButikenOnline'
+                lang: false
 
         created: ->
+            # Load data for translations
+            @settings.lang = require './lang/sv.json'
             # Log a reference to this App
             if @DEBUG
                 console.log this
