@@ -39,9 +39,24 @@ class overviewController extends Controller
                         'articles' => []
                     ];
                     foreach (Article::all() as $article){
+                        $tArticles = [
+                            'id' => $article->id,
+                            'name' => $article->name,
+                            'desc' => $article->desc,
+                            'price' => $article->price,
+                            'updated_at' => $article->updated_at->format('Y-m-d H:i:s'),
+                            'publish_interval' => $article->publish_interval,
+                            'bidding_interval' => $article->bidding_interval,
+                            'public' => $article->public,
+                            'sections' => $article->sections,
+                            'categories' => $article->categories,
+                            'images' => $article->images,
+                            'contacts' => $article->contacts,
+                            'created_by' => $article->creator
+                        ];
                         foreach ($article->contacts as $article_contact){
                             if ($article_contact->id == $user->id){
-                                array_push($tUser['articles'], $article);
+                                array_push($tUser['articles'], $tArticles);
                             }
                         }
                     }
