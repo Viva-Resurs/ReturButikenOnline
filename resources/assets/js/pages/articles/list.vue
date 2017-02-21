@@ -1,6 +1,6 @@
 <template lang="pug">
     item-grid(
-        header="Artiklar"
+        ":header"="translate('article.header')"
         ":columns"="columns"
         ":card"="$options.components.ArticleCard"
         ":toolsRow"=`[
@@ -28,12 +28,12 @@
             items: []
             columns:
                 image:
-                    label: 'Image'
+                    label: 'image'
                     key: 'images'
                     type: 'image'
                     class: 'center aligned collapsing'
                 name:
-                    label: 'Name'
+                    label: 'name'
                     key: 'name'
                     type: 'string'
                     search: true
@@ -41,7 +41,7 @@
                     tooltip: 'desc'
                     class: 'link'
                 updated_at:
-                    label: 'Updated'
+                    label: 'updated'
                     key: 'updated_at'
                     type: 'number'
                     desc: true
@@ -50,14 +50,14 @@
                     sort: true
                     class: 'link'
                 category:
-                    label: 'Categories'
+                    label: 'categories'
                     key: 'categories'
                     type: 'array'
                     search: true
                     sort: true
                     class: 'link'
                 public:
-                    label: 'Public'
+                    label: 'public'
                     key: 'public'
                     search: false
                     sort: true

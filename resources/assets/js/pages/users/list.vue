@@ -1,6 +1,6 @@
 <template lang="pug">
     item-grid(
-        header="Användare"
+        ":header"="translate('user.header')"
         ":columns"="columns"
         ":toolsRow"=`[
             $options.components.Edit,
@@ -24,7 +24,7 @@
             items: []
             columns:
                 name:
-                    label: 'Name'
+                    label: 'name'
                     key: 'name'
                     type: 'string'
                     search: true
@@ -33,14 +33,14 @@
                     tooltip: 'desc'
                     class: 'link'
                 section:
-                    label: 'Section'
+                    label: 'sections'
                     key: 'sections'
                     type: 'array'
                     search: true
                     sort: true
                     class: 'link'
                 roles:
-                    label: 'Roles'
+                    label: 'roles'
                     key: 'roles'
                     type: 'array'
                     search: true

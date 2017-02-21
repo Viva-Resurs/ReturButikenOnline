@@ -1,6 +1,6 @@
 <template lang="pug">
     item-grid(
-        header="Avdelningar"
+        ":header"="translate('section.header')"
         ":columns"="columns"
         ":toolsRow"=
             `[
@@ -32,7 +32,7 @@
             itemsNew: []
             columns:
                 name:
-                    label: 'Name'
+                    label: 'name'
                     key: 'name'
                     type: 'string'
                     search: true
@@ -40,7 +40,7 @@
                     default_sort: true
                     class: 'link'
                 users:
-                    label: 'Users'
+                    label: 'users'
                     key: 'users'
                     type: 'array'
                     search: true

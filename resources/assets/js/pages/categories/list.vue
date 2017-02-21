@@ -1,6 +1,6 @@
 <template lang="pug">
     item-grid(
-        header="Kategorier"
+        ":header"="translate('category.header')"
         ":columns"="columns"
         ":toolsRow"=
             `[
@@ -32,7 +32,7 @@
             itemsNew: []
             columns:
                 name:
-                    label: 'Name'
+                    label: 'name'
                     key: 'name'
                     type: 'string'
                     search: true
