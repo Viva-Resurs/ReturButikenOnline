@@ -3,10 +3,10 @@
         div.ui.attached.right.aligned.menu( v-if="images.length>0" )
             a.item( @click="openFilePicker()" )
                 i.upload.icon
-                | Upload
+                | {{ translate('dropzone.upload') }}
             a.item( @click="toggleDeleting()" ":class"="deleting?'active':''")
                 i.remove.icon
-                | Remove
+                | {{ translate('dropzone.remove') }}
         div.ui.segment.bottom.attached#dropZone
             input#files( type='file' name='files[]' hidden multiple)
             div#images.ui.five.doubling.cards(
@@ -29,12 +29,12 @@
                     @click="openFilePicker()"
                     style="border: 1px dashed #999; border-radius: 10px; cursor:pointer;")
                     i.circular.icon.info
-                    p Dra bilder hit eller tryck för att bläddra
+                    p {{ translate('dropzone.info') }}
             div.ui.dimmer
                 div.content
                     div.center
                         h2.ui.inverted.icon.header
-                            i.upload.icon Drop Files
+                            i.upload.icon {{ translate('dropzone.drop_hover') }}
 </template>
 
 <script lang="coffee">
