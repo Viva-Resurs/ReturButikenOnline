@@ -1,6 +1,6 @@
 <template lang="pug">
     div.ui.grid.padded
-        div.ui.vertical.fluid.menu.computer.tablet.only.row
+        div.ui.vertical.fluid.compact.menu.computer.tablet.only.row
             div.item
                 div.header Contacts
             a.item(

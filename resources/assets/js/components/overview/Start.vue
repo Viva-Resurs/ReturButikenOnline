@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        div.ui.equal.width.grid.stackable.steps
+        div.ui.equal.width.grid.stackable.steps.segment
             div.column.step(
                 v-if="$root.isAdmin()"
                 ":class"="!section ? 'active' : ''" )
@@ -12,6 +12,17 @@
             div.column.step(
                 ":class"="contact && !article ? 'active' : ''" )
                 article-overview( ":articles"="getArticles" )
+
+        article-card(
+            ":item"="article"
+            ":tools"=`[
+                $options.components.PublishInterval,
+                $options.components.BiddingInterval,
+                $options.components.Preview,
+                $options.components.Edit,
+                $options.components.Remove ]`
+            "from"="start"
+            )
 </template>
 
 <script lang="coffee">
@@ -22,6 +33,12 @@
             SectionOverview: require './Section.vue'
             ContactOverview: require './Contact.vue'
             ArticleOverview: require './Article.vue'
+            ArticleCard: require '../ArticleCard.vue'
+            PublishInterval: require '../tools/PublishInterval.vue'
+            BiddingInterval: require '../tools/BiddingInterval.vue'
+            Preview: require '../tools/Preview.vue'
+            Remove: require '../tools/Remove.vue'
+            Edit: require '../tools/Edit.vue'
 
         props: [ 'article_tree' ]
 

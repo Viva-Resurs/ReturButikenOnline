@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.vertical.fluid.menu
+    div.ui.vertical.compact.fluid.menu
         div.item
             div.header Articles
         a.item(

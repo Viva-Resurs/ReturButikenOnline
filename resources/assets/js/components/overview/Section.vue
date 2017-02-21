@@ -1,8 +1,10 @@
 <template lang="pug">
     div.ui.grid.padded
-        div.ui.vertical.fluid.menu.computer.tablet.only.row
-            div.item
-                div.header Sections
+        div.ui.vertical.fluid.compact.menu.computer.tablet.only.row#section_menu
+            a.item
+                i.icon.external.square(@click = "openSections()")
+                |  Sections
+
             a.item(
                 v-for="section in sections"
                 ":class"="section.selected ? 'active':''"
@@ -31,4 +33,7 @@
         methods:
             selectSection: (section) ->
                 bus.$emit 'section_changed', section
+
+            openSections: ->
+                # TODO: Send to Sections route
 </script>
