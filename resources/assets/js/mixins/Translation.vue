@@ -15,7 +15,7 @@
 
                     # Try to find a match
                     if lang[c] && lang[c][l] != undefined
-                        return lang[s][l]
+                        return lang[c][l]
                     else
                         console.info 'Missing sub-lang-data for '+label
                         return label
