@@ -1,5 +1,7 @@
 <template lang="pug">
     div
+        h2.ui.header.centered
+            | {{ translate('overview') }}
         div.ui.equal.width.grid.stackable.steps.segment
             div.column.step(
                 v-if="$root.isAdmin()"

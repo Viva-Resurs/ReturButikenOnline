@@ -1,8 +1,9 @@
 <template lang="pug">
     div.ui.grid.padded
         div.ui.vertical.fluid.compact.menu.computer.tablet.only.row
-            div.item
-                div.header Contacts
+            router-link.item.header( to="/users" )
+                | {{ translate('contacts') }}
+                i.icon.external.square
             a.item(
                 v-for="contact in contacts"
                 ":class"="contact.selected ? 'active':''"
