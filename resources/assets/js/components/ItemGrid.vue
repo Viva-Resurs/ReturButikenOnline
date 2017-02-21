@@ -59,16 +59,16 @@
                 div.row( v-if="countItems > 0 || toolsBottom"
                     ":class"="(card)?'computer only':''"
                     )
-                    table.ui.compact.celled.table.unstackable
+                    table.ui.very.compact.celled.table.unstackable
                         thead
                             tr
                                 th.collapsing #
-                                th( v-for="column in columns"
+                                th.slim( v-for="column in columns"
                                     ":class"="column.class"
                                     @click=`
                                         (column.sort) ? setOrder(column.key,column.desc) : false
                                     ` )
-                                    div.ui.small.secondary.menu.borderless
+                                    div.ui.small.secondary.menu
                                         div.item
                                             | {{column.label}}
                                             i.icon(

@@ -1,6 +1,6 @@
 <template lang="pug">
-    div.ui.grid
-        div.two.column.row
+    div.ui.grid.fluid
+        div.two.column.row.stackable
             div.left.floated.column( v-if="total!=0 && total>limit && showPagination" )
                 div.ui.grid.computer.only.pagination.menu
                     a.icon.item( @click="firstPage" )
