@@ -14,7 +14,7 @@
                             input.prompt(
                                 v-focus=""
                                 v-model="search"
-                                placeholder="Type to search"
+                                ":placeholder"="translate('placeholder.search')"
                                 )
                             i.search.icon
                     div.column.grid.computer.only
@@ -33,7 +33,7 @@
                                 v-for="column in columns"
                                 v-if="order==column.key"
                                 )
-                                | {{ column.label }} &nbsp;
+                                | {{ translate(column.label) }} &nbsp;
                                 i.icon.label.sort.right.floated(
                                     ":class" = "(desc==1)?'ascending':'descending'"
                                 )
@@ -44,7 +44,7 @@
                                     ":class"="(order==column.key)?'active':''"
                                     @click="setOrder(column.key,column.desc)"
                                     )
-                                    | {{column.label}} &nbsp;
+                                    | {{ translate(column.label) }} &nbsp;
                                     i.icon.label.sort(
                                         v-if="order==column.key"
                                         ":class" = "(desc)?'ascending':'descending'"
@@ -164,7 +164,7 @@
                     v-if="limitOffBtn"
                     @click="limitOff = true"
                     )
-                    | Visa alla resultat
+                    | {{ translate('show_all_results') }}
 </template>
 
 <script lang="coffee">
