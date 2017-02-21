@@ -22,6 +22,14 @@
     "users": "Användare",
     "sections": "Avdelningar",
     "tools": "Verktyg",
+    "tool": {
+        "edit": "Redigera",
+        "add": "Lägg till",
+        "remove": "Ta bort",
+        "save": "Spara",
+        "undo": "Ångra",
+        "preview": "Förhandsvisa"
+    },
     "placeholder": {
         "search": "Skriv för att söka"
     }

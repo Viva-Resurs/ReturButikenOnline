@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.icon.button.hover-default(
         v-tooltip = ""
-        data-html = "Preview"
+        ":data-html" = "translate('tool.preview')"
         @click    = "preview(item)"
     )
         i.ui.icon.unhide

@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.icon.button.hover-primary(
         v-tooltip = ""
-        data-html = "Add"
+        ":data-html" = "translate('tool.add')"
         @click    = "add()"
     )
         i.ui.icon.plus

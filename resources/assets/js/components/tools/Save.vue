@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.icon.button.hover-primary(
         v-tooltip = ""
-        data-html = "Save"
+        ":data-html" = "translate('tool.save')"
         v-show    = "item.edit || !item.id"
         @click    = "save(item)"
     )

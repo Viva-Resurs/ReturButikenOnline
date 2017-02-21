@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.icon.button.hover-primary(
         v-tooltip = ""
-        data-html = "Edit"
+        ":data-html" = "translate('tool.edit')"
         v-show    = "!item.edit && item.id"
         @click    = "edit(item)"
     )

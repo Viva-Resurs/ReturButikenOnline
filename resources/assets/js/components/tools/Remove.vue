@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.icon.button.hover-danger(
         v-tooltip = ""
-        data-html = "Remove"
+        ":data-html" = "translate('tool.remove')"
         v-show    = "!item.edit || !item.id"
         @click    = "remove(item)"
     )

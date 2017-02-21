@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.icon.button(
         v-tooltip = ""
-        data-html = "Undo"
+        ":data-html" = "translate('tool.undo')"
         v-show    = "item.edit"
         @click    = "undo(item)"
     )
