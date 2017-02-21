@@ -14,6 +14,7 @@
     },
     "overview": "Översikt",
     "contacts": "Kontakter",
+    "roles": "Behörigheter",
     "image": "Bild",
     "name": "Namn",
     "updated": "Uppdaterad",
@@ -30,6 +31,7 @@
         "undo": "Ångra",
         "preview": "Förhandsvisa"
     },
+    "show_all_results": "Visa alla resultat",
     "placeholder": {
         "search": "Skriv för att söka"
     }

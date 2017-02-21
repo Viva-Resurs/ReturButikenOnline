@@ -2,13 +2,13 @@
     div.ui.segments
         div.ui.segment
             div.ui.grid.two.columns.stackable
-                div.column.ten.wide
+                div.column.eight.wide
                     h2.header Welcome
-                div.column.right.floated.six.wide
+                div.column.right.floated.eight.wide
                     user-card(
                         v-if="user"
                         ":user"="user"
-                        "type" = "vertical"
+                        "type" = "horizontal"
                         "detailed"="true"
                         picture="true" )
         div.ui.segment( v-if="user" )
