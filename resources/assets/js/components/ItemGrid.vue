@@ -22,7 +22,7 @@
                             input.prompt(
                                 v-focus=""
                                 v-model="search"
-                                placeholder="Type to search"
+                                ":placeholder"="translate('placeholder.search')"
                                 )
                             i.search.icon
                     div.column.right.aligned( v-if="card"
@@ -70,7 +70,7 @@
                                     ` )
                                     div.ui.small.secondary.menu
                                         div.item
-                                            | {{column.label}}
+                                            | {{ translate(column.label) }}
                                             i.icon(
                                                 ":class" = `
                                                     (order==column.key) ?
@@ -82,7 +82,7 @@
                                                 `
                                             )
 
-                                th.collapsing Tools
+                                th.collapsing {{ translate('tools') }}
 
                         tbody( v-item="$route.hash.substr(1)" )
 
@@ -231,7 +231,6 @@
             bus.$on 'limit_changed', (new_limit) => this.maxItems = new_limit
             # Set default order
             for index, column of @columns
-                console.log column
                 if column.default_sort == true
                     @setOrder column.key, column.desc
         beforeDestroy: ->
