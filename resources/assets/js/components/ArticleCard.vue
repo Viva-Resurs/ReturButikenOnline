@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.fluid.raised.card
+    div.ui.fluid.raised.card( v-if="item" )
         div.content
 
             div.header.left.aligned
