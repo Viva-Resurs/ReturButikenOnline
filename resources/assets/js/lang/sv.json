@@ -32,6 +32,12 @@
         "preview": "Förhandsvisa"
     },
     "show_all_results": "Visa alla resultat",
+    "dropzone": {
+        "upload": "Ladda upp",
+        "remove": "Radering",
+        "info": "Dra bilder hit eller tryck för att bläddra",
+        "drop_hover": "Släpp filer här"
+    },
     "placeholder": {
         "search": "Skriv för att söka"
     }
