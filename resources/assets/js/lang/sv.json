@@ -1,0 +1,28 @@
+{
+    "section": {
+        "header": "Avdelningar"
+    },
+    "user": {
+        "header": "Användare"
+    },
+    "category": {
+        "header": "Kategorier"
+    },
+    "article": {
+        "header": "Artiklar",
+        "add": "Lägg till vara"
+    },
+    "overview": "Översikt",
+    "contacts": "Kontakter",
+    "image": "Bild",
+    "name": "Namn",
+    "updated": "Uppdaterad",
+    "categories": "Kategorier",
+    "public": "Publik",
+    "users": "Användare",
+    "sections": "Avdelningar",
+    "tools": "Verktyg",
+    "placeholder": {
+        "search": "Skriv för att söka"
+    }
+}
