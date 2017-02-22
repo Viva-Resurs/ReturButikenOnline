@@ -1,6 +1,10 @@
 # ReturButikenOnline
 This project is under development!
 
+## Documentation
+
+Under development, head over to our [GitHub Pages](https://viva-resurs.github.io/ReturButikenOnline) to read it.
+
 #### Install needed* tools
 
 - [PHP](http://php.net/) *
