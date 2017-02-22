@@ -45,7 +45,8 @@
             "php artisan optimize"
         ],
         "docs": [
-            "daux generate -d public/docs"
+            "daux generate -s resources/docs -d public/docs",
+            "daux generate -s resources/docs -d docs"
         ]
     },
     "config": {
