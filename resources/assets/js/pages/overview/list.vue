@@ -3,7 +3,9 @@
         div.ui.segment
             div.ui.grid.two.columns.stackable
                 div.column.eight.wide
-                    h2.header Welcome
+                    h2.ui.header
+                        div.content {{ translate('welcome') }}
+
                 div.column.right.floated.eight.wide
                     user-card(
                         v-if="user"

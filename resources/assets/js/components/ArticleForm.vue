@@ -1,25 +1,25 @@
 <template lang="pug">
     div#articleForm
-        div.ui.dividing.header Artikel
+        div.ui.dividing.header {{ translate('article_form.header') }}
         form.ui.form#article_form(
             v-if="article"
             "v-on:submit.prevent"="previewArticle" )
             div.fields
                 div.twelve.wide.field
-                    label Varunamn:
+                    label {{ translate('article_form.name_label') }}
                     input#name(
                         type="text"
                         "v-model"="article.name"
-                        placeholder="Varunamn" )
+                        ":placeholder"="translate('article_form.name_placeholder')" )
                 div.four.wide.field
-                    label Välj varukategori:
+                    label {{ translate('article_form.category_select_label') }}
                     div.ui.fluid.multiple.selection.dropdown#category(
                         v-if="categories"
                         name="categories"
                         v-dropdown=""
                         ":data-selected"="selectedCategories" )
                         input#categories( type="hidden" )
-                        div.default.text Select Category
+                        div.default.text {{ translate('article_form.category_default_text') }}
                         i.dropdown.icon
                         div.menu
                             div.item(
@@ -27,19 +27,19 @@
                                 ":data-value"="category.id" )
                                 | {{category.name}}
             div.field
-                label Beskrivning av varan:
+                label {{ translate('article_form.desc_label') }}
                 textarea#desc(
                     rows="4"
                     v-model="article.desc"
-                    placeholder="Ge din beskrivning här" )
+                    ":placeholder"="translate('article_form.desc_placeholder')" )
             div.field
-                label Pris:
+                label {{ translate('article_form.price_label') }}
                 input#price(
                     type="number"
                     v-model="article.price"
-                    placeholder="Ange ditt pris här" )
+                    ":placeholder"="translate('article_form.price_placeholder')" )
             div.field
-                label Bilder:
+                label {{ translate('article_form.images_label') }}
                 image-dropzone( ":images"="article.images" )
             div.two.fields
                 div.field
@@ -47,16 +47,16 @@
                         input.hidden(
                             type="checkbox"
                             v-model="settings.publish_interval" )
-                        label Publicera inom datumintervall
+                        label {{ translate('article_form.publish_interval_label') }}
                 div.field
                     div.ui.checkbox( v-checkbox="" )
                         input.hidden(
                             type="checkbox"
                             v-model="settings.bidding_interval" )
-                        label Aktivera budgivning
+                        label {{ translate('article_form.bidding_interval_label') }}
             div.two.fields
                 div.field( v-show="settings.publish_interval" )
-                    h4.ui.sub.header publish_interval
+                    h4.ui.sub.header {{ translate('article_form.publish_interval_header') }}
                     div.ui.input.left.icon( @click="showRangePicker" )
                         i.link.calendar.icon
                         input(
@@ -67,7 +67,7 @@
                 div.field( v-show="!settings.publish_interval" )
                     // Just to keep offset
                 div.field( v-show="settings.bidding_interval" )
-                    h4.ui.sub.header bidding_interval
+                    h4.ui.sub.header {{ translate('article_form.bidding_interval_header') }}
                     div.ui.input.left.icon( @click="showRangePicker" )
                         i.link.calendar.icon
                         input(
@@ -83,7 +83,7 @@
                             name="public"
                             value="0"
                             v-model="article.public" )
-                        label Publicera på kommunens Intranät
+                        label {{ translate('article_form.public_intra_label') }}
                 div.field
                     div.ui.radio.checkbox( v-checkbox="" )
                         input.hidden(
@@ -91,25 +91,25 @@
                             name="public"
                             value="1"
                             v-model="article.public" )
-                        label Publicera för allmänheten
+                        label {{ translate('article_form.public_all_label') }}
             div.ui.divider
             div.two.fields( v-if="contacts" )
                 div.field
-                    label Kontakt:
+                    label {{ translate('article_form.contact_label') }}
                     div.field( v-if="article.contacts" )
                         user-card.fluid(
                             v-for="contact in article.contacts"
                             ":user"="contact"
                             "detailed"="true" )
                 div.field( v-if="contacts.length>1" )
-                    label Välj kontakt:
+                    label {{ translate('article_form.choose_contact_label') }}
                     div.ui.fluid.selection.dropdown#contact(
                         v-if="contacts"
                         name="contacts"
                         v-dropdown=""
                         ":data-selected"="selectedContacts" )
                         i.dropdown.icon
-                        div.default.text Select Contact
+                        div.default.text {{ translate('article_form.choose_contact_default_text') }}
                         div.menu
                             div.item(
                                 v-for="contact in contacts"
@@ -119,12 +119,12 @@
                 div.ui.container
                     div.ui.hidden.divider
                     div.ui.container.right.aligned
-                        div.ui.button.secondary( @click="goBack()" ) Back
+                        div.ui.button.secondary( @click="goBack()" ) {{ translate('nav.back') }}
                         div.ui.button.primary(
                             type="submit"
                             @keydown.enter.prevent="previewArticle"
                             @click="previewArticle" )
-                            | Förhandsgranska
+                            | {{ translate('article_form.preview') }}
 </template>
 
 <script lang="coffee">

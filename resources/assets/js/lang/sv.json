@@ -3,7 +3,10 @@
         "header": "Avdelningar"
     },
     "user": {
-        "header": "Användare"
+        "header": "Användare",
+        "profile": "Profil",
+        "logout": "Logga ut",
+        "login": "Logga in"
     },
     "category": {
         "header": "Kategorier"
@@ -12,7 +15,37 @@
         "header": "Artiklar",
         "add": "Lägg till vara"
     },
+    "article_form": {
+        "header": "Artikel",
+        "name_label": "Varunamn:",
+        "name_placeholder": "Varunamn",
+        "category_select_label": "Välj varukategori:",
+        "category_default_text": "Välj kategori",
+        "desc_label": "Beskrivning av varan:",
+        "desc_placeholder": "Ge din beskrivning här",
+        "price_label": "Pris:",
+        "price_placeholder": "Ange ditt pris här",
+        "images_label": "Bilder:",
+        "publish_interval_label": "Publicera inom datumintervall",
+        "publish_interval_header": "Publiceringsintervall",
+        "bidding_interval_label": "Aktivera budgivning",
+        "bidding_interval_header": "Budgivningsintervall",
+        "public_intra_label": "Publicera på kommunens intranät",
+        "public_all_label": "Publicera för allmänheten",
+        "contact_label": "Kontakt:",
+        "choose_contact_label": "Välj kontakt:",
+        "choose_contact_default_text": "Välj kontakt",
+        "preview": "Förhandsgranska"
+    },
     "overview": "Översikt",
+    "welcome": "Välkommen",
+    "nav": {
+        "menu": "Meny",
+        "list": "Lista",
+        "logged_in_as": "Inloggad som",
+        "help": "Hjälp",
+        "back": "Tillbaka"
+    },
     "contacts": "Kontakter",
     "roles": "Behörigheter",
     "image": "Bild",
