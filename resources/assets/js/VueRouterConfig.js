@@ -7,7 +7,7 @@ module.exports = {
         {
             path: '/',
             component: require('./pages/Overview.vue'),
-            meta: { requiresAuth: true },
+            meta: {  },
             children: [
                 {
                   path: '/',
