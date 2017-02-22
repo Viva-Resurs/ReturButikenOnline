@@ -52,7 +52,6 @@
                 div.ui.right.inverted.menu
                     template( v-if="!user" )
                         router-link.item( to="/auth/login" exact ) {{ translate('user.login') }}
-                        router-link.item( to="/help" exact ) {{ translate('nav.help') }}
                     template( v-if="user" )
                         router-link.item( to="/sections" exact v-if="$root.isAdmin()" )
                             i.icon.building
@@ -75,6 +74,9 @@
                                 router-link.item( to="/users/profile" exact )
                                     i.icon.user
                                     |  {{ translate('user.profile') }}
+                                a.item( href="docs" )
+                                    i.icon.help.circle
+                                    |  {{ translate('nav.help') }}
                                 a.item( @click="$root.exitUser()" )
                                     i.icon.sign.out
                                     |  {{ translate('user.logout') }}
