@@ -1,6 +1,6 @@
 <template lang="pug">
     div#preview
-        div.ui.dividing.header( v-if="mode!='show'" ) Förhandsgranskning
+        div.ui.dividing.header( v-if="mode!='show'" ) {{ translate('article_preview.header') }}
         div( v-if="article!=-1" )
             div( v-if="article.images && article.images.length>0" )
                 div.ui.basic.segment.center.aligned.preview_header(
@@ -28,64 +28,64 @@
                 div.ui.hidden.divider
                 div.ui.bottom.aligned.stackable.grid.mobile.reversed
                     div.left.aligned.column.eight.wide
-                        h4.ui.sub.header Kontakt
+                        h4.ui.sub.header {{ translate('article_preview.contact_header') }}
                         template( v-for="contact in article.contacts" )
                             user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
                     div.right.aligned.column.eight.wide
-                        h3( v-if="article.price" ) Pris : {{article.price}} kr
+                        h3( v-if="article.price" ) {{ translate('article_preview.price_label') }} {{article.price}} {{ translate('article_preview.price_currency_label') }}
                 div.ui.divider
                 div.ui.grid.padded
                     span
                         i( v-if="article.updated_at" )
-                            b Ändrad:
+                            b {{ translate('article_preview.updated_at_label') }}
                             | &nbsp;&nbsp;{{ formatDate(article.updated_at.date) }}
                         i( v-if="!article.updated_at && article.created_at" )
-                            | Publicerad {{ formatDate(article.created_at.date) }}
+                            | {{ translate('article_preview.created_at_label') }} {{ formatDate(article.created_at.date) }}
                         i( v-if="!article.updated_at && !article.created_at" )
-                            | Publicerad YYYY-MM-DD HH:MM
+                            | {{ translate('article_preview.created_at_label') }} YYYY-MM-DD HH:MM
                     span
-                        b Artikelnr:
+                        b {{ translate('article_preview.article_number_label') }}
                         | &nbsp;&nbsp;{{ $root.displayArtNR(article) }}
                 div.ui.hidden.divider
                 div.ui.segment( v-if="mode!='show'" )
                     div.ui.top.attached.label( @click="toggleDetails()" )
-                        h4.ui.sub.header Information om publicering
+                        h4.ui.sub.header {{ translate('article_preview.publish_info_header') }}
                     div.ui.grid.equal.width.stackable#details
                         div.row
                             div.column( v-if="article.publish_interval" )
-                                h4.ui.sub.header Publiceringsintervall
+                                h4.ui.sub.header {{ translate('article_preview.publish_interval_header') }}
                                 i.ui.icon.time
                                 span {{ formatInterval(article.publish_interval) }}
                             div.column( v-if="article.bidding_interval" )
-                                h4.ui.sub.header Budgivningsintervall
+                                h4.ui.sub.header {{ translate('article_preview.bidding_interval_header') }}
                                 i.ui.icon.time
                                 span {{ formatInterval(article.bidding_interval) }}
                             div.column( v-if="!article.publish_interval && !article.bidding_interval" )
                                 h4.ui.sub.header
                                 i.ui.icon.warning
-                                i Artikeln har varken publiceringsintervall eller budgivningsintervall
+                                i {{ translate('article_preview.not_published') }}
                         div.row
                             div.column(v-if="article.public==true")
-                                h4.ui.sub.header Publiceras för
+                                h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
                                 i.ui.icon.green.world
-                                | Allmänheten
+                                | {{ translate('article_preview.published_all') }}
                             div.column(v-if="article.public!=true")
                                 h4.ui.sub.header Publiceras för
                                 i.ui.icon.red.industry
-                                | Kommunens intranät
+                                | {{ translate('article_preview.published_intra') }}
         div.ui.container
             div.ui.container.right.aligned
                 div.ui.button.secondary( v-if="mode=='show'"
                     @click="goBack()"
-                ) Back
+                ) {{ translate('nav.back') }}
                 div.ui.button.secondary( v-if="mode!='show'"
                     @click="modifyArticle"
-                ) Modify
+                ) {{ translate('article_preview.article_modify') }}
                 div.ui.button.primary( v-if="mode!='show'"
                     @click="attemptPublish"
-                ) Publish
+                ) {{ translate('article_preview.article_publish') }}
         div( v-if="article==-1" )
-            | Artikeln hittades inte
+            | {{ translate('article_preview.article_not_found') }}
 </template>
 
 <script lang="coffee">

@@ -37,6 +37,25 @@
         "choose_contact_default_text": "Välj kontakt",
         "preview": "Förhandsgranska"
     },
+    "article_preview": {
+        "header": "Förhandsgranskning",
+        "contact_header": "Kontakt",
+        "price_label": "Pris : ",
+        "price_currency_label": " kr",
+        "updated_at_label": "Ändrad:",
+        "created_at_label": "Publicerad",
+        "article_number_label": "Artikelnr:",
+        "publish_info_header": "Information om publicering",
+        "publish_interval_header": "Publiceringsintervall",
+        "bidding_interval_header": "Budgivningsintervall",
+        "not_published": "Artikeln har varken ett publiceringsintervall eller Budgivningsintervall",
+        "published_for_header": "Publiceras för",
+        "published_all": "Allmänheten",
+        "published_intra": "Kommunens intranät",
+        "article_not_found": "Artikeln hittades inte",
+        "article_modify": "Ändra",
+        "article_publish": "Publicera"
+    },
     "overview": "Översikt",
     "welcome": "Välkommen",
     "nav": {
