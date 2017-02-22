@@ -67,7 +67,7 @@
                 else
                     @$router.push path: '/'
 
-        mounted: ->
+        created: ->
             @getUser()
             bus.$on 'login_ok', (response) =>
                 @getUser()
