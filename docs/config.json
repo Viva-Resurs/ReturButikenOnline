@@ -1,0 +1,18 @@
+{
+    "title": "ReturButikenOnline",
+    "tagline": "Welcome to the documentation!",
+    "repo": "Viva-Resurs/ReturButikenOnline",
+    "links": {
+       "GitHub Repo": "https://github.com/Viva-Resurs/ReturButikenOnline",
+       "Help/Support/Bugs": "https://github.com/Viva-Resurs/ReturButikenOnline/issues"
+   },
+    "author": "Jonathan Timmerlid, Daniel Ögren",
+    "languages": { "en": "English" },
+    "html": {
+        "theme": "daux-navy",
+        "search": true,
+        "edit_on_github": "Viva-Resurs/ReturButikenOnline/blob/master/docs"
+    },
+    "breadcrumbs": true,
+    "breadcrumb_separator" : " / "
+}

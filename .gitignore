@@ -1,6 +1,5 @@
 # Composer
 /vendor
-composer.lock
 
 # NPM
 /node_modules
@@ -13,6 +12,7 @@ npm-debug.log
 /public/css
 /public/js
 /public/fonts
+/public/docs
 
 # Uploads
 /public/uploads/*.*

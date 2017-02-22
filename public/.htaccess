@@ -5,6 +5,9 @@
 
     RewriteEngine On
 
+    # Let the docs be
+    RewriteRule ^(docs)($|/) - [L]
+
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)/$ /$1 [L,R=301]
