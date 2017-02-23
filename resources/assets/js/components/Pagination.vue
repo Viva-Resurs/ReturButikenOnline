@@ -25,7 +25,7 @@
                         i.angle.left.icon
 
                     a.icon.item
-                        i Page {{currentPage}} ... {{totalPages}}
+                        i {{ translate('page') }} {{currentPage}} ... {{totalPages}}
 
                     a.icon.item( @click="nextPage" )
                         i.angle.right.icon
