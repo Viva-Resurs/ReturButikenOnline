@@ -17,12 +17,13 @@
         methods:
             displayInterval: (interval) ->
                 if interval.indexOf('|') < 0
-                    return 'Click to set interval'
+                    return @$root.translate('bidding_interval.select_interval_message')
                 dates = interval.split '|'
-                if dates.length < 1
+                if dates.length < 2
                     return false
-                return "<b>Start:</b><br>" + dates[0] + "<br><br>"+
-                       "<b>End:</b><br>" + dates[1]
+                return "<b>"+@$root.translate('display_interval.start')+"</b><br>" + dates[0] + "<br><br>"+
+                       "<b>"+@$root.translate('display_interval.end')+"</b><br>" + dates[1]
+
 
             activeInterval: (interval) ->
                 if (
@@ -36,7 +37,7 @@
             showRangePicker: ->
                 item = @item
                 bus.$emit 'show_message',
-                    title:'Välj datum',
+                    title: @$root.translate('bidding_interval.select_date_title'),
                     message:'',
                     start: item.bidding_interval.split('|')[0],
                     end: item.bidding_interval.split('|')[1]

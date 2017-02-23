@@ -10,13 +10,13 @@
                     div.ui.form( v-show="type=='calendar'" )
                         div.two.stackable.fields
                             div.field
-                                h4.ui.sub.header Start date
+                                h4.ui.sub.header {{ translate('semantic_dialog.start_date_header') }}
                                 div.ui.calendar#interval_start( v-calendar="" )
                                     div.ui.input.left.icon.bottom.attached
                                         i.calendar.icon
                                         input( type="text" placeholder="Start" )
                             div.field
-                                h4.ui.sub.header End date
+                                h4.ui.sub.header {{ translate('semantic_dialog.end_date_header') }}
                                 div.ui.calendar#interval_end( v-calendar="" )
                                     div.ui.input.left.icon
                                         i.calendar.icon
@@ -44,7 +44,7 @@
                     buttons: [
                         {
                             class: 'ui deny primary button',
-                            label: 'Close'
+                            label: @$root.translate('semantic_dialog.close_label')
                         },
                     ]
 
@@ -54,7 +54,7 @@
                     buttons: [
                         {
                             class: 'ui deny red button',
-                            label: 'Close'
+                            label: @$root.translate('semantic_dialog.close_label')
                         },
                     ]
 
@@ -64,11 +64,11 @@
                     buttons: [
                         {
                             class: 'ui deny button',
-                            label: 'Abort'
+                            label: @$root.translate('semantic_dialog.abort_label')
                         },
                         {
                             class: 'ui approve primary button',
-                            label: 'Confirm'
+                            label: @$root.translate('semantic_dialog.confirm_label')
                         },
                     ]
 
@@ -78,11 +78,11 @@
                     buttons: [
                         {
                             class: 'ui deny button',
-                            label: 'Abort'
+                            label: @$root.translate('semantic_dialog.abort_label')
                         },
                         {
                             class: 'ui approve primary button',
-                            label: 'Confirm'
+                            label: @$root.translate('semantic_dialog.confirm_label')
                         },
                     ]
 
@@ -92,7 +92,7 @@
                     buttons: [
                         {
                             class: 'ui approve primary button',
-                            label: 'Ok'
+                            label: @$root.translate('semantic_dialog.confirm_label')
                         },
                     ]
 

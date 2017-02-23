@@ -62,14 +62,14 @@
                     search: false
                     sort: true
                     type: 'checkbox'
-                    checkbox_true: 'Publicerad för allmänheten'
-                    checkbox_false: 'Publicerad på kommunens intranät'
+                    checkbox_true: @$root.translate('article_list.published_all')
+                    checkbox_false: @$root.translate('article_list.published_intra')
                     class: 'link center aligned collapsing'
         methods:
             attemptRemove: (article) ->
                 bus.$emit 'show_message',
-                    title:'Confirm'
-                    message:'Do you want to remove the article?'
+                    title: @$root.translate('article_list.remove_article_title') + "''"+article.name+"''."
+                    message: @$root.translate('article_list.remove_article_message')
                     type:'confirm'
                     cb: => @removeArticle article
 
@@ -77,8 +77,8 @@
                 @$http.delete('api/articles/'+article.id).then(
                     (response) =>
                         bus.$emit 'success',
-                            title: 'Success'
-                            details: 'Article removed'
+                            title: @$root.translate('article_list.success_message')
+                            details: @$root.translate('article_list.article_removed')
                         Vue.set article, 'removed', true
                     (response) => bus.$emit 'error', response.data
                 )
@@ -91,8 +91,8 @@
                 @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
                         bus.$emit 'success',
-                            title: 'Success'
-                            details: 'Article updated'
+                            title: @$root.translate('article_list.success_message')
+                            details: @$root.translate('article_list.article_updated')
                     (response) => bus.$emit 'error', response.data
                 )
 

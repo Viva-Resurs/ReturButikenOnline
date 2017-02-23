@@ -83,6 +83,34 @@
         "published_all": "Publicerad för allmänheten",
         "published_intra": "Publicerad på kommunens intranät"
     },
+    "semantic_dialog": {
+        "start_date_header": "Startdatum",
+        "end_date_header": "Slutdatum",
+        "close_label": "Stäng",
+        "abort_label": "Avbryt",
+        "confirm_label": "Ok",
+    },
+    "article_list":{
+        "published_all": "Publicerad för allmänheten",
+        "published_intra": "Publicerad på kommunens intranät",
+        "remove_article_title": "Tar bort artikel: ",
+        "remove_article_message": "Är du säker på att du vill ta bort artikeln?",
+        "article_removed": "Artikel borttagen",
+        "article_updated": "Artikel uppdaterad",
+        "success_message": "Utförd:"
+    },
+    "publish_interval":{
+        "select_date_title": "Välj publiceringsintervall:",
+        "select_interval_message": "Klicka för att sätta ett publiceringsintervall"
+    },
+    "bidding_interval":{
+        "select_date_title": "Välj budgivningsintervall:",
+        "select_interval_message": "Klicka för att sätta ett budgivningssintervall"
+    },
+    "display_interval":{
+        "start": "Startar:",
+        "end": "Slutar:",
+    },
     "overview": "Översikt",
     "welcome": "Välkommen",
     "nav": {
