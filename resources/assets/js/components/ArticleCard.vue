@@ -19,17 +19,17 @@
             div.description
                 div.ui.vertical.segment.basic
                     h4.ui.sub.header
-                        | Beskrivning
+                        | {{ translate('article_card.description_header') }}
                     p {{ item.desc }}
 
                 div.ui.vertical.segment.basic.right.floated.center.aligned
                     h4.ui.sub.header
-                        | Pris
-                    p {{ item.price }} kr
+                        | {{ translate('article_card.price_header') }}
+                    p {{ item.price }} {{ translate('article_card.price_currency') }}
 
                 div( v-if="item.images.length>0" ).ui.vertical.segment.basic
                     h4.ui.sub.header
-                        | Bilder
+                        | {{ translate('article_card.images_header') }}
                     p
                         div.ui.tiny.images
                             img.ui.rounded.image(
@@ -43,9 +43,9 @@
                         ":class"="(item.public==1)?'green world':'red industry'"
                         )
                     span( v-if="item.public==1" )
-                        | Publicerad för allmänheten
+                        | {{ translate('article_card.published_all') }}
                     span( v-if="item.public!=1" )
-                        | Publicerad på kommunens intranät
+                        | {{ translate('article_card.published_intra') }}
                 div.column.right.aligned
                     div.ui.icon.basic.buttons
                         component( v-for="tool in tools" ":is"="tool" ":item"="item" ":from"="from" )
