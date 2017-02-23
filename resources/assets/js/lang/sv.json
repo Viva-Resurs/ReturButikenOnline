@@ -56,6 +56,25 @@
         "article_modify": "Ändra",
         "article_publish": "Publicera"
     },
+    "user_form": {
+      "header": "Användare",
+      "profile_photo_label": "Profil foto:",
+      "user_name_label": "Användarnamn:",
+      "user_name_placeholder": "Användarnamn",
+      "change_password_label": "Ändra lösenord",
+      "password_label": "Lösenord",
+      "select_role_label": "Välj roll:",
+      "select_role_default_text": "Välj roll",
+      "select_section_label": "Välj område:",
+      "select_section_default_text": "Välj område",
+      "fullname_label": "Namn:",
+      "fullname_placeholder": "Namn",
+      "phone_label": "Telefon:",
+      "phone_placeholder": "Telefon",
+      "email_label": "E-post:",
+      "email_placeholder": "E-post",
+      "user_save": "Spara"
+    },
     "overview": "Översikt",
     "welcome": "Välkommen",
     "nav": {

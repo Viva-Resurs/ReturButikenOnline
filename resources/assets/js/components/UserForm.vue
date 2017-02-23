@@ -1,6 +1,6 @@
 <template lang="pug">
     div#userForm
-        div.ui.dividing.header Användare
+        div.ui.dividing.header {{ translate('user_form.header') }}
         div.ui.basic.segment
             user-card.centered(
                 ":user"="user"
@@ -13,38 +13,38 @@
             div.ui.grid
                 div.row.tablet.reversed.computer.reversed.stackable
                     div.eight.wide.column.right.floated
-                        label Profilfoto
+                        label {{ translate('user_form.profile_photo_label') }}
                         image-dropzone(
                             ":images"="user.images"
                             mode="usefirst" )
                     div.eight.wide.column.left.floated
                         div.field
-                            label Användarnamn:
+                            label {{ translate('user_form.user_name_label') }}
                             input#name(
                                 type="text"
                                 "v-model"="user.name"
-                                placeholder="Användarnamn" )
+                                ":placeholder"="translate('user_form.user_name_placeholder')" )
                         div.field
                             div.ui.checkbox( v-checkbox="" )
                                 input.hidden(
                                     type="checkbox"
                                     v-model="settings.change_password" )
-                                label Ändra lösenord
+                                label {{ translate('user_form.change_password_label') }}
                         div.field( v-if="settings.change_password" )
-                            label Lösenord:
+                            label {{ translate('user_form.password_label') }}
                             input#password(
                                 type="password"
                                 "v-model"="user.password"
                                 placeholder="***" )
                         div.field( v-if="$root.isAdmin()" )
-                            label Välj roll:
+                            label {{ translate('user_form.select_role_label') }}
                             div.ui.fluid.selection.dropdown(
                                 v-if="roles"
                                 name="roles"
                                 v-dropdown=""
                                 ":data-selected"="selectedRoles" )
                                 input#roles( type="hidden" )
-                                div.default.text Select Roles
+                                div.default.text {{ translate('user_form.select_role_default_text') }}
                                 i.dropdown.icon
                                 div.menu
                                     div.item(
@@ -52,14 +52,14 @@
                                         ":data-value"="role.id" )
                                         | {{ role.name }}
                         div.field( v-if="roles && $root.isAdmin()" )
-                            label Välj område:
+                            label {{ translate('user_form.select_section_label') }}
                             div.ui.fluid.selection.dropdown(
                                 v-if="sections"
                                 name="sections"
                                 v-dropdown=""
                                 ":data-selected"="selectedSections" )
                                 input#sections( type="hidden" )
-                                div.default.text Select Sections
+                                div.default.text {{ translate('user_form.select_section_default_text') }}
                                 i.dropdown.icon
                                 div.menu
                                     div.item(
@@ -69,37 +69,37 @@
                 div.row
                     div.eight.wide.column
                         div.field
-                            label Namn:
+                            label {{ translate('user_form.fullname_label') }}
                             input#fullname(
                                 type="text"
                                 "v-model"="user.fullname"
-                                placeholder="Namn" )
+                                ":placeholder"="translate('user_form.fullname_placeholder')" )
                     div.eight.wide.column
                         div.field
-                            label Telefon:
+                            label {{ translate('user_form.phone_label') }}
                             input#phone(
                                 type="text"
-                                placeholder="Telefon"
+                                ":placeholder"="translate('user_form.phone_placeholder')"
                                 "v-model"="user.phone" )
                 div.sixteen.wide.column
                     div.field
-                        label E-post:
+                        label {{ translate('user_form.email_label') }}
                         input#email(
                             type="email"
                             "v-model"="user.email"
-                            placeholder="Epost" )
+                            ":placeholder"="translate('user_form.email_placeholder')" )
                 div.sixteen.wide.column
                     div.ui.container
                         div.ui.hidden.divider
                         div.ui.container.right.aligned
                             div.ui.button.secondary(
                                 @click="goBack()"
-                            ) Back
+                            ) {{ translate('nav.back') }}
                             div.ui.button.primary(
                                 type="submit"
                                 @keydown.enter.prevent="attemptSave"
                                 @click="attemptSave"
-                            ) Spara
+                            ) {{ translate('user_form.user_save') }}
 </template>
 
 <script lang="coffee">
