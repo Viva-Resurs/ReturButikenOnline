@@ -91,6 +91,13 @@
         "abort_label": "Avbryt",
         "confirm_label": "Ok",
     },
+    "section_list": {
+        "remove_section_title": "Tar bort avdelning: ",
+        "remove_section_message": "Är du säker på att du vill ta bort avdelningen?",
+        "section_removed": "Avdelning borttagen",
+        "section_updated": "Avdelning uppdaterad",
+        "success_message": "Utförd:"
+    },
     "article_list":{
         "published_all": "Publicerad för allmänheten",
         "published_intra": "Publicerad på kommunens intranät",
@@ -112,8 +119,16 @@
         "start": "Startar:",
         "end": "Slutar:",
     },
+    "goto":{
+        "sections": "Gå till avdelningar",
+        "users": "Gå till användare",
+        "articles": "Gå till artiklar"
+    },
     "overview": "Översikt",
+    "my_articles": "Mina artiklar",
     "welcome": "Välkommen",
+    "welcome_info": "Du är nu inloggad i ReturButikenOnline!",
+    "welcome_help": "Behöver du hjälp?",
     "nav": {
         "menu": "Meny",
         "list": "Lista",
