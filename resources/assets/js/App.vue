@@ -3,6 +3,7 @@
         navigation
         semantic-dialog
         router-view.ui.padded.container.segment
+        footer-component( ":lang"="settings.lang" ":language_lib"="language_lib" )
 </template>
 
 <script lang="coffee">
@@ -35,6 +36,7 @@
         components:
             Navigation: require './components/Nav.vue'
             SemanticDialog: require './components/SemanticDialog.vue'
+            FooterComponent: require './components/Footer.vue'
 
         mixins: [
             require './mixins/Debug.vue'
