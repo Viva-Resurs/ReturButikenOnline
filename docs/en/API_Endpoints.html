@@ -4,7 +4,7 @@
 <!--[if IE 8]>          <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
 <head>
-    <title>Home - ReturButikenOnline</title>
+    <title>API Endpoints - ReturButikenOnline</title>
     <meta name="description" content="Welcome to the documentation!" />
     <meta name="author" content="Jonathan Timmerlid, Daniel Ögren">
     <meta charset="UTF-8">
@@ -46,7 +46,7 @@
 
         <div class="Collapsible__content">
             <!-- Navigation -->
-            <ul class='Nav'><li class='Nav__item Nav__item--active'><a href="../en/Home.html">Home</a></li><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Getting started</a><ul class='Nav'><li class='Nav__item '><a href="../en/Getting_started/Setup.html">Setup</a></li></ul></li><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>User interface</a><ul class='Nav'><li class='Nav__item '><a href="../en/User_interface/User_interface.html">User interface</a></li><li class='Nav__item '><a href="../en/User_interface/Sections.html">Sections</a></li><li class='Nav__item '><a href="../en/User_interface/Users.html">Users</a></li><li class='Nav__item '><a href="../en/User_interface/Categories.html">Categories</a></li><li class='Nav__item '><a href="../en/User_interface/Articles.html">Articles</a></li></ul></li><li class='Nav__item '><a href="../en/API_Endpoints.html">API Endpoints</a></li></ul>
+            <ul class='Nav'><li class='Nav__item '><a href="../en/Home.html">Home</a></li><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>Getting started</a><ul class='Nav'><li class='Nav__item '><a href="../en/Getting_started/Setup.html">Setup</a></li></ul></li><li class='Nav__item  has-children'><a href="#" class="aj-nav folder"><i class="Nav__arrow">&nbsp;</i>User interface</a><ul class='Nav'><li class='Nav__item '><a href="../en/User_interface/User_interface.html">User interface</a></li><li class='Nav__item '><a href="../en/User_interface/Sections.html">Sections</a></li><li class='Nav__item '><a href="../en/User_interface/Users.html">Users</a></li><li class='Nav__item '><a href="../en/User_interface/Categories.html">Categories</a></li><li class='Nav__item '><a href="../en/User_interface/Articles.html">Articles</a></li></ul></li><li class='Nav__item Nav__item--active'><a href="../en/API_Endpoints.html">API Endpoints</a></li></ul>
 
             <div class="Links">
                 
@@ -64,20 +64,50 @@
                 <article class="Page">
 
     <div class="Page__header">
-        <h1><a href="../en/Home.html">Home</a></h1>
+        <h1><a href="../en/API_Endpoints.html">API Endpoints</a></h1>
                         <span style="float: right; font-size: 10px; color: gray;">
-            <a href="https://github.com/Viva-Resurs/ReturButikenOnline/blob/master/resources/docs/en\00_Home.md" target="_blank">Edit on GitHub</a>
+            <a href="https://github.com/Viva-Resurs/ReturButikenOnline/blob/master/resources/docs/en\09_API_Endpoints.md" target="_blank">Edit on GitHub</a>
         </span>
             </div>
 
 
     <div class="s-content">
-        <h1 id="page_Welcome+to+the+ReturButikenOnline+documentation%21">Welcome to the ReturButikenOnline documentation!</h1>
+        <h1 id="page_API+Endpoints">API Endpoints</h1>
+<h2 id="page_Models">Models</h2>
+<table>
+<tr><th>HTTP Method</th> <th>URI</th>        <th>Action</th></tr>
+<tr><td>GET</td>         <td>sections</td>       <td>List sections</td></tr>
+<tr><td>POST</td>        <td>sections</td>       <td>Create section</td></tr>
+<tr><td>PUT</td>         <td>sections/:id</td>   <td>Update section</td></tr>
+<tr><td>DELETE</td>      <td>sections/:id</td>   <td>Delete section</td></tr>
+<tr><td>GET</td>         <td>articles</td>       <td>List articles</td></tr>
+<tr><td>POST</td>        <td>articles</td>       <td>Create article</td></tr>
+<tr><td>PUT</td>         <td>articles/:id</td>   <td>Update article</td></tr>
+<tr><td>DELETE</td>      <td>articles/:id</td>   <td>Delete article</td></tr>
+<tr><td>GET</td>         <td>categories</td>       <td>List categories</td></tr>
+<tr><td>POST</td>        <td>categories</td>       <td>Create category</td></tr>
+<tr><td>PUT</td>         <td>categories/:id</td>   <td>Update category</td></tr>
+<tr><td>DELETE</td>      <td>categories/:id</td>   <td>Delete category</td></tr>
+<tr><td>GET</td>         <td>users</td>       <td>List users</td></tr>
+<tr><td>POST</td>        <td>users</td>       <td>Create user</td></tr>
+<tr><td>PUT</td>         <td>users/:id</td>   <td>Update user</td></tr>
+<tr><td>DELETE</td>      <td>users/:id</td>   <td>Delete user</td></tr>
+</table>
+<h2 id="page_Current+user+%26+helpers">Current user &amp; helpers</h2>
+<table>
+<tr><th>HTTP Method</th> <th>URI</th>        <th>Action</th></tr>
+<tr><td>GET</td> <td>overview</td>    <td>Get overview (sections > contacts > articles)</td></tr>
+<tr><td>GET</td> <td>overview/my</td> <td>Get articles created by current user</td></tr>
+<tr><td>GET</td> <td>user</td>        <td>Get current user</td></tr>
+<tr><td>GET</td> <td>contacts</td>    <td>Get available contacts in section</td></tr>
+<tr><td>GET</td> <td>roles</td>       <td>Get available roles (for admin)</td></tr>
+<tr><td>GET</td> <td>token</td>       <td>Get XSRF-TOKEN</td></tr>
+</table>
     </div>
 
         <nav>
         <ul class="Pager">
-            <li class=Pager--prev><a href="../index.html">Previous</a></li>            <li class=Pager--next><a href="../en/Getting_started/Setup.html">Next</a></li>        </ul>
+            <li class=Pager--prev><a href="../en/User_interface/Articles.html">Previous</a></li>                    </ul>
     </nav>
     </article>
 

@@ -19,28 +19,18 @@ Auth::routes();
 
 Route::group(['prefix' => 'api'], function () {
 
-    Route::get('overview', 'OverviewController@getArticleTree');
-
-    Route::get('overview/my', 'OverviewController@getMyArticles');
-
+    // Models
     Route::resource('sections', 'SectionController');
-
     Route::resource('articles', 'ArticleController');
-
-    Route::get('artnr/{artnr}', 'ArticleController@showByArticleNr');
-
     Route::resource('categories', 'CategoryController');
-
-    Route::resource('images', 'ImageController');
-
     Route::resource('users', 'UserController');
 
+    // Current user & helpers
+    Route::get('overview', 'OverviewController@getArticleTree');
+    Route::get('overview/my', 'OverviewController@getMyArticles');
     Route::get('user', 'UserController@me');
-
     Route::get('contacts', 'UserController@contacts');
-
     Route::get('roles', 'UserController@rolesList');
-
     Route::get('token', 'UserController@token');
 
     // let API know that the route wasn´t found
