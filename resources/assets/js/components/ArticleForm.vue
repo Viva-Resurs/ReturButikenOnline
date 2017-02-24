@@ -197,7 +197,7 @@
                 key = input.name
                 range = input.value or ''
                 bus.$emit 'show_message',
-                    title: 'Välj datum'
+                    title: @translate 'article_form.choose_date'
                     start: range.split('|')[0]
                     end: range.split('|')[1]
                     type: 'calendar'

@@ -26,6 +26,7 @@
         "price_label": "Pris:",
         "price_placeholder": "Ange ditt pris här",
         "images_label": "Bilder:",
+        "choose_date": "Välj datum",
         "publish_interval_label": "Publicera inom datumintervall",
         "publish_interval_header": "Publiceringsintervall",
         "bidding_interval_label": "Aktivera budgivning",
