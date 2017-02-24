@@ -57,7 +57,14 @@
             createSection: (new_section) ->
                 @$http.post('api/sections', new_section).then(
                     (response) =>
-                        @attemptRemove new_section
+                        # Remove new items that are not yet created
+                        #if !section.id
+
+                        #    return false
+                        #@removeSection new_section
+                        for index, ob of @itemsNew
+                            if Number(ob.id_new) == Number(new_section.id_new)
+                                @itemsNew.splice index, 1
                         section = response.data
                         @items.push section
                         @$nextTick ->
@@ -86,19 +93,18 @@
                 )
 
             attemptRemove: (section) ->
-                # Remove new items that are not yet created
-                if !section.id
-                    for index, ob of @itemsNew
-                        if Number(ob.id_new) == Number(section.id_new)
-                            return @itemsNew.splice index, 1
-                    return false
-                # Are you sure?
-                @removeSection section
+                bus.$emit 'show_message',
+                    title: @$root.translate('section_list.remove_section_title') + "''"+section.name+"''."
+                    message: @$root.translate('section_list.remove_section_message')
+                    type:'confirm'
+                    cb: => @removeSection section
 
             removeSection: (section) ->
                 @$http.delete('api/sections/'+section.id).then(
                     (response) =>
-                        bus.$emit 'success', 'removed_category'
+                        bus.$emit 'success',
+                            title: @$root.translate('section_list.success_message')
+                            details: @$root.translate('section_list.section_removed')
                         $('tbody').trigger 'removed', section.id, ->
                             Vue.set section, 'removed', true
                     (response) => bus.$emit 'error', response.data
