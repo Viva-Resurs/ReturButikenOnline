@@ -119,7 +119,7 @@
     "nav": {
         "menu": "Menu",
         "list": "List",
-        "logged_in_as": "Inlogged in as",
+        "logged_in_as": "Logged in as",
         "help": "Help",
         "back": "Back"
     },
