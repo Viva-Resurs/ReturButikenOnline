@@ -46,6 +46,9 @@
                             i.icon.user
                         a.item( @click="$root.exitUser()" ) {{ translate('user.logout') }}
                             i.icon.sign.out
+                a.item( href="docs" )
+                    i.icon.help.circle
+                    |  {{ translate('nav.help') }}
         div.ui.grid.fluid.inverted.menu.computer.only.attached
             div.ui.container
                 router-link.item( to="/" exact ) {{ $root.settings.title }}
