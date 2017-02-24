@@ -1,0 +1,162 @@
+{
+    "section": {
+        "header": "Sections"
+    },
+    "user": {
+        "header": "Users",
+        "profile": "Profile",
+        "logout": "Logout",
+        "login": "Login"
+    },
+    "category": {
+        "header": "Categories"
+    },
+    "article": {
+        "header": "Articles",
+        "add": "Add article"
+    },
+    "article_form": {
+        "header": "Article",
+        "name_label": "Article name:",
+        "name_placeholder": "Article name",
+        "category_select_label": "Select category:",
+        "category_default_text": "select category",
+        "desc_label": "Article description:",
+        "desc_placeholder": "Enter your description here",
+        "price_label": "Price:",
+        "price_placeholder": "Enter your price here",
+        "images_label": "Pictures:",
+        "choose_date": "Select date",
+        "publish_interval_label": "Publish within dateinterval",
+        "publish_interval_header": "Publishinterval",
+        "bidding_interval_label": "Activate bidding",
+        "bidding_interval_header": "Biddinginterval",
+        "public_intra_label": "Municipal publishing",
+        "public_all_label": "Publish for all",
+        "contact_label": "Contact:",
+        "choose_contact_label": "Select contact:",
+        "choose_contact_default_text": "Select contact",
+        "preview": "Preview"
+    },
+    "article_preview": {
+        "header": "Preview",
+        "contact_header": "Contact",
+        "price_label": "Price : ",
+        "price_currency_label": " SEK",
+        "updated_at_label": "Updated at:",
+        "created_at_label": "Published",
+        "article_number_label": "Articlenr:",
+        "publish_info_header": "Publish information",
+        "publish_interval_header": "Publishinterval",
+        "bidding_interval_header": "Biddinginterval",
+        "not_published": "The Article is missing a publish and bidding interval",
+        "published_for_header": "Published for",
+        "published_all": "All",
+        "published_intra": "Municipal",
+        "article_not_found": "Article could not be found",
+        "article_modify": "Modify",
+        "article_publish": "Publish"
+    },
+    "user_form": {
+        "header": "Users",
+        "profile_photo_label": "Profile photo:",
+        "user_name_label": "Username:",
+        "user_name_placeholder": "Username",
+        "change_password_label": "Change password",
+        "password_label": "Password",
+        "select_role_label": "Select role:",
+        "select_role_default_text": "Select role",
+        "select_section_label": "Select section:",
+        "select_section_default_text": "Select section",
+        "fullname_label": "Name:",
+        "fullname_placeholder": "Name",
+        "phone_label": "Phone:",
+        "phone_placeholder": "Phone",
+        "email_label": "Email:",
+        "email_placeholder": "Email",
+        "user_save": "Save"
+    },
+    "article_card": {
+        "description_header": "Description",
+        "price_header": "Price",
+        "price_currency": "SEK",
+        "images_header": "Pictures",
+        "published_all": "Published for all",
+        "published_intra": "Published municipal"
+    },
+    "semantic_dialog": {
+        "start_date_header": "Start date",
+        "end_date_header": "End date",
+        "close_label": "Close",
+        "abort_label": "Abort",
+        "confirm_label": "Ok",
+    },
+    "article_list":{
+        "published_all": "Published for all",
+        "published_intra": "Published municipal",
+        "remove_article_title": "Remove article: ",
+        "remove_article_message": "Sure you want to remove the article?",
+        "article_removed": "Article removed",
+        "article_updated": "Article updated",
+        "success_message": "Success:"
+    },
+    "publish_interval":{
+        "select_date_title": "Select publish interval:",
+        "select_interval_message": "Click to set publish interval"
+    },
+    "bidding_interval":{
+        "select_date_title": "Select bidding interval:",
+        "select_interval_message": "Click to set bidding interval"
+    },
+    "display_interval":{
+        "start": "Start:",
+        "end": "End:",
+    },
+    "overview": "Overview",
+    "welcome": "Welcome",
+    "welcome_info": "You are now logged into ReturButikenOnline!",
+    "welcome_help": "Do you need help?",
+    "nav": {
+        "menu": "Menu",
+        "list": "List",
+        "logged_in_as": "Inlogged in as",
+        "help": "Help",
+        "back": "Back"
+    },
+    "login": {
+        "header": "Login",
+        "email_label": "Email:",
+        "password_label": "Password:",
+        "login": "Login"
+    },
+    "page": "Page",
+    "contacts": "Contacts",
+    "roles": "Roles",
+    "image": "Picture",
+    "name": "Name",
+    "updated": "Updated",
+    "categories": "Categories",
+    "public": "Public",
+    "users": "Users",
+    "sections": "Sections",
+    "tools": "Tools",
+    "tool": {
+        "edit": "Edit",
+        "add": "Add",
+        "remove": "Remove",
+        "save": "Save",
+        "undo": "Undo",
+        "preview": "Preview"
+    },
+    "show_all_results": "Show all results",
+    "dropzone": {
+        "upload": "Upload",
+        "remove": "Remove",
+        "info": "Drag images here or click to browse",
+        "drop_hover": "Drop images here"
+    },
+    "placeholder": {
+        "type": "Type",
+        "search": "Write to search"
+    }
+}
