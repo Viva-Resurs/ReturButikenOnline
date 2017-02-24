@@ -3,7 +3,9 @@
         div.ui.vertical.fluid.compact.menu.computer.tablet.only.row
             router-link.item.header( to="/users" )
                 | {{ translate('contacts') }}
-                i.icon.external.square
+                i.icon.external.square(
+                    v-tooltip = ""
+                    ":data-html" = "translate('goto.users')" )
             a.item(
                 v-for="contact in contacts"
                 ":class"="contact.selected ? 'active':''"

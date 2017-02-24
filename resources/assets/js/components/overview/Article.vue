@@ -3,7 +3,9 @@
         div.ui.vertical.fluid.compact.menu.row
             router-link.item.header( to="/articles" )
                 | {{ translate('article.header') }}
-                i.icon.external.square
+                i.icon.external.square(
+                    v-tooltip = ""
+                    ":data-html" = "translate('goto.articles')" )
             a.item(
                 v-for="article in articles"
                 ":class"="article.selected ? 'active':''"

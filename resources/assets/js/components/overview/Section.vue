@@ -3,7 +3,9 @@
         div.ui.vertical.fluid.compact.menu.computer.tablet.only.row#section_menu
             router-link.item.header( to="/sections" )
                 | {{ translate('section.header') }}
-                i.icon.external.square
+                i.icon.external.square(
+                    v-tooltip = ""
+                    ":data-html" = "translate('goto.sections')" )
             a.item(
                 v-for="section in sections"
                 ":class"="section.selected ? 'active':''"
