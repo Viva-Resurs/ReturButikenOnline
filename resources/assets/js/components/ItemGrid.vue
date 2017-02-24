@@ -93,7 +93,7 @@
                                     v-tooltip="" ":data-html"="formatTooltip(item[column.tooltip])" )
 
                                     div.ui.input.fluid( v-if="column.type=='string'" )
-                                        input( v-model="item[column.key]" ":placeholder"="'Type ' + column.label"
+                                        input( v-model="item[column.key]" ":placeholder"="translate('placeholder.type')+' '+translate(column.label)"
                                         v-focus="" )
 
                                 td
@@ -112,7 +112,7 @@
                                     v-tooltip="" ":data-html"="formatTooltip(item[column.tooltip])" )
 
                                     div.ui.input.fluid( v-if="item.edit && column.type=='string'" )
-                                        input( v-model="item[column.key+'_new']" ":placeholder"="'Type ' + column.label"
+                                        input( v-model="item[column.key+'_new']" ":placeholder"="translate('placeholder.type')+' '+translate(column.label)"
                                         v-focus="" ).collapsing
 
                                     div( v-else="" )

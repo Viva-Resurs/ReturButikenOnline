@@ -147,6 +147,7 @@
         "drop_hover": "Släpp filer här"
     },
     "placeholder": {
+        "type": "Skriv",
         "search": "Skriv för att söka"
     }
 }
