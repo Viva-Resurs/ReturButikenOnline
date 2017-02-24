@@ -15,7 +15,7 @@
                     v-model="login.password" )
             div.field
                 div.ui.container.right.aligned.fluid
-                    button.ui.right.aligned.button.primary( type="submit" @keydown.enter.prevent="attemptLogin" ) Login
+                    button.ui.right.aligned.button.primary( type="submit" @keydown.enter.prevent="attemptLogin" ) {{ translate('login.login') }}
 </template>
 
 <script lang="coffee">

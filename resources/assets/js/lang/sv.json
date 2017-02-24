@@ -124,7 +124,8 @@
     "login": {
         "header": "Inloggning",
         "email_label": "E-post:",
-        "password_label": "Lösenord:"
+        "password_label": "Lösenord:",
+        "login": "Logga in"
     },
     "page": "Sida",
     "contacts": "Kontakter",
