@@ -14,13 +14,13 @@
                                 div.ui.calendar#interval_start( v-calendar="" )
                                     div.ui.input.left.icon.bottom.attached
                                         i.calendar.icon
-                                        input( type="text" placeholder="Start" )
+                                        input( type="text" placeholder="????-??-??" )
                             div.field
                                 h4.ui.sub.header {{ translate('semantic_dialog.end_date_header') }}
                                 div.ui.calendar#interval_end( v-calendar="" )
                                     div.ui.input.left.icon
                                         i.calendar.icon
-                                        input( type="text" placeholder="End" )
+                                        input( type="text" placeholder="????-??-??" )
                     div.ui.fluid.basic.segment( v-show="type=='image'" )
                         div.image.content(v-if="image && image.path")
                             img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
