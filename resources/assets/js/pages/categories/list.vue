@@ -93,7 +93,6 @@
             removeCategory: (category) ->
                 @$http.delete('api/categories/'+category.id).then(
                     (response) =>
-                        bus.$emit 'success', 'removed_category'
                         $('tbody').trigger 'removed', category.id, ->
                             Vue.set category, 'removed', true
                     (response) => bus.$emit 'error', response.data
