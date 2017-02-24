@@ -24,6 +24,7 @@ Route::group(['prefix' => 'api'], function () {
     Route::resource('articles', 'ArticleController');
     Route::resource('categories', 'CategoryController');
     Route::resource('users', 'UserController');
+    Route::resource('images', 'ImageController');
 
     // Current user & helpers
     Route::get('overview', 'OverviewController@getArticleTree');
