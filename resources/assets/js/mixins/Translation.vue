@@ -15,14 +15,14 @@
 
                     # Try to find a match
                     if lang[c] && lang[c][l] != undefined
-                        return lang[c][l]
+                        return '⚐ '+lang[c][l]
                     else
                         console.info 'Missing sub-lang-data for '+label
                         return label
 
                 # Try to find a match
                 if lang[label] != undefined
-                    return lang[label]
+                    return '⚐ '+lang[label]
                 else
                     console.info 'Missing lang-data for '+label
                     return label
