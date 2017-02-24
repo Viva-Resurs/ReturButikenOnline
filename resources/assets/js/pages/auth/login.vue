@@ -1,15 +1,15 @@
 <template lang="pug">
     div#articleForm
-        div.ui.dividing.header Inloggning
+        div.ui.dividing.header {{ translate('login.header') }}
         form.ui.form( v-on:submit.prevent="attemptLogin" role="form" name="myform" )
             div.field
-                label E-post:
+                label {{ translate('login.email_label') }}
                 input#name(
                     type="email"
                     v-model="login.email"
                     placeholder="name@domain.com" )
             div.field
-                label Lösenord:
+                label {{ translate('login.password_label') }}
                 input#password(
                     type="password"
                     v-model="login.password" )

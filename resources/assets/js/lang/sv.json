@@ -121,6 +121,11 @@
         "help": "Hjälp",
         "back": "Tillbaka"
     },
+    "login": {
+        "header": "Inloggning",
+        "email_label": "E-post:",
+        "password_label": "Lösenord:"
+    },
     "page": "Sida",
     "contacts": "Kontakter",
     "roles": "Behörigheter",
