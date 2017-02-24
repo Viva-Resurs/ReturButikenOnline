@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.pusher
+    div.pusher( v-if="settings.lang" )
         navigation
         semantic-dialog
         router-view.ui.padded.container.segment
@@ -42,6 +42,7 @@
             require './mixins/ErrorHandler.vue'
             require './mixins/SuccessHandler.vue'
             require './mixins/ArticleNumber.vue'
+            require './mixins/LangChoice.vue'
         ]
 
         data: ->
@@ -51,10 +52,8 @@
                 lang: false
 
         created: ->
-            # Load data for translations
-            @settings.lang = require './lang/sv.json'
             # Log a reference to this App
             if @DEBUG
-                console.log this
+                console.log window.App = this
 
 </script>

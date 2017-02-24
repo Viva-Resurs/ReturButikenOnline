@@ -4,7 +4,7 @@
         methods:
             translate: (label) ->
                 # Use this data
-                lang = @$root.settings.lang
+                lang = @$root.language_lib[@$root.settings.lang]
 
                 # If using a sub label
                 if label.indexOf('.') != -1
