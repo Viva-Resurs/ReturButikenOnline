@@ -128,37 +128,3 @@
         mounted: ->
             $('body').scrollTop(0)
 </script>
-
-<style lang="scss">
-    #preview {
-        .preview_header {
-            background-color: rgba(0,0,0,0.4);
-
-            width: 100%;
-            padding: 0px;
-            background-image:url('');
-            background-size: contain;
-            background-repeat:no-repeat;
-            background-position:center;
-            margin-bottom: 0px;
-        }
-        .preview_thumbs {
-            margin-top: 0px;
-            background-color: rgba(0,0,0,0.1);
-        }
-        .ui.images {
-            img.image {
-                //margin: 0px;
-            }
-        }
-
-        img.disabled {
-            opacity: 0.8 !important;
-        }
-
-        img.active {
-            outline: 2px solid #25f;
-            box-shadow: 0px 0px 9px 5px rgba(50,70,255,0.6) !important;
-        }
-    }
-</style>

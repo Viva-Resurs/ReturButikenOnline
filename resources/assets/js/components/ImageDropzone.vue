@@ -104,16 +104,3 @@
             fileInput = document.getElementById 'files'
             fileInput.addEventListener 'change', @handleFileSelect
 </script>
-
-<style lang="scss">
-    // CSS-hack to keep pointer-cursor on corner-buttons.
-    a.ui.corner.label {
-        i.icon {
-            cursor: pointer;
-        }
-    }
-    img.active {
-        outline: 2px solid #25f;
-        box-shadow: 0px 0px 9px 5px rgba(50,70,255,0.6) !important;
-    }
-</style>

@@ -15,3 +15,25 @@
     background-position: 50% 50%;
     border-radius: 100px;
 }
+
+img.active {
+    outline: 2px solid #25f;
+    box-shadow: 0px 0px 9px 5px rgba(50,70,255,0.6) !important;
+}
+
+img.disabled {
+    opacity: 0.8 !important;
+}
+
+#preview{
+    .preview_header {
+        background-color: rgba(0,0,0,0.4);
+        width: 100%;
+        padding: 0px;
+        margin-bottom: 0px;
+    }
+    .preview_thumbs {
+        margin-top: 0px;
+        background-color: rgba(0,0,0,0.1);
+    }
+}
