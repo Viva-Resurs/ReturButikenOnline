@@ -27,7 +27,7 @@ require('semantic-ui-css/components/form.min.js');
  * moment
  * http://momentjs.com/docs/
  */
-window.moment = require('moment');
+window.moment = require('moment/min/moment.min.js');
 
 /**
  * Semantic-UI-Calendar
