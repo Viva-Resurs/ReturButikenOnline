@@ -27,6 +27,7 @@
 
     # Define global mixins
     Vue.mixin require './mixins/GoBack.vue'
+    Vue.mixin require './mixins/Debug.vue'
     Vue.mixin require './mixins/Translation.vue'
 
     # Export the root-instance options
@@ -39,7 +40,6 @@
             FooterComponent: require './components/Footer.vue'
 
         mixins: [
-            require './mixins/Debug.vue'
             require './mixins/Auth.vue'
             require './mixins/ErrorHandler.vue'
             require './mixins/SuccessHandler.vue'
