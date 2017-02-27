@@ -57,17 +57,16 @@ window.Vue.use(VueRouter);
  * included with Laravel will automatically verify the header's value.
  */
 
-Vue.http.interceptors.push((request, next) => {
+Vue.http.interceptors.push(function(request, next){
     request.headers['X-CSRF-TOKEN'] = sessionStorage.token;
-
     next();
 });
 
 /**
  * This will try to parse every response.data into JSON if not done allready.
  */
-Vue.http.interceptors.push((request, next) => {
-    next((response) => {
+Vue.http.interceptors.push(function(request, next){
+    next(function(response){
         if (typeof response.data != 'object'){
             try{
                 response.data = JSON.parse(response.data);

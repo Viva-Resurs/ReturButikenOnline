@@ -18,5 +18,5 @@ const App = Vue.extend( require('./App.vue') );
  * Create a new root instance, enable vue-router and mount it on target
  */
 new App({
-    router
+    router: router
 }).$mount('#app');
