@@ -124,11 +124,13 @@
         "users": "Gå till användare",
         "articles": "Gå till artiklar"
     },
-    "overview": "Översikt",
-    "my_articles": "Mina artiklar",
-    "welcome": "Välkommen",
-    "welcome_info": "Du är nu inloggad i ReturButikenOnline!",
-    "welcome_help": "Behöver du hjälp?",
+    "overview":{
+        "overview": "Översikt",
+        "my_articles": "Mina artiklar",
+        "welcome": "Välkommen",
+        "welcome_info": "Du är nu inloggad i ReturButikenOnline!",
+        "welcome_help": "Behöver du hjälp?"
+    },
     "nav": {
         "menu": "Meny",
         "list": "Lista",

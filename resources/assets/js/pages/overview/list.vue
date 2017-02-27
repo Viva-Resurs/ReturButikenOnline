@@ -4,9 +4,9 @@
             div.ui.grid.two.columns.stackable
                 div.column.eight.wide
                     h2.ui.header
-                        div.content {{ translate('welcome') + ' ' + user.fullname }}
-                    p {{ translate('welcome_info') }}
-                    a( href="docs" ) {{ translate('welcome_help') }}
+                        div.content {{ translate('overview.welcome') + ' ' + user.fullname }}
+                    p {{ translate('overview.welcome_info') }}
+                    a( href="docs" ) {{ translate('overview.welcome_help') }}
 
                 div.column.right.floated.eight.wide
                     user-card(

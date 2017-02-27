@@ -117,10 +117,13 @@
         "users": "Go to users",
         "articles": "Go to articles"
     },
-    "overview": "Overview",
-    "welcome": "Welcome",
-    "welcome_info": "You are now logged into ReturButikenOnline!",
-    "welcome_help": "Do you need help?",
+    "overview": {
+        "overview": "Overview",
+        "my_articles": "My articles",
+        "welcome": "Welcome",
+        "welcome_info": "You are now logged into ReturButikenOnline!",
+        "welcome_help": "Do you need help?",
+    },
     "nav": {
         "menu": "Menu",
         "list": "List",
