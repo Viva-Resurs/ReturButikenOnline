@@ -1,39 +1,37 @@
 
-//window._ = require('lodash');
-
 /**
  * We'll load jQuery and the Bootstrap jQuery plugin which provides support
  * for JavaScript based Bootstrap features such as modals and tabs. This
  * code may be modified to fit the specific needs of your application.
  */
 
-window.$ = window.jQuery = require('jquery/dist/jquery.slim.min.js');
+window.$ = window.jQuery = require('jquery/dist/jquery.slim.js');
 
 /**
  * Semantic UI
  * Require used components
  */
 //require('semantic-ui-css/semantic.min.js');
-require('semantic-ui-css/components/checkbox.min.js');
-require('semantic-ui-css/components/dropdown.min.js');
-require('semantic-ui-css/components/popup.min.js');
-require('semantic-ui-css/components/sidebar.min.js');
-require('semantic-ui-css/components/transition.min.js');
-require('semantic-ui-css/components/dimmer.min.js');
-require('semantic-ui-css/components/modal.min.js');
-require('semantic-ui-css/components/form.min.js');
+require('semantic-ui-css/components/checkbox.js');
+require('semantic-ui-css/components/dropdown.js');
+require('semantic-ui-css/components/popup.js');
+require('semantic-ui-css/components/sidebar.js');
+require('semantic-ui-css/components/transition.js');
+require('semantic-ui-css/components/dimmer.js');
+require('semantic-ui-css/components/modal.js');
+require('semantic-ui-css/components/form.js');
 
 /**
  * moment
  * http://momentjs.com/docs/
  */
-window.moment = require('moment/min/moment.min.js');
+window.moment = require('moment');
 
 /**
  * Semantic-UI-Calendar
  * https://github.com/mdehoog/Semantic-UI-Calendar
  */
-require('semantic-ui-calendar/dist/calendar.min.js');
+require('semantic-ui-calendar/dist/calendar.js');
 
 
 /**
