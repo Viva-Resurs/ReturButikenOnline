@@ -11,8 +11,17 @@ window.$ = window.jQuery = require('jquery');
 
 /**
  * Semantic UI
+ * Require used components
  */
-require('semantic-ui-css/semantic.min.js');
+//require('semantic-ui-css/semantic.min.js');
+require('semantic-ui-css/components/checkbox.min.js');
+require('semantic-ui-css/components/dropdown.min.js');
+require('semantic-ui-css/components/popup.min.js');
+require('semantic-ui-css/components/sidebar.min.js');
+require('semantic-ui-css/components/transition.min.js');
+require('semantic-ui-css/components/dimmer.min.js');
+require('semantic-ui-css/components/modal.min.js');
+require('semantic-ui-css/components/form.min.js');
 
 /**
  * moment
