@@ -7,7 +7,7 @@
  * code may be modified to fit the specific needs of your application.
  */
 
-window.$ = window.jQuery = require('jquery');
+window.$ = window.jQuery = require('jquery/dist/jquery.slim.min.js');
 
 /**
  * Semantic UI
