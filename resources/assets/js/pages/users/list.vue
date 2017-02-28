@@ -24,7 +24,7 @@
             items: []
             columns:
                 name:
-                    label: 'name'
+                    label: 'username'
                     key: 'name'
                     type: 'string'
                     search: true
@@ -32,11 +32,20 @@
                     default_sort: true
                     tooltip: 'desc'
                     class: 'link'
+                fullname:
+                    label: 'name'
+                    key: 'fullname'
+                    type: 'string'
+                    search: true
+                    sort: true
+                    tooltip: 'desc'
+                    class: 'link'
                 section:
                     label: 'sections'
                     key: 'sections'
                     type: 'array'
                     search: true
+                    default_sort: true
                     sort: true
                     class: 'link'
                 roles:

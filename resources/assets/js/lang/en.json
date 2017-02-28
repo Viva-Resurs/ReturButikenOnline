@@ -142,6 +142,7 @@
     "roles": "Roles",
     "image": "Picture",
     "name": "Name",
+    "username": "Username",
     "updated": "Updated",
     "categories": "Categories",
     "public": "Public",
