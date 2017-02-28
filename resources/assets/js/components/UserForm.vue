@@ -25,11 +25,11 @@
                                 "v-model"="user.name"
                                 ":placeholder"="translate('user_form.user_name_placeholder')" )
                         div.field
-                            div.ui.checkbox( v-checkbox="" )
-                                input.hidden(
+                            div.ui.checkbox()
+                                input#change_password(
                                     type="checkbox"
                                     v-model="settings.change_password" )
-                                label {{ translate('user_form.change_password_label') }}
+                                label.link( for="change_password" ) {{ translate('user_form.change_password_label') }}
                         div.field( v-if="settings.change_password" )
                             label {{ translate('user_form.password_label') }}
                             input#password(

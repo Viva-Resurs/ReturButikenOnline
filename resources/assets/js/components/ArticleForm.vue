@@ -43,17 +43,17 @@
                 image-dropzone( ":images"="article.images" )
             div.two.fields
                 div.field
-                    div.ui.checkbox( v-checkbox="" )
-                        input.hidden(
+                    div.ui.checkbox
+                        input#publish_interval(
                             type="checkbox"
                             v-model="settings.publish_interval" )
-                        label {{ translate('article_form.publish_interval_label') }}
+                        label.link( for="publish_interval" ) {{ translate('article_form.publish_interval_label') }}
                 div.field
-                    div.ui.checkbox( v-checkbox="" )
-                        input.hidden(
+                    div.ui.checkbox
+                        input#bidding_interval(
                             type="checkbox"
                             v-model="settings.bidding_interval" )
-                        label {{ translate('article_form.bidding_interval_label') }}
+                        label.link( for="bidding_interval" ) {{ translate('article_form.bidding_interval_label') }}
             div.two.fields
                 div.field( v-show="settings.publish_interval" )
                     h4.ui.sub.header {{ translate('article_form.publish_interval_header') }}
@@ -77,21 +77,21 @@
                             v-model="article.bidding_interval" )
             div.two.fields
                 div.field
-                    div.ui.radio.checkbox( v-checkbox="" )
-                        input.hidden(
+                    div.ui.radio.checkbox
+                        input#publicOFF(
                             type="radio"
                             name="public"
                             value="0"
                             v-model="article.public" )
-                        label {{ translate('article_form.public_intra_label') }}
+                        label.link( for="publicOFF" ) {{ translate('article_form.public_intra_label') }}
                 div.field
-                    div.ui.radio.checkbox( v-checkbox="" )
-                        input.hidden(
+                    div.ui.radio.checkbox
+                        input#publicON(
                             type="radio"
                             name="public"
                             value="1"
                             v-model="article.public" )
-                        label {{ translate('article_form.public_all_label') }}
+                        label.link( for="publicON" ) {{ translate('article_form.public_all_label') }}
             div.ui.divider
             div.two.fields( v-if="contacts" )
                 div.field
