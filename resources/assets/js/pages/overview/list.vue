@@ -1,7 +1,11 @@
 <template lang="pug">
     div.ui.segments
         div.ui.segment
-            div.ui.grid.two.columns.stackable
+            div.ui.grid.two.columns.stackable( v-if="!user" )
+                div.column.eight.wide
+                    h2.ui.header
+                        div.content {{ translate('overview.welcome') }}
+            div.ui.grid.two.columns.stackable( v-if="user" )
                 div.column.eight.wide
                     h2.ui.header
                         div.content {{ translate('overview.welcome') + ' ' + user.fullname }}
@@ -62,12 +66,13 @@
                 else
                     @getArticleOverview()
 
-                bus.$off 'user_changed', @setUser
-
         created: ->
+            # Check if User is ready
             if @$root.user
                 @setUser()
-            else
-                bus.$on 'user_changed', @setUser
+            # When User is changed
+            bus.$on 'user_changed', @setUser
 
+        beforeDestroy: ->
+            bus.$off 'user_changed', @setUser
 </script>
