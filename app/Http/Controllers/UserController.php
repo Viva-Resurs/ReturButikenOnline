@@ -177,7 +177,7 @@ class UserController extends Controller
             // Attach Sections
             if ($request['sections'])
                 foreach ($request['sections'] as $section){
-                    $s = Role::find($section['id']);
+                    $s = Section::find($section['id']);
                     if ($s)
                         $user->sections()->save($s);
                 }
