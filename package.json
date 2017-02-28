@@ -4,7 +4,7 @@
     "watch-css": "node-sass -w resources/assets/sass/app.scss public/css/app.css",
     "watch-js": "watchify -vd -p browserify-hmr -e resources/assets/js/app.js -o public/js/app.js",
     "build-css": "node-sass resources/assets/sass/app.scss public/css/app.css",
-    "build-js": "cross-env NODE_ENV=production browserify -g envify -e resources/assets/js/app.js | uglifyjs --compress --mangle -o public/js/app.js",
+    "build-js": "cross-env NODE_ENV=production browserify -g envify -e resources/assets/js/app.js | uglifyjs --compress warnings=false --mangle -o public/js/app.js",
     "create-folders": "mkdirp public/css/themes/default/, public/js",
     "copy-css": "ncp node_modules/semantic-ui-css/semantic.min.css public/css/semantic.min.css",
     "copy-assets": "ncp node_modules/semantic-ui-css/themes/default public/css/themes/default",
