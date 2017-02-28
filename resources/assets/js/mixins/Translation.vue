@@ -20,7 +20,7 @@
                         return lang[c][l]
                     else
                         if process.env.NODE_ENV == "development"
-                            console.warning 'Missing sub-lang-data for '+label
+                            console.warn 'Missing sub-lang-data for '+label
                         return label
 
                 # Try to find a match
@@ -30,6 +30,6 @@
                     return lang[label]
                 else
                     if process.env.NODE_ENV == "development"
-                        console.warning 'Missing lang-data for '+label
+                        console.warn 'Missing lang-data for '+label
                     return label
 </script>
