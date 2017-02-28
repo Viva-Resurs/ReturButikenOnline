@@ -57,7 +57,7 @@ class UserController extends Controller
                     'name' => $section->name
                 ]);
 
-            foreach ($user->images as $image)
+            foreach ($user->images()->orderBy('order')->get() as $image)
                 array_push($u['images'], [
                     'id' => $image->id,
                     'name' => $image->name,
@@ -398,7 +398,7 @@ class UserController extends Controller
                 'name' => $role->name
             ]);
 
-        foreach ($me->images as $image)
+        foreach ($me->images()->orderBy('order')->get() as $image)
             array_push($result['images'], [
                 'id' => $image->id,
                 'name' => $image->name,
