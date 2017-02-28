@@ -65,7 +65,6 @@
 
         created: ->
             bus.$on 'section_changed', (section) =>
-                console.log section.name
                 # Update selection
                 @section = section
                 bus.$emit 'contact_changed', false

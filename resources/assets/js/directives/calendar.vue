@@ -3,7 +3,7 @@
         inserted: (el) ->
             if el.id == "interval_start"
                 $(el).calendar
-                    debug: true
+                    debug: !process.env.NODE_ENV
                     ampm: false
                     inline: true
                     endCalendar: $ '#interval_end'

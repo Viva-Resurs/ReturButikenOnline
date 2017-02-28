@@ -15,19 +15,21 @@
 
                     # Try to find a match
                     if lang[c] && lang[c][l] != undefined
-                        if @DEBUG
+                        if process.env.NODE_ENV == "development"
                             return '⚐ '+lang[c][l]
                         return lang[c][l]
                     else
-                        console.info 'Missing sub-lang-data for '+label
+                        if process.env.NODE_ENV == "development"
+                            console.warning 'Missing sub-lang-data for '+label
                         return label
 
                 # Try to find a match
                 if lang[label] != undefined
-                    if @DEBUG
+                    if process.env.NODE_ENV == "development"
                         return '⚐ '+lang[label]
                     return lang[label]
                 else
-                    console.info 'Missing lang-data for '+label
+                    if process.env.NODE_ENV == "development"
+                        console.warning 'Missing lang-data for '+label
                     return label
 </script>

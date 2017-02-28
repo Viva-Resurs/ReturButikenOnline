@@ -106,7 +106,9 @@
                 @title = message.title
                 @message = message.message
                 @type = message.type
-                console.log message
+
+                if process.env.NODE_ENV == "development"
+                    console.log message
 
                 switch message.type
                     when "error"

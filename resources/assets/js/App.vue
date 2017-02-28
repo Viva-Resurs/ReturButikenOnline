@@ -26,7 +26,6 @@
 
     # Define global mixins
     Vue.mixin require './mixins/GoBack.vue'
-    Vue.mixin require './mixins/Debug.vue'
     Vue.mixin require './mixins/Translation.vue'
 
     # Export the root-instance options
@@ -54,7 +53,6 @@
 
         created: ->
             # Log a reference to this App
-            if @DEBUG
-                console.log window.App = this
-
+            if process.env.NODE_ENV == "development"
+                console.debug window.App = this
 </script>

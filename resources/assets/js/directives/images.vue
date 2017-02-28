@@ -48,12 +48,14 @@
                     card.image.ondrop = (e) ->
                         e.preventDefault()
                         target = this
-                        console.debug 'Move (d t): ' + dragged.position + ' -> ' + target.position
+                        if process.env.NODE_ENV == "development"
+                            console.debug 'Move (d t): ' + dragged.position + ' -> ' + target.position
                         # Switch positions
                         temp = dragged.position
                         dragged.position = target.position
                         target.position = temp
-                        console.debug 'Position (d t): ' + dragged.position + ' ' + target.position
+                        if process.env.NODE_ENV == "development"
+                            console.debug 'Position (d t): ' + dragged.position + ' ' + target.position
                         # Clear styles
                         target.card.style.border = ""
                         # Update Vue-Data
@@ -61,7 +63,8 @@
                         Vue.set dragged.card.vmData, 'order', dragged.position
                         # When DOM is ready
                         Vue.nextTick ->
-                            console.debug 'VM (d t): '+ dragged.card.vmData.order + ' ' + target.card.vmData.order
+                            if process.env.NODE_ENV == "development"
+                                console.debug 'VM (d t): '+ dragged.card.vmData.order + ' ' + target.card.vmData.order
                             # Clear currently dragged element
                             dragged = false
                             # Setup cards again

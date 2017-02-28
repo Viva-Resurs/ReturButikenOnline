@@ -29,7 +29,8 @@
                     slides.refs[this.slideID].imageHeight = this.height
                     slides.refs[this.slideID].imageWidth = this.width
                     slides.refs[this.slideID].ready = true
-                    console.debug "IMG: #{this.slideID}: #{this.width} #{this.height}"
+                    if process.env.NODE_ENV == "development"
+                        console.debug "IMG: #{this.slideID}: #{this.width} #{this.height}"
                 img.src = image.path
                 slide.style.backgroundImage = "url('#{image.path}')"
                 slide.style.backgroundSize = 'cover'
@@ -149,9 +150,6 @@
                             # Update css
                             slide.style.backgroundSize = w + 'px ' + h + 'px'
                             slide.style.backgroundPosition = x + 'px ' + y + 'px'
-
-                            # Debug
-                            # console.debug "Slide[#{index}] width: #{width} height: #{height} w: #{w} h: #{h}"
 
                         snapTo()
                         timer = false

@@ -2,7 +2,6 @@
     module.exports =
         inserted: (el, binding) ->
             if binding.value
-                console.log binding.value
                 $('#'+binding.value).transition(
                     animation : 'pulse'
                     onStart : ->

@@ -7,7 +7,6 @@
                         div.content {{ translate('overview.welcome') + ' ' + user.fullname }}
                     p {{ translate('overview.welcome_info') }}
                     a( href="docs" ) {{ translate('overview.welcome_help') }}
-
                 div.column.right.floated.eight.wide
                     user-card(
                         v-if="user"

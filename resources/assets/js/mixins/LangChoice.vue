@@ -1,6 +1,3 @@
-<template lang="pug">
-</template>
-
 <script lang="coffee">
     module.exports =
         name: 'LangChoice'
@@ -12,7 +9,6 @@
             setLang: (lang) ->
                 for key, l of @language_lib
                     if key == lang
-                        console.log 'ok'
                         @settings.lang = lang
                         sessionStorage.lang = lang
         created: ->
