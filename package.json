@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "build-docs": "batch-showdown \"docs\" \"public/docs\" \"docs/config.js\"",
+    "build-docs": "batch-showdown \"docs\" \"public/docs\"",
     "copy-docs-index": "ncp docs/index.html public/docs/index.html",
     "copy-docs-css": "ncp docs/docs.css public/docs/docs.css",
     "docs": "npm-run-all build-docs copy-docs-index copy-docs-css",
