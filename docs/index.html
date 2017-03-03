@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/default.min.css">
+        <link rel="stylesheet" href="docs.css">
+    </head>
+    <body>
+        <h3>Welcome to the ReturButikenOnline documentation!</h1>
+
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
+        <script>
+            // Highlight scripts using highlight.js
+            hljs.initHighlighting();
+
+            // Get the documentation tree and then init
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200)
+                    initDocs(this.responseText);
+            };
+            xhttp.open("GET", "tree.json", true);
+            xhttp.send();
+
+            // Initialize the documentation
+            //   for now, generate a table of contents...
+            var initDocs = function(tree){
+                if (typeof tree == 'string')
+                    tree = JSON.parse(tree);
+                var parser = function(o){
+                    var ul = document.createElement('ul');
+                    for (var key in o){
+                        if (key != "files" ){
+                            var li = document.createElement('li');
+                            li.innerHTML = key;
+                            li.appendChild(parser(o[key]));
+                            ul.appendChild(li);
+                        }
+                    }
+                    for (var i=0 ; i<o.files.length ; i++){
+                        var li = document.createElement('li');
+                            li.innerHTML = o.files[i];
+                        ul.appendChild(li);
+                    }
+                    return ul;
+                }
+                document.body.appendChild( parser(tree) );
+            }
+        </script>
+    </body>
+</html>
