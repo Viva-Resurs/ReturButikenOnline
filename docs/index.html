@@ -11,14 +11,20 @@
             // Highlight scripts using highlight.js
             hljs.initHighlighting();
 
+            // Get resource
+            var get = function(url, callback) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function(){
+                    if (this.readyState == 4 && this.status == 200)
+                        callback(this.responseText);
+                };
+                xhttp.open("GET", url, true);
+                xhttp.send();
+            }
             // Get the documentation tree and then init
-            var xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function(){
-                if (this.readyState == 4 && this.status == 200)
-                    initDocs(this.responseText);
-            };
-            xhttp.open("GET", "tree.json", true);
-            xhttp.send();
+            get('tree.json', function(response){
+                initDocs(response);
+            });
 
             // Initialize the documentation
             //   for now, generate a table of contents...
