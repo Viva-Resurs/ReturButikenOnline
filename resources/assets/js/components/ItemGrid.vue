@@ -49,9 +49,9 @@
                                         v-if="order==column.key"
                                         ":class" = "(desc)?'ascending':'descending'"
                                     )
-
-            // Data
-            div.ui.padded.grid
+            br
+            // Data , Desktop and Tablet view
+            div.ui.padded.grid.computer.tablet.only
                 div.row( v-if="countItems==0 && !toolsBottom" )
                     div.ui.warning.message
                         p {{ (items.length != 0) ? 'No results' : 'Empty' }}
@@ -145,15 +145,95 @@
                                 td.right.aligned
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
+            //Data, mobile view
+            div.ui.padded.grid.mobile.only(v-if="!card")
+                div.row( v-if="countItems==0 && !toolsBottom" )
+                    div.ui.warning.message
+                        p {{ (items.length != 0) ? 'No results' : 'Empty' }}
 
-                div.mobile.tablet.only.row( v-if="card" )
-                    component(
-                        v-for="(item, index) in filterItems"
-                        ":is"="card"
-                        ":item"="item"
-                        ":tools"="toolsRow"
-                        ":from"="from"
-                        )
+                div.row( v-if="countItems > 0 || toolsBottom"
+                    ":class"="(card)?'computer only':''"
+                    )
+                    table.ui.very.compact.celled.table.unstackable
+                        thead
+                            tr
+                                th.slim(
+                                    ":class"="firstColumn.class"
+                                    @click=`
+                                        (firstColumn.sort) ? setOrder(firstColumn.key,firstColumn.desc) : false
+                                    ` )
+                                    div.ui.small.secondary.menu
+                                        div.item
+                                            | {{ translate(firstColumn.label) }}
+                                            i.icon(
+                                                ":class" = `
+                                                    (order==firstColumn.key) ?
+                                                        (desc==1) ?
+                                                            'sort ascending' :
+                                                            'sort descending'
+                                                        :
+                                                    ''
+                                                `
+                                            )
+
+                                th.collapsing {{ translate('tools') }}
+
+                        tbody( v-item="$route.hash.substr(1)" )
+
+                            tr( v-for="(item, index) in itemsNew" )
+                                td(
+                                    ":class"="firstColumn.class"
+                                    v-tooltip="" ":data-html"="formatTooltip(item[firstColumn.tooltip])" )
+                                td
+                                    div.ui.icon.basic.buttons
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+
+                            tr(
+                                v-for="(item, filterIndex) in filterItems"
+                                ":id"="item.id"
+                                ":class"="item.edit ? 'active' : ''" )
+
+                                td( ":class"="firstColumn.class"
+                                    v-tooltip="" ":data-html"="formatTooltip(item[firstColumn.tooltip])" )
+                                    div.ui.item.fluid
+                                        div( v-for="(column, index) in columns" )
+                                            div.content
+                                                a.header {{ translate(column.label) }}
+                                                div.description( v-if="column.type=='string' || column.type=='number' || column.type==''" ) {{ item[column.key] }}
+                                                div.description(v-if="column.type=='array'")
+                                                    span( v-for="(post, column_index) in item[column.key]")
+                                                        router-link.item( v-if="column.key=='users'"
+                                                        ":to"="'/users/'+post.id" exact ) {{post.name}}
+                                                        span( v-else ) {{post.name}}
+                                                        span( v-if="(column_index != item[column.key].length -1)") ,{{ ' ' }}
+
+                                                img.ui.mini.fluid.rounded.image(
+                                                    v-if="column.type=='image' && item[column.key].length"
+                                                    ":src"="item[column.key][0].thumb_path"
+                                                )
+
+                                                div.center.aligned( v-if="column.type=='checkbox'" )
+                                                    i( ":class"="'ui icon ' + ((item[column.key]==1) ? 'green checkmark' : 'red remove')"
+                                                        v-tooltip="" ":data-html"="((item[column.key]==1) ? column.checkbox_true : column.checkbox_false)" )
+
+                                td.right.aligned
+                                    div.ui.icon.basic.buttons
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+
+                            tr( v-if="toolsBottom")
+                                td
+                                td.right.aligned
+                                    div.ui.icon.basic.buttons
+                                        component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
+
+            div.mobile.tablet.only.ui.grid.padded.row( v-if="card" )
+                component(
+                    v-for="(item, index) in filterItems"
+                    ":is"="card"
+                    ":item"="item"
+                    ":tools"="toolsRow"
+                    ":from"="from"
+                    )
 
         pagination.ui.bottom.attached(
             ":total"="countItems"
@@ -212,6 +292,9 @@
                     .filter (item) => item.removed != true
                     .filter (item) => @filterBy item, @search, @columns
                     .length
+
+            firstColumn: ->
+                @columns[Object.keys(@columns)[0]]
 
         watch:
             # Reset show all results when editing search
