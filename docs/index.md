@@ -1,9 +1,3 @@
-<center>
-
-# Documentation
-
-</center>
-
-
+# index.md
 
 Under construction...
