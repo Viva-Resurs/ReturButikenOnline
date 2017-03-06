@@ -3,7 +3,7 @@
   "scripts": {
     "build-docs": "batch-showdown \"docs\" \"public/docs\"",
     "copy-docs-index": "ncp docs/index.html public/docs/index.html",
-    "copy-docs-css": "ncp docs/docs.css public/docs/docs.css",
+    "copy-docs-css": "ncp docs/github-markdown.css public/docs/github-markdown.css",
     "docs": "npm-run-all build-docs copy-docs-index copy-docs-css",
     "watch-css": "node-sass -w resources/assets/sass/app.scss public/css/app.css",
     "watch-js": "cross-env NODE_ENV=development watchify -vd -p browserify-hmr -g envify -e resources/assets/js/app.js -o public/js/app.js",
