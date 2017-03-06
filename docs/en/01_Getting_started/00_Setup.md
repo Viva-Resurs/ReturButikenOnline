@@ -1,40 +1,40 @@
-# Gettings started
+# Setup
 
-1. First, make sure that needed* tools are available on the system
+1. First, make sure that needed tools are available on the system
 
-- [PHP](http://php.net/) *
-    - PHP >= 5.6.4
-    - OpenSSL PHP Extension
-    - PDO PHP Extension
-    - Mbstring PHP Extension
-    - Tokenizer PHP Extension
-    - XML PHP Extension
+    - [x] [PHP](http://php.net/)
+        - [x] PHP >= 5.6.4
+        - [x] OpenSSL PHP Extension
+        - [x] PDO PHP Extension
+        - [x] Mbstring PHP Extension
+        - [x] Tokenizer PHP Extension
+        - [x] XML PHP Extension
 
-- [Composer](https://getcomposer.org/download/) *
+    - [x] [Composer](https://getcomposer.org/download/)
 
-- [NodeJS & npm](https://nodejs.org/en/download/) *
+    - [x] [NodeJS & npm](https://nodejs.org/en/download/)
 
-- [Git](https://git-scm.com/download/win)
+    - [ ] [Git](https://git-scm.com/download/win)
 
 
 2. Get the repository
 
-```bash
-# example with git
-git clone https://github.com/Viva-Resurs/ReturButikenOnline.git
-cd ReturButikenOnline
-```
+    ```bash
+    # example with git
+    git clone https://github.com/Viva-Resurs/ReturButikenOnline.git
+    cd ReturButikenOnline
+    ```
 
 
 3. Install dependencies
 
-```bash
-# install PHP-packages
-composer install
+    ```bash
+    # install PHP-packages
+    composer install
 
-# install npm-packages
-npm install
-```
+    # install npm-packages
+    npm install
+    ```
 
 ## Advanced / Troubleshooting
 
@@ -61,4 +61,7 @@ npm run copy-css
 
 # Build js & css to create GUI
 npm run build
+
+# Build local documentation
+npm run docs
 ```
