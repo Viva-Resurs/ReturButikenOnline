@@ -181,7 +181,7 @@
                         if (response.indexOf('<meta')>0){
                             // Use everything in the first div
                             response = response.substr(response.indexOf('<div'));
-                            response = response.substr(response.indexOf('>'));
+                            response = response.substr(response.indexOf('>')+1);
                             response = response.substr(0,response.lastIndexOf('</div>'));
                         }
                         reader.innerHTML = response;
