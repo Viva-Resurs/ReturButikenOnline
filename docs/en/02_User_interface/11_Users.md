@@ -1,7 +1,6 @@
-<center><i class="ui icon users huge"></i>
-
-# Users
-
+<center>
+<i class="ui icon users huge"></i>
+<h1>Users</h1>
 </center>
 
 <i class="ui icon unlock"></i> Top administrator<br>

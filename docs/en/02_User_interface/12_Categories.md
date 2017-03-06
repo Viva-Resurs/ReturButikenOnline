@@ -1,7 +1,6 @@
-<center><i class="ui icon tag huge"></i>
-
-# Categories
-
+<center>
+<i class="ui icon tag huge"></i>
+<h1>Categories</h1>
 </center>
 
 <i class="ui icon unlock"></i> Top administrator<br>
