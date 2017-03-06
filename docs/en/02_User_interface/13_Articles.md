@@ -1,7 +1,7 @@
-
 <center><i class="ui icon cubes huge"></i>
 
 # Articles
+
 </center>
 
 <i class="ui icon unlock"></i> Top administrator: Any article<br>

@@ -1,6 +1,7 @@
 <center><i class="ui icon building huge"></i>
 
 # Sections
+
 </center>
 
 <i class="ui icon unlock"></i> Top administrator<br>
