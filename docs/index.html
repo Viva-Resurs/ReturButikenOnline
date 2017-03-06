@@ -177,6 +177,13 @@
                         return location.hash = "#"+lang+"/00_Index.html";
                     // Get the page
                     get(path,function(response){
+                        // GitHub Pages or generated?
+                        if (response.indexOf('<meta')>0){
+                            // Use everything in the first div
+                            response = response.substr(response.indexOf('<div'));
+                            response = response.substr(response.indexOf('>'));
+                            response = response.substr(0,response.lastIndexOf('</div>'));
+                        }
                         reader.innerHTML = response;
                         // Highlight scripts using highlight.js
                         var codeblocks = document.querySelectorAll('code');
