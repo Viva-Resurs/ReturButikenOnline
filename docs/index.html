@@ -33,16 +33,19 @@
             <div class="ui secondary fluid vertical menu">
                 <div class="item">
                     <h5 class="ui dividing header">
-                        ReturButikenOnline
+                        <a href="#">ReturButikenOnline</a>
                         <div class="sub header">documentation</div>
                     </h5>
                 </div>
                 <div class="item" id="toc">
+
                 </div>
             </div>
         </div>
         <div class="content stretched twelve wide column">
-            <div class="ui segment markdown-body" id="content"></div>
+            <div class="ui segment markdown-body" id="content">
+
+            </div>
         </div>
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
@@ -59,7 +62,7 @@
             }
 
             // Get the documentation tree and then init
-            get('tree.json', function(response){
+            get('tree.json?', function(response){
                 initDocs(response);
             });
 
@@ -106,6 +109,9 @@
                     }
                     // Files
                     for (var i=0 ; i<o.files.length ; i++){
+                        // Skip index
+                        if (o.files[i] == "00_Index.html")
+                            continue;
                         var a = document.createElement('a');
                             a.href = "#" + path + o.files[i];
                             a.innerHTML = displayName(o.files[i]);
@@ -126,9 +132,9 @@
                 var navigate = function(){
                     // Get the path
                     var path = (location.hash) ? location.hash.substr(1) : '';
-                    // Default page should go here. for now, do nothing
+                    // No path? Get index
                     if (!path)
-                        return location.hash = "#en/00_Home.html";
+                        return location.hash = "#en/00_Index.html";
                     // Get the page
                     get(path,function(response){
                         reader.innerHTML = response;
