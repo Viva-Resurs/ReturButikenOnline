@@ -8,9 +8,6 @@
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
         <script>
-            // Highlight scripts using highlight.js
-            hljs.initHighlighting();
-
             // Function to get a resource
             var get = function(url, callback) {
                 var xhttp = new XMLHttpRequest();
@@ -78,6 +75,33 @@
                 // Generate TOC and append it to body
                 document.body.appendChild( generateTOC(tree) );
 
+                // Create and append container for current file
+                var reader = document.createElement('div');
+                document.body.appendChild(reader);
+
+                // Function to navigate (replace content in reader)
+                var navigate = function(){
+                    // Get the path
+                    var path = (location.hash) ? location.hash.substr(1) : '';
+                    // Default page should go here. for now, do nothing
+                    if (!path)
+                        return;
+                    // Get the page
+                    get(path,function(response){
+                        reader.innerHTML = response;
+                        // Highlight scripts using highlight.js
+                        var codeblocks = document.querySelectorAll('code');
+                        for (var i=0 ; i<codeblocks.length ; i++){
+                            hljs.highlightBlock(codeblocks[i]);
+                        }
+                    })
+                }
+
+                // Listen to changes in hash
+                window.onhashchange = navigate;
+
+                // Navigate now
+                navigate();
             }
         </script>
     </body>
