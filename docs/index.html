@@ -40,6 +40,9 @@
                 <div class="item" id="toc">
 
                 </div>
+                <div class="item" id="lang">
+
+                </div>
             </div>
         </div>
         <div class="content stretched twelve wide column">
@@ -121,9 +124,46 @@
                     return ul;
                 }
 
+                // Language
+                var lang = sessionStorage.lang;
+                if (!lang)
+                    lang = sessionStorage.lang = "en";
+
+                // Function to change language
+                var changeLang = function(event){
+                    // Set language using button id
+                    var choice = event.target.id;
+                    lang = sessionStorage.lang = choice;
+                    // Turn of navigation
+                    window.onhashchange = false;
+                    // Update hash
+                    location.hash = "#"+lang+"/00_Index.html";
+                    // Reinitialize the documentation
+                    initDocs(tree);
+                }
+
+                // Add choices to menu
+                var menu_lang = document.getElementById('lang');
+                menu_lang.innerHTML = "";
+                for (var lang_section in tree){
+                    // Every language has a folder, dont use files
+                    if (lang_section == "files")
+                        continue;
+                    var a = document.createElement('a');
+                        a.id = lang_section;
+                        a.classList.add('ui','button','button-default');
+                        if (lang_section == lang)
+                            a.classList.add('active');
+                        else
+                            a.onclick = changeLang;
+                        a.innerHTML = lang_section;
+                    menu_lang.appendChild(a);
+                }
+
                 // Generate TOC and append it
-                var menu = document.getElementById('toc');
-                menu.appendChild(generateTOC(tree.en,'en/'));
+                var menu_toc = document.getElementById('toc');
+                menu_toc.innerHTML = "";
+                menu_toc.appendChild(generateTOC(tree.en, lang+'/'));
 
                 // Get container for current file
                 var reader = document.getElementById('content');
@@ -134,7 +174,7 @@
                     var path = (location.hash) ? location.hash.substr(1) : '';
                     // No path? Get index
                     if (!path)
-                        return location.hash = "#en/00_Index.html";
+                        return location.hash = "#"+lang+"/00_Index.html";
                     // Get the page
                     get(path,function(response){
                         reader.innerHTML = response;
