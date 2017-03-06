@@ -11,10 +11,39 @@
                 margin: 0 auto;
                 padding: 45px;
             }
+            .menu ul {
+                padding-left: 5px;
+            }
+            .menu ul .header {
+                font-size: 15px !important;
+            }
+            .menu ul a.item {
+                font-size: 13px !important;
+            }
+            .markdown-body table {
+                display: table;
+            }
+            table tr td:last-child {
+                text-align: right;
+            }
         </style>
     </head>
-    <body class="markdown-body">
-        <h3>Welcome to the ReturButikenOnline documentation!</h1>
+    <body class="ui container grid stackable">
+        <div class="four wide menu column">
+            <div class="ui secondary fluid vertical menu">
+                <div class="item">
+                    <h5 class="ui dividing header">
+                        ReturButikenOnline
+                        <div class="sub header">documentation</div>
+                    </h5>
+                </div>
+                <div class="item" id="toc">
+                </div>
+            </div>
+        </div>
+        <div class="content stretched twelve wide column">
+            <div class="ui segment markdown-body" id="content"></div>
+        </div>
 
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/highlight.min.js"></script>
         <script>
@@ -61,33 +90,37 @@
                     if (!path)
                         path = '';
                     var ul = document.createElement('ul');
+                        ul.classList.add('compact','vertical','menu');
                     // Folders
                     for (var key in o){
                         if (key != "files" ){
+                            var header = document.createElement('div');
+                                header.classList.add('header');
+                                header.innerHTML = displayName(key);
                             var li = document.createElement('li');
-                                li.innerHTML = displayName(key);
+                                li.classList.add('item');
+                            li.appendChild(header);
                             li.appendChild(generateTOC(o[key],path + key+'/'));
                             ul.appendChild(li);
                         }
                     }
                     // Files
                     for (var i=0 ; i<o.files.length ; i++){
-                        var li = document.createElement('li');
                         var a = document.createElement('a');
                             a.href = "#" + path + o.files[i];
                             a.innerHTML = displayName(o.files[i]);
-                        li.appendChild(a);
-                        ul.appendChild(li);
+                            a.classList.add('item');
+                        ul.appendChild(a);
                     }
                     return ul;
                 }
 
-                // Generate TOC and append it to body
-                document.body.appendChild( generateTOC(tree) );
+                // Generate TOC and append it
+                var menu = document.getElementById('toc');
+                menu.appendChild(generateTOC(tree.en,'en/'));
 
-                // Create and append container for current file
-                var reader = document.createElement('div');
-                document.body.appendChild(reader);
+                // Get container for current file
+                var reader = document.getElementById('content');
 
                 // Function to navigate (replace content in reader)
                 var navigate = function(){
@@ -95,7 +128,7 @@
                     var path = (location.hash) ? location.hash.substr(1) : '';
                     // Default page should go here. for now, do nothing
                     if (!path)
-                        return;
+                        return location.hash = "#en/00_Home.html";
                     // Get the page
                     get(path,function(response){
                         reader.innerHTML = response;
