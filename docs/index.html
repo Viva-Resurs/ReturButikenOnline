@@ -11,7 +11,7 @@
             // Highlight scripts using highlight.js
             hljs.initHighlighting();
 
-            // Get resource
+            // Function to get a resource
             var get = function(url, callback) {
                 var xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function(){
@@ -21,34 +21,63 @@
                 xhttp.open("GET", url, true);
                 xhttp.send();
             }
+
             // Get the documentation tree and then init
             get('tree.json', function(response){
                 initDocs(response);
             });
 
-            // Initialize the documentation
-            //   for now, generate a table of contents...
+            // Function to initialize the documentation
             var initDocs = function(tree){
+                // Make sure tree is a object
                 if (typeof tree == 'string')
                     tree = JSON.parse(tree);
-                var parser = function(o){
+
+                // Function to display file/folder names
+                var displayName = function(original){
+                    var name = original;
+                    // Remove ordering prefix 00_
+                    if (name.indexOf('_')>0)
+                        name = name.substr(name.indexOf('_')+1);
+                    // Remove extension
+                    if (name.indexOf('.')>0)
+                        name = name.substr(0,name.lastIndexOf('.'));
+                    // Replace _ with spaces
+                    name = name.replace(/_/g,' ');
+                    // Done
+                    return name;
+                }
+
+                // Function to generate table of contents
+                var generateTOC = function(o,path){
+                    // Check path
+                    if (!path)
+                        path = '';
                     var ul = document.createElement('ul');
+                    // Folders
                     for (var key in o){
                         if (key != "files" ){
                             var li = document.createElement('li');
-                            li.innerHTML = key;
-                            li.appendChild(parser(o[key]));
+                                li.innerHTML = displayName(key);
+                            li.appendChild(generateTOC(o[key],path + key+'/'));
                             ul.appendChild(li);
                         }
                     }
+                    // Files
                     for (var i=0 ; i<o.files.length ; i++){
                         var li = document.createElement('li');
-                            li.innerHTML = o.files[i];
+                        var a = document.createElement('a');
+                            a.href = "#" + path + o.files[i];
+                            a.innerHTML = displayName(o.files[i]);
+                        li.appendChild(a);
                         ul.appendChild(li);
                     }
                     return ul;
                 }
-                document.body.appendChild( parser(tree) );
+
+                // Generate TOC and append it to body
+                document.body.appendChild( generateTOC(tree) );
+
             }
         </script>
     </body>
