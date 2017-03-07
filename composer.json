@@ -40,7 +40,9 @@
             "touch database/database.sqlite",
             "php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
             "php artisan optimize",
-            "php artisan key:generate"
+            "php artisan key:generate",
+            "php artisan migrate",
+            "php artisan db:seed"
         ],
         "post-update-cmd": [
             "Illuminate\\Foundation\\ComposerScripts::postUpdate",
