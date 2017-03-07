@@ -3,7 +3,11 @@ This project is under development!
 
 ## Documentation
 
-Under development, head over to our [GitHub Pages](https://viva-resurs.github.io/ReturButikenOnline) to read it.
+Will be located on the running server under 'help', online version available at our [GitHub Pages](https://viva-resurs.github.io/ReturButikenOnline).
+
+## Test
+
+Check our page at [heroku](http://returbutikenonline.herokuapp.com).
 
 #### Install needed* tools
 
