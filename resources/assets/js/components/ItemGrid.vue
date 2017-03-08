@@ -164,7 +164,7 @@
                                     ` )
                                     div.ui.small.secondary.menu
                                         div.item
-                                            | {{ translate(firstColumn.label) }}
+                                            | {{ translate(header) }}
                                             i.icon(
                                                 ":class" = `
                                                     (order==firstColumn.key) ?
@@ -181,9 +181,8 @@
                         tbody( v-item="$route.hash.substr(1)" )
 
                             tr( v-for="(item, index) in itemsNew" )
-                                td(
-                                    ":class"="firstColumn.class"
-                                    v-tooltip="" ":data-html"="formatTooltip(item[firstColumn.tooltip])" )
+                                td
+
                                 td
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
@@ -195,10 +194,11 @@
 
                                 td( ":class"="firstColumn.class"
                                     v-tooltip="" ":data-html"="formatTooltip(item[firstColumn.tooltip])" )
+
                                     div.ui.item.fluid
-                                        div( v-for="(column, index) in columns" )
-                                            div.content
-                                                a.header {{ translate(column.label) }}
+                                        div.content( v-for="(column, index) in columns" "v-if"="itemHaveData(column, item[column.key])")
+                                            div.ui.small.top.attached.header {{ translate(column.label) }}
+                                            div.ui.attached.compact.segment
                                                 div.description( v-if="column.type=='string' || column.type=='number' || column.type==''" ) {{ item[column.key] }}
                                                 div.description(v-if="column.type=='array'")
                                                     span( v-for="(post, column_index) in item[column.key]")
@@ -206,17 +206,9 @@
                                                         ":to"="'/users/'+post.id" exact ) {{post.name}}
                                                         span( v-else ) {{post.name}}
                                                         span( v-if="(column_index != item[column.key].length -1)") ,{{ ' ' }}
+                                                br
 
-                                                img.ui.mini.fluid.rounded.image(
-                                                    v-if="column.type=='image' && item[column.key].length"
-                                                    ":src"="item[column.key][0].thumb_path"
-                                                )
-
-                                                div.center.aligned( v-if="column.type=='checkbox'" )
-                                                    i( ":class"="'ui icon ' + ((item[column.key]==1) ? 'green checkmark' : 'red remove')"
-                                                        v-tooltip="" ":data-html"="((item[column.key]==1) ? column.checkbox_true : column.checkbox_false)" )
-
-                                td.right.aligned
+                                td.bottom.aligned
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
@@ -296,6 +288,7 @@
             firstColumn: ->
                 @columns[Object.keys(@columns)[0]]
 
+
         watch:
             # Reset show all results when editing search
             search: (val, oldVal) ->
@@ -309,6 +302,16 @@
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
 
+            itemHaveData: (column, item) ->
+                if item
+                    if (column.type == 'array')
+                        console.log (item.length > 0)
+                        return (item.length > 0)
+                    return true
+                return false
+
+
+
         created: ->
             bus.$on 'offset_changed', (new_offset) => this.offset = new_offset
             bus.$on 'limit_changed', (new_limit) => this.maxItems = new_limit
@@ -316,6 +319,9 @@
             for index, column of @columns
                 if column.default_sort == true
                     @setOrder column.key, column.desc
+
+
+
         beforeDestroy: ->
             bus.$off 'offset_changed'
             bus.$off 'limit_changed'
