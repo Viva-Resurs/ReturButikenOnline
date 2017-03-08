@@ -154,6 +154,15 @@ class ArticleController extends Controller
         if (!$article)
             abort(404);
 
+        if (
+            !$user->hasRole('admin')
+            &&
+            $user->id!=$article->creator()->first()->id
+            &&
+            !$user->sections->find($article->sections->first()->id)
+        )
+            abort(401,'Not allowed to update article');
+
         if ($request->has('name') && $request['name']!='')
             $article->name = $request['name'];
 
@@ -256,6 +265,15 @@ class ArticleController extends Controller
 
         if (!$article)
             abort(404);
+
+        if (
+            !$user->hasRole('admin')
+            &&
+            $user->id!=$article->creator()->first()->id
+            &&
+            !$user->sections->find($article->sections->first()->id)
+        )
+            abort(401,'Not allowed to remove article');
 
         $article->delete();
     }
