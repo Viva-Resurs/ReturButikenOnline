@@ -33,8 +33,13 @@
             <div class="ui secondary fluid vertical menu">
                 <div class="item">
                     <h5 class="ui dividing header">
-                        <a href="#">ReturButikenOnline</a>
-                        <div class="sub header">documentation</div>
+                        <div class="icon" id="back">
+
+                        </div>
+                        <div class="content">
+                            <a href="#">ReturButikenOnline</a>
+                            <div class="sub header">documentation</div>
+                        </div>
                     </h5>
                 </div>
                 <div class="item" id="toc">
@@ -71,9 +76,48 @@
 
             // Function to initialize the documentation
             var initDocs = function(tree){
+
                 // Make sure tree is a object
                 if (typeof tree == 'string')
                     tree = JSON.parse(tree);
+
+
+                // Language
+                var lang = sessionStorage.lang;
+                if (!lang)
+                    lang = sessionStorage.lang = "en";
+
+                // Function to change language
+                var changeLang = function(event){
+                    // Set language using button id
+                    var choice = event.target.id;
+                    lang = sessionStorage.lang = choice;
+                    // Turn of navigation
+                    window.onhashchange = false;
+                    // Update hash
+                    location.hash = "#"+lang+"/00_Index.html";
+                    // Reinitialize the documentation
+                    initDocs(tree);
+                }
+
+                // Add choices to menu
+                var menu_lang = document.getElementById('lang');
+                menu_lang.innerHTML = "";
+                for (var lang_section in tree){
+                    // Every language has a folder, dont use files
+                    if (lang_section == "files")
+                        continue;
+                    var a = document.createElement('a');
+                        a.id = lang_section;
+                        a.classList.add('ui','button','button-default');
+                        if (lang_section == lang)
+                            a.classList.add('active');
+                        else
+                            a.onclick = changeLang;
+                        a.innerHTML = lang_section;
+                    menu_lang.appendChild(a);
+                }
+
 
                 // Function to display file/folder names
                 var displayName = function(original){
@@ -124,46 +168,34 @@
                     return ul;
                 }
 
-                // Language
-                var lang = sessionStorage.lang;
-                if (!lang)
-                    lang = sessionStorage.lang = "en";
-
-                // Function to change language
-                var changeLang = function(event){
-                    // Set language using button id
-                    var choice = event.target.id;
-                    lang = sessionStorage.lang = choice;
-                    // Turn of navigation
-                    window.onhashchange = false;
-                    // Update hash
-                    location.hash = "#"+lang+"/00_Index.html";
-                    // Reinitialize the documentation
-                    initDocs(tree);
-                }
-
-                // Add choices to menu
-                var menu_lang = document.getElementById('lang');
-                menu_lang.innerHTML = "";
-                for (var lang_section in tree){
-                    // Every language has a folder, dont use files
-                    if (lang_section == "files")
-                        continue;
-                    var a = document.createElement('a');
-                        a.id = lang_section;
-                        a.classList.add('ui','button','button-default');
-                        if (lang_section == lang)
-                            a.classList.add('active');
-                        else
-                            a.onclick = changeLang;
-                        a.innerHTML = lang_section;
-                    menu_lang.appendChild(a);
-                }
-
                 // Generate TOC and append it
                 var menu_toc = document.getElementById('toc');
                 menu_toc.innerHTML = "";
                 menu_toc.appendChild(generateTOC(tree.en, lang+'/'));
+
+
+                // Setup go back button
+                var menu_back = document.getElementById('back');
+                var menu_back_btn = document.createElement('a');
+                    menu_back_btn.classList.add('ui','circular','button','button-default','icon');
+                    menu_back_btn.onclick = function(){
+                        // Github pages? go to repo
+                        if (location.href.indexOf('github')>0)
+                            location.assign("https://github.com/Viva-Resurs/ReturButikenOnline")
+                        // Just go up one dir
+                        else {
+                            var url = location.href;
+                                // Remove hash
+                                url = (location.hash) ? url.substr(0,url.indexOf('#')) : url;
+                                // Go up
+                                url = url.substr(0,url.lastIndexOf('/')); // /docs
+                                url = url.substr(0,url.lastIndexOf('/')); // /
+                            location.assign(url);
+                        }
+                    };
+                    menu_back_btn.innerHTML = "<i class='icon circular arrow left'></i>";
+                menu_back.appendChild(menu_back_btn);
+
 
                 // Get container for current file
                 var reader = document.getElementById('content');
