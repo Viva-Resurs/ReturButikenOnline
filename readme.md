@@ -3,8 +3,8 @@ This project is under development!
 
 ### Documentation
 
-[GitHub Pages](https://viva-resurs.github.io/ReturButikenOnline).
+[Go to documentation](http://returbutikenonline.dev/docs/).
 
 ### Live test page
 
-[heroku](http://returbutikenonline.herokuapp.com).
+[Go to our heroku app](http://returbutikenonline.herokuapp.com).
