@@ -154,35 +154,12 @@
                 div.row( v-if="countItems > 0 || toolsBottom"
                     ":class"="(card)?'computer only':''"
                     )
-                    table.ui.very.compact.celled.table.unstackable
-                        thead
-                            tr
-                                th.slim(
-                                    ":class"="firstColumn.class"
-                                    @click=`
-                                        (firstColumn.sort) ? setOrder(firstColumn.key,firstColumn.desc) : false
-                                    ` )
-                                    div.ui.small.secondary.menu
-                                        div.item
-                                            | {{ translate(header) }}
-                                            i.icon(
-                                                ":class" = `
-                                                    (order==firstColumn.key) ?
-                                                        (desc==1) ?
-                                                            'sort ascending' :
-                                                            'sort descending'
-                                                        :
-                                                    ''
-                                                `
-                                            )
-
-                                th.collapsing {{ translate('tools') }}
+                    table.ui.very.basic.table.very.compact.unstackable
 
                         tbody( v-item="$route.hash.substr(1)" )
 
                             tr( v-for="(item, index) in itemsNew" )
                                 td
-
                                 td
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
@@ -192,23 +169,21 @@
                                 ":id"="item.id"
                                 ":class"="item.edit ? 'active' : ''" )
 
-                                td( ":class"="firstColumn.class"
+                                td.slim( ":class"="firstColumn.class"
                                     v-tooltip="" ":data-html"="formatTooltip(item[firstColumn.tooltip])" )
+                                    div.ui.item.fluid(style="margin-left: 5px;")
+                                        div.ui.vertical.segment.basic( v-for="(column, index) in columns" "v-if"="itemHaveData(column, item[column.key])")
+                                            h4.ui.sub.header {{ translate(column.label) }}
+                                            p( v-if="column.type=='string' || column.type=='number' || column.type==''" ) {{ item[column.key] }}
+                                            p(v-if="column.type=='array'")
+                                                span( v-for="(post, column_index) in item[column.key]")
+                                                    router-link.item( v-if="column.key=='users'"
+                                                    ":to"="'/users/'+post.id" exact ) {{post.name}}
+                                                    span( v-else ) {{post.name}}
+                                                    span( v-if="(column_index != item[column.key].length -1)") ,{{ ' ' }}
 
-                                    div.ui.item.fluid
-                                        div.content( v-for="(column, index) in columns" "v-if"="itemHaveData(column, item[column.key])")
-                                            div.ui.small.top.attached.header {{ translate(column.label) }}
-                                            div.ui.attached.compact.segment
-                                                div.description( v-if="column.type=='string' || column.type=='number' || column.type==''" ) {{ item[column.key] }}
-                                                div.description(v-if="column.type=='array'")
-                                                    span( v-for="(post, column_index) in item[column.key]")
-                                                        router-link.item( v-if="column.key=='users'"
-                                                        ":to"="'/users/'+post.id" exact ) {{post.name}}
-                                                        span( v-else ) {{post.name}}
-                                                        span( v-if="(column_index != item[column.key].length -1)") ,{{ ' ' }}
-                                                br
 
-                                td.bottom.aligned
+                                td.collapsing.bottom.aligned
                                     div.ui.icon.basic.buttons
                                         component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
@@ -305,7 +280,6 @@
             itemHaveData: (column, item) ->
                 if item
                     if (column.type == 'array')
-                        console.log (item.length > 0)
                         return (item.length > 0)
                     return true
                 return false
