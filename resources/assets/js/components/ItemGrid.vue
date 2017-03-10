@@ -23,7 +23,7 @@
                                 ":placeholder"="translate('placeholder.search')"
                                 )
                             i.search.icon
-                    div.column.right.aligned( v-if="card"
+                    div.column.right.aligned.mobile.only(
                         ":class"="(card)?'mobile tablet only':''"
                         )
                         div.ui.floated.basic.button.dropdown#order( v-dropdown="" )
