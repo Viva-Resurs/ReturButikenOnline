@@ -70,7 +70,7 @@
             }
 
             // Get the documentation tree and then init
-            get('tree.json?', function(response){
+            get('tree.json', function(response){
                 initDocs(response);
             });
 
@@ -209,8 +209,7 @@
                         path = lang+"/00_Index.html";
                     // Get the page
                     get(path,function(response){
-                        // GitHub Pages or generated?
-                        if (response.indexOf('<meta')>0){
+                        if (response.indexOf('<div')>0){
                             // Use everything in the first div
                             response = response.substr(response.indexOf('<div'));
                             response = response.substr(response.indexOf('>')+1);

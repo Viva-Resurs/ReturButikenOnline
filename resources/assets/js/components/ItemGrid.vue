@@ -12,7 +12,6 @@
                     div.column.grid.mobile.tablet.only
                         div.ui.icon.input.fluid
                             input.prompt(
-                                v-focus=""
                                 v-model="search"
                                 ":placeholder"="translate('placeholder.search')"
                                 )
@@ -20,7 +19,6 @@
                     div.column.grid.computer.only
                         div.ui.icon.input
                             input.prompt(
-                                v-focus=""
                                 v-model="search"
                                 ":placeholder"="translate('placeholder.search')"
                                 )
