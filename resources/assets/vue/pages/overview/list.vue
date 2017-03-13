@@ -59,6 +59,26 @@
                         @$root.loading = false
                 )
 
+            previewArticle: (article) ->
+                @$router.push @$root.encodeArtNR article
+
+            attemptRemove: (article) ->
+                bus.$emit 'show_message',
+                    title: @$root.translate('article_list.remove_article_title') + "''"+article.name+"''."
+                    message: @$root.translate('article_list.remove_article_message')
+                    type:'confirm'
+                    cb: => @removeArticle article
+
+            removeArticle: (article) ->
+                @$http.delete('api/articles/'+article.id).then(
+                    (response) =>
+                        bus.$emit 'success',
+                            title: @$root.translate('article_list.success_message')
+                            details: @$root.translate('article_list.article_removed')
+                        Vue.set article, 'removed', true
+                    (response) => bus.$emit 'error', response.data
+                )
+
             setUser: ->
                 @user = @$root.user
                 if @$root.isAdmin() || @$root.isAdmin(2)
@@ -73,6 +93,14 @@
             # When User is changed
             bus.$on 'user_changed', @setUser
 
+            bus.$on 'articles_item_remove', (item) => @attemptRemove item
+            bus.$on 'start_item_preview', (item) => @previewArticle item
+            bus.$on 'start_item_edit', (item) =>
+                @$router.push path: '/articles/'+item.id
+
         beforeDestroy: ->
             bus.$off 'user_changed', @setUser
+            bus.$off 'articles_item_remove'
+            bus.$off 'start_item_preview'
+            bus.$off 'start_item_edit'
 </script>
