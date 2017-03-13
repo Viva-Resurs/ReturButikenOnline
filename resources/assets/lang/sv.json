@@ -150,6 +150,7 @@
     "image": "Bild",
     "username": "Användarnamn",
     "name": "Namn",
+    "fullname": "Namn",
     "updated": "Uppdaterad",
     "updated_at": "Uppdaterad",
     "categories": "Kategorier",

@@ -142,6 +142,7 @@
     "roles": "Roles",
     "image": "Picture",
     "name": "Name",
+    "fullname": "Name",
     "username": "Username",
     "updated": "Updated",
     "updated_at": "Updated",
