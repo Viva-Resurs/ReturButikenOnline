@@ -9,7 +9,7 @@
     module.exports =
         name: 'Create'
         components:
-            UserForm: require '../../components/UserForm.vue'
+            UserForm: require '../../components/user/form.vue'
         data: ->
             user:
                 name: ''

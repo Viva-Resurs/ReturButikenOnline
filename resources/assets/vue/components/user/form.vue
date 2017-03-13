@@ -107,8 +107,8 @@
         name: 'UserForm'
         props: [ 'draft', 'roles', 'sections' ]
         components:
-            ImageDropzone: require './ImageDropzone.vue'
-            UserCard: require './UserCard.vue'
+            ImageDropzone: require '../ImageDropzone.vue'
+            UserCard: require './card.vue'
         data: ->
             user: false
             settings:

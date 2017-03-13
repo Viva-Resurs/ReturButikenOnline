@@ -12,7 +12,7 @@
     module.exports =
         name: 'Update'
         components:
-            UserForm: require '../../components/UserForm.vue'
+            UserForm: require '../../components/user/form.vue'
         data: ->
             user: null
             roles: false
