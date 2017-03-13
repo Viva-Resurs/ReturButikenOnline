@@ -37,6 +37,7 @@ class UserController extends Controller
             $u = [
                 'id' => $user->id,
                 'name' => $user->name,
+                'username' => $user->name,
                 'fullname' => $user->fullname,
                 'email' => $user->email,
                 'phone' => $user->phone,
