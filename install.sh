@@ -26,7 +26,6 @@ curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/loca
 sudo composer self-update
 
 # Start Installing the repo
-(cd ~/ReturButikenOnline && mkdir public/js)
 (cd ~/ReturButikenOnline && npm install)
 (cd ~/ReturButikenOnline && composer install)
 
