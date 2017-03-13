@@ -1,24 +1,36 @@
 <template lang="pug">
-    item-grid(
-        ":header"="translate('article.header')"
-        ":columns"="columns"
-        ":card"="$options.components.ArticleCard"
-        ":toolsRow"=`[
-              $options.components.PublishInterval,
-              $options.components.BiddingInterval,
-              $options.components.Preview,
-              $options.components.Edit,
-              $options.components.Remove
-            ]`
-        ":items"="items" )
+    div
+        div.ui.grid.one.column
+            div.row
+                div.column
+                    div.ui.dividing.header.fluid {{ translate('article.header') }}
+            div.row
+                article-desktop-list.column.computer.only(
+                    ":toolsRow"=`[
+                          $options.components.PublishInterval,
+                          $options.components.BiddingInterval,
+                          $options.components.Preview,
+                          $options.components.Edit,
+                          $options.components.Remove
+                        ]`
+                    ":items"="items" )
+            article-mobile-list.row.mobile.tablet.only(
+                ":toolsRow"=`[
+                      $options.components.PublishInterval,
+                      $options.components.BiddingInterval,
+                      $options.components.Preview,
+                      $options.components.Edit,
+                      $options.components.Remove
+                    ]`
+                ":items"="items" )
 </template>
 
 <script lang="coffee">
     module.exports =
         name: 'List'
         components:
-            ItemGrid: require '../../components/ItemGrid.vue'
-            ArticleCard: require '../../components/ArticleCard.vue'
+            ArticleDesktopList: require '../../components/article/desktop/list.vue'
+            ArticleMobileList: require '../../components/article/mobile/list.vue'
             PublishInterval: require '../../components/tools/PublishInterval.vue'
             BiddingInterval: require '../../components/tools/BiddingInterval.vue'
             Preview: require '../../components/tools/Preview.vue'
@@ -26,45 +38,7 @@
             Edit: require '../../components/tools/Edit.vue'
         data: ->
             items: []
-            columns:
-                image:
-                    label: 'image'
-                    key: 'images'
-                    type: 'image'
-                    class: 'center aligned collapsing'
-                name:
-                    label: 'name'
-                    key: 'name'
-                    type: 'string'
-                    search: true
-                    sort: true
-                    tooltip: 'desc'
-                    class: 'link'
-                updated_at:
-                    label: 'updated'
-                    key: 'updated_at'
-                    type: 'number'
-                    desc: true
-                    default_sort: true
-                    search: true
-                    sort: true
-                    class: 'link'
-                category:
-                    label: 'categories'
-                    key: 'categories'
-                    type: 'array'
-                    search: true
-                    sort: true
-                    class: 'link'
-                public:
-                    label: 'public'
-                    key: 'public'
-                    search: false
-                    sort: true
-                    type: 'checkbox'
-                    checkbox_true: @$root.translate('article_list.published_all')
-                    checkbox_false: @$root.translate('article_list.published_intra')
-                    class: 'link center aligned collapsing'
+
         methods:
             attemptRemove: (article) ->
                 bus.$emit 'show_message',

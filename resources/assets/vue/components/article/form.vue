@@ -131,8 +131,8 @@
     module.exports =
         name: 'ArticleForm'
         components:
-            ImageDropzone: require './ImageDropzone.vue'
-            UserCard: require './UserCard.vue'
+            ImageDropzone: require '../ImageDropzone.vue'
+            UserCard: require '../user/card.vue'
         props: [ 'draft', 'categories', 'contacts' ]
         data: ->
             article: false

@@ -95,7 +95,7 @@
         data: ->
             expandDetails: @mode
         components:
-            UserCard: require './UserCard.vue'
+            UserCard: require '../user/card.vue'
 
         methods:
             toggleDetails: ->

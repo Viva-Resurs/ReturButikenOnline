@@ -11,7 +11,7 @@
     module.exports =
         name: 'Show'
         components:
-            ArticlePreview : require '../../components/ArticlePreview.vue'
+            ArticlePreview : require '../../components/article/preview.vue'
         data: ->
             article: null
         methods:

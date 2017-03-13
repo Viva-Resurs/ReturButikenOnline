@@ -16,8 +16,8 @@
     module.exports =
         name: 'Update'
         components:
-            ArticleForm    : require '../../components/ArticleForm.vue'
-            ArticlePreview : require '../../components/ArticlePreview.vue'
+            ArticleForm    : require '../../components/article/form.vue'
+            ArticlePreview : require '../../components/article/preview.vue'
         data: ->
             preview: false
             article: null
