@@ -29,7 +29,7 @@
     module.exports =
         name: 'List'
         components:
-            UserCard: require '../../components/UserCard.vue'
+            UserCard: require '../../components/user/card.vue'
             StartOverview: require '../../components/overview/Start.vue'
 
         data: ->

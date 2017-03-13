@@ -35,7 +35,7 @@
             SectionOverview: require './Section.vue'
             ContactOverview: require './Contact.vue'
             ArticleOverview: require './Article.vue'
-            ArticleCard: require '../ArticleCard.vue'
+            ArticleCard: require '../article/card.vue'
             PublishInterval: require '../tools/PublishInterval.vue'
             BiddingInterval: require '../tools/BiddingInterval.vue'
             Preview: require '../tools/Preview.vue'
