@@ -1,7 +1,10 @@
 <script lang="coffee">
     module.exports =
         inserted: (el) ->
-            $(el).popup(
-                variation: "inverted"
-            )
+            mq = window.matchMedia("(min-width: 768px)")
+            if mq.matches
+                $(el).popup(
+                    variation: "inverted"
+                )
+
 </script>

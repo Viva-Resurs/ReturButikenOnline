@@ -70,7 +70,7 @@
                                 i.ui.icon.green.world
                                 | {{ translate('article_preview.published_all') }}
                             div.column(v-if="article.public!=true")
-                                h4.ui.sub.header Publiceras för
+                                h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
                                 i.ui.icon.red.industry
                                 | {{ translate('article_preview.published_intra') }}
         div.ui.container
