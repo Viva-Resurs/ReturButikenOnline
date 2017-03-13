@@ -3,8 +3,8 @@
         name: 'LangChoice'
         data: ->
             language_lib:
-                sv: require './../lang/sv.json'
-                en: require './../lang/en.json'
+                sv: require './../../lang/sv.json'
+                en: require './../../lang/en.json'
         methods:
             setLang: (lang) ->
                 for key, l of @language_lib

@@ -6,90 +6,90 @@ module.exports = {
     routes : [
         {
             path: '/',
-            component: require('./pages/Overview.vue'),
+            component: require('../vue/pages/Overview.vue'),
             meta: {  },
             children: [
                 {
                   path: '/',
-                  component: require('./pages/overview/list.vue')
+                  component: require('../vue/pages/overview/list.vue')
                 }
             ]
         },
         {
             path: '/auth/login',
-            component: require('./pages/auth/login.vue')
+            component: require('../vue/pages/auth/login.vue')
         },
         {
             path: '/articles',
-            component: require('./pages/Articles.vue'),
+            component: require('../vue/pages/Articles.vue'),
             meta: { requiresAuth: true },
             children: [
                 {
                   path: '/',
-                  component: require('./pages/articles/list.vue')
+                  component: require('../vue/pages/articles/list.vue')
                 },
                 {
                   path: 'create',
-                  component: require('./pages/articles/create.vue')
+                  component: require('../vue/pages/articles/create.vue')
                 },
                 {
                   path: ':id',
-                  component: require('./pages/articles/update.vue')
+                  component: require('../vue/pages/articles/update.vue')
                 }
             ]
         },
         {
             path: '/categories',
-            component: require('./pages/Categories.vue'),
+            component: require('../vue/pages/Categories.vue'),
             meta: { requiresAuth: true },
             children: [
                 {
                   path: '/',
-                  component: require('./pages/categories/list.vue')
+                  component: require('../vue/pages/categories/list.vue')
                 }
             ]
         },
         {
             path: '/sections',
-            component: require('./pages/Sections.vue'),
+            component: require('../vue/pages/Sections.vue'),
             meta: { requiresAuth: true },
             children: [
                 {
                   path: '/',
-                  component: require('./pages/sections/list.vue')
+                  component: require('../vue/pages/sections/list.vue')
                 }
             ]
         },
         {
             path: '/users',
-            component: require('./pages/Users.vue'),
+            component: require('../vue/pages/Users.vue'),
             meta: { requiresAuth: true },
             children: [
                 {
                   path: '/',
-                  component: require('./pages/users/list.vue')
+                  component: require('../vue/pages/users/list.vue')
                 },
                 {
                   path: 'create',
-                  component: require('./pages/users/create.vue')
+                  component: require('../vue/pages/users/create.vue')
                 },
                 {
                   path: 'profile',
-                  component: require('./pages/users/profile.vue')
+                  component: require('../vue/pages/users/profile.vue')
                 },
                 {
                   path: ':id',
-                  component: require('./pages/users/update.vue')
+                  component: require('../vue/pages/users/update.vue')
                 }
             ]
         },
         {
             path: '/:artnr',
-            component: require('./pages/articles/show.vue'),
+            component: require('../vue/pages/articles/show.vue'),
         },
         {
             path: '*',
-            component: require('./pages/404.vue')
+            component: require('../vue/pages/404.vue')
         }
     ]
 
