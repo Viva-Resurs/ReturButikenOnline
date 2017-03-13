@@ -1,60 +1,42 @@
 <template lang="pug">
-    item-grid(
-        ":header"="translate('user.header')"
-        ":columns"="columns"
-        ":toolsRow"=`[
-            $options.components.Edit,
-            $options.components.Remove
-        ]`
-        ":toolsBottom"=`[
-            $options.components.Add
-        ]`
-        ":items"="items" )
+    div
+        div.ui.grid.one.column
+            div.row
+                div.column
+                    div.ui.dividing.header.fluid {{ translate('user.header') }}
+            div.row
+                user-desktop-list.column.computer.only(
+                    ":toolsRow"=`[
+                        $options.components.Edit,
+                        $options.components.Remove
+                    ]`
+                    ":toolsBottom"=`[
+                        $options.components.Add
+                    ]`
+                    ":items"="items" )
+            div.row
+                user-mobile-list.column.mobile.tablet.only(
+                    ":toolsRow"=`[
+                        $options.components.Edit,
+                        $options.components.Remove
+                    ]`
+                    ":toolsBottom"=`[
+                        $options.components.Add
+                    ]`
+                    ":items"="items" )
 </template>
 
 <script lang="coffee">
     module.exports =
         name: 'List'
         components:
-            ItemGrid: require '../../components/ItemGrid.vue'
+            UserDesktopList: require '../../components/user/desktop/list.vue'
+            UserMobileList: require '../../components/user/mobile/list.vue'
             Remove: require '../../components/tools/Remove.vue'
             Edit: require '../../components/tools/Edit.vue'
             Add: require '../../components/tools/Add.vue'
         data: ->
             items: []
-            columns:
-                name:
-                    label: 'username'
-                    key: 'name'
-                    type: 'string'
-                    search: true
-                    sort: true
-                    default_sort: true
-                    tooltip: 'desc'
-                    class: 'link'
-                fullname:
-                    label: 'name'
-                    key: 'fullname'
-                    type: 'string'
-                    search: true
-                    sort: true
-                    tooltip: 'desc'
-                    class: 'link'
-                section:
-                    label: 'sections'
-                    key: 'sections'
-                    type: 'array'
-                    search: true
-                    default_sort: true
-                    sort: true
-                    class: 'link'
-                roles:
-                    label: 'roles'
-                    key: 'roles'
-                    type: 'array'
-                    search: true
-                    sort: true
-                    class: 'link'
         methods:
             attemptRemove: (user) ->
                 bus.$emit 'show_message',
