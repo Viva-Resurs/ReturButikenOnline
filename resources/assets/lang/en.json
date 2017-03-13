@@ -144,6 +144,7 @@
     "name": "Name",
     "username": "Username",
     "updated": "Updated",
+    "updated_at": "Updated",
     "categories": "Categories",
     "public": "Public",
     "users": "Users",

@@ -151,6 +151,7 @@
     "username": "Användarnamn",
     "name": "Namn",
     "updated": "Uppdaterad",
+    "updated_at": "Uppdaterad",
     "categories": "Kategorier",
     "public": "Publik",
     "users": "Användare",
