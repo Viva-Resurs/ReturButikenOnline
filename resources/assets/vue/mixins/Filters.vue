@@ -37,6 +37,25 @@
                                 return true
                 return false
 
+            # Case insensitive filter
+            filterArrayBy: (item, search, targets) ->
+                if search == ''
+                    return true
+
+                s = new RegExp search, "gi"
+
+                # Check targets
+                for target in targets
+                    key = target
+                    if typeof item[key] == 'string' || typeof item[key] == 'number'
+                        if s.test item[key]
+                            return true
+                    if typeof item[key] == 'object'
+                        for i of item[key]
+                            if s.test item[key][i].name
+                                return true
+                return false
+
             # Sort objects by targeting a deeper property
             deepSort: (a, b, order, desc) ->
                 checkA = a
@@ -112,4 +131,37 @@
             updateList: (list) ->
                 list.reverse()
                 list.reverse()
+
+        data: ->
+            search: ''
+
+            limitOff: false
+            limitOffBtn: false
+
+            order: ''
+            desc: -1
+
+            offset: 0
+            maxItems: 10
+
+        watch:
+            # Reset show all results when editing search
+            search: (val, oldVal) ->
+                @offset = 0
+                @limitOff = false
+
+            # Reset offset when changing maxItems
+            maxItems: (val, oldVal) ->
+                @offset = 0
+
+        components:
+            Pagination: require '../components/Pagination.vue'
+
+        created: ->
+            bus.$on 'offset_changed', (new_offset) => @offset = new_offset
+            bus.$on 'limit_changed', (new_limit) => @maxItems = new_limit
+
+        beforeDestroy: ->
+            bus.$off 'offset_changed'
+            bus.$off 'limit_changed'
 </script>

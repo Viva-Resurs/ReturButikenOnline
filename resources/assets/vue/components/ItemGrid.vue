@@ -227,20 +227,9 @@
         mixins: [
             require '../mixins/Filters.vue'
         ]
-        components:
-            Pagination: require './Pagination.vue'
 
         data: ->
-            search: ''
-
-            limitOff: false
-            limitOffBtn: false
-
             order: 'updated_at'
-            desc: -1
-
-            offset: 0
-            maxItems: 10
 
         computed:
             from: ->
@@ -261,16 +250,6 @@
             firstColumn: ->
                 @columns[Object.keys(@columns)[0]]
 
-
-        watch:
-            # Reset show all results when editing search
-            search: (val, oldVal) ->
-                this.offset = 0
-                this.limitOff = false
-            # Reset offset when changing maxItems
-            maxItems: (val, oldVal) ->
-                this.offset = 0
-
         methods:
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
@@ -282,19 +261,9 @@
                     return true
                 return false
 
-
-
         created: ->
-            bus.$on 'offset_changed', (new_offset) => this.offset = new_offset
-            bus.$on 'limit_changed', (new_limit) => this.maxItems = new_limit
             # Set default order
             for index, column of @columns
                 if column.default_sort == true
                     @setOrder column.key, column.desc
-
-
-
-        beforeDestroy: ->
-            bus.$off 'offset_changed'
-            bus.$off 'limit_changed'
 </script>
