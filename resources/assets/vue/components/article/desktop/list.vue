@@ -4,13 +4,8 @@
         div.ui.attached( v-else="" )
             div.ui.equal.width.grid
                 div.row
-                    div.column.grid
-                        div.ui.icon.input
-                            input.prompt(
-                                v-model="search"
-                                ":placeholder"="translate('placeholder.search')"
-                                )
-                            i.search.icon
+                    div.column
+                        search( ":search"="search" )
             div.ui.padded.grid
                 div.row( v-if="countItems==0 && !toolsBottom" )
                     div.ui.warning.message
@@ -87,6 +82,8 @@
         mixins: [
             require '../../../mixins/Filters.vue'
         ]
+        components:
+            Search: require '../../tools/Search.vue'
         data: ->
             order: 'updated_at'
         computed:

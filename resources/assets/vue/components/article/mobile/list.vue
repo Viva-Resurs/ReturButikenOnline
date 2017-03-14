@@ -4,13 +4,7 @@
         div( v-else="" )
             div.ui.top.attached.menu
                 div.left.menu
-                    div.ui.search.item
-                        div.ui.transparent.icon.input(style="width: 150px")
-                            input.prompt(
-                                v-model="search"
-                                ":placeholder"="translate('placeholder.search')"
-                                )
-                            i.search.icon
+                    search( ":search"="search" )
 
                 div.ui.right.dropdown.item#order( v-dropdown="" )
                     div.default.value
@@ -102,6 +96,7 @@
         ]
         components:
             ArticleCard: require '../card.vue'
+            Search: require '../../tools/Search.vue'
         data: ->
             order: 'updated_at'
             desc: 1
