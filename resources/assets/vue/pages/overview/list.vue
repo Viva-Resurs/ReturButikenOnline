@@ -37,6 +37,20 @@
             article_tree: false
 
         methods:
+            getArticleById: (id) ->
+                # If not any form of admin, article_tree is just articles
+                if !@$root.isAdmin(2)
+                    for article in @article_tree
+                        if Number(article.id) == Number(id)
+                            return article
+                else
+                    for section in @article_tree
+                        for contact in section.contacts
+                            for article in contact.articles
+                                if Number(article.id) == Number(id)
+                                    return article
+                return 0
+
             getOverview: ->
                 @$root.loading = true
                 @$http.get('api/overview').then(
@@ -79,6 +93,19 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            attemptUpdate: (article) ->
+                # Validation
+                @updateArticle article
+
+            updateArticle: (article) ->
+                @$http.put('api/articles/'+article.id, article).then(
+                    (response) =>
+                        bus.$emit 'success',
+                            title: @$root.translate('article_list.success_message')
+                            details: @$root.translate('article_list.article_updated')
+                    (response) => bus.$emit 'error', response.data
+                )
+
             setUser: ->
                 @user = @$root.user
                 if @$root.isAdmin() || @$root.isAdmin(2)
@@ -93,14 +120,32 @@
             # When User is changed
             bus.$on 'user_changed', @setUser
 
-            bus.$on 'articles_item_remove', (item) => @attemptRemove item
+            bus.$on 'start_item_remove', (item) => @attemptRemove item
             bus.$on 'start_item_preview', (item) => @previewArticle item
+            bus.$on 'start_item_changed', (item) => @attemptUpdate item
             bus.$on 'start_item_edit', (item) =>
                 @$router.push path: '/articles/'+item.id
+            bus.$on 'publish_interval_changed', (id, new_value) =>
+                console.log 'changed'
+                item = @getArticleById id
+                console.log item
+                if item
+                    Vue.set item, 'publish_interval', new_value
+                    bus.$emit 'start_item_changed', item
+            bus.$on 'bidding_interval_changed', (id, new_value) =>
+                console.log 'changed'
+                item = @getArticleById id
+                console.log item
+                if item
+                    Vue.set item, 'bidding_interval', new_value
+                    bus.$emit 'start_item_changed', item
 
         beforeDestroy: ->
             bus.$off 'user_changed', @setUser
-            bus.$off 'articles_item_remove'
+            bus.$off 'start_item_remove'
             bus.$off 'start_item_preview'
+            bus.$off 'start_item_changed'
             bus.$off 'start_item_edit'
+            bus.$off 'publish_interval_changed'
+            bus.$off 'bidding_interval_changed'
 </script>
