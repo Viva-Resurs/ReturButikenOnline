@@ -65,7 +65,8 @@
                     if (this.readyState == 4 && this.status == 200)
                         callback(this.responseText);
                 };
-                xhttp.open("GET", url+'?', true);
+                var t = new Date().getTime();
+                xhttp.open("GET", url+'?t='+t, true);
                 xhttp.send();
             }
 
