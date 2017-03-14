@@ -6,6 +6,8 @@
 <i class="ui icon unlock"></i> Top administrator<br>
 <i class="ui icon unlock"></i> Section administrator
 
+### Category list
+
 From here the administrator and section administrator can manage categories.
 
 

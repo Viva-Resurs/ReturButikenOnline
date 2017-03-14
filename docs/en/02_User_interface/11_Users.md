@@ -6,6 +6,8 @@
 <i class="ui icon unlock"></i> Top administrator<br>
 <i class="ui icon unlock"></i> Section administrator
 
+### User list
+
 From here the administrator can manage all users while a section administrator can manage publishers in their section.
 
 

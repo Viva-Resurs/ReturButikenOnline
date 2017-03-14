@@ -5,6 +5,8 @@
 
 <i class="ui icon unlock"></i> Top administrator<br>
 
+### Section list
+
 From here the administrator can manage sections.
 
 

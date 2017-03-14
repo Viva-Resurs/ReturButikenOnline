@@ -65,7 +65,8 @@
                     if (this.readyState == 4 && this.status == 200)
                         callback(this.responseText);
                 };
-                xhttp.open("GET", url+'?', true);
+                var t = new Date().getTime();
+                xhttp.open("GET", url+'?t='+t, true);
                 xhttp.send();
             }
 
@@ -122,6 +123,9 @@
                 // Function to display file/folder names
                 var displayName = function(original){
                     var name = original;
+                    // Translation
+                    // TODO: Get document title?
+                    
                     // Remove ordering prefix 00_
                     if (name.indexOf('_')>0)
                         name = name.substr(name.indexOf('_')+1);

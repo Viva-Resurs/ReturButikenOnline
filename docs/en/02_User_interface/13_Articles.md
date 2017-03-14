@@ -7,6 +7,8 @@
 <i class="ui icon unlock"></i> Section administrator: Articles in their section<br>
 <i class="ui icon unlock"></i> Publisher: Articles in their section<br>
 
+### Article list
+
 From here all articles that the current user can change, are listed.
 
 
