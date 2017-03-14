@@ -1,7 +1,7 @@
 <template lang="pug">
-    div.ui.grid.fluid
-        div.two.column.row.stackable
-            div.left.floated.column( v-if="total!=0 && total>limit && showPagination" )
+    div.ui.padded.grid
+        div.equal.width.row
+            div.left.floated.column( v-if="total!=0 && total>limit && showPagination && false" )
                 div.ui.grid.computer.only.pagination.menu
                     a.icon.item( @click="firstPage" )
                         i.angle.double.left.icon
@@ -38,10 +38,10 @@
                     slot( name="replacePagination" )
 
             div.right.floated.right.aligned.column
-                    select.selection.dropdown#limit(
-                        v-show="total>limitOptions[0]"
-                        v-dropdown="" v-model="limit" )
-                        option.item( v-for="option in limitOptions" ":value"="option") {{option}}
+                select.selection.fluid.dropdown#limit(
+                    v-show="total>limitOptions[0]"
+                    v-dropdown="" v-model="limit" )
+                    option.item( v-for="option in limitOptions" ":value"="option") {{option}}
 </template>
 
 <script lang="coffee">
