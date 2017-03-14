@@ -1,71 +1,64 @@
 <template lang="pug">
     div
-        loading( v-if="$root.loading" )
-        div.ui.attached( v-else="" )
-            div.ui.equal.width.grid
-                div.row
-                    div.column.grid.computer.only
-                        div.ui.icon.input
-                            input.prompt(
-                                v-model="search"
-                                ":placeholder"="translate('placeholder.search')"
-                                )
-                            i.search.icon
-            div.ui.padded.grid
-                div.row( v-if="countItems==0 && !toolsBottom" )
-                    div.ui.warning.message
-                        p {{ (items.length != 0) ? 'No results' : 'Empty' }}
-                div.row( v-if="countItems > 0 || toolsBottom" )
-                    table.ui.very.compact.celled.table.unstackable
-                        thead
-                            tr
-                                th.collapsing #
-                                th.slim.link( @click="setOrder('username')")
-                                    div.ui.small.secondary.menu
-                                        div.item {{ translate('username') }}
-                                            i.icon( ":class" = "(order=='username') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                                th.slim.link( @click="setOrder('fullname')")
-                                    div.ui.small.secondary.menu
-                                        div.item {{ translate('fullname') }}
-                                            i.icon( ":class" = "(order=='fullname') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                                th.slim.link( @click="setOrder('sections')")
-                                    div.ui.small.secondary.menu
-                                        div.item {{ translate('sections') }}
-                                            i.icon( ":class" = "(order=='sections') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                                th.slim.link( @click="setOrder('roles')")
-                                    div.ui.small.secondary.menu
-                                        div.item {{ translate('roles') }}
-                                            i.icon( ":class" = "(order=='roles') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                                th.collapsing {{ translate('tools') }}
-                        tbody( v-item="$route.hash.substr(1)" )
-                            tr(
-                                v-for="(item, index) in filterItems"
-                                ":id"="item.id"
-                                ":class"="item.edit ? 'active' : ''" )
-                                td.center.aligned
-                                    strong {{(index+1)+offset}}
-                                td {{ item.username }}
-                                td {{ item.fullname }}
-                                td
-                                    span( v-for="(section, column_index) in item.sections")
-                                        span {{ section.name }}
-                                        span( v-if="(column_index != item.sections.length -1)") ,{{ ' ' }}
-                                td
-                                    span( v-for="(role, column_index) in item.roles")
-                                        span {{ role.name }}
-                                        span( v-if="(column_index != item.roles.length -1)") ,{{ ' ' }}
-                                td.right.aligned
-                                    div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
-                            tr( v-if="toolsBottom")
-                                td
-                                td
-                                td
-                                td
-                                td
-                                td.right.aligned
-                                    div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
+        div.ui.equal.width.grid
+            div.row
+                div.column
+                    search( ":search"="search" )
+        div.ui.padded.grid
+            div.row( v-if="countItems==0 && !toolsBottom" )
+                div.ui.warning.message
+                    p {{ (items.length != 0) ? 'No results' : 'Empty' }}
+            div.row( v-if="countItems > 0 || toolsBottom" )
+                table.ui.very.compact.celled.table.unstackable
+                    thead
+                        tr
+                            th.collapsing #
+                            th.slim.link( @click="setOrder('username')")
+                                div.ui.small.secondary.menu
+                                    div.item {{ translate('username') }}
+                                        i.icon( ":class" = "(order=='username') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
+                            th.slim.link( @click="setOrder('fullname')")
+                                div.ui.small.secondary.menu
+                                    div.item {{ translate('fullname') }}
+                                        i.icon( ":class" = "(order=='fullname') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
+                            th.slim.link( @click="setOrder('sections')")
+                                div.ui.small.secondary.menu
+                                    div.item {{ translate('sections') }}
+                                        i.icon( ":class" = "(order=='sections') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
+                            th.slim.link( @click="setOrder('roles')")
+                                div.ui.small.secondary.menu
+                                    div.item {{ translate('roles') }}
+                                        i.icon( ":class" = "(order=='roles') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
+                            th.collapsing {{ translate('tools') }}
+                    tbody( v-item="$route.hash.substr(1)" )
+                        tr(
+                            v-for="(item, index) in filterItems"
+                            ":id"="item.id"
+                            ":class"="item.edit ? 'active' : ''" )
+                            td.center.aligned
+                                strong {{(index+1)+offset}}
+                            td {{ item.username }}
+                            td {{ item.fullname }}
+                            td
+                                span( v-for="(section, column_index) in item.sections")
+                                    span {{ section.name }}
+                                    span( v-if="(column_index != item.sections.length -1)") ,{{ ' ' }}
+                            td
+                                span( v-for="(role, column_index) in item.roles")
+                                    span {{ role.name }}
+                                    span( v-if="(column_index != item.roles.length -1)") ,{{ ' ' }}
+                            td.right.aligned
+                                div.ui.icon.basic.buttons
+                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                        tr( v-if="toolsBottom")
+                            td
+                            td
+                            td
+                            td
+                            td
+                            td.right.aligned
+                                div.ui.icon.basic.buttons
+                                    component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
         pagination.ui.bottom.attached(
             ":total"="countItems"
             ":show-pagination"="(search=='' && !limitOffBtn)"
@@ -89,6 +82,8 @@
         mixins: [
             require '../../../mixins/Filters.vue'
         ]
+        components:
+            Search: require '../../tools/Search.vue'
         data: ->
             order: 'username'
             desc: 1
