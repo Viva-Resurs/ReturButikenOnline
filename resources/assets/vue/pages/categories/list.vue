@@ -1,27 +1,44 @@
 <template lang="pug">
-    item-grid(
-        ":header"="translate('category.header')"
-        ":columns"="columns"
-        ":toolsRow"=
-            `[
-                $options.components.Edit,
-                $options.components.Save,
-                $options.components.Remove,
-                $options.components.Undo
-            ]`
-        ":toolsBottom"=
-            `[
-                $options.components.Add
-            ]`
-        ":itemsNew"="itemsNew"
-        ":items"="items" )
+    div
+        loading( v-if="$root.loading" )
+        div.ui.grid.one.column( v-else="" )
+            div.row
+                div.column
+                    div.ui.dividing.header.fluid {{ translate('category.header') }}
+            div.row
+                category-desktop-list.column.computer.only(
+                    ":toolsRow"=`[
+                        $options.components.Edit,
+                        $options.components.Save,
+                        $options.components.Remove,
+                        $options.components.Undo
+                    ]`
+                    ":toolsBottom"=`[
+                        $options.components.Add
+                    ]`
+                    ":items"="items"
+                    ":itemsNew"="itemsNew" )
+            div.row
+                category-mobile-list.column.mobile.tablet.only(
+                    ":toolsRow"=`[
+                        $options.components.Edit,
+                        $options.components.Save,
+                        $options.components.Remove,
+                        $options.components.Undo
+                    ]`
+                    ":toolsBottom"=`[
+                        $options.components.Add
+                    ]`
+                    ":items"="items"
+                    ":itemsNew"="itemsNew" )
 </template>
 
 <script lang="coffee">
     module.exports =
         name: 'List'
         components:
-            ItemGrid: require '../../components/ItemGrid.vue'
+            CategoryDesktopList: require '../../components/category/desktop/list.vue'
+            CategoryMobileList: require '../../components/category/mobile/list.vue'
             Remove: require '../../components/tools/Remove.vue'
             Save: require '../../components/tools/Save.vue'
             Undo: require '../../components/tools/Undo.vue'
@@ -30,15 +47,9 @@
         data: ->
             items: []
             itemsNew: []
-            columns:
-                name:
-                    label: 'name'
-                    key: 'name'
-                    type: 'string'
-                    search: true
-                    sort: true
-                    default_sort: true
-                    class: 'link'
+            columns: [
+                'name'
+            ]
 
         methods:
             addItem: ->
@@ -61,22 +72,22 @@
 
             editItem: (item) ->
                 Vue.set item, 'edit', true
-                for key, column of @columns
+                for key in @columns
                     Vue.set item, key+'_new', item[key]
 
             revertItem: (item) ->
                 Vue.set item, 'edit', false
 
-            attemptUpdate: (category) ->
-                Vue.set category, 'edit', false
-                for key, column of @columns
-                    Vue.set category, key, category[key+'_new']
+            attemptUpdate: (item) ->
+                Vue.set item, 'edit', false
+                for key in @columns
+                    Vue.set item, key, item[key+'_new']
 
-                @$http.put('api/categories/'+category.id, category).then(
+                @$http.put('api/categories/'+item.id, item).then(
                     (response) =>
-                        Vue.set category, 'updated_at', response.data.updated_at
+                        Vue.set item, 'updated_at', response.data.updated_at
                         @$nextTick ->
-                            $('tbody').trigger 'updated', category.id
+                            $('tbody').trigger 'updated', item.id
                     (response) => bus.$emit 'error', response.data
                 )
 
