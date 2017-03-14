@@ -4,8 +4,8 @@
             div.row
                 div.column
                     div.ui.dividing.header.fluid {{ translate('article.header') }}
-            div.row
-                article-desktop-list.column.computer.only(
+            div.row.column.computer.only
+                article-desktop-list(
                     ":toolsRow"=`[
                           $options.components.PublishInterval,
                           $options.components.BiddingInterval,
@@ -14,7 +14,7 @@
                           $options.components.Remove
                         ]`
                     ":items"="items" )
-            article-mobile-list.row.mobile.tablet.only(
+            article-mobile-list.column.mobile.tablet.only(
                 ":toolsRow"=`[
                       $options.components.PublishInterval,
                       $options.components.BiddingInterval,

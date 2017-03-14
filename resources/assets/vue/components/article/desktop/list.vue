@@ -11,7 +11,6 @@
                                 ":placeholder"="translate('placeholder.search')"
                                 )
                             i.search.icon
-            br
             div.ui.padded.grid
                 div.row( v-if="countItems==0 && !toolsBottom" )
                     div.ui.warning.message
