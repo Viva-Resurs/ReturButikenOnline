@@ -1,6 +1,7 @@
 <template lang="pug">
     div
-        div.ui.grid.one.column
+        loading( v-if="$root.loading" )
+        div.ui.grid.one.column( v-else="" )
             div.row
                 div.column
                     div.ui.dividing.header.fluid {{ translate('article.header') }}
