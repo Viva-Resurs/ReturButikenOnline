@@ -25,13 +25,29 @@
                                         i.icon( ":class" = "(order=='users') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
                             th.collapsing {{ translate('tools') }}
                     tbody( v-item="$route.hash.substr(1)" )
+                        tr( v-for="(item, index) in itemsNew" )
+                            td.center.aligned.collapsing
+                            td
+                                div.ui.input.fluid
+                                    input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
+                                    v-focus="" )
+                            td
+                            td
+                                div.ui.icon.basic.buttons
+                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+
                         tr(
                             v-for="(item, index) in filterItems"
                             ":id"="item.id"
                             ":class"="item.edit ? 'active' : ''" )
                             td.center.aligned
                                 strong {{(index+1)+offset}}
-                            td {{ item.name }}
+                            td
+                                div.ui.input.fluid( v-if="item.edit" )
+                                    input( v-model="item.name_new"
+                                    ":placeholder"="translate('placeholder.type')+' '+translate('name')"
+                                    v-focus="" ).collapsing
+                                span( v-if="!item.edit" ) {{ item.name }}
                             td
                                 span( v-for="(user, column_index) in item.users")
                                     span {{ user.name }}

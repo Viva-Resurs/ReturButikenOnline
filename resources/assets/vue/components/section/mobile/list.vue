@@ -15,12 +15,25 @@
             div.row( v-if="countItems > 0 || toolsBottom" )
                 table.ui.very.basic.table.very.compact.unstackable
                     tbody( v-item="$route.hash.substr(1)" )
+                        tr( v-for="(item, index) in itemsNew" )
+                            td.slim
+                                div.ui.input.fluid
+                                    input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
+                                    v-focus="" )
+                            td
+                            td
+                                div.ui.icon.basic.buttons
+                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
                         tr(
                             v-for="(item, filterIndex) in filterItems"
                             ":id"="item.id" )
                             td.slim
                                 div.ui.item.fluid(style="margin-left: 5px;")
-                                    div.ui.vertical.segment.basic( "v-if"="itemHaveData('name', item.name)" )
+                                    div.ui.input.fluid( v-if="item.edit" )
+                                        input( v-model="item.name_new"
+                                        ":placeholder"="translate('placeholder.type')+' '+translate('name')"
+                                        v-focus="" ).collapsing
+                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name)" )
                                         h4.ui.sub.header {{ translate('name') }}
                                         p {{ item.name }}
                                     div.ui.vertical.segment.basic( "v-if"="itemHaveData('users', item.users)" )

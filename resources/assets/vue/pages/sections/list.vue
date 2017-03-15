@@ -14,7 +14,8 @@
                 ":toolsBottom"=`[
                     $options.components.Add
                 ]`
-                ":items"="items" )
+                ":items"="items"
+                ":itemsNew"="itemsNew" )
             section-mobile-list.column.mobile.tablet.only(
                 ":toolsRow"=`[
                     $options.components.Edit,
@@ -25,7 +26,8 @@
                 ":toolsBottom"=`[
                     $options.components.Add
                 ]`
-                ":items"="items" )
+                ":items"="items"
+                ":itemsNew"="itemsNew" )
 </template>
 
 <script lang="coffee">
@@ -42,22 +44,7 @@
         data: ->
             items: []
             itemsNew: []
-            columns:
-                name:
-                    label: 'name'
-                    key: 'name'
-                    type: 'string'
-                    search: true
-                    sort: true
-                    default_sort: true
-                    class: 'link'
-                users:
-                    label: 'users'
-                    key: 'users'
-                    type: 'array'
-                    search: true
-                    sort: true
-                    class: 'link'
+            columns: ['name']
         methods:
             addItem: ->
                 @itemsNew.push id_new: @itemsNew.length
@@ -86,21 +73,21 @@
 
             editItem: (item) ->
                 Vue.set item, 'edit', true
-                for key, column of @columns
+                for key in @columns
                     Vue.set item, key+'_new', item[key]
 
             revertItem: (item) ->
                 Vue.set item, 'edit', false
 
-            attemptUpdate: (section) ->
-                Vue.set section, 'edit', false
-                for key, column of @columns
-                    Vue.set section, key, section[key+'_new']
-                @$http.put('api/sections/'+section.id, section).then(
+            attemptUpdate: (item) ->
+                Vue.set item, 'edit', false
+                for key in @columns
+                    Vue.set item, key, item[key+'_new']
+                @$http.put('api/sections/'+item.id, item).then(
                     (response) =>
-                        Vue.set section, 'updated_at', response.data.updated_at
+                        Vue.set item, 'updated_at', response.data.updated_at
                         @$nextTick ->
-                            $('tbody').trigger 'updated', section.id
+                            $('tbody').trigger 'updated', item.id
                     (response) => bus.$emit 'error', response.data
                 )
 
