@@ -1,6 +1,6 @@
 <template lang="pug">
-    div.item
-        div.ui.grid.mobile.tablet.only
+    div.ui.grid.equal.width
+        div.column.mobile.tablet.only
             div.ui.button.icon.item.dropdown#order( v-dropdown="" )
                 i.sort.icon
                 div.menu
@@ -14,27 +14,25 @@
                             v-if="order==column"
                             ":class" = "(desc==1)?'ascending':'descending'"
                         )
-        div.ui.grid.computer.only
-            div.row
-                div.column
-                    div.ui.button.item.dropdown#order( v-dropdown="" )
-                        div.default.value(
-                            v-for="column in columns"
-                            v-if="order==column" ) {{ translate(column) }} &nbsp;
-                            i.icon.sort.right.floated(
-                                ":class" = "(desc==1)?'ascending':'descending'"
-                            )
-                        div.menu
-                            div.item(
-                                v-for="column in columns"
-                                ":class"="(order==column)?'active':''"
-                                @click="change_order(column)"
-                                )
-                                | {{ translate(column) }} &nbsp;
-                                i.icon.sort(
-                                    v-if="order==column"
-                                    ":class" = "(desc==1)?'ascending':'descending'"
-                                )
+        div.column.computer.only
+            div.ui.button.item.dropdown#order( v-dropdown="" )
+                div.default.value(
+                    v-for="column in columns"
+                    v-if="order==column" ) {{ translate(column) }} &nbsp;
+                    i.icon.sort.right.floated(
+                        ":class" = "(desc==1)?'ascending':'descending'"
+                    )
+                div.menu
+                    div.item(
+                        v-for="column in columns"
+                        ":class"="(order==column)?'active':''"
+                        @click="change_order(column)"
+                        )
+                        | {{ translate(column) }} &nbsp;
+                        i.icon.sort(
+                            v-if="order==column"
+                            ":class" = "(desc==1)?'ascending':'descending'"
+                        )
 </template>
 
 <script lang="coffee">
