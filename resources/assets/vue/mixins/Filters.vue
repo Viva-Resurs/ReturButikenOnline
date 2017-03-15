@@ -161,9 +161,11 @@
             bus.$on 'offset_changed', (new_offset) => @offset = new_offset
             bus.$on 'limit_changed', (new_limit) => @maxItems = new_limit
             bus.$on 'search_changed', (new_search) => @search = new_search
+            bus.$on 'order_changed', (new_order, new_desc) => @setOrder new_order, new_desc
 
         beforeDestroy: ->
             bus.$off 'offset_changed'
             bus.$off 'limit_changed'
             bus.$off 'search_changed'
+            bus.$off 'order_changed'
 </script>
