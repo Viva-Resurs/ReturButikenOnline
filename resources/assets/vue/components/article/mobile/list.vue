@@ -2,7 +2,9 @@
     div
         div.ui.top.attached.menu
             div.left.menu
-                search( ":search"="search" )
+                search( ":search"="search" )            
+                paginate(":total"="countItems"
+                    ":show-pagination"="(search=='' && !limitOffBtn)")
             div.right.menu
                 sort(
                     ":order"="order"
@@ -43,6 +45,7 @@
             ArticleCard: require '../card.vue'
             Search: require '../../tools/Search.vue'
             Sort: require '../../tools/Sort.vue'
+            Paginate: require '../../tools/Paginate.vue'
         data: ->
             order: 'updated_at'
             desc: 1
