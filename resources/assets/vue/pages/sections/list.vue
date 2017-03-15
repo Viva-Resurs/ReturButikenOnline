@@ -1,27 +1,42 @@
 <template lang="pug">
-    item-grid(
-        ":header"="translate('section.header')"
-        ":columns"="columns"
-        ":toolsRow"=
-            `[
-                $options.components.Edit,
-                $options.components.Save,
-                $options.components.Remove,
-                $options.components.Undo
-            ]`
-        ":toolsBottom"=
-            `[
-                $options.components.Add
-            ]`
-        ":itemsNew"="itemsNew"
-        ":items"="items" )
+    div
+        loading( v-if="$root.loading" )
+        div.ui.grid.one.column( v-else="" )
+            div.row
+                div.column
+                    div.ui.dividing.header.fluid {{ translate('section.header') }}
+            div.row
+                section-desktop-list.column.computer.only(
+                    ":toolsRow"=`[
+                        $options.components.Edit,
+                        $options.components.Save,
+                        $options.components.Remove,
+                        $options.components.Undo
+                    ]`
+                    ":toolsBottom"=`[
+                        $options.components.Add
+                    ]`
+                    ":items"="items" )
+            div.row
+                section-mobile-list.column.mobile.tablet.only(
+                    ":toolsRow"=`[
+                        $options.components.Edit,
+                        $options.components.Save,
+                        $options.components.Remove,
+                        $options.components.Undo
+                    ]`
+                    ":toolsBottom"=`[
+                        $options.components.Add
+                    ]`
+                    ":items"="items" )
 </template>
 
 <script lang="coffee">
     module.exports =
         name: 'List'
         components:
-            ItemGrid: require '../../components/ItemGrid.vue'
+            SectionDesktopList: require '../../components/section/desktop/list.vue'
+            SectionMobileList: require '../../components/section/mobile/list.vue'
             Remove: require '../../components/tools/Remove.vue'
             Save: require '../../components/tools/Save.vue'
             Undo: require '../../components/tools/Undo.vue'
