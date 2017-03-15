@@ -40,45 +40,32 @@
                 v-dropdown="" v-model="limit" )
                 option.item( v-for="option in limitOptions" ":value"="option") {{option}}
 
-        div.column.computer.only
-            div.equal.width.row
-                div.left.floated.column( v-if="total!=0 && total>limit && showPagination && false" )
-                    div.ui.grid.computer.only.pagination.menu
-                        a.icon.item( @click="firstPage" )
-                            i.angle.double.left.icon
+        div.column.computer.only( v-if="total!=0 && showPagination" )
+            div.ui.compact.menu
+                a.icon.item( @click="firstPage" )
+                    i.angle.double.left.icon
 
-                        a.icon.item( @click="prevPage" )
-                            i.angle.left.icon
+                a.icon.item( @click="prevPage" )
+                    i.angle.left.icon
 
-                        a( v-for="n in totalPages" ":class"="'item '+((n==currentPage)?'active':'')" @click="toPage(n)" ) {{n}}
+                a( v-for="n in totalPages" ":class"="'item '+((n==currentPage)?'active':'')" @click="toPage(n)" ) {{n}}
 
-                        a.icon.item( @click="nextPage" )
-                            i.angle.right.icon
+                a.icon.item( @click="nextPage" )
+                    i.angle.right.icon
 
-                        a.icon.item( @click="lastPage" )
-                            i.angle.double.right.icon
+                a.icon.item( @click="lastPage" )
+                    i.angle.double.right.icon
 
-                    div.ui.grid.mobile.tablet.only.pagination.menu
-                        a.icon.item( @click="firstPage" )
-                            i.angle.double.left.icon
-
-                        a.icon.item( @click="prevPage" )
-                            i.angle.left.icon
-
-                        a.icon.item
-                            i {{ translate('page') }} {{currentPage}} ... {{totalPages}}
-
-                        a.icon.item( @click="nextPage" )
-                            i.angle.right.icon
-
-                        a.icon.item( @click="lastPage" )
-                            i.angle.double.right.icon
-
-                div.right.floated.right.aligned.column
-                    select.selection.fluid.dropdown#limit(
-                        v-show="total>limitOptions[0]"
-                        v-dropdown="" v-model="limit" )
-                        option.item( v-for="option in limitOptions" ":value"="option") {{option}}
+                div.ui.button.item.dropdown.right#limit( v-dropdown="" )
+                    div.default.value {{ limit }}
+                        i.sort.icon
+                    div.menu
+                        div.item(
+                            v-for="option in limitOptions"
+                            ":class"="(limit==option)?'active':''"
+                            @click="change_limit(option)"
+                            )
+                            | {{ option }}
 </template>
 
 <script lang="coffee">
@@ -117,6 +104,9 @@
                 return p;
 
         methods:
+            change_limit: (value) ->
+                Vue.set this, 'limit', value
+
             change_search: (value) ->
                 bus.$emit 'search_changed', value
 
