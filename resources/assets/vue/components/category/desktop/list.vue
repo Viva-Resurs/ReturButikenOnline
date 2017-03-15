@@ -4,6 +4,11 @@
             div.row
                 div.column
                     search( ":search"="search" )
+                div.column.right.aligned
+                    sort(
+                        ":order"="order"
+                        ":desc"="desc"
+                        ":columns"="['name']" )
         div.ui.padded.grid
             div.row
                 table.ui.very.compact.celled.table.unstackable

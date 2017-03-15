@@ -4,6 +4,11 @@
             div.row
                 div.column
                     search( ":search"="search" )
+                div.column.right.aligned
+                    sort(
+                        ":order"="order"
+                        ":desc"="desc"
+                        ":columns"="['username','fullname','sections','roles']" )
         div.ui.padded.grid
             div.row( v-if="countItems==0 && !toolsBottom" )
                 div.ui.warning.message

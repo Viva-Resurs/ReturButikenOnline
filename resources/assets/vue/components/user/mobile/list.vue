@@ -1,53 +1,13 @@
 <template lang="pug">
     div
-        div.ui.equal.width.grid
-            div.row
-                div.column.grid
-                    search( ":search"="search" )
-                div.column.right.aligned
-                    div.ui.floated.basic.button.dropdown#order( v-dropdown="" )
-                        div.default.value
-                            | {{ translate(order) }} &nbsp;
-                            i.icon.label.sort.right.floated(
-                                ":class" = "(desc==1)?'ascending':'descending'"
-                            )
-                        div.menu
-                            div.item(
-                                ":class"="(order=='username')?'active':''"
-                                @click="setOrder('username')"
-                                )
-                                | {{ translate('username') }} &nbsp;
-                                i.icon.label.sort(
-                                    v-if="order=='username'"
-                                    ":class" = "(desc)?'ascending':'descending'"
-                                )
-                            div.item(
-                                ":class"="(order=='fullname')?'active':''"
-                                @click="setOrder('fullname')"
-                                )
-                                | {{ translate('fullname') }} &nbsp;
-                                i.icon.label.sort(
-                                    v-if="order=='fullname'"
-                                    ":class" = "(desc)?'ascending':'descending'"
-                                )
-                            div.item(
-                                ":class"="(order=='sections')?'active':''"
-                                @click="setOrder('sections')"
-                                )
-                                | {{ translate('sections') }} &nbsp;
-                                i.icon.label.sort(
-                                    v-if="order=='sections'"
-                                    ":class" = "(desc)?'ascending':'descending'"
-                                )
-                            div.item(
-                                ":class"="(order=='roles')?'active':''"
-                                @click="setOrder('roles')"
-                                )
-                                | {{ translate('roles') }} &nbsp;
-                                i.icon.label.sort(
-                                    v-if="order=='roles'"
-                                    ":class" = "(desc)?'ascending':'descending'"
-                                )
+        div.ui.top.attached.menu
+            div.left.menu
+                search( ":search"="search" )
+            div.right.menu
+                sort(
+                    ":order"="order"
+                    ":desc"="desc"
+                    ":columns"="['username','fullname','sections','roles']" )
         div.ui.padded.grid
             div.row( v-if="countItems==0 && !toolsBottom" )
                 div.ui.warning.message

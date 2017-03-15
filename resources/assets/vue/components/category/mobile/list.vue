@@ -1,33 +1,13 @@
 <template lang="pug">
     div
-        div.ui.top.attached.fluid.menu
-            search( ":search"="search" )
-
-            div.ui.right.dropdown.item#order( v-dropdown="" )
-                div.default.value
-                    i.icon.label.sort( ":class" = "(desc == 1)?'ascending':'descending'" )
-                    i.icon.label.font(
-                        v-if="order=='name'"
-                    )
-                    i.icon.label.wait(
-                        v-if="order=='updated_at'"
-                    )
-                    i.icon.label.pie.chart(
-                        v-if="order=='categories'"
-                    )
-                    i.icon.label.universal.access(
-                        v-if="order=='public'"
-                    )
-                div.menu
-                    div.item(
-                        ":class"="(order=='name')?'active':''"
-                        @click="setOrder('name')"
-                        )
-                        | {{ translate('name') }} &nbsp;
-                        i.icon.label.sort(
-                            v-if="order=='name'"
-                            ":class" = "(desc)?'ascending':'descending'"
-                        )
+        div.ui.top.attached.menu
+            div.left.menu
+                search( ":search"="search" )
+            div.right.menu
+                sort(
+                    ":order"="order"
+                    ":desc"="desc"
+                    ":columns"="['name']" )
         div.ui.padded.grid
             div.row
                 table.ui.very.basic.table.very.compact.unstackable

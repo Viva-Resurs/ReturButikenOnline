@@ -4,6 +4,11 @@
             div.row
                 div.column
                     search( ":search"="search" )
+                div.column.right.aligned
+                    sort(
+                        ":order"="order"
+                        ":desc"="desc"
+                        ":columns"="['name','updated_at','categories']" )
         div.ui.padded.grid
             div.row( v-if="countItems==0 && !toolsBottom" )
                 div.ui.warning.message
@@ -82,6 +87,7 @@
         ]
         components:
             Search: require '../../tools/Search.vue'
+            Sort: require '../../tools/Sort.vue'
         data: ->
             order: 'updated_at'
         computed:
