@@ -164,7 +164,11 @@
         "remove": "Ta bort",
         "save": "Spara",
         "undo": "Ångra",
-        "preview": "Förhandsvisa"
+        "preview": "Förhandsvisa",
+        "pagination": "Paginering",
+        "search": "Sök",
+        "clear_search": "Rensa sökning",
+        "sort": "Sortering"
     },
     "show_all_results": "Visa alla resultat",
     "dropzone": {

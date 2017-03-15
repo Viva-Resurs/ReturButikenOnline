@@ -4,7 +4,7 @@
             div.ui.button.icon.item.dropdown( v-dropdown="" )
                 i.sticky.note.icon
                 div.ui.menu
-                    div.header Navigate
+                    div.header {{ translate('tool.pagination') }}
                     div.row
                         select.selection.fluid.dropdown#limit(
                             v-show="total>limitOptions[0]"

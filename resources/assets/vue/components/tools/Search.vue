@@ -4,7 +4,7 @@
             div.ui.button.icon.item.dropdown#search( v-dropdown="" )
                 i.search.icon
                 div.menu
-                    div.header Search
+                    div.header {{ translate('tool.search') }}
                     div.ui.icon.input
                         i.search.icon
                         input(
@@ -16,12 +16,12 @@
                             v-if="search!=''"
                             @click="change_search('')" )
                             i.delete.icon
-                            | Clear Search
+                            | {{ translate('tool.clear_search') }}
         div.column.tablet.only
             div.ui.button.icon.item.dropdown#search( v-dropdown="" )
                 i.search.icon
                 div.menu
-                    div.header Search
+                    div.header {{ translate('tool.search') }}
                     div.ui.icon.input
                         i.search.icon
                         input(
@@ -33,7 +33,7 @@
                             v-if="search!=''"
                             @click="change_search('')" )
                             i.delete.icon
-                            | Clear Search
+                            | {{ translate('tool.clear_search') }}
         div.column.computer.only
             div.ui.icon.input
                 i.search.icon

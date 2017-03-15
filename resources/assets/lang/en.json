@@ -157,7 +157,11 @@
         "remove": "Remove",
         "save": "Save",
         "undo": "Undo",
-        "preview": "Preview"
+        "preview": "Preview",
+        "pagination": "Pagination",
+        "search": "Search",
+        "clear_search": "Clear search",
+        "sort": "Sorting"
     },
     "show_all_results": "Show all results",
     "dropzone": {

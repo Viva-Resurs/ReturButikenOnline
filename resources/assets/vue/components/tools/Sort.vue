@@ -4,6 +4,7 @@
             div.ui.button.icon.item.dropdown#order( v-dropdown="" )
                 i.sort.icon
                 div.menu
+                    div.header {{ translate('tool.sort') }}
                     div.item(
                         v-for="column in columns"
                         ":class"="(order==column)?'active':''"
@@ -23,6 +24,7 @@
                         ":class" = "(desc==1)?'ascending':'descending'"
                     )
                 div.menu
+                    div.header {{ translate('tool.sort') }}
                     div.item(
                         v-for="column in columns"
                         ":class"="(order==column)?'active':''"
