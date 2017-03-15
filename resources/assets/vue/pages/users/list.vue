@@ -2,29 +2,26 @@
     div
         loading( v-if="$root.loading" )
         div.ui.grid.one.column( v-else="" )
-            div.row
-                div.column
-                    div.ui.dividing.header.fluid {{ translate('user.header') }}
-            div.row
-                user-desktop-list.column.computer.only(
-                    ":toolsRow"=`[
-                        $options.components.Edit,
-                        $options.components.Remove
-                    ]`
-                    ":toolsBottom"=`[
-                        $options.components.Add
-                    ]`
-                    ":items"="items" )
-            div.row
-                user-mobile-list.column.mobile.tablet.only(
-                    ":toolsRow"=`[
-                        $options.components.Edit,
-                        $options.components.Remove
-                    ]`
-                    ":toolsBottom"=`[
-                        $options.components.Add
-                    ]`
-                    ":items"="items" )
+            div.column
+                div.ui.dividing.header.fluid {{ translate('user.header') }}
+            user-desktop-list.column.computer.only(
+                ":toolsRow"=`[
+                    $options.components.Edit,
+                    $options.components.Remove
+                ]`
+                ":toolsBottom"=`[
+                    $options.components.Add
+                ]`
+                ":items"="items" )
+            user-mobile-list.column.mobile.tablet.only(
+                ":toolsRow"=`[
+                    $options.components.Edit,
+                    $options.components.Remove
+                ]`
+                ":toolsBottom"=`[
+                    $options.components.Add
+                ]`
+                ":items"="items" )
 </template>
 
 <script lang="coffee">

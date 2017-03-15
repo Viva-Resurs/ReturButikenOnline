@@ -2,19 +2,17 @@
     div
         loading( v-if="$root.loading" )
         div.ui.grid.one.column( v-else="" )
-            div.row
-                div.column
-                    div.ui.dividing.header.fluid {{ translate('article.header') }}
-            div.row.column.computer.only
-                article-desktop-list(
-                    ":toolsRow"=`[
-                          $options.components.PublishInterval,
-                          $options.components.BiddingInterval,
-                          $options.components.Preview,
-                          $options.components.Edit,
-                          $options.components.Remove
-                        ]`
-                    ":items"="items" )
+            div.column
+                div.ui.dividing.header.fluid {{ translate('article.header') }}
+            article-desktop-list.column.computer.only(
+                ":toolsRow"=`[
+                      $options.components.PublishInterval,
+                      $options.components.BiddingInterval,
+                      $options.components.Preview,
+                      $options.components.Edit,
+                      $options.components.Remove
+                    ]`
+                ":items"="items" )
             article-mobile-list.column.mobile.tablet.only(
                 ":toolsRow"=`[
                       $options.components.PublishInterval,

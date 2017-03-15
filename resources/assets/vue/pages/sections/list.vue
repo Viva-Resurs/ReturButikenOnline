@@ -2,33 +2,30 @@
     div
         loading( v-if="$root.loading" )
         div.ui.grid.one.column( v-else="" )
-            div.row
-                div.column
-                    div.ui.dividing.header.fluid {{ translate('section.header') }}
-            div.row
-                section-desktop-list.column.computer.only(
-                    ":toolsRow"=`[
-                        $options.components.Edit,
-                        $options.components.Save,
-                        $options.components.Remove,
-                        $options.components.Undo
-                    ]`
-                    ":toolsBottom"=`[
-                        $options.components.Add
-                    ]`
-                    ":items"="items" )
-            div.row
-                section-mobile-list.column.mobile.tablet.only(
-                    ":toolsRow"=`[
-                        $options.components.Edit,
-                        $options.components.Save,
-                        $options.components.Remove,
-                        $options.components.Undo
-                    ]`
-                    ":toolsBottom"=`[
-                        $options.components.Add
-                    ]`
-                    ":items"="items" )
+            div.column
+                div.ui.dividing.header.fluid {{ translate('section.header') }}
+            section-desktop-list.column.computer.only(
+                ":toolsRow"=`[
+                    $options.components.Edit,
+                    $options.components.Save,
+                    $options.components.Remove,
+                    $options.components.Undo
+                ]`
+                ":toolsBottom"=`[
+                    $options.components.Add
+                ]`
+                ":items"="items" )
+            section-mobile-list.column.mobile.tablet.only(
+                ":toolsRow"=`[
+                    $options.components.Edit,
+                    $options.components.Save,
+                    $options.components.Remove,
+                    $options.components.Undo
+                ]`
+                ":toolsBottom"=`[
+                    $options.components.Add
+                ]`
+                ":items"="items" )
 </template>
 
 <script lang="coffee">
