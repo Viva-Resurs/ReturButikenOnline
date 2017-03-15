@@ -10,10 +10,7 @@
                         ":desc"="desc"
                         ":columns"="['username','fullname','sections','roles']" )
         div.ui.padded.grid
-            div.row( v-if="countItems==0 && !toolsBottom" )
-                div.ui.warning.message
-                    p {{ (items.length != 0) ? 'No results' : 'Empty' }}
-            div.row( v-if="countItems > 0 || toolsBottom" )
+            div.row
                 table.ui.very.compact.celled.table.unstackable
                     thead
                         tr
@@ -89,6 +86,7 @@
         ]
         components:
             Search: require '../../tools/Search.vue'
+            Sort: require '../../tools/Sort.vue'
         data: ->
             order: 'username'
             desc: 1
@@ -105,7 +103,7 @@
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
-                    .filter (item) => @filterBy item, @search, ['name','fullname','sections','roles']
+                    .filter (item) => @filterArrayBy item, @search, ['name','fullname','sections','roles']
                     .length
         methods:
             formatTooltip: (info) ->

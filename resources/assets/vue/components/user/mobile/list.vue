@@ -71,6 +71,7 @@
         ]
         components:
             Search: require '../../tools/Search.vue'
+            Sort: require '../../tools/Sort.vue'
         data: ->
             order: 'username'
             desc: 1
@@ -80,14 +81,14 @@
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
-                    .filter (item) => @filterBy item, @search, @columns
+                    .filter (item) => @filterArrayBy item, @search, ['name','fullname','sections','roles']
                     .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
 
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
-                    .filter (item) => @filterBy item, @search, @columns
+                    .filter (item) => @filterArrayBy item, @search, ['name','fullname','sections','roles']
                     .length
             firstColumn: ->
                 @columns[Object.keys(@columns)[0]]

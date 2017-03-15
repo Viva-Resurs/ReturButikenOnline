@@ -64,6 +64,7 @@
         ]
         components:
             Search: require '../../tools/Search.vue'
+            Sort: require '../../tools/Sort.vue'
         mixins: [
             require '../../../mixins/Filters.vue'
         ]

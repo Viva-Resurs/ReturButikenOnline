@@ -49,9 +49,6 @@
                         tr( v-if="toolsBottom")
                             td
                             td
-                            td
-                            td
-                            td
                             td.right.aligned
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
@@ -81,6 +78,7 @@
         ]
         components:
             Search: require '../../tools/Search.vue'
+            Sort: require '../../tools/Sort.vue'
         data: ->
             order: 'name'
             desc: 1
