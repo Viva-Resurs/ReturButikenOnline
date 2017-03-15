@@ -1,10 +1,11 @@
 <template lang="pug">
     div
         div.ui.top.attached.menu
-            div.left.menu
-                search( ":search"="search" )            
-                paginate(":total"="countItems"
-                    ":show-pagination"="(search=='' && !limitOffBtn)")
+            search( ":search"="search" )
+
+            paginate(
+                ":total"="countItems"
+                ":show-pagination"="(search=='' && !limitOffBtn)" )
             div.right.menu
                 sort(
                     ":order"="order"
@@ -19,16 +20,11 @@
                     ":from"="from"
                     )
 
-            pagination.row.attached(
-                ":total"="countItems"
-                ":show-pagination"="(search=='' && !limitOffBtn)"
-                )
-                div( slot="replacePagination" )
-                    button.ui.button.searchresults_expander(
-                        v-if="limitOffBtn"
-                        @click="limitOff = true"
-                        )
-                        | {{ translate('show_all_results') }}
+        div.row( v-if="countItems > 0 && search!=''" )
+            button.ui.button.searchresults_expander(
+                v-if="limitOffBtn"
+                @click="limitOff = true" )
+                | {{ translate('show_all_results') }}
 </template>
 
 <script lang="coffee">
@@ -44,8 +40,8 @@
         components:
             ArticleCard: require '../card.vue'
             Search: require '../../tools/Search.vue'
-            Sort: require '../../tools/Sort.vue'
             Paginate: require '../../tools/Paginate.vue'
+            Sort: require '../../tools/Sort.vue'
         data: ->
             order: 'updated_at'
             desc: 1
