@@ -44,9 +44,7 @@
         data: ->
             items: []
             itemsNew: []
-            columns: [
-                'name'
-            ]
+            columns: [ 'name' ]
 
         methods:
             addItem: ->

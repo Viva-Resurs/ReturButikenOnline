@@ -1,6 +1,6 @@
 <template lang="pug">
     div.ui.grid.equal.width
-        div.column.mobile.tablet.only
+        div.column.mobile.only
             div.ui.button.icon.item.dropdown#order( v-dropdown="" )
                 i.sort.icon
                 div.menu
@@ -14,7 +14,7 @@
                             v-if="order==column"
                             ":class" = "(desc==1)?'ascending':'descending'"
                         )
-        div.column.computer.only
+        div.column.tablet.computer.only
             div.ui.button.item.dropdown#order( v-dropdown="" )
                 div.default.value(
                     v-for="column in columns"
