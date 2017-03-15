@@ -138,7 +138,7 @@
             limitOff: false
             limitOffBtn: false
 
-            order: ''
+            order: 'updated_at'
             desc: -1
 
             offset: 0
