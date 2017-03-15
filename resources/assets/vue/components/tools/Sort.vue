@@ -10,8 +10,8 @@
                         @click="change_order(column)"
                         )
                         | {{ translate(column) }} &nbsp;
-                        i.icon.label.sort(
-                            v-if="order==column.key"
+                        i.icon.sort(
+                            v-if="order==column"
                             ":class" = "(desc==1)?'ascending':'descending'"
                         )
         div.ui.grid.computer.only
@@ -21,7 +21,7 @@
                         div.default.value(
                             v-for="column in columns"
                             v-if="order==column" ) {{ translate(column) }} &nbsp;
-                            i.icon.label.sort.right.floated(
+                            i.icon.sort.right.floated(
                                 ":class" = "(desc==1)?'ascending':'descending'"
                             )
                         div.menu
@@ -31,8 +31,8 @@
                                 @click="change_order(column)"
                                 )
                                 | {{ translate(column) }} &nbsp;
-                                i.icon.label.sort(
-                                    v-if="order==column.key"
+                                i.icon.sort(
+                                    v-if="order==column"
                                     ":class" = "(desc==1)?'ascending':'descending'"
                                 )
 </template>
