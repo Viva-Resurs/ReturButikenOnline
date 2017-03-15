@@ -4,6 +4,11 @@
             div.row
                 div.column
                     search( ":search"="search" )
+                div.column
+                    paginate(
+                        ":offset"="offset"
+                        ":total"="countItems"
+                        ":show-pagination"="(search=='' && !limitOffBtn)" )
                 div.column.right.aligned
                     sort(
                         ":order"="order"
@@ -62,16 +67,11 @@
                             td.right.aligned
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
-        pagination.ui.bottom.attached(
-            ":total"="countItems"
-            ":show-pagination"="(search=='' && !limitOffBtn)"
-            )
-            div( slot="replacePagination" )
-                button.ui.button.searchresults_expander(
-                    v-if="limitOffBtn"
-                    @click="limitOff = true"
-                    )
-                    | {{ translate('show_all_results') }}
+        div.row( v-if="countItems > 0 && search!=''" )
+            button.ui.button.searchresults_expander(
+                v-if="limitOffBtn"
+                @click="limitOff = true" )
+                | {{ translate('show_all_results') }}
 </template>
 
 <script lang="coffee">
@@ -88,6 +88,7 @@
         ]
         components:
             Search: require '../../tools/Search.vue'
+            Paginate: require '../../tools/Paginate.vue'
             Sort: require '../../tools/Sort.vue'
         data: ->
             order: 'name'

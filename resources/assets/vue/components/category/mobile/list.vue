@@ -4,10 +4,15 @@
             div.left.menu
                 search( ":search"="search" )
             div.right.menu
-                sort(
-                    ":order"="order"
-                    ":desc"="desc"
-                    ":columns"="['name']" )
+                paginate(
+                    ":offset"="offset"
+                    ":total"="countItems"
+                    ":show-pagination"="(search=='' && !limitOffBtn)" )
+                div.right.menu
+                    sort(
+                        ":order"="order"
+                        ":desc"="desc"
+                        ":columns"="['name']" )
         div.ui.padded.grid
             div.row
                 table.ui.very.basic.table.very.compact.unstackable
@@ -41,16 +46,11 @@
                             td.right.aligned
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
-        pagination.ui.bottom.attached(
-            ":total"="countItems"
-            ":show-pagination"="(search=='' && !limitOffBtn)"
-            )
-            div( slot="replacePagination" )
-                button.ui.button.searchresults_expander(
-                    v-if="limitOffBtn"
-                    @click="limitOff = true"
-                    )
-                    | {{ translate('show_all_results') }}
+        div.row( v-if="countItems > 0 && search!=''" )
+            button.ui.button.searchresults_expander(
+                v-if="limitOffBtn"
+                @click="limitOff = true" )
+                | {{ translate('show_all_results') }}
 </template>
 
 <script lang="coffee">
@@ -64,6 +64,7 @@
         ]
         components:
             Search: require '../../tools/Search.vue'
+            Paginate: require '../../tools/Paginate.vue'
             Sort: require '../../tools/Sort.vue'
         mixins: [
             require '../../../mixins/Filters.vue'
