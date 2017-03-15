@@ -1,16 +1,18 @@
 <template lang="pug">
     div
         div.ui.top.attached.menu
-            search( ":search"="search" )
-
-            paginate(
-                ":total"="countItems"
-                ":show-pagination"="(search=='' && !limitOffBtn)" )
+            div.left.menu
+                search( ":search"="search" )
             div.right.menu
-                sort(
-                    ":order"="order"
-                    ":desc"="desc"
-                    ":columns"="['name','updated_at','categories']" )
+                paginate(
+                    ":offset"="offset"
+                    ":total"="countItems"
+                    ":show-pagination"="(search=='' && !limitOffBtn)" )
+                div.right.menu
+                    sort(
+                        ":order"="order"
+                        ":desc"="desc"
+                        ":columns"="['name','updated_at','categories']" )
         div.ui.padded.grid
             div.row.top.attached
                 article-card(
@@ -25,6 +27,13 @@
                 v-if="limitOffBtn"
                 @click="limitOff = true" )
                 | {{ translate('show_all_results') }}
+        div.row( v-if="countItems > 0 && search==''" )
+            button.ui.button.left.floated(
+                v-if="offset-maxItems >= 0"
+                @click="prevPage()" ) Previous page
+            button.ui.button.right.floated(
+                v-if="countItems > offset+maxItems"
+                @click="nextPage()" ) Next page
 </template>
 
 <script lang="coffee">
@@ -60,6 +69,16 @@
                     .filter (item) => @filterArrayBy item, @search, ['name','description','categories']
                     .length
         methods:
+            prevPage: ->
+                if @offset-@maxItems < 0
+                    return @firstPage()
+                bus.$emit 'offset_changed', @offset - @maxItems
+            nextPage: ->
+                window.scrollTo 0, 0
+                if @offset >= @total-@maxItems
+                    return @lastPage()
+                bus.$emit 'offset_changed', @offset + @maxItems
+
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
 </script>

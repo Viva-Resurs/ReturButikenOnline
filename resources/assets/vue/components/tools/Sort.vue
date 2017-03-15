@@ -15,8 +15,28 @@
                             v-if="order==column"
                             ":class" = "(desc==1)?'ascending':'descending'"
                         )
-        div.column.tablet.computer.only
+        div.column.tablet.only
             div.ui.button.item.dropdown#order( v-dropdown="" )
+                div.default.value(
+                    v-for="column in columns"
+                    v-if="order==column" ) {{ translate(column) }} &nbsp;
+                    i.icon.sort.right.floated(
+                        ":class" = "(desc==1)?'ascending':'descending'"
+                    )
+                div.menu
+                    div.header {{ translate('tool.sort') }}
+                    div.item(
+                        v-for="column in columns"
+                        ":class"="(order==column)?'active':''"
+                        @click="change_order(column)"
+                        )
+                        | {{ translate(column) }} &nbsp;
+                        i.icon.sort(
+                            v-if="order==column"
+                            ":class" = "(desc==1)?'ascending':'descending'"
+                        )
+        div.column.computer.only
+            div.ui.basic.button.dropdown#order( v-dropdown="" )
                 div.default.value(
                     v-for="column in columns"
                     v-if="order==column" ) {{ translate(column) }} &nbsp;

@@ -6,6 +6,7 @@
                     search( ":search"="search" )
                 div.column
                     paginate(
+                        ":offset"="offset"
                         ":total"="countItems"
                         ":show-pagination"="(search=='' && !limitOffBtn)" )
                 div.column.right.aligned
