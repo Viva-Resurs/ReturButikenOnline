@@ -9,11 +9,6 @@
                         ":offset"="offset"
                         ":total"="countItems"
                         ":show-pagination"="(search=='' && !limitOffBtn)" )
-                div.column.right.aligned
-                    sort(
-                        ":order"="order"
-                        ":desc"="desc"
-                        ":columns"="['name','users']" )
         div.ui.padded.grid
             div.row
                 table.ui.very.compact.celled.table.unstackable

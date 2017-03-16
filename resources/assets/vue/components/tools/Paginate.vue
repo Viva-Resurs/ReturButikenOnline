@@ -33,7 +33,7 @@
                             i.angle.double.right.icon
 
         div.column.tablet.only
-            div.left.menu
+            div.right.menu
                 a.item( @click="firstPage" )
                     i.angle.double.left.icon
                 a.item( @click="prevPage" )
@@ -56,8 +56,8 @@
                             )
                             | {{ option }}
 
-        div.column.computer.only( v-if="total!=0 && showPagination" )
-            div.ui.compact.menu
+        div.column.computer.only.right.floated.right.aligned( v-if="total!=0 && showPagination" )
+            div.ui.compact.menu.right.aligned
                 a.icon.item( @click="firstPage" )
                     i.angle.double.left.icon
 

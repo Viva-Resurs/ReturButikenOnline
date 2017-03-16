@@ -9,11 +9,6 @@
                         ":offset"="offset"
                         ":total"="countItems"
                         ":show-pagination"="(search=='' && !limitOffBtn)" )
-                div.column.right.aligned
-                    sort(
-                        ":order"="order"
-                        ":desc"="desc"
-                        ":columns"="['name','updated_at','categories']" )
         div.ui.padded.grid
             div.row( v-if="countItems==0 && !toolsBottom" )
                 div.ui.warning.message
