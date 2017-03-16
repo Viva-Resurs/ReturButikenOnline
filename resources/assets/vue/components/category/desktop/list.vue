@@ -2,18 +2,13 @@
     div
         div.ui.equal.width.grid
             div.row
-                div.column
+                div.column.middle.aligned
                     search( ":search"="search" )
                 div.column
                     paginate(
                         ":offset"="offset"
                         ":total"="countItems"
                         ":show-pagination"="(search=='' && !limitOffBtn)" )
-                div.column.right.aligned
-                    sort(
-                        ":order"="order"
-                        ":desc"="desc"
-                        ":columns"="['name']" )
         div.ui.padded.grid
             div.row
                 table.ui.very.compact.celled.table.unstackable
