@@ -38,8 +38,8 @@
         methods:
             attemptRemove: (user) ->
                 bus.$emit 'show_message',
-                    title: 'Confirm'
-                    message: 'Do you want to remove the user?'
+                    title: @$root.translate('user_list.remove_user_title') + "''"+user.name+"''."
+                    message: @$root.translate('user_list.remove_user_message')
                     type: 'confirm'
                     cb: => @removeUser user
             removeUser: (user) ->

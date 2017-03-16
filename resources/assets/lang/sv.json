@@ -13,7 +13,8 @@
     },
     "article": {
         "header": "Artiklar",
-        "add": "Lägg till vara"
+        "add": "Lägg till vara",
+        "empty": "Artiklar saknas"
     },
     "article_form": {
         "header": "Artikel",
@@ -106,6 +107,10 @@
         "article_removed": "Artikel borttagen",
         "article_updated": "Artikel uppdaterad",
         "success_message": "Utförd:"
+    },
+    "user_list": {
+        "remove_user_title": "Tar bort användare: ",
+        "remove_user_message": "Är du säker på att du vill ta bort användaren?"
     },
     "publish_interval":{
         "select_date_title": "Välj publiceringsintervall:",

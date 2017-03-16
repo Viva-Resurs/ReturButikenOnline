@@ -10,7 +10,7 @@
                 v-for="article in articles"
                 ":class"="article.selected ? 'active':''"
                 @click="selectArticle(article)" ) {{ article.name }}
-            i.item( v-if="articles.length==0" ) empty...
+            i.item( v-if="articles.length==0" ) {{ translate('article.empty') }}
 </template>
 
 <script lang="coffee">

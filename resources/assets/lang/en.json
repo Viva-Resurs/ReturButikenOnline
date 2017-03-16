@@ -13,7 +13,8 @@
     },
     "article": {
         "header": "Articles",
-        "add": "Add article"
+        "add": "Add article",
+        "empty": "No articles"
     },
     "article_form": {
         "header": "Article",
@@ -99,6 +100,10 @@
         "article_removed": "Article removed",
         "article_updated": "Article updated",
         "success_message": "Success:"
+    },
+    "user_list": {
+        "remove_user_title": "Remove user: ",
+        "remove_user_message": "Sure you want to remove the user?"
     },
     "publish_interval":{
         "select_date_title": "Select publish interval:",
