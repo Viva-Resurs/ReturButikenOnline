@@ -110,7 +110,7 @@
     },
     "user_list": {
         "remove_user_title": "Tar bort användare: ",
-        "remove_user_message": "Är du säker på att du vill ta bort användaren?"
+        "remove_user_message": "Är du säker på att du vill ta bort denna användare?"
     },
     "publish_interval":{
         "select_date_title": "Välj publiceringsintervall:",
