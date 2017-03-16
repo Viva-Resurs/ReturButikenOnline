@@ -6,11 +6,12 @@
                 div.menu
                     div.header {{ translate('tool.pagination') }}
 
-                    div.text
+                    div.text.ui.item
                         div.ui.grid.two.columns
-                            div.left.aligned.column {{ translate('page') }} {{currentPage}} / {{totalPages}}
+                            div.left.aligned.column
+                                p.middle.aligned {{ translate('page') }} {{currentPage}} / {{totalPages}}
                             div.right.aligned.column
-                                div.ui.right.basic.compact.button.dropdown#limit( v-dropdown="" )
+                                div.ui.right.basic.compact.button.fluid.dropdown#limit( v-dropdown="" )
                                     div.default.value {{ limit }}
                                         i.dropdown.left.icon
                                     div.left.menu
