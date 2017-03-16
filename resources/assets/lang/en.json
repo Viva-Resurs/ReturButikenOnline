@@ -105,6 +105,13 @@
         "remove_user_title": "Remove user: ",
         "remove_user_message": "Sure you want to remove the user?"
     },
+    "section_list": {
+        "remove_section_title": "Removing section: ",
+        "remove_section_message": "Sure you want to remove this section?",
+        "section_removed": "Section removed",
+        "section_updated": "Section updated",
+        "success_message": "Success:"
+    },
     "publish_interval":{
         "select_date_title": "Select publish interval:",
         "select_interval_message": "Click to set publish interval"
