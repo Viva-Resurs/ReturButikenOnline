@@ -103,7 +103,7 @@
     },
     "user_list": {
         "remove_user_title": "Remove user: ",
-        "remove_user_message": "Sure you want to remove the user?"
+        "remove_user_message": "Sure you want to remove this user?"
     },
     "section_list": {
         "remove_section_title": "Removing section: ",
