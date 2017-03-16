@@ -2,7 +2,7 @@
     div
         div.ui.equal.width.grid
             div.row
-                div.column
+                div.column.middle.aligned
                     search( ":search"="search" )
                 div.column
                     paginate(
