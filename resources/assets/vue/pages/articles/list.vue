@@ -90,6 +90,8 @@
             bus.$on 'articles_item_changed', (payload) => @attemptUpdate payload
             bus.$on 'articles_item_edit', (item) =>
                 @$router.push path: '/articles/'+item.id
+            bus.$on 'articles_item_add', =>
+                @$router.push path: '/articles/create'
             bus.$on 'publish_interval_changed', (id, new_value) =>
                 for item in @items
                     if Number(item.id) == Number(id)
@@ -105,6 +107,7 @@
             bus.$off 'articles_item_preview'
             bus.$off 'articles_item_changed'
             bus.$off 'articles_item_edit'
+            bus.$off 'articles_item_add'
             bus.$off 'publish_interval_changed'
             bus.$off 'bidding_interval_changed'
 </script>
