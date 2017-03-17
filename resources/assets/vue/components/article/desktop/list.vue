@@ -1,19 +1,18 @@
 <template lang="pug">
     div
         div.ui.equal.width.grid
-            div.row
-                div.column.middle.aligned
+            div.row.middle.aligned
+                div.column
                     search( ":search"="search" )
                 div.column
                     paginate(
                         ":offset"="offset"
                         ":total"="countItems"
-                        ":show-pagination"="(search=='' && !limitOffBtn)" )
+                        ":show-pagination"="search==''" )
+                div.column.right.aligned
+                    add.item.icon( from="articles" )
         div.ui.padded.grid
-            div.row( v-if="countItems==0 && !toolsBottom" )
-                div.ui.warning.message
-                    p {{ (items.length != 0) ? 'No results' : 'Empty' }}
-            div.row( v-if="countItems > 0 || toolsBottom" )
+            div.row
                 table.ui.very.compact.celled.table.unstackable
                     thead
                         tr
@@ -85,6 +84,7 @@
             Search: require '../../tools/Search.vue'
             Paginate: require '../../tools/Paginate.vue'
             Sort: require '../../tools/Sort.vue'
+            Add: require '../../tools/Add.vue'
         computed:
             from: ->
                 @$route.path.substring 1

@@ -1,14 +1,16 @@
 <template lang="pug">
     div
         div.ui.equal.width.grid
-            div.row
-                div.column.middle.aligned
+            div.row.middle.aligned
+                div.column
                     search( ":search"="search" )
                 div.column
                     paginate(
                         ":offset"="offset"
                         ":total"="countItems"
                         ":show-pagination"="(search=='' && !limitOffBtn)" )
+                div.column.right.aligned
+                    add.item.icon( from="categories" )
         div.ui.padded.grid
             div.row
                 table.ui.very.compact.celled.table.unstackable
@@ -68,6 +70,7 @@
             Search: require '../../tools/Search.vue'
             Paginate: require '../../tools/Paginate.vue'
             Sort: require '../../tools/Sort.vue'
+            Add: require '../../tools/Add.vue'
         data: ->
             order: 'name'
             desc: 1

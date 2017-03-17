@@ -15,7 +15,7 @@
                         ":columns"="['name','users']" )
                     div.right.menu
                         div.ui.buttons
-                            add.right.item.large.icon( from="sections" )
+                            add.right.item.large.icon( from="users" )
         div.ui.padded.grid
             div.row( v-if="countItems==0" )
                 div.ui.warning.message

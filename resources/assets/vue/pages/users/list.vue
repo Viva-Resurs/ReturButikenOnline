@@ -9,17 +9,11 @@
                     $options.components.Edit,
                     $options.components.Remove
                 ]`
-                ":toolsBottom"=`[
-                    $options.components.Add
-                ]`
                 ":items"="items" )
             user-mobile-list.column.mobile.tablet.only(
                 ":toolsRow"=`[
                     $options.components.Edit,
                     $options.components.Remove
-                ]`
-                ":toolsBottom"=`[
-                    $options.components.Add
                 ]`
                 ":items"="items" )
 </template>
@@ -32,7 +26,6 @@
             UserMobileList: require '../../components/user/mobile/list.vue'
             Remove: require '../../components/tools/Remove.vue'
             Edit: require '../../components/tools/Edit.vue'
-            Add: require '../../components/tools/Add.vue'
         data: ->
             items: []
         methods:

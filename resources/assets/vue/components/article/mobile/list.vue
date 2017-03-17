@@ -13,6 +13,9 @@
                         ":order"="order"
                         ":desc"="desc"
                         ":columns"="['name','updated_at','categories']" )
+                    div.right.menu
+                        div.ui.buttons
+                            add.right.item.large.icon( from="articles" )
         div.ui.padded.grid
             div.row.top.attached
                 article-card(
@@ -51,6 +54,7 @@
             Search: require '../../tools/Search.vue'
             Paginate: require '../../tools/Paginate.vue'
             Sort: require '../../tools/Sort.vue'
+            Add: require '../../tools/Add.vue'
         data: ->
             order: 'updated_at'
             desc: 1

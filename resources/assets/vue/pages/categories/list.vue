@@ -11,9 +11,6 @@
                     $options.components.Remove,
                     $options.components.Undo
                 ]`
-                ":toolsBottom"=`[
-                    $options.components.Add
-                ]`
                 ":items"="items"
                 ":itemsNew"="itemsNew" )
             category-mobile-list.column.mobile.tablet.only(
@@ -22,9 +19,6 @@
                     $options.components.Save,
                     $options.components.Remove,
                     $options.components.Undo
-                ]`
-                ":toolsBottom"=`[
-                    $options.components.Add
                 ]`
                 ":items"="items"
                 ":itemsNew"="itemsNew" )
@@ -40,7 +34,6 @@
             Save: require '../../components/tools/Save.vue'
             Undo: require '../../components/tools/Undo.vue'
             Edit: require '../../components/tools/Edit.vue'
-            Add: require '../../components/tools/Add.vue'
         data: ->
             items: []
             itemsNew: []

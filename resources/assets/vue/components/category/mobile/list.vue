@@ -13,6 +13,9 @@
                         ":order"="order"
                         ":desc"="desc"
                         ":columns"="['name']" )
+                    div.right.menu
+                        div.ui.buttons
+                            add.right.item.large.icon( from="categories" )
         div.ui.padded.grid
             div.row
                 table.ui.very.basic.table.very.compact.unstackable
@@ -60,6 +63,7 @@
             Search: require '../../tools/Search.vue'
             Paginate: require '../../tools/Paginate.vue'
             Sort: require '../../tools/Sort.vue'
+            Add: require '../../tools/Add.vue'
         mixins: [
             require '../../../mixins/Filters.vue'
         ]
