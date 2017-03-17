@@ -25,7 +25,7 @@
         "desc_label": "Article description:",
         "desc_placeholder": "Enter your description here",
         "price_label": "Price",
-        "price_currency_label": "SEK",       
+        "price_currency_label": "SEK",
         "price_placeholder": "Enter your price here",
         "images_label": "Pictures:",
         "choose_date": "Select date",
@@ -176,6 +176,8 @@
         "clear_search": "Clear search",
         "sort": "Sorting"
     },
+    "no_results": "No results",
+    "empty": "Empty",
     "show_all_results": "Show all results",
     "dropzone": {
         "upload": "Upload",

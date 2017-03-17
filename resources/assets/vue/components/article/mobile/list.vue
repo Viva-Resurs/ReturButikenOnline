@@ -17,7 +17,10 @@
                         div.ui.buttons
                             add.right.item.large.icon( from="articles" )
         div.ui.padded.grid
-            div.row.top.attached
+            div.row( v-if="countItems==0" )
+                div.ui.column.warning.message
+                    p {{ (search!='') ? translate('no_results') : translate('empty') }}
+            div.row( v-if="countItems > 0" )
                 article-card(
                     v-for="(item, index) in filterItems"
                     ":item"="item"

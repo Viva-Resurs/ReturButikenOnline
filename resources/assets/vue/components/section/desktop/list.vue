@@ -12,7 +12,10 @@
                 div.column.right.aligned
                     add.item.icon( from="sections" )
         div.ui.padded.grid
-            div.row
+            div.row( v-if="countItems==0" )
+                div.ui.column.warning.message
+                    p {{ (search!='') ? translate('no_results') : translate('empty') }}
+            div.row( v-if="countItems > 0" )
                 table.ui.very.compact.celled.table.unstackable
                     thead
                         tr

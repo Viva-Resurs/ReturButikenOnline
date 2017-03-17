@@ -24,7 +24,7 @@
         "category_default_text": "Välj kategori",
         "desc_label": "Beskrivning av varan:",
         "desc_placeholder": "Ge din beskrivning här",
-        "price_label": "Pris",                
+        "price_label": "Pris",
         "price_currency_label": "Kr",
         "price_placeholder": "Ange ditt pris här",
         "images_label": "Bilder:",
@@ -176,6 +176,8 @@
         "clear_search": "Rensa sökning",
         "sort": "Sortering"
     },
+    "no_results": "Inga resultat",
+    "empty": "Tomt",
     "show_all_results": "Visa alla resultat",
     "dropzone": {
         "upload": "Ladda upp",

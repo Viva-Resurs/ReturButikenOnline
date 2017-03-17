@@ -18,8 +18,8 @@
                             add.right.item.large.icon( from="users" )
         div.ui.padded.grid
             div.row( v-if="countItems==0" )
-                div.ui.warning.message
-                    p {{ (items.length != 0) ? 'No results' : 'Empty' }}
+                div.ui.column.warning.message
+                    p {{ (search!='') ? translate('no_results') : translate('empty') }}
             div.row( v-if="countItems > 0" )
                 table.ui.very.basic.table.very.compact.unstackable
                     tbody( v-item="$route.hash.substr(1)" )
