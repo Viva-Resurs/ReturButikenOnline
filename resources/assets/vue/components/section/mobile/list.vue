@@ -24,8 +24,7 @@
                             td.slim
                                 div.ui.input.fluid
                                     input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
-                                    v-focus="" )
-                            td
+                                    v-focus="" )                       
                             td
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
