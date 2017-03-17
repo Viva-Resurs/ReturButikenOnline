@@ -3,12 +3,12 @@
         div.ui.equal.width.grid
             div.row.middle.aligned
                 div.column
-                    search( ":search"="search" )
+                    search( ":search"="search" ":results"="countItems" )
                 div.column
                     paginate(
                         ":offset"="offset"
                         ":total"="countItems"
-                        ":show-pagination"="(search=='' && !limitOffBtn)" )
+                        ":show-pagination"="search==''" )
                 div.column.right.aligned
                     add.item.icon( from="categories" )
         div.ui.padded.grid

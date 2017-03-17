@@ -7,7 +7,7 @@
                 paginate(
                     ":offset"="offset"
                     ":total"="countItems"
-                    ":show-pagination"="(search=='' && !limitOffBtn)" )
+                    ":show-pagination"="search==''" )
                 div.right.menu
                     sort(
                         ":order"="order"

@@ -3,7 +3,7 @@
         div.ui.equal.width.grid
             div.row.middle.aligned
                 div.column
-                    search( ":search"="search" )
+                    search( ":search"="search" ":results"="countItems" )
                 div.column
                     paginate(
                         ":offset"="offset"
