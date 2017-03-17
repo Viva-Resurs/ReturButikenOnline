@@ -33,7 +33,7 @@
                     v-model="article.desc"
                     ":placeholder"="translate('article_form.desc_placeholder')" )
             div.field
-                label {{ translate('article_form.price_label') }}
+                label {{ translate('article_form.price_label') }}( {{ translate('article_form.price_currency_label') }} ):
                 input#price(
                     type="number"
                     v-model="article.price"
