@@ -11,13 +11,13 @@
                         div.two.stackable.fields
                             div.field
                                 h4.ui.sub.header {{ translate('semantic_dialog.start_date_header') }}
-                                div.ui.calendar#interval_start( v-calendar="" )
+                                div.ui.calendar#interval_start( v-calendar="validateCalendar" )
                                     div.ui.input.left.icon.bottom.attached
                                         i.calendar.icon
                                         input( type="text" placeholder="????-??-??" )
                             div.field
                                 h4.ui.sub.header {{ translate('semantic_dialog.end_date_header') }}
-                                div.ui.calendar#interval_end( v-calendar="" )
+                                div.ui.calendar#interval_end( v-calendar="validateCalendar" )
                                     div.ui.input.left.icon
                                         i.calendar.icon
                                         input( type="text" placeholder="????-??-??" )
@@ -44,7 +44,7 @@
                     buttons: [
                         {
                             class: 'ui deny primary button',
-                            label: @$root.translate('semantic_dialog.close_label')
+                            label: @translate('semantic_dialog.close_label')
                         },
                     ]
 
@@ -54,7 +54,7 @@
                     buttons: [
                         {
                             class: 'ui deny red button',
-                            label: @$root.translate('semantic_dialog.close_label')
+                            label: @translate('semantic_dialog.close_label')
                         },
                     ]
 
@@ -64,11 +64,11 @@
                     buttons: [
                         {
                             class: 'ui deny button',
-                            label: @$root.translate('semantic_dialog.abort_label')
+                            label: @translate('semantic_dialog.abort_label')
                         },
                         {
                             class: 'ui approve primary button',
-                            label: @$root.translate('semantic_dialog.confirm_label')
+                            label: @translate('semantic_dialog.confirm_label')
                         },
                     ]
 
@@ -78,11 +78,11 @@
                     buttons: [
                         {
                             class: 'ui deny button',
-                            label: @$root.translate('semantic_dialog.abort_label')
+                            label: @translate('semantic_dialog.abort_label')
                         },
                         {
                             class: 'ui approve primary button',
-                            label: @$root.translate('semantic_dialog.confirm_label')
+                            label: @translate('semantic_dialog.confirm_label')
                         },
                     ]
 
@@ -92,7 +92,7 @@
                     buttons: [
                         {
                             class: 'ui approve primary button',
-                            label: @$root.translate('semantic_dialog.confirm_label')
+                            label: @translate('semantic_dialog.confirm_label')
                         },
                     ]
 
@@ -100,8 +100,19 @@
             message: 'Empty'
             type: 'Empty'
             image: 'Empty'
-
         methods:
+            validateCalendar: ->
+                setTimeout =>
+                    range = [
+                        $('#interval_start').calendar('get date'),
+                        $('#interval_end').calendar('get date')
+                    ]
+                    # Just check if a date is selected
+                    if range[0] && range[1]
+                        @actions.calendar.buttons[1].class = 'ui approve primary button'
+                    else
+                        @actions.calendar.buttons[1].class = 'ui approve disabled button'
+                , 100
             handleMessage: (message) ->
                 @title = message.title
                 @message = message.message
@@ -129,6 +140,7 @@
                         $('#interval_start').calendar('set mode','day')
                         $('#interval_end').calendar('set date',message.end)
                         $('#interval_end').calendar('set mode','day')
+                        @validateCalendar()
 
                         $('.modal').modal({
                             observeChanges: true
