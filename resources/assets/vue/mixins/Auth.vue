@@ -16,8 +16,9 @@
 
             setUser: (payload) ->
                 sessionStorage.token = payload.token
-                @user = payload.user
-                bus.$emit 'user_changed', payload.user
+                if !@user or @user.name != payload.user.name
+                    @user = payload.user
+                    bus.$emit 'user_changed', payload.user
 
             clearUser: ->
                 sessionStorage.token = false
