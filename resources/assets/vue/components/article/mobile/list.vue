@@ -2,8 +2,8 @@
     div
         div.ui.top.attached.menu
             div.left.menu
-                search( ":search"="search" )
-            div.right.menu
+                search( ":search"="search" ":results"="countItems" )
+            div.right.menu.fitted.item
                 paginate(
                     ":offset"="offset"
                     ":total"="countItems"

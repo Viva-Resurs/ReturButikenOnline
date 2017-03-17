@@ -1,53 +1,55 @@
 <template lang="pug">
     div.ui.grid.equal.width
         div.column.mobile.only
-            div.ui.button.icon.item.dropdown#pagination( v-dropdown="" )
-                i.sticky.note.icon
-                div.menu
-                    div.header {{ translate('tool.pagination') }}
+            div.fitted.item
+                div.ui.buttons
+                    div.ui.button.large.item.icon.top.right.pointing.dropdown#pagination( v-dropdown="" )
+                        i.sticky.note.icon
+                        div.menu
+                            div.header {{ translate('tool.pagination') }}
 
-                    div.text.ui.item
-                        div.ui.grid.two.columns
-                            div.left.aligned.column
-                                p.middle.aligned {{ translate('page') }} {{currentPage}} / {{totalPages}}
-                            div.right.aligned.column
-                                div.ui.right.basic.compact.button.fluid.dropdown#limit( v-dropdown="" )
-                                    div.default.value {{ limit }}
-                                        i.dropdown.left.icon
-                                    div.left.menu
-                                        div.item(
-                                            v-for="option in limitOptions"
-                                            ":class"="(limit==option)?'active':''"
-                                            @click="change_limit(option)"
-                                            )
-                                            | {{ option }}
+                            div.text.ui.item
+                                div.ui.grid.two.columns
+                                    div.left.aligned.column
+                                        p.middle.aligned {{ translate('page') }} {{currentPage}} / {{totalPages}}
+                                    div.right.aligned.column
+                                        div.ui.right.basic.compact.button.fluid.dropdown#limit( v-dropdown="" )
+                                            div.default.value {{ limit }}
+                                                i.dropdown.left.icon
+                                            div.left.menu
+                                                div.item(
+                                                    v-for="option in limitOptions"
+                                                    ":class"="(limit==option)?'active':''"
+                                                    @click="change_limit(option)"
+                                                    )
+                                                    | {{ option }}
 
-                    div.ui.basic.compact.buttons.bottom.attached.fluid
-                        button.ui.button( @click="firstPage" )
-                            i.angle.double.left.icon
-                        button.ui.button( @click="prevPage" )
-                            i.angle.left.icon
-                        button.ui.button( @click="nextPage" )
-                            i.angle.right.icon
-                        button.ui.button( @click="lastPage" )
-                            i.angle.double.right.icon
+                            div.ui.basic.compact.buttons.bottom.attached.fluid
+                                button.ui.button( @click="firstPage" )
+                                    i.angle.double.left.icon
+                                button.ui.button( @click="prevPage" )
+                                    i.angle.left.icon
+                                button.ui.button( @click="nextPage" )
+                                    i.angle.right.icon
+                                button.ui.button( @click="lastPage" )
+                                    i.angle.double.right.icon
 
         div.column.tablet.only
-            div.right.menu
-                a.item( @click="firstPage" )
+            div.ui.buttons
+                button.ui.large.icon.right.item.button( @click="firstPage" )
                     i.angle.double.left.icon
-                a.item( @click="prevPage" )
+                button.ui.large.icon.right.item.button( @click="prevPage" )
                     i.angle.left.icon
-                div.item
+                button.ui.large.icon.right.item.button.disabled( style="line-height: 12px;" )
                     i {{ translate('page') }} {{currentPage}} / {{totalPages}}
-                a.item( @click="nextPage" )
+                button.ui.large.icon.right.item.button( @click="nextPage" )
                     i.angle.right.icon
-                a.item( @click="lastPage" )
+                button.ui.large.icon.right.item.button( @click="lastPage" )
                     i.angle.double.right.icon
-
-                div.ui.button.item.dropdown#limit( v-dropdown="" )
-                    div.default.value {{ limit }}
-                        i.dropdown.icon
+                div.ui.button.large.right.item.icon.top.left.pointing.dropdown#limit( v-dropdown="" )
+                    div.default.value( style="line-height: 12px;" )
+                        | {{ limit }} &nbsp;
+                    i.dropdown.icon
                     div.menu
                         div.item(
                             v-for="option in limitOptions"

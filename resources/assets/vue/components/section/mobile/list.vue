@@ -2,8 +2,8 @@
     div
         div.ui.top.attached.menu
             div.left.menu
-                search( ":search"="search" )
-            div.right.menu
+                search( ":search"="search" ":results"="countItems" )
+            div.right.menu.fitted.item
                 paginate(
                     ":offset"="offset"
                     ":total"="countItems"
@@ -13,18 +13,18 @@
                         ":order"="order"
                         ":desc"="desc"
                         ":columns"="['name','users']" )
+                    div.right.menu
+                        div.ui.buttons
+                            add.right.item.large.icon( from="sections" )
         div.ui.padded.grid
-            div.row( v-if="countItems==0 && !toolsBottom" )
-                div.ui.warning.message
-                    p {{ (items.length != 0) ? 'No results' : 'Empty' }}
-            div.row( v-if="countItems > 0 || toolsBottom" )
+            div.row
                 table.ui.very.basic.table.very.compact.unstackable
                     tbody( v-item="$route.hash.substr(1)" )
                         tr( v-for="(item, index) in itemsNew" )
                             td.slim
                                 div.ui.input.fluid
                                     input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
-                                    v-focus="" )                       
+                                    v-focus="" )
                             td
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
@@ -49,11 +49,6 @@
                             td.collapsing.bottom.aligned
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
-                        tr( v-if="toolsBottom")
-                            td
-                            td.right.aligned
-                                div.ui.icon.basic.buttons
-                                    component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(
                 v-if="limitOffBtn"
@@ -68,7 +63,6 @@
             'items'
             'itemsNew'
             'toolsRow'
-            'toolsBottom'
         ]
         mixins: [
             require '../../../mixins/Filters.vue'
@@ -77,6 +71,7 @@
             Search: require '../../tools/Search.vue'
             Paginate: require '../../tools/Paginate.vue'
             Sort: require '../../tools/Sort.vue'
+            Add: require '../../tools/Add.vue'
         data: ->
             order: 'name'
             desc: 1
