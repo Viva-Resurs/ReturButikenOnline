@@ -97,6 +97,9 @@
                     Vue.set a, 'selected', false
                 if article
                     Vue.set article, 'selected', true
+                    $('#articles').dropdown 'set selected', article.id
+                else
+                    $('#articles').dropdown 'restore placeholder text'
 
         mounted: ->
             # Select the first section avaiable

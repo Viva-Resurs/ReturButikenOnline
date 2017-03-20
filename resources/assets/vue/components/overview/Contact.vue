@@ -13,13 +13,13 @@
                 div.ui.small.label(
                     ":class"="contact.articles.length>0 ? 'black' : 'grey'" )
                     | {{ contact.articles.length }}
-            i.item( v-if="contacts.length==0" ) empty...
+            i.item( v-if="contacts.length==0" ) {{ translate('empty') }}
         div.ui.row.selection.dropdown.mobile.only#contacts(
             v-dropdown=""
             ":class"="contacts.length > 0 ? '' : 'disabled'" )
             input(type="hidden" name="contact_selection" )
             i.dropdown.icon
-            div.default.text Contacts
+            div.default.text {{ translate('contacts') }}
             div.class.menu
                 div.item(
                     v-for="contact in contacts"

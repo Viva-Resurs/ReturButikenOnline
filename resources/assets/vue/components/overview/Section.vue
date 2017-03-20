@@ -13,13 +13,13 @@
                 div.ui.small.label(
                     ":class"="section.contacts.length>0 ? 'black' : 'grey'" )
                     | {{ section.contacts.length }}
-            i.item( v-if="sections.length==0" ) empty...
+            i.item( v-if="sections.length==0" ) {{ translate('empty') }}
         div.ui.row.selection.dropdown.mobile.only#sections(
             v-dropdown=""
             ":class"="sections.length > 0 ? '' : 'disabled'" )
             input(type="hidden" name="section_selection" )
             i.dropdown.icon
-            div.default.text Section
+            div.default.text {{ translate('sections') }}
             div.class.menu
                 div.item(
                     v-for="section in sections"
