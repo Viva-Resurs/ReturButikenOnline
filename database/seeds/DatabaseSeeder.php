@@ -54,6 +54,8 @@ class UsersTableSeeder extends Seeder {
         $admin = User::create([
             'name'     => config('returbutiken.settings.users.administrator.username'),
             'email'    => config('returbutiken.settings.users.administrator.email'),
+            'fullname' => config('returbutiken.settings.users.administrator.fullname'),
+            'phone'    => config('returbutiken.settings.users.administrator.phone'),
             'password' => Hash::make(config('returbutiken.settings.users.administrator.password'))
         ]);
 

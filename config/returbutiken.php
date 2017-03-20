@@ -9,7 +9,9 @@ return [
         'users' => [
             'administrator' => [
                 'username' => 'admin',
-                'email'    => 'admin@viva.se',
+                'fullname' => 'The Admin',
+                'phone' => '12345',
+                'email'    => 'admin@example.org',
                 'password' => 'admin'
             ]
         ],
