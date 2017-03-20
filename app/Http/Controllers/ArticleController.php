@@ -21,12 +21,9 @@ class ArticleController extends Controller
 
         $user = Auth::user();
 
-        if (!$user)
-            abort(401,'Not allowed to list articles');
-
         $result = [];
         foreach (Article::all() as $article){
-            if ($user->hasRole('admin') || $user->inSection($article->sections))
+            if ($user && $user->hasRole('admin') || $user && $user->inSection($article->sections) || !$user && $article->public==1)
                 array_push($result,[
                     'id' => $article->id,
                     'name' => $article->name,
