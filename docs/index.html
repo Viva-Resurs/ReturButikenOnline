@@ -33,8 +33,8 @@
         <div class="four wide menu column">
             <div class="ui secondary fluid vertical menu">
                 <div class="item">
-                    <h5 class="ui dividing header">
-                        <div class="icon" id="back">
+                    <h5 class="ui header">
+                        <div class="icon" id="menu_back">
 
                         </div>
                         <div class="content">
@@ -43,10 +43,10 @@
                         </div>
                     </h5>
                 </div>
-                <div class="item" id="toc">
+                <div class="item" id="menu_toc">
 
                 </div>
-                <div class="item" id="lang">
+                <div class="item" id="menu_lang">
 
                 </div>
             </div>
@@ -103,7 +103,7 @@
                 }
 
                 // Add choices to menu
-                var menu_lang = document.getElementById('lang');
+                var menu_lang = document.getElementById('menu_lang');
                 menu_lang.innerHTML = "";
                 for (var lang_section in tree){
                     // Every language has a folder, dont use files
@@ -111,7 +111,7 @@
                         continue;
                     var a = document.createElement('a');
                         a.id = lang_section;
-                        a.classList.add('ui','button','button-default');
+                        a.classList.add('ui','button','tiny','basic');
                         if (lang_section == lang)
                             a.classList.add('active');
                         else
@@ -174,15 +174,16 @@
                 }
 
                 // Generate TOC and append it
-                var menu_toc = document.getElementById('toc');
+                var menu_toc = document.getElementById('menu_toc');
                 menu_toc.innerHTML = "";
-                menu_toc.appendChild(generateTOC(tree.en, lang+'/'));
+                menu_toc.appendChild(generateTOC(tree[lang], lang+'/'));
 
 
                 // Setup go back button
-                var menu_back = document.getElementById('back');
+                var menu_back = document.getElementById('menu_back');
+                menu_back.innerHTML = "";
                 var menu_back_btn = document.createElement('a');
-                    menu_back_btn.classList.add('ui','circular','button','button-default','icon');
+                    menu_back_btn.classList.add('ui','circular','button','grey','icon');
                     menu_back_btn.onclick = function(){
                         // Github pages? go to repo
                         if (location.href.indexOf('github')>0)
