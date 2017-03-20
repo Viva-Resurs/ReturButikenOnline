@@ -2,15 +2,15 @@
     div
         div.ui.equal.width.grid
             div.row.middle.aligned
-                div.column
+                div.column.six.wide
                     search( ":search"="search" ":results"="countItems" )
-                div.column
+                div.column.nine.wide
                     paginate(
                         ":offset"="offset"
                         ":total"="countItems"
                         ":show-pagination"="search==''" )
-                div.column.right.aligned
-                    add.item.icon( from="users" )
+                div.column.one.wide
+                    add.item.basic.icon( from="users" )
         div.ui.padded.grid
             div.row( v-if="countItems==0" )
                 div.ui.column.warning.message
