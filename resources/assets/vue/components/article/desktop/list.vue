@@ -38,7 +38,7 @@
                                     div.item {{ translate('public') }}
                                         i.icon( ":class" = "(order=='public') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
                             th.collapsing {{ translate('tools') }}
-                    tbody( v-item="$route.hash.substr(1)" )
+                    tbody( v-item="location && location.hash ? location.hash.substr(1) : ''" )
                         tr(
                             v-for="(item, index) in filterItems"
                             ":id"="item.id" )
@@ -90,7 +90,7 @@
             Add: require '../../tools/Add.vue'
         computed:
             from: ->
-                @$route.path.substring 1
+                if @$route && @$route.path then @$route.path.substring 1
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true

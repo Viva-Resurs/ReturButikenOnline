@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/butik', function () {
+    return view('butik');
+});
+
 Auth::routes();
 
 Route::group(['prefix' => 'api'], function () {

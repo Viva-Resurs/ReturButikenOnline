@@ -4,6 +4,8 @@
     "node": "^6.10.0"
   },
   "scripts": {
+    "build-butik": "cross-env NODE_ENV=production browserify -g envify -e resources/assets/js/butik.js | uglifyjs --compress warnings=false --mangle -o public/js/butik.js",
+    "watch-butik": "cross-env NODE_ENV=development watchify -vd -p browserify-hmr -g envify -e resources/assets/js/butik.js -o public/js/butik.js",
     "build-docs": "batch-showdown docs public/docs",
     "copy-docs-index": "ncp docs/index.html public/docs/index.html",
     "copy-docs-css": "ncp docs/github-markdown.css public/docs/github-markdown.css",

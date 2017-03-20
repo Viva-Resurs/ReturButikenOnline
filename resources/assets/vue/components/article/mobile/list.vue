@@ -63,7 +63,7 @@
             desc: 1
         computed:
             from: ->
-                @$route.path.substring 1
+                if @$route && @$route.path then @$route.path.substring 1
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
