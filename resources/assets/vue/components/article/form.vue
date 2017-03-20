@@ -100,7 +100,8 @@
                         user-card.fluid(
                             v-for="contact in article.contacts"
                             ":user"="contact"
-                            "detailed"="true" )
+                            "detailed"="true" 
+                            "type"="horizontal")                    
                 div.field( v-if="contacts.length>1" )
                     label {{ translate('article_form.choose_contact_label') }}
                     div.ui.fluid.selection.dropdown#contact(
