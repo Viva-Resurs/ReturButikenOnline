@@ -22,10 +22,10 @@
             $(el).on 'removed', (e, arg, cb) ->
                 if !arg
                     return
-                $('#'+arg).transition(
-                    animation : 'fade'
-                    onStart : ->
-                        @classList.add 'negative'
-                    onComplete : cb
-                )
+                $('#'+arg).each ->
+                    $(this).transition
+                        animation : 'fade'
+                        onStart : ->
+                            @classList.add 'negative'
+                        onComplete : cb
 </script>
