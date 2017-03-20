@@ -43,22 +43,23 @@ require('semantic-ui-calendar/dist/calendar.js');
 window.Vue = require('vue');
 require('vue-resource');
 
-/**
- * Vue-Router
- */
-window.VueRouter = require('vue-router');
-window.Vue.use(VueRouter);
+if (process.env.BUILD == "gui"){
+    /**
+     * Vue-Router
+     */
+    window.VueRouter = require('vue-router');
+    window.Vue.use(VueRouter);
 
-/**
- * We'll register a HTTP interceptor to attach the "CSRF" header to each of
- * the outgoing requests issued by this application. The CSRF middleware
- * included with Laravel will automatically verify the header's value.
- */
-
-Vue.http.interceptors.push(function(request, next){
-    request.headers['X-CSRF-TOKEN'] = sessionStorage.token;
-    next();
-});
+    /**
+     * We'll register a HTTP interceptor to attach the "CSRF" header to each of
+     * the outgoing requests issued by this application. The CSRF middleware
+     * included with Laravel will automatically verify the header's value.
+     */
+    Vue.http.interceptors.push(function(request, next){
+        request.headers['X-CSRF-TOKEN'] = sessionStorage.token;
+        next();
+    });
+}
 
 /**
  * This will try to parse every response.data into JSON if not done allready.
