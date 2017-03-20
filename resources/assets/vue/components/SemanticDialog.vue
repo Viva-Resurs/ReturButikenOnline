@@ -44,7 +44,7 @@
                     buttons: [
                         {
                             class: 'ui deny primary button',
-                            label: @translate('semantic_dialog.close_label')
+                            label: @$root.translate('semantic_dialog.close_label')
                         },
                     ]
 
@@ -54,7 +54,7 @@
                     buttons: [
                         {
                             class: 'ui deny red button',
-                            label: @translate('semantic_dialog.close_label')
+                            label: @$root.translate('semantic_dialog.close_label')
                         },
                     ]
 
@@ -64,11 +64,11 @@
                     buttons: [
                         {
                             class: 'ui deny button',
-                            label: @translate('semantic_dialog.abort_label')
+                            label: @$root.translate('semantic_dialog.abort_label')
                         },
                         {
                             class: 'ui approve primary button',
-                            label: @translate('semantic_dialog.confirm_label')
+                            label: @$root.translate('semantic_dialog.confirm_label')
                         },
                     ]
 
@@ -78,11 +78,11 @@
                     buttons: [
                         {
                             class: 'ui deny button',
-                            label: @translate('semantic_dialog.abort_label')
+                            label: @$root.translate('semantic_dialog.abort_label')
                         },
                         {
                             class: 'ui approve primary button',
-                            label: @translate('semantic_dialog.confirm_label')
+                            label: @$root.translate('semantic_dialog.confirm_label')
                         },
                     ]
 
@@ -92,7 +92,7 @@
                     buttons: [
                         {
                             class: 'ui approve primary button',
-                            label: @translate('semantic_dialog.confirm_label')
+                            label: @$root.translate('semantic_dialog.confirm_label')
                         },
                     ]
 
