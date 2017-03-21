@@ -17,10 +17,10 @@
                         div.ui.buttons
                             add.right.item.large.icon( from="sections" )
         div.ui.padded.grid
-            div.row( v-if="countItems==0" )
+            div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message
                     p {{ (search!='') ? translate('no_results') : translate('empty') }}
-            div.row( v-if="countItems > 0" )
+            div.row( v-if="countItems > 0 || itemsNew.length > 0" )
                 table.ui.very.basic.table.very.compact.unstackable
                     tbody( v-item="$route.hash.substr(1)" )
                         tr( v-for="(item, index) in itemsNew" )
@@ -28,7 +28,7 @@
                                 div.ui.input.fluid
                                     input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
                                     v-focus="" )
-                            td
+                            td.collapsing.bottom.aligned
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
                         tr(

@@ -17,10 +17,10 @@
                         div.ui.buttons
                             add.right.item.large.icon( from="users" )
         div.ui.padded.grid
-            div.row( v-if="countItems==0" )
+            div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message
                     p {{ (search!='') ? translate('no_results') : translate('empty') }}
-            div.row( v-if="countItems > 0" )
+            div.row( v-if="countItems > 0 || itemsNew.length > 0" )
                 table.ui.very.basic.table.very.compact.unstackable
                     tbody( v-item="$route.hash.substr(1)" )
                         tr( v-for="(item, index) in itemsNew" )

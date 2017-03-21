@@ -12,10 +12,10 @@
                 div.column.one.wide
                     add.item.basic.icon( from="users" )
         div.ui.padded.grid
-            div.row( v-if="countItems==0" )
+            div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message
                     p {{ (search!='') ? translate('no_results') : translate('empty') }}
-            div.row( v-if="countItems > 0" )
+            div.row( v-if="countItems > 0 || itemsNew.length > 0" )
                 table.ui.very.compact.celled.table.unstackable
                     thead
                         tr
