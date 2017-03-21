@@ -3,7 +3,7 @@ This project is under development!
 
 ### Documentation
 
-[Go to documentation](http://returbutikenonline.dev/docs/).
+[Go to documentation](http://returbutikenonline.herokuapp.com/public/docs/).
 
 ### Live test page
 
