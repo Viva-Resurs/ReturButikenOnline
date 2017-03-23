@@ -2,26 +2,23 @@
     module.exports =
         name: 'ScreenSize'
         data: ->
-            screensize: 'none'
+            screentype: 'none'
         methods:
             WidthChange: (mq, type) ->
                 if (mq.matches)                    
-                    @screensize = type                    
+                    @screentype = type                    
                 
-        mounted: ->            
-            self = this;
-            mobileMq = window.matchMedia("(max-width: 767px)")            
-            mobileMq.addListener( -> 
-                self.WidthChange(this, "mobile")
-                )
+            InitAndAddListener: (query, type) ->
+                self = this;
+                mq = window.matchMedia(query)
+                if (mq.matches)
+                    @screentype = type;
+                mq.addListener( -> 
+                    self.WidthChange(this, type)
+                    )
 
-            tabletMq = window.matchMedia("(min-width: 768px) and (max-width: 991px)")            
-            tabletMq.addListener( -> 
-                self.WidthChange(this, "tablet")
-                )
-                
-            desktopMq = window.matchMedia("(min-width: 992px)")            
-            desktopMq.addListener( -> 
-                self.WidthChange(this, "desktop")
-                )           
+        mounted: ->            
+            @InitAndAddListener("(max-width: 767px)", "mobile")
+            @InitAndAddListener("(min-width: 768px) and (max-width: 991px)", "tablet")
+            @InitAndAddListener("(min-width: 992px)", "desktop")
 </script>
