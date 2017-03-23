@@ -3,29 +3,24 @@
         name: 'ScreenSize'
         data: ->
             screensize: 'none'
-            screensizes: 
-                mobile: "(max-width: 767px)"
-                tablet: "(min-width: 768px) and (max-width: 991px)"
-                desktop: "(min-width: 992px)"
-                    
         methods:
             WidthChange: (mq, type) ->
                 if (mq.matches)                    
-                    @screensize = type
+                    @screensize = type                    
                 
         mounted: ->            
             self = this;
-            mobileMq = window.matchMedia(@screensizes.mobile)            
+            mobileMq = window.matchMedia("(max-width: 767px)")            
             mobileMq.addListener( -> 
                 self.WidthChange(this, "mobile")
                 )
 
-            tabletMq = window.matchMedia(@screensizes.tablet)            
+            tabletMq = window.matchMedia("(min-width: 768px) and (max-width: 991px)")            
             tabletMq.addListener( -> 
                 self.WidthChange(this, "tablet")
                 )
                 
-            desktopMq = window.matchMedia(@screensizes.desktop)            
+            desktopMq = window.matchMedia("(min-width: 992px)")            
             desktopMq.addListener( -> 
                 self.WidthChange(this, "desktop")
                 )           
