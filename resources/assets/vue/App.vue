@@ -26,6 +26,7 @@
     # Define global mixins
     Vue.mixin require './mixins/GoBack.vue'
     Vue.mixin require './mixins/Translation.vue'
+    Vue.mixin require './mixins/ScreenSize.vue'
 
     # Export the root-instance options
     module.exports =
@@ -41,7 +42,7 @@
             require './mixins/ErrorHandler.vue'
             require './mixins/SuccessHandler.vue'
             require './mixins/ArticleNumber.vue'
-            require './mixins/LangChoice.vue'
+            require './mixins/LangChoice.vue'            
         ]
 
         data: ->
