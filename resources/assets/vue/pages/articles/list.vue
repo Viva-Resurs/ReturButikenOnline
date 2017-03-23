@@ -4,7 +4,8 @@
         div.ui.grid.one.column( v-else="" )
             div.column
                 div.ui.dividing.header.fluid {{ translate('article.header') }}
-            article-desktop-list.column.computer.only(
+            article-desktop-list.column(
+                v-if="screenType == 'desktop'"
                 ":toolsRow"=`[
                       $options.components.PublishInterval,
                       $options.components.BiddingInterval,
@@ -13,7 +14,8 @@
                       $options.components.Remove
                     ]`
                 ":items"="items" )
-            article-mobile-list.column.mobile.tablet.only(
+            article-mobile-list.column(
+                v-if="(screenType == 'mobile') || (screenType == 'tablet')"
                 ":toolsRow"=`[
                       $options.components.PublishInterval,
                       $options.components.BiddingInterval,

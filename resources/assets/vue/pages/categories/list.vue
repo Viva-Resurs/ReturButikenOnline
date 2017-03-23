@@ -5,7 +5,7 @@
             div.column
                 div.ui.dividing.header.fluid {{ translate('category.header') }}
             category-desktop-list.column( 
-                v-if="screentype == 'desktop'"
+                v-if="screenType == 'desktop'"
                 ":toolsRow"=`[
                     $options.components.Edit,
                     $options.components.Save,
@@ -15,7 +15,7 @@
                 ":items"="items"
                 ":itemsNew"="itemsNew" )
             category-mobile-list.column(
-                v-if="(screentype == 'mobile') || (screentype == 'tablet')"
+                v-if="(screenType == 'mobile') || (screenType == 'tablet')"
                 ":toolsRow"=`[
                     $options.components.Edit,
                     $options.components.Save,

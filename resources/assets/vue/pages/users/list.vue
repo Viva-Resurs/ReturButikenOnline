@@ -4,13 +4,15 @@
         div.ui.grid.one.column( v-else="" )
             div.column
                 div.ui.dividing.header.fluid {{ translate('user.header') }}
-            user-desktop-list.column.computer.only(
+            user-desktop-list.column(
+                v-if="screenType == 'desktop'"
                 ":toolsRow"=`[
                     $options.components.Edit,
                     $options.components.Remove
                 ]`
                 ":items"="items" )
-            user-mobile-list.column.mobile.tablet.only(
+            user-mobile-list.column(
+                v-if="(screenType == 'mobile') || (screenType == 'tablet')"
                 ":toolsRow"=`[
                     $options.components.Edit,
                     $options.components.Remove

@@ -2,14 +2,14 @@
     div
         div.ui.equal.width.grid
             div.row.middle.aligned
-                div.column.six.wide
+                div.column.four.wide
                     search( ":search"="search" ":results"="countItems" )
-                div.column.nine.wide
+                div.column.ten.wide
                     paginate(
                         ":offset"="offset"
                         ":total"="countItems"
                         ":show-pagination"="search==''" )
-                div.column.one.wide
+                div.column.two.wide.right.floated.right.aligned
                     add.item.basic.icon( from="categories" )
         div.ui.padded.grid
             div.row( v-if="countItems == 0 && itemsNew.length == 0" )

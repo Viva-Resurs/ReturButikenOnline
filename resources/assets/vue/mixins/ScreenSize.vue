@@ -2,19 +2,19 @@
     module.exports =
         name: 'ScreenSize'
         data: ->
-            screentype: 'none'
+            screenType: 'none'
         methods:
             widthChange: (mq, type) ->
                 if mq.matches                    
-                    @screentype = type                    
+                    @screenType = type                    
                 
             initAndAddListener: (query, type) ->
                 self = this;
                 mq = window.matchMedia query
                 if mq.matches
-                    @screentype = type
+                    @screenType = type
                 mq.addListener -> 
-                    self.WidthChange this, type
+                    self.widthChange this, type
                     
         mounted: ->            
             @initAndAddListener "(max-width: 767px)", "mobile"
