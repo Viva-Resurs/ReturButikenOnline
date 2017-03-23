@@ -4,7 +4,8 @@
         div.ui.grid.one.column( v-else="" )
             div.column
                 div.ui.dividing.header.fluid {{ translate('category.header') }}
-            category-desktop-list.column.computer.only(
+            category-desktop-list.column( 
+                v-if="screentype == 'desktop'"
                 ":toolsRow"=`[
                     $options.components.Edit,
                     $options.components.Save,
@@ -13,7 +14,8 @@
                 ]`
                 ":items"="items"
                 ":itemsNew"="itemsNew" )
-            category-mobile-list.column.mobile.tablet.only(
+            category-mobile-list.column(
+                v-if="(screentype == 'mobile') || (screentype == 'tablet')"
                 ":toolsRow"=`[
                     $options.components.Edit,
                     $options.components.Save,
@@ -109,7 +111,7 @@
                 )
 
         created: ->
-            @getCategories()
+            @getCategories()                       
             bus.$on 'categories_item_add', => @addItem()
             bus.$on 'categories_item_edit', (item) => @editItem item
             bus.$on 'categories_item_revert', (item) => @revertItem item
