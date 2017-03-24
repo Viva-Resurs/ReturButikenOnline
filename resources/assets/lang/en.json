@@ -30,9 +30,9 @@
         "images_label": "Pictures:",
         "choose_date": "Select date",
         "publish_interval_label": "Publish within dateinterval",
-        "publish_interval_header": "Publishinterval",
+        "publish_interval_header": "Publish interval",
         "bidding_interval_label": "Activate bidding",
-        "bidding_interval_header": "Biddinginterval",
+        "bidding_interval_header": "Bidding interval",
         "public_intra_label": "Municipal publishing",
         "public_all_label": "Publish for all",
         "contact_label": "Contact:",
@@ -49,8 +49,8 @@
         "created_at_label": "Published",
         "article_number_label": "Articlenr:",
         "publish_info_header": "Publish information",
-        "publish_interval_header": "Publishinterval",
-        "bidding_interval_header": "Biddinginterval",
+        "publish_interval_header": "Publish interval",
+        "bidding_interval_header": "Bidding interval",
         "not_published": "The Article is missing a publish and bidding interval",
         "published_for_header": "Published for",
         "published_all": "All",
@@ -85,14 +85,15 @@
         "categories_header": "Categories",
         "images_header": "Pictures",
         "published_all": "Published for all",
-        "published_intra": "Published municipally"
+        "published_intra": "Published municipally",
+        "bidding_not_set": "No bidding interval is set"
     },
     "semantic_dialog": {
         "start_date_header": "Start date",
         "end_date_header": "End date",
         "close_label": "Close",
         "abort_label": "Abort",
-        "confirm_label": "Ok",
+        "confirm_label": "Ok"
     },
     "article_list":{
         "published_all": "Published for all",
@@ -101,7 +102,8 @@
         "remove_article_message": "Sure you want to remove the article?",
         "article_removed": "Article removed",
         "article_updated": "Article updated",
-        "success_message": "Success:"
+        "success_message": "Success:",
+        "bidding_interval": "Bidding interval"
     },
     "user_list": {
         "remove_user_title": "Remove user: ",
@@ -124,7 +126,7 @@
     },
     "display_interval":{
         "start": "Start:",
-        "end": "End:",
+        "end": "End:"
     },
     "goto":{
         "sections": "Go to sections",
@@ -136,7 +138,7 @@
         "my_articles": "My articles",
         "welcome": "Welcome",
         "welcome_info": "You are now logged into ReturButikenOnline!",
-        "welcome_help": "Do you need help?",
+        "welcome_help": "Do you need help?"
     },
     "nav": {
         "menu": "Menu",

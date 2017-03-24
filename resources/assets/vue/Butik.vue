@@ -4,24 +4,12 @@
             loading( v-if="$root.loading" )
             div.ui.grid.one.column( v-else="" )
                 div.column
-                    div.ui.dividing.header.fluid {{ translate('article.header') }}
-                article-desktop-list.column.computer.only(
-                    ":toolsRow"=`[
-                          $options.components.PublishInterval,
-                          $options.components.BiddingInterval,
-                          $options.components.Preview,
-                          $options.components.Edit,
-                          $options.components.Remove
-                        ]`
+                    div.ui.dividing.header.fluid Shop
+                shop-desktop-list.column(
+                    v-if="screenType == 'desktop'"
                     ":items"="items" )
-                article-mobile-list.column.mobile.tablet.only(
-                    ":toolsRow"=`[
-                          $options.components.PublishInterval,
-                          $options.components.BiddingInterval,
-                          $options.components.Preview,
-                          $options.components.Edit,
-                          $options.components.Remove
-                        ]`
+                shop-mobile-list.column(
+                    v-if="(screenType == 'mobile') || (screenType == 'tablet')"
                     ":items"="items" )
         footer-component( ":lang"="settings.lang" ":language_lib"="language_lib" )
 </template>
@@ -45,14 +33,15 @@
     # Define global mixins
     Vue.mixin require './mixins/GoBack.vue'
     Vue.mixin require './mixins/Translation.vue'
+    Vue.mixin require './mixins/ScreenSize.vue'
 
     # Export the root-instance options
     module.exports =
         name: 'Butik'
 
         components:
-            ArticleDesktopList: require './components/article/desktop/list.vue'
-            ArticleMobileList: require './components/article/mobile/list.vue'
+            ShopDesktopList: require './components/shop/desktop/list.vue'
+            ShopMobileList: require './components/shop/mobile/list.vue'
             FooterComponent: require './components/Footer.vue'
 
         mixins: [

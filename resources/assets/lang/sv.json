@@ -85,14 +85,15 @@
         "categories_header": "Kategorier",
         "images_header": "Bilder",
         "published_all": "Publicerad för allmänheten",
-        "published_intra": "Publicerad på kommunens intranät"
+        "published_intra": "Publicerad på kommunens intranät",
+        "bidding_not_set": "Inget budgivningsintervall är satt"
     },
     "semantic_dialog": {
         "start_date_header": "Startdatum",
         "end_date_header": "Slutdatum",
         "close_label": "Stäng",
         "abort_label": "Avbryt",
-        "confirm_label": "Ok",
+        "confirm_label": "Ok"
     },
     "section_list": {
         "remove_section_title": "Tar bort avdelning: ",
@@ -108,7 +109,8 @@
         "remove_article_message": "Är du säker på att du vill ta bort artikeln?",
         "article_removed": "Artikel borttagen",
         "article_updated": "Artikel uppdaterad",
-        "success_message": "Utförd:"
+        "success_message": "Utförd:",
+        "bidding_interval": "Budgivningsintervall"
     },
     "user_list": {
         "remove_user_title": "Tar bort användare: ",
@@ -124,7 +126,7 @@
     },
     "display_interval":{
         "start": "Startar:",
-        "end": "Slutar:",
+        "end": "Slutar:"
     },
     "goto":{
         "sections": "Gå till avdelningar",
