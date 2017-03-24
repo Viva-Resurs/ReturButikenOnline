@@ -82,9 +82,10 @@
         "description_header": "Description",
         "price_header": "Price",
         "price_currency": "SEK",
+        "categories_header": "Categories",
         "images_header": "Pictures",
         "published_all": "Published for all",
-        "published_intra": "Published municipal"
+        "published_intra": "Published municipally"
     },
     "semantic_dialog": {
         "start_date_header": "Start date",
@@ -95,7 +96,7 @@
     },
     "article_list":{
         "published_all": "Published for all",
-        "published_intra": "Published municipal",
+        "published_intra": "Published municipally",
         "remove_article_title": "Remove article: ",
         "remove_article_message": "Sure you want to remove the article?",
         "article_removed": "Article removed",

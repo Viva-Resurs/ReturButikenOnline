@@ -82,6 +82,7 @@
         "description_header": "Beskrivning",
         "price_header": "Pris",
         "price_currency": "kr",
+        "categories_header": "Kategorier",
         "images_header": "Bilder",
         "published_all": "Publicerad för allmänheten",
         "published_intra": "Publicerad på kommunens intranät"
