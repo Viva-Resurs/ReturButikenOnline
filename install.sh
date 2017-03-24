@@ -8,9 +8,9 @@ curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 
 # Start to install packages
 sudo apt-get install apache2
-sudo apt-get install php
+sudo apt-get install php7.0
 sudo apt-get install libapache2-mod-php
-sudo apt-get install php-gd php-sqlite php7.0-mbstring php-xml
+sudo apt-get install php7.0-gd php7.0-sqlite php7.0-mbstring php-xml
 sudo apt-get install git
 sudo apt-get install nodejs
 
