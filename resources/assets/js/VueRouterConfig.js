@@ -5,7 +5,7 @@ module.exports = {
 
     routes : [
         {
-            path: '/',
+            path: '/ui/',
             component: require('../vue/pages/Overview.vue'),
             meta: {  },
             children: [
@@ -16,11 +16,11 @@ module.exports = {
             ]
         },
         {
-            path: '/auth/login',
+            path: '/ui/auth/login',
             component: require('../vue/pages/auth/login.vue')
         },
         {
-            path: '/articles',
+            path: '/ui/articles',
             component: require('../vue/pages/Articles.vue'),
             meta: { requiresAuth: true },
             children: [
@@ -39,7 +39,7 @@ module.exports = {
             ]
         },
         {
-            path: '/categories',
+            path: '/ui/categories',
             component: require('../vue/pages/Categories.vue'),
             meta: { requiresAuth: true },
             children: [
@@ -50,7 +50,7 @@ module.exports = {
             ]
         },
         {
-            path: '/sections',
+            path: '/ui/sections',
             component: require('../vue/pages/Sections.vue'),
             meta: { requiresAuth: true },
             children: [
@@ -61,7 +61,7 @@ module.exports = {
             ]
         },
         {
-            path: '/users',
+            path: '/ui/users',
             component: require('../vue/pages/Users.vue'),
             meta: { requiresAuth: true },
             children: [
@@ -84,7 +84,7 @@ module.exports = {
             ]
         },
         {
-            path: '/:artnr',
+            path: '/ui/:artnr',
             component: require('../vue/pages/articles/show.vue'),
         },
         {

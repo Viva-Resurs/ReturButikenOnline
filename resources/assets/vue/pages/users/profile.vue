@@ -7,7 +7,7 @@
         name: 'ProfileRedirect'
         methods:
             goToUpdate: ->
-                @$router.push path: '/users/'+@$root.user.id
+                @$router.push path: '/ui/users/'+@$root.user.id
         created: ->
             # Check if User is ready or wait
             if @$root.user

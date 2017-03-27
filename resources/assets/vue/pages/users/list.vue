@@ -58,9 +58,9 @@
                 )
         created: ->
             @getUsers()
-            bus.$on 'users_item_add', => @$router.push path: '/users/create'
+            bus.$on 'users_item_add', => @$router.push path: '/ui/users/create'
             bus.$on 'users_item_remove', (item) => @attemptRemove item
-            bus.$on 'users_item_edit', (item) => @$router.push path: '/users/'+item.id
+            bus.$on 'users_item_edit', (item) => @$router.push path: '/ui/users/'+item.id
         beforeDestroy: ->
             bus.$off 'users_item_add'
             bus.$off 'users_item_edit'

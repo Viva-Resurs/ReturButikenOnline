@@ -12,11 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('butik');
 });
 
-Route::get('/butik', function () {
-    return view('butik');
+Route::get('/admin', function () {
+    return view('ui');
 });
 
 Auth::routes();
@@ -48,5 +48,5 @@ Route::group(['prefix' => 'api'], function () {
 
 // Let index handle further routing
 Route::any( '{catchall}', function ( $page ) {
-    return view('index');
+    return view('ui');
 } )->where('catchall', '(.*)');

@@ -50,7 +50,7 @@
             createArticle: (article) ->
                 @$http.post('api/articles', article).then(
                     (response) =>
-                        @$router.push path: '/articles'
+                        @$router.push path: '/ui/articles'
                     (response) =>
                         bus.$emit 'error', response.data
                 )

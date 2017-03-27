@@ -64,15 +64,15 @@
 
                 # Go to login-page if unauthorized, else home
                 if mode == 'unauthorized'
-                    @$router.push path: '/auth/login'
+                    @$router.push path: '/ui/auth/login'
                 else
-                    @$router.push path: '/'
+                    @$router.push path: '/ui/'
 
         created: ->
             @getUser()
             bus.$on 'login_ok', (response) =>
                 @getUser()
-                @$router.push path: '/'
+                @$router.push path: '/ui/'
         beforeDestroy: ->
             bus.$off 'login_ok'
 </script>

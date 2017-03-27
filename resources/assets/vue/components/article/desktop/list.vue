@@ -89,8 +89,6 @@
             Sort: require '../../tools/Sort.vue'
             Add: require '../../tools/Add.vue'
         computed:
-            from: ->
-                if @$route && @$route.path then @$route.path.substring 1
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true

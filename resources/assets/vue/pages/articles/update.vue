@@ -56,7 +56,7 @@
             updateArticle: (article) ->
                 @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
-                        @$router.push path: '/articles'
+                        @$router.push path: '/ui/articles'
                     (response) =>
                         bus.$emit 'error', response.data
                 )

@@ -21,7 +21,7 @@
             div.row( v-if="countItems > 0" )
                 article-card(
                     v-for="(item, index) in filterItems"
-                    ":item"="item"      
+                    ":item"="item"
                     ":from"="from"
                     )
 
@@ -58,8 +58,6 @@
             order: 'updated_at'
             desc: 1
         computed:
-            from: ->
-                if @$route && @$route.path then @$route.path.substring 1
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true

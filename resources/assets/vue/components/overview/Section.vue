@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.grid.padded
         div.ui.vertical.fluid.compact.menu.computer.tablet.only.row#section_menu
-            router-link.item.header( to="/sections" )
+            router-link.item.header( to="/ui/sections" )
                 | {{ translate('section.header') }}
                 i.icon.external.square(
                     v-tooltip = ""

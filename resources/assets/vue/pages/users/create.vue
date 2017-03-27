@@ -45,7 +45,7 @@
                         bus.$emit 'success',
                             title: 'Success'
                             details: 'User created'
-                        @$router.push path: '/users'
+                        @$router.push path: '/ui/users'
                     (response) => bus.$emit 'error', response.data
                 )
         created: ->

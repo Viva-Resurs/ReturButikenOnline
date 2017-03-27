@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.grid.padded
         div.ui.vertical.fluid.compact.menu.computer.tablet.only.row
-            router-link.item.header( to="/users" )
+            router-link.item.header( to="/ui/users" )
                 | {{ translate('contacts') }}
                 i.icon.external.square(
                     v-tooltip = ""

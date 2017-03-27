@@ -91,9 +91,9 @@
             bus.$on 'articles_item_preview', (item) => @previewArticle item
             bus.$on 'articles_item_changed', (payload) => @attemptUpdate payload
             bus.$on 'articles_item_edit', (item) =>
-                @$router.push path: '/articles/'+item.id
+                @$router.push path: '/ui/articles/'+item.id
             bus.$on 'articles_item_add', =>
-                @$router.push path: '/articles/create'
+                @$router.push path: '/ui/articles/create'
             bus.$on 'publish_interval_changed', (id, new_value) =>
                 for item in @items
                     if Number(item.id) == Number(id)
