@@ -88,7 +88,7 @@
 
             attemptRemove: (section) ->
                 bus.$emit 'show_message',
-                    title: @$root.translate('section_list.remove_section_title') + "''"+section.name+"''."
+                    title: @$root.translate('section_list.remove_section_title') + " \""+section.name+"\""
                     message: @$root.translate('section_list.remove_section_message')
                     type:'confirm'
                     cb: => @removeSection section

@@ -102,19 +102,22 @@
         "remove_article_message": "Sure you want to remove the article?",
         "article_removed": "Article removed",
         "article_updated": "Article updated",
-        "success_message": "Success:",
+        "success_message": "Success",
         "bidding_interval": "Bidding interval"
     },
     "user_list": {
-        "remove_user_title": "Remove user: ",
-        "remove_user_message": "Sure you want to remove this user?"
+        "remove_user_title": "Remove user",
+        "remove_user_message": "Sure you want to remove this user?",
+        "user_removed": "User removed",
+        "user_created": "User created",
+        "success_message": "Success"
     },
     "section_list": {
-        "remove_section_title": "Removing section: ",
+        "remove_section_title": "Remove section",
         "remove_section_message": "Sure you want to remove this section?",
         "section_removed": "Section removed",
         "section_updated": "Section updated",
-        "success_message": "Success:"
+        "success_message": "Success"
     },
     "publish_interval":{
         "select_date_title": "Select publish interval:",
