@@ -43,8 +43,8 @@
                 @$http.post('api/users', user).then(
                     (response) =>
                         bus.$emit 'success',
-                            title: 'Success'
-                            details: 'User created'
+                            title: @$root.translate('user_list.success_message')
+                            details: @$root.translate('user_list.user_created')
                         @$router.push path: '/ui/users'
                     (response) => bus.$emit 'error', response.data
                 )

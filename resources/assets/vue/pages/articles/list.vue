@@ -43,7 +43,7 @@
         methods:
             attemptRemove: (article) ->
                 bus.$emit 'show_message',
-                    title: @$root.translate('article_list.remove_article_title') + "''"+article.name+"''."
+                    title: @$root.translate('article_list.remove_article_title') + " \""+article.name+"\""
                     message: @$root.translate('article_list.remove_article_message')
                     type:'confirm'
                     cb: => @removeArticle article

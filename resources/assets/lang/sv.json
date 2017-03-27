@@ -99,11 +99,11 @@
         "confirm_label": "Ok"
     },
     "section_list": {
-        "remove_section_title": "Tar bort avdelning: ",
+        "remove_section_title": "Ta bort avdelning",
         "remove_section_message": "Är du säker på att du vill ta bort avdelningen?",
         "section_removed": "Avdelning borttagen",
         "section_updated": "Avdelning uppdaterad",
-        "success_message": "Utförd:"
+        "success_message": "Utfört"
     },
     "article_list":{
         "published_all": "Publicerad för allmänheten",
@@ -112,12 +112,15 @@
         "remove_article_message": "Är du säker på att du vill ta bort artikeln?",
         "article_removed": "Artikel borttagen",
         "article_updated": "Artikel uppdaterad",
-        "success_message": "Utförd:",
+        "success_message": "Utfört",
         "bidding_interval": "Budgivningsintervall"
     },
     "user_list": {
-        "remove_user_title": "Tar bort användare: ",
-        "remove_user_message": "Är du säker på att du vill ta bort denna användare?"
+        "remove_user_title": "Ta bort användare",
+        "remove_user_message": "Är du säker på att du vill ta bort denna användare?",
+        "user_removed": "Användare borttagen",
+        "user_created": "Användare skapad",
+        "success_message": "Utfört"
     },
     "publish_interval":{
         "select_date_title": "Välj publiceringsintervall:",

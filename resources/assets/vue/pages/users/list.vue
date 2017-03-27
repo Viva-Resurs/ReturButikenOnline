@@ -33,7 +33,7 @@
         methods:
             attemptRemove: (user) ->
                 bus.$emit 'show_message',
-                    title: @$root.translate('user_list.remove_user_title') + "''"+user.name+"''."
+                    title: @$root.translate('user_list.remove_user_title') + " \""+user.name+"\""
                     message: @$root.translate('user_list.remove_user_message')
                     type: 'confirm'
                     cb: => @removeUser user
@@ -41,8 +41,8 @@
                 @$http.delete('api/users/'+user.id).then(
                     (response) =>
                         bus.$emit 'success',
-                            title: 'Success'
-                            details: 'User removed'
+                            title: @$root.translate('user_list.success_message')
+                            details: @$root.translate('user_list.user_removed')
                         Vue.set user, 'removed', true
                     (response) => bus.$emit 'error', response.data
                 )
