@@ -11,6 +11,9 @@
     "category": {
         "header": "Categories"
     },
+    "shop": {
+        "header": "Returbutiken online"
+    },
     "article": {
         "header": "Articles",
         "add": "Add article",
@@ -166,6 +169,7 @@
     "public": "Public",
     "users": "Users",
     "sections": "Sections",
+    "not_set": "Missing",
     "tools": "Tools",
     "tool": {
         "edit": "Edit",

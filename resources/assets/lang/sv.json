@@ -11,6 +11,9 @@
     "category": {
         "header": "Kategorier"
     },
+    "shop": {
+        "header": "Returbutiken online"
+    },
     "article": {
         "header": "Artiklar",
         "add": "Lägg till vara",
@@ -166,6 +169,7 @@
     "public": "Allmän",
     "users": "Användare",
     "sections": "Avdelningar",
+    "not_set": "Saknas",
     "tools": "Verktyg",
     "tool": {
         "edit": "Redigera",

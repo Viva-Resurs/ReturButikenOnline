@@ -4,7 +4,7 @@
             loading( v-if="$root.loading" )
             div.ui.grid.one.column( v-else="" )
                 div.column
-                    div.ui.dividing.header.fluid Shop
+                    div.ui.dividing.header.fluid {{ translate('shop.header') }}
                 shop-desktop-list.column(
                     v-if="screenType == 'desktop'"
                     ":items"="items" )
