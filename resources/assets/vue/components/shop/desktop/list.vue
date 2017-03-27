@@ -55,7 +55,7 @@
                                     | {{post.name}}
                                     span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}                                    
                             td.collapsing
-                                span {{ item.bidding_interval }}
+                                span {{ biddingFormatted(item) }} 
 
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(
@@ -66,7 +66,7 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'ItemGrid'
+        name: 'Shop'
         props: [
             'items'
         ]
@@ -91,11 +91,16 @@
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','desc','categories']
                     .length
+           
         methods:
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
             
             previewItem: (item) ->
                 window.location.href = @$root.encodeArtNR (item)
-                
+
+            biddingFormatted: (item)->
+                item.bidding_interval.split("|")[0] + " - " + item.bidding_interval.split("|")[1]
+        
+
 </script>

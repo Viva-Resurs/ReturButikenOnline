@@ -48,7 +48,7 @@
             require './mixins/ErrorHandler.vue'
             require './mixins/SuccessHandler.vue'
             require './mixins/ArticleNumber.vue'
-            require './mixins/LangChoice.vue'
+            require './mixins/LangChoice.vue'   
         ]
 
         data: ->
@@ -61,7 +61,7 @@
         methods:
             getArticles: ->
                 @$root.loading = true
-                @$http.get('api/articles').then(
+                @$http.get('api/shop').then(
                     (response) =>
                         @items = response.data
                         @$root.loading = false
@@ -69,7 +69,7 @@
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
-
+    
         created: ->
             # Set and log a reference
             if process.env.NODE_ENV == "development"
