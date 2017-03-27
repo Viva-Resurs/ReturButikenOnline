@@ -17,10 +17,9 @@
             div.row( v-if="countItems > 0" )
                 table.ui.very.compact.celled.table.unstackable
                     thead
-                        tr
-                            th.collapsing #
+                        tr   
                             th.slim.center.aligned
-                                i.icon.image
+                                i.icon.image(style="margin: 10px")
                             th.slim.link( @click="setOrder('name')")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('name') }}
@@ -40,8 +39,6 @@
                         tr(
                             v-for="(item, index) in filterItems"
                             ":id"="item.id" )
-                            td.center.aligned
-                                strong {{(index+1)+offset}}
                             td.center.aligned.collapsing
                                 img.ui.mini.fluid.rounded.image(
                                     v-if="item.images.length"
@@ -51,9 +48,13 @@
                                 span {{ item.name }}
 
                             td.collapsing
-                                span( v-for="(post, column_index) in item.categories")
-                                    | {{post.name}}
-                                    span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
+                                div(v-if="item.categories.size > 0")                                    
+                                    span( v-for="(post, column_index) in item.categories")
+                                        | {{post.name}}
+                                        span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
+                                span.center.aligned(v-else="")
+                                    p {{ translate('not_set')}}
+
                             td.collapsing
                                 span {{ biddingFormatted(item) }}
 
