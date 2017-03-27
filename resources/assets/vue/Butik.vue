@@ -2,14 +2,18 @@
     div.pusher( v-if="settings.lang" )
         div.ui.padded.container.segment
             loading( v-if="$root.loading" )
-            div.ui.grid.one.column( v-else="" )
+            div.ui.grid.one.column( v-if="!$root.loading" )
                 div.column
                     div.ui.dividing.header.fluid {{ translate('shop.header') }}
+                article-preview.column(
+                    v-if="article"
+                    ":article" = "article"
+                    "mode" = "show" )
                 shop-desktop-list.column(
-                    v-if="screenType == 'desktop'"
+                    v-if="!article && screenType == 'desktop'"
                     ":items"="items" )
                 shop-mobile-list.column(
-                    v-if="(screenType == 'mobile') || (screenType == 'tablet')"
+                    v-if="!article && (screenType == 'mobile' || screenType == 'tablet')"
                     ":items"="items" )
         footer-component( ":lang"="settings.lang" ":language_lib"="language_lib" )
 </template>
@@ -42,23 +46,37 @@
         components:
             ShopDesktopList: require './components/shop/desktop/list.vue'
             ShopMobileList: require './components/shop/mobile/list.vue'
+            ArticlePreview : require './components/shop/preview.vue'
             FooterComponent: require './components/Footer.vue'
 
         mixins: [
             require './mixins/ErrorHandler.vue'
             require './mixins/SuccessHandler.vue'
             require './mixins/ArticleNumber.vue'
-            require './mixins/LangChoice.vue'   
+            require './mixins/LangChoice.vue'
         ]
 
         data: ->
             loading: true
             items: []
+            article: null
             settings:
                 title: 'ReturButikenOnline'
                 lang: false
 
         methods:
+            getArticleByArtNR: (articleNR) ->
+                @getArticle @decodeArtNR articleNR
+            getArticle: (id) ->
+                @$root.loading = true
+                @$http.get('api/shop/'+id).then(
+                    (response) =>
+                        @article = response.data
+                        @$root.loading = false
+                    (response) =>
+                        @article = -1
+                        @$root.loading = false
+                )
             getArticles: ->
                 @$root.loading = true
                 @$http.get('api/shop').then(
@@ -69,12 +87,18 @@
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
-    
+
         created: ->
             # Set and log a reference
             if process.env.NODE_ENV == "development"
                 console.debug window.Butik = this
 
-            # Get articles
-            @getArticles()
+            # Check ArticleNR
+            artnr = location.href.substr location.href.lastIndexOf('/')+1
+
+            # Get article or articles
+            if artnr
+                @getArticleByArtNR artnr
+            else
+                @getArticles()
 </script>

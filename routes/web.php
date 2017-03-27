@@ -11,16 +11,22 @@
 |
 */
 
-Route::get('/', function () {
-    return view('butik');
-});
+Auth::routes();
 
-Route::get('/admin', function () {
+// User interface
+Route::get('/ui', function () {
     return view('ui');
 });
 
-Auth::routes();
+Route::group(['prefix' => 'ui'], function () {
+    // Let index handle further routing
+    Route::any( '{catchall}', function ( $page ) {
+        return view('ui');
+    } )->where('catchall', '(.*)');
 
+});
+
+// API
 Route::group(['prefix' => 'api'], function () {
 
     // Models
@@ -46,7 +52,7 @@ Route::group(['prefix' => 'api'], function () {
 
 });
 
-// Let index handle further routing
-Route::any( '{catchall}', function ( $page ) {
-    return view('ui');
-} )->where('catchall', '(.*)');
+// Shop
+Route::get('/{articleNR?}', function ($articleNR = null) {
+    return view('butik', ["articleNR" => $articleNR]);
+});
