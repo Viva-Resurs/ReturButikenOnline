@@ -37,7 +37,8 @@ class ArticleController extends Controller
                     'categories' => $article->categories,
                     'images' => $article->images,
                     'contacts' => $article->contacts,
-                    'created_by' => $article->creator
+                    'created_by' => $article->creator,
+                    'is_active' => $article->isActive()
                 ]);
         }
 
@@ -65,7 +66,8 @@ class ArticleController extends Controller
             'sections' => $article->sections,
             'categories' => $article->categories,
             'contacts' => [],
-            'images' => []
+            'images' => [],
+            'is_active' => $article->isActive()
         ];
 
         foreach ($article->contacts as $contact){

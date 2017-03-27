@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+
 class Article extends Model
 {
     protected $table = 'articles';
@@ -38,6 +40,19 @@ class Article extends Model
 
     public function images() {
         return $this->belongsToMany(Image::class, 'articles_image');
+    }
+
+    public function isActive()
+    {
+        $today = Carbon::now();
+        if ($this->publish_interval=='')
+            return false;
+        $parts = explode('|',$this->publish_interval);
+        if (count($parts)<2)
+            return false;
+        $start = Carbon::createFromFormat('Y-m-d H:i:s', trim($parts[0]));
+        $end   = Carbon::createFromFormat('Y-m-d H:i:s', trim($parts[1]));
+        return $today->between($start, $end);
     }
 
 }
