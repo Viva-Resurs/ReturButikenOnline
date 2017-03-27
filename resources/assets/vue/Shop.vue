@@ -41,7 +41,7 @@
 
     # Export the root-instance options
     module.exports =
-        name: 'Butik'
+        name: 'Shop'
 
         components:
             ShopDesktopList: require './components/shop/desktop/list.vue'

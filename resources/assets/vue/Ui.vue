@@ -31,7 +31,7 @@
 
     # Export the root-instance options
     module.exports =
-        name: 'App'
+        name: 'Ui'
 
         components:
             Navigation: require './components/Nav.vue'

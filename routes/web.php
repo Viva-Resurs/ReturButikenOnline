@@ -54,5 +54,5 @@ Route::group(['prefix' => 'api'], function () {
 
 // Shop
 Route::get('/{articleNR?}', function ($articleNR = null) {
-    return view('butik', ["articleNR" => $articleNR]);
+    return view('shop', ["articleNR" => $articleNR]);
 });

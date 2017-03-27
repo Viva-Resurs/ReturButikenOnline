@@ -9,6 +9,6 @@
     </head>
     <body>
         <div id="app"></div>
-        <script src="js/butik.js?date={{ date('ymdHis') }}"></script>
+        <script src="js/shop.js?date={{ date('ymdHis') }}"></script>
     </body>
 </html>

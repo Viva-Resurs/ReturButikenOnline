@@ -10,13 +10,13 @@ require('./bootstrap');
 const router = new VueRouter( require('./VueRouterConfig') );
 
 /**
- * Extend the Vue-constructor using our App
+ * Extend the Vue-constructor using our User Interface
  */
-const App = Vue.extend( require('../vue/App.vue') );
+const Ui = Vue.extend( require('../vue/Ui.vue') );
 
 /**
  * Create a new root instance, enable vue-router and mount it on target
  */
-new App({
+new Ui({
     router: router
 }).$mount('#app');
