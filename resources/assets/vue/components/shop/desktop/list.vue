@@ -44,6 +44,11 @@
                                     v-if="item.images.length"
                                     ":src"="item.images[0].thumb_path"
                                 )
+                                div(v-else="")
+                                    i.stacked.icons
+                                        i.icon.file.outline
+                                        i.small.icon.remove.centered.attached.black
+
                             td.link( v-tooltip="" ":data-html"="formatTooltip(item.desc)" @click="previewItem(item)")
                                 span {{ item.name }}
 
@@ -103,3 +108,24 @@
 
 
 </script>
+<style>
+.stacked.icons{
+    position: relative;
+}
+
+.stacked.icons > .attached.black.icon{
+    text-shadow:
+        -0.5px -0.5px 0 #fff,  
+        0.5px -0.5px 0 #fff,
+        -0.5px 0.5px 0 #fff,
+        0.5px 0.5px 0 #fff;
+}
+
+.stacked.icons > .centered {
+    position: absolute;
+    left: 0.6em;
+    top: 0.75em;
+}
+
+
+</style>
