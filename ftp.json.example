@@ -1,0 +1,9 @@
+{
+    "host": "ftp.example.org",
+    "port": 21,
+    "username": "user@example.org",
+    "password": "password",
+    "localRoot": "./public/",
+    "remoteRoot": "/public/",
+    "exclude": [".git", ".idea", "tmp/*", "uploads/*"]
+}
