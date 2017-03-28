@@ -19,11 +19,12 @@
                 div.ui.column.warning.message
                     p {{ (search!='') ? translate('no_results') : translate('empty') }}
             div.row( v-if="countItems > 0" )
-                article-card(
-                    v-for="(item, index) in filterItems"
-                    ":item"="item"
-                    ":from"="from"
-                    )
+                div.ui.link.cards
+                    article-card(
+                        v-for="(item, index) in filterItems"
+                        ":item"="item"
+                        ":from"="from"
+                        )
 
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(

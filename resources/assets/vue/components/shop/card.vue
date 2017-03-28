@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.fluid.raised.card( v-if="item"  @click="previewItem(item)")
+    div.ui.fluid.raised.card(v-if="item"  @click="previewItem(item)")
         div.content
             div.header.left.aligned                
                 div.ui.dividing.header {{item.name}}
@@ -60,6 +60,6 @@
         methods:
             previewItem: (item) ->
                 console.log "clicked card"
-                window.location.href = @$root.encodeArtNR (item)
+                window.location.href = @$root.encodeArtNR (item)                
 
 </script>

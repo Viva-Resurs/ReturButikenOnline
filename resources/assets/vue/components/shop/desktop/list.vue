@@ -103,9 +103,10 @@
             previewItem: (item) ->
                 window.location.href = @$root.encodeArtNR (item)
 
-            biddingFormatted: (item)->
-                item.bidding_interval.split("|")[0] + " - " + item.bidding_interval.split("|")[1]
-
+            biddingFormatted: (item) ->
+                if (item.bidding_interval)
+                    item.bidding_interval.split("|")[0] + " - " + item.bidding_interval.split("|")[1]
+                
 
 </script>
 <style>
