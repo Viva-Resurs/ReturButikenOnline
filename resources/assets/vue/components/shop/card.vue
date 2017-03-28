@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.fluid.raised.card( v-if="item" )
+    div.ui.fluid.raised.card( v-if="item"  @click="previewItem(item)")
         div.content
             div.header.left.aligned                
                 div.ui.dividing.header {{item.name}}
@@ -31,16 +31,17 @@
                         div.column.center.aligned.right.floated
                                 h4.ui.sub.header
                                     | {{ translate('article_card.price_header') }}
-                                p {{ item.price }} {{ translate('article_card.price_currency') }}
+                                p {{ item.price }} {{ translate('article_card.price_currency') }}                                        
                 
         div.extra.content            
             div.ui.equal.width.grid.stackable                          
-                div.column.left.aligned                                                            
+                div.column
                     div.ui.basic.label.bottom.attached(v-if="item.bidding_interval")
                         i.icon.legal
-                        | {{ biddingStart }} - {{biddingEnd}}
+                        | {{ biddingStart }} - {{biddingEnd}}                        
                     div(v-else="")
                         p {{ translate('article_card.bidding_not_set') }}
+                
                  
         </template>
 
@@ -55,5 +56,10 @@
             biddingEnd: ->
                 @item.bidding_interval
                     .split("|")[1]
-           
+        
+        methods:
+            previewItem: (item) ->
+                console.log "clicked card"
+                window.location.href = @$root.encodeArtNR (item)
+
 </script>
