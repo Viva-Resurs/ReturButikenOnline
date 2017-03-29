@@ -112,7 +112,7 @@
                 if !timer
                     timer = setTimeout ->
                         # Get current height & set
-                        height = el.height = (window.innerHeight-60)/2
+                        height = el.height = (window.innerHeight-60)/3
 
                         # Get current width & set
                         width = el.width = el.offsetWidth
