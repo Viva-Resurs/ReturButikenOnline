@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.fluid.raised.card(v-if="item"  @click="previewItem(item)")
+    div.ui.fluid.raised.link.card(v-if="item"  @click="previewItem(item)")
         div.content
             div.header.left.aligned                
                 div.ui.dividing.header {{item.name}}
