@@ -17,7 +17,7 @@
             div.row( v-if="countItems > 0" )
                 table.ui.very.compact.celled.table.unstackable
                     thead
-                        tr   
+                        tr
                             th.slim.center.aligned
                                 i.icon.image(style="margin: 10px")
                             th.slim.link( @click="setOrder('name')")
@@ -32,7 +32,7 @@
 
                             th.slim.link( @click="setOrder('bidding_interval',1)")
                                 div.ui.small.secondary.menu
-                                    div.item {{ translate('article_list.bidding_interval') }}
+                                    div.item.nowrap {{ translate('article_list.bidding_interval') }}
                                         i.icon( ":class" = "(order=='bidding_interval') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
 
                     tbody( v-item="location && location.hash ? location.hash.substr(1) : ''" )
@@ -53,7 +53,7 @@
                                 span {{ item.name }}
 
                             td.collapsing
-                                div(v-if="item.categories.size > 0")                                    
+                                div(v-if="item.categories.size > 0")
                                     span( v-for="(post, column_index) in item.categories")
                                         | {{post.name}}
                                         span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
@@ -106,7 +106,7 @@
             biddingFormatted: (item) ->
                 if (item.bidding_interval)
                     item.bidding_interval.split("|")[0] + " - " + item.bidding_interval.split("|")[1]
-                
+
 
 </script>
 <style>
@@ -116,7 +116,7 @@
 
 .stacked.icons > .attached.black.icon{
     text-shadow:
-        -0.5px -0.5px 0 #fff,  
+        -0.5px -0.5px 0 #fff,
         0.5px -0.5px 0 #fff,
         -0.5px 0.5px 0 #fff,
         0.5px 0.5px 0 #fff;
