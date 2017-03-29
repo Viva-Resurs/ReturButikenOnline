@@ -21,9 +21,12 @@ class ArticleController extends Controller
 
         $user = Auth::user();
 
+        if (!$user)
+            abort(401,'Not allowed to view articles');
+
         $result = [];
         foreach (Article::all() as $article){
-            if ($user && $user->hasRole('admin') || $user && $user->inSection($article->sections) || !$user && $article->public==1)
+            if ($user->hasRole('admin') || $user->inSection($article->sections))
                 array_push($result,[
                     'id' => $article->id,
                     'name' => $article->name,
@@ -49,10 +52,16 @@ class ArticleController extends Controller
 
         $user = Auth::user();
 
+        if (!$user)
+            abort(401,'Not allowed to view articles');
+
         $article = Article::find($id);
 
         if (!$article)
             abort(404);
+
+        if (!$user->hasRole('admin') && !$user->inSection($article->sections))
+            abort(401,'Not allowed to view this article');
 
         $result = [
             'id' => $article->id,
