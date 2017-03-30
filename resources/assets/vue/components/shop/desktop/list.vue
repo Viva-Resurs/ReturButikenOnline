@@ -30,7 +30,7 @@
                                     div.item {{ translate('categories') }}
                                         i.icon( ":class" = "(order=='categories') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
 
-                            th.slim.link( @click="setOrder('bidding_interval',1)")
+                            th.slim.link( @click="setOrder('bidding_interval',1)" style="white-space: nowrap;")
                                 div.ui.small.secondary.menu
                                     div.item.nowrap {{ translate('article_list.bidding_interval') }}
                                         i.icon( ":class" = "(order=='bidding_interval') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
@@ -40,7 +40,7 @@
                             v-for="(item, index) in filterItems"
                             ":id"="item.id" )
                             td.center.aligned.collapsing
-                                img.ui.mini.fluid.rounded.image(
+                                img.ui.mini.fluid.rounded.image(                                   
                                     v-if="item.images.length"
                                     ":src"="item.images[0].thumb_path"
                                 )
@@ -60,7 +60,7 @@
                                 span.center.aligned(v-else="")
                                     p {{ translate('not_set')}}
 
-                            td.collapsing
+                            td.collapsing.center.aligned
                                 span {{ biddingFormatted(item) }}
 
         div.row( v-if="countItems > 0 && search!=''" )
@@ -106,27 +106,26 @@
             biddingFormatted: (item) ->
                 if (item.bidding_interval)
                     item.bidding_interval.split("|")[0] + " - " + item.bidding_interval.split("|")[1]
-
+                else
+                    @.$root.translate('not_set')
 
 </script>
 <style>
-.stacked.icons{
-    position: relative;
-}
+    .stacked.icons{
+        position: relative;
+    }
 
-.stacked.icons > .attached.black.icon{
-    text-shadow:
-        -0.5px -0.5px 0 #fff,
-        0.5px -0.5px 0 #fff,
-        -0.5px 0.5px 0 #fff,
-        0.5px 0.5px 0 #fff;
-}
+    .stacked.icons > .attached.black.icon{
+        text-shadow:
+            -0.5px -0.5px 0 #fff,
+            0.5px -0.5px 0 #fff,
+            -0.5px 0.5px 0 #fff,
+            0.5px 0.5px 0 #fff;
+    }
 
-.stacked.icons > .centered {
-    position: absolute;
-    left: 0.6em;
-    top: 0.75em;
-}
-
-
+    .stacked.icons > .centered {
+        position: absolute;
+        left: 0.6em;
+        top: 0.75em;
+    }
 </style>
