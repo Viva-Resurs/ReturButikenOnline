@@ -20,5 +20,5 @@
                 if key == sessionStorage.lang
                     return @setLang key
             # Not available, set default language
-            @setLang 'en'
+            @setLang 'sv'
 </script>
