@@ -59,7 +59,6 @@
         
         methods:
             previewItem: (item) ->
-                console.log "clicked card"
                 window.location.href = @$root.encodeArtNR (item)                
 
 </script>
