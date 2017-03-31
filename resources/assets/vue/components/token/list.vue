@@ -17,22 +17,12 @@
             div.row( v-if="items.length > 0" )
                 table.ui.very.basic.table.very.compact.unstackable
                     tbody( v-item="$route.hash.substr(1)" )
-                        tr( v-for="(item, index) in items" )
-                            td.slim 
+                        tr(
+                            v-for="(item, index) in items"
+                            ":id"="item.id" )
+                            td.slim
                                 h4.ui.sub.header {{ translate('token') }}
                                 p {{ item.token }}
-                            td.collapsing.bottom.aligned
-                                div.ui.icon.basic.buttons
-                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
-                        tr(
-                            v-for="(item, index) in item"
-                            ":id"="item.id"
-                            )
-                            td.slim
-                                div.ui.item.fluid(style="margin-left: 5px;")                       
-                                    div.ui.vertical.segment.basic
-                                        h4.ui.sub.header {{ translate('token') }}
-                                        p {{ item.token }}
                             td.collapsing.bottom.aligned
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
