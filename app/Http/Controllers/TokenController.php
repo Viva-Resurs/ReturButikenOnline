@@ -19,7 +19,7 @@ class TokenController extends Controller
 		$user = Auth::user();
         if (!$user || !$user->hasRole('admin'))
             abort(401,'Not allowed to list tokens');
-        
+
         return Token::all();
     }
 
@@ -30,21 +30,12 @@ class TokenController extends Controller
         if (!$user || !$user->hasRole('admin'))
 			abort(401,'Not allowed to create tokens');
 
-
-        $token = new Token([
-            'token' => $this->generateToken()
-        ]);
+        $token = new Token();
+        $token->generate();
 
         $token->save();
 
         return $token;
-    }
-
-    
-    private function generateToken(){
-        //TODO: Needs to generate and return a real token
-        //$app_key = env(APP_KEY, false);
-        return "12345";
     }
 
     public function destroy($id){
