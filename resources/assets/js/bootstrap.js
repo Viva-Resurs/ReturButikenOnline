@@ -74,3 +74,14 @@ Vue.http.interceptors.push(function(request, next){
         }
     });
 });
+
+/**
+ * This will add Internal token to every request
+ */
+Vue.http.interceptors.push(function(request, next){
+    hash = location.hash;
+    if (hash.indexOf('#')>-1)
+        hash = hash.substr(1);
+    request.headers['INTERNAL-TOKEN'] = hash;
+    next();
+});

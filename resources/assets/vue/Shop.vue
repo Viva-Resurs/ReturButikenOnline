@@ -95,6 +95,13 @@
 
             # Check ArticleNR
             artnr = location.href.substr location.href.lastIndexOf('/')+1
+            if artnr.indexOf('#')>-1
+                artnr = artnr.substr 0, artnr.indexOf('#')
+
+            # Check Token
+            token = location.hash
+            if token.length > 1
+                token = token.substr 1
 
             # Get article or articles
             if artnr

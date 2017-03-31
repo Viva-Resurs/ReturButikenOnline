@@ -40,7 +40,7 @@
                             v-for="(item, index) in filterItems"
                             ":id"="item.id" )
                             td.center.aligned.collapsing
-                                img.ui.mini.fluid.rounded.image(                                   
+                                img.ui.mini.fluid.rounded.image(
                                     v-if="item.images.length"
                                     ":src"="item.images[0].thumb_path"
                                 )
@@ -101,7 +101,7 @@
                 return if info then info.replace /\n/g, '<br>' else ''
 
             previewItem: (item) ->
-                window.location.href = @$root.encodeArtNR (item)
+                window.location.href = @$root.encodeArtNR(item)+location.hash
 
             biddingFormatted: (item) ->
                 if (item.bidding_interval)
