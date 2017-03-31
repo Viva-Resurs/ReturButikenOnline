@@ -84,6 +84,18 @@ module.exports = {
             ]
         },
         {
+            path: '/ui/tokens',
+            component: require('../vue/pages/Tokens.vue'),
+            meta: { requiresAuth: true },
+            children: [
+                {
+                  path: '/',
+                  component: require('../vue/pages/tokens/list.vue')
+                }
+            ]
+        },
+        
+        {
             path: '/ui/:artnr',
             component: require('../vue/pages/articles/show.vue'),
         },
