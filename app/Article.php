@@ -55,4 +55,13 @@ class Article extends Model
         return $today->between($start, $end);
     }
 
+    public function matchAudience($audience)
+    {
+        if ($this->public==1 && $audience=='public')
+            return true;
+        if ($this->public==0 && $audience=='internal')
+            return true;
+        return false;
+    }
+
 }
