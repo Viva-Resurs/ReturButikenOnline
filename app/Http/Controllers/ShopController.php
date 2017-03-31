@@ -52,7 +52,7 @@ class ShopController extends Controller
         return $result;
     }
 
-    public function show($id){
+    public function show(Request $request, $id){
 
         $article = Article::find($id);
 
