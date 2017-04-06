@@ -15,9 +15,9 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('name');
             $table->string('desc');
+            $table->string('amount');
             $table->integer('public');
             $table->string('price');
             $table->string('publish_interval');

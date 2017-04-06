@@ -14,6 +14,7 @@ class Article extends Model
         'name',
         'desc',
         'price',
+        'amount',
         'public',
         'publish_interval',
         'bidding_interval'

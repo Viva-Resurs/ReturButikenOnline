@@ -32,6 +32,7 @@ class ArticleController extends Controller
                     'name' => $article->name,
                     'desc' => $article->desc,
                     'price' => $article->price,
+                    'amount' => $article->amount,
                     'updated_at' => $article->updated_at->format('Y-m-d H:i:s'),
                     'publish_interval' => $article->publish_interval,
                     'bidding_interval' => $article->bidding_interval,
@@ -68,6 +69,7 @@ class ArticleController extends Controller
             'name' => $article->name,
             'desc' => $article->desc,
             'price' => $article->price,
+            'amount' => $article->amount,
             'updated_at' => $article->updated_at,
             'publish_interval' => $article->publish_interval,
             'bidding_interval' => $article->bidding_interval,
@@ -113,6 +115,7 @@ class ArticleController extends Controller
             'name' => ($request->has('name')) ? $request['name'] : '',
             'desc' => ($request->has('desc')) ? $request['desc'] : '',
             'price' => ($request->has('price')) ? $request['price'] : '',
+            'amount' => ($request->has('amount')) ? $request['amount'] : '',
             'public' => $request['public'] || false,
             'publish_interval' => ($request->has('publish_interval')) ? $request['publish_interval'] : '',
             'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : ''
@@ -176,6 +179,9 @@ class ArticleController extends Controller
 
         if ($request->has('desc') && $request['desc']!='')
             $article->desc = $request['desc'];
+
+        if ($request->has('amount') && $request['amount']!='')
+            $article->desc = $request['amount'];
 
         if ($request->has('price') && $request['price']!='')
             $article->price = $request['price'];
