@@ -158,19 +158,25 @@
                             identifier: 'name'
                             rules: [
                                 type: 'empty'
-                                prompt: 'Please enter article name'
+                                prompt: @$root.translate 'article_form.name_validate'
                             ]
                         desc:
                             identifier: 'desc'
                             rules: [
                                 type: 'empty'
-                                prompt: 'Please select a role'
+                                prompt: @$root.translate 'article_form.desc_validate'
                             ]
                         price:
                             identifier: 'price'
                             rules: [
                                 type: 'integer'
-                                prompt: 'Please enter price'
+                                prompt: @$root.translate 'article_form.price_validate'
+                            ]
+                        amount:
+                            identifier: 'amount'
+                            rules: [
+                                type: 'empty'
+                                prompt: @$root.translate 'article.amount_validate'
                             ]
         computed:
             selectedContacts: ->

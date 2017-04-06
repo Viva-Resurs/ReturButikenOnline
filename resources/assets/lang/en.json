@@ -15,7 +15,8 @@
         "header": "Returbutiken online"
     },
     "article": {
-        "amount": "Amount of separate articles",        
+        "amount": "Amount",  
+        "amount_validate": "Pleace enter amount of items",
         "header": "Articles",
         "add": "Add article",
         "empty": "No articles"
@@ -24,13 +25,16 @@
         "header": "Article",
         "name_label": "Article name:",
         "name_placeholder": "Article name",
+        "name_validate": "Please enter article name",
         "category_select_label": "Select category:",
-        "category_default_text": "select category",
+        "category_default_text": "select category",        
         "desc_label": "Article description:",
         "desc_placeholder": "Enter your description here",
+        "desc_validate": "Please enter your description",
         "price_label": "Price",
         "price_currency_label": "SEK",
         "price_placeholder": "Enter your price here",
+        "price_validate": "Please enter price",
         "images_label": "Pictures:",
         "choose_date": "Select date",
         "publish_interval_label": "Publish within dateinterval",

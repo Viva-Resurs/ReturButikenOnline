@@ -15,7 +15,8 @@
         "header": "Returbutiken online"
     },
     "article": {
-        "amount": "Antal separerade artiklar",
+        "amount": "Antal",
+        "amount_validate": "Ange antalet artiklar",
         "header": "Artiklar",
         "add": "Lägg till vara",
         "empty": "Artiklar saknas"
@@ -24,13 +25,16 @@
         "header": "Artikel",
         "name_label": "Varunamn:",
         "name_placeholder": "Varunamn",
+        "name_validate": "Ange artikel namn",
         "category_select_label": "Välj varukategori:",
         "category_default_text": "Välj kategori",
         "desc_label": "Beskrivning av varan:",
         "desc_placeholder": "Ge din beskrivning här",
+        "desc_validate": "Ange din beskrivning",
         "price_label": "Pris",
         "price_currency_label": "Kr",
         "price_placeholder": "Ange ditt pris här",
+        "price_validate": "Ange ditt pris",
         "images_label": "Bilder:",
         "choose_date": "Välj datum",
         "publish_interval_label": "Publicera inom datumintervall",

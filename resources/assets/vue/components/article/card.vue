@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.fluid.raised.card( v-if="item" )
+    div.ui.fluid.raised.card( v-if="item")
         div.content
 
             div.header.left.aligned                
@@ -27,7 +27,13 @@
                                 v-for="image in item.images"
                                 ":src"="image.thumb_path" )
         
-               
+
+                div.ui.grid.equal.width     
+                    div.column.right.aligned                        
+                            div.column.center.aligned.right.floated
+                                h4.ui.sub.header
+                                    | {{ translate('article.amount') }}
+                                p {{ item.amount }}
 
                 div.ui.grid.equal.width            
                     div.column.bottom.aligned
@@ -41,10 +47,12 @@
 
                     div.column.right.aligned                        
                         div.column.center.aligned.right.floated
-                                h4.ui.sub.header
-                                    | {{ translate('article_card.price_header') }}
-                                p {{ item.price }} {{ translate('article_card.price_currency') }}
-                
+                            h4.ui.sub.header
+                                | {{ translate('article_card.price_header') }}
+                            p {{ item.price }} {{ translate('article_card.price_currency') }}
+
+       
+                    
         div.extra.content
             div.ui.equal.width.grid.stackable
                 div.column.middle.aligned.tablet.only
