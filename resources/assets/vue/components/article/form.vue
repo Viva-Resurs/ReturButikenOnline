@@ -95,7 +95,7 @@
 
             div.field
                 label {{ translate('article.amount') }}:                
-                input#price(
+                input#amount(
                     type="number"
                     v-model="article.amount"
                     )
