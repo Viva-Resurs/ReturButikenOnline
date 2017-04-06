@@ -15,6 +15,7 @@
         "header": "Returbutiken online"
     },
     "article": {
+        "amount": "Amount of separate articles",        
         "header": "Articles",
         "add": "Add article",
         "empty": "No articles"

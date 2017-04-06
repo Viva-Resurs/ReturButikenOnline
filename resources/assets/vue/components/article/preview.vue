@@ -31,8 +31,13 @@
                         h4.ui.sub.header {{ translate('article_preview.contact_header') }}
                         template( v-for="contact in article.contacts" )
                             user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
-                    div.right.aligned.column.eight.wide
+                                                
+                    div.right.aligned.column.eight.wide                  
                         h3( v-if="article.price" ) {{ translate('article_preview.price_label') }} {{article.price}} {{ translate('article_preview.price_currency_label') }}
+                
+                h3 {{ translate('article.amount') }}: 
+                    |&nbsp;&nbsp; {{ article.amount }}
+                    
                 div.ui.divider
                 div.ui.grid.padded
                     span

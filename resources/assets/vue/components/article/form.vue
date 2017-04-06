@@ -33,7 +33,7 @@
                     v-model="article.desc"
                     ":placeholder"="translate('article_form.desc_placeholder')" )
             div.field
-                label {{ translate('article_form.price_label') }}( {{ translate('article_form.price_currency_label') }} ):
+                label {{ translate('article_form.price_label') }}( {{ translate('article_form.price_currency_label') }} ):                
                 input#price(
                     type="number"
                     v-model="article.price"
@@ -92,6 +92,14 @@
                             value="1"
                             v-model="article.public" )
                         label.link( for="publicON" ) {{ translate('article_form.public_all_label') }}
+
+            div.field
+                label {{ translate('article.amount') }}:                
+                input#price(
+                    type="number"
+                    v-model="article.amount"
+                    )
+
             div.ui.divider
             div.two.fields( v-if="contacts" )
                 div.field

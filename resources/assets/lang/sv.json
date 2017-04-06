@@ -15,6 +15,7 @@
         "header": "Returbutiken online"
     },
     "article": {
+        "amount": "Antal separerade artiklar",
         "header": "Artiklar",
         "add": "Lägg till vara",
         "empty": "Artiklar saknas"
