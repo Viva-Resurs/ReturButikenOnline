@@ -33,6 +33,13 @@
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('categories') }}
                                         i.icon( ":class" = "(order=='categories') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
+                            
+                            th.slim.link( @click="setOrder('amount')")
+                                div.ui.small.secondary.menu
+                                    div.item {{ translate('article.amount') }}
+                                        i.icon( ":class" = "(order=='amount') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
+
+                            
                             th.slim.link( @click="setOrder('public',0)")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('public') }}
@@ -57,6 +64,9 @@
                                 span( v-for="(post, column_index) in item.categories")
                                     | {{post.name}}
                                     span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
+
+                            td.collapsing.center.aligned
+                                span {{ item.amount }}
 
                             td.center.aligned.collapsing
                                 div.center.aligned
