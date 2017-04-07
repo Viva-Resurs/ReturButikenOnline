@@ -32,7 +32,7 @@
                             div.column.center.aligned.right.floated
                                 h4.ui.sub.header
                                     | {{ translate('article.amount') }}
-                                p {{ item.amount }}
+                                p {{ item.amount }} {{ translate('article.pieces')}}
 
 
                 div.ui.grid.equal.width
