@@ -17,6 +17,7 @@
     "article": {
         "amount": "Antal",
         "amount_validate": "Ange antalet artiklar",
+        "pieces": "st",
         "header": "Artiklar",
         "add": "Lägg till vara",
         "empty": "Artiklar saknas"
