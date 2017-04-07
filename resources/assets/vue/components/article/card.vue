@@ -33,7 +33,7 @@
                             div.column.center.aligned.right.floated
                                 h4.ui.sub.header
                                     | {{ translate('article.amount') }}
-                                p {{ item.amount }}
+                                p {{ item.amount }} {{ translate('article.pieces')}}
 
                 div.ui.grid.equal.width            
                     div.column.bottom.aligned
@@ -55,16 +55,16 @@
                     
         div.extra.content
             div.ui.equal.width.grid.stackable
-                div.column.middle.aligned.tablet.only
+                div.column.middle.aligned.tablet.computer.only
                     div.ui.basic.label
                         i.checked.calendar.icon
                         | {{ item.updated_at+' ' }}
                       
-                div.column.right.aligned.tablet.only
+                div.column.right.aligned.tablet.computer.only
                     div.ui.icon.basic.buttons
                         component( v-for="tool in tools" ":is"="tool" ":item"="item" ":from"="from" )
                 
-              
+                
                 div.column.center.aligned.mobile.only
                     div.ui.icon.basic.buttons
                         component( v-for="tool in tools" ":is"="tool" ":item"="item" ":from"="from" )
