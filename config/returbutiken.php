@@ -13,7 +13,20 @@ return [
                 'phone' => '12345',
                 'email'    => 'admin@example.org',
                 'password' => 'admin'
+            ],
+            'sectionadmin' => [
+                'username' => 'adam',
+                'fullname' => 'Section Chief',
+                'phone'    => '12346',
+                'email'    => 'adam@example.org',
+                'password' => 'adam'
             ]
+        ],
+        'sections' => [
+            'section1' => [
+                'name' => 'IT-avdelningen',
+                'desc' => 'Returbutikens IT-avdelning'
+          ]
         ],
     ]
 ];
