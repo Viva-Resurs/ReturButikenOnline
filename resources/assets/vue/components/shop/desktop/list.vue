@@ -30,6 +30,12 @@
                                     div.item {{ translate('categories') }}
                                         i.icon( ":class" = "(order=='categories') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
 
+                            th.slim.link( @click="setOrder('amount')")
+                                div.ui.small.secondary.menu
+                                    div.item {{ translate('article.amount') }}
+                                        i.icon( ":class" = "(order=='amount') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
+
+
                             th.slim.link( @click="setOrder('bidding_interval',1)" style="white-space: nowrap;")
                                 div.ui.small.secondary.menu
                                     div.item.nowrap {{ translate('article_list.bidding_interval') }}
@@ -59,6 +65,9 @@
                                         span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
                                 span.center.aligned(v-else="")
                                     p {{ translate('not_set')}}
+
+                            td.collapsing.center.aligned
+                                span {{ item.amount }}
 
                             td.collapsing.center.aligned
                                 span {{ biddingFormatted(item) }}
