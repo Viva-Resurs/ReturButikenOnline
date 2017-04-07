@@ -181,7 +181,7 @@ class ArticleController extends Controller
             $article->desc = $request['desc'];
 
         if ($request->has('amount') && $request['amount']!='')
-            $article->desc = $request['amount'];
+            $article->amount = $request['amount'];
 
         if ($request->has('price') && $request['price']!='')
             $article->price = $request['price'];
