@@ -26,17 +26,19 @@
 
                 div.description {{ article.desc }}
                 div.ui.hidden.divider
-                div.ui.bottom.aligned.stackable.grid.mobile.reversed
-                    div.left.aligned.column.eight.wide
-                        h4.ui.sub.header {{ translate('article_preview.contact_header') }}
-                        template( v-for="contact in article.contacts" )
-                            user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
-                                                
+                div.ui.bottom.aligned.grid.mobile
+                    div.left.aligned.column.eight.wide                                                             
+                        i
+                            b(style="font-size: 18px;") {{ translate('article.amount') }}:
+                            | &nbsp;&nbsp;{{ article.amount }}
+               
                     div.right.aligned.column.eight.wide                  
                         h3( v-if="article.price" ) {{ translate('article_preview.price_label') }} {{article.price}} {{ translate('article_preview.price_currency_label') }}
                 
-                h3 {{ translate('article.amount') }}: 
-                    |&nbsp;&nbsp; {{ article.amount }}
+
+                h4.ui.sub.header {{ translate('article_preview.contact_header') }}
+                template( v-for="contact in article.contacts" )
+                    user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
                     
                 div.ui.divider
                 div.ui.grid.padded
