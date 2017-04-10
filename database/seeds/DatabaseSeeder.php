@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 
 use App\User;
 use App\Role;
+use App\Section;
 use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
@@ -15,8 +16,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
         $this->call(RolesTablesSeeder::class);
+        $this->call(SectionTableSeeder::class);
         $this->call(UsersTableSeeder::class);
 
     }
@@ -47,6 +48,17 @@ class RolesTablesSeeder extends Seeder {
     }
 }
 
+class SectionTableSeeder extends Seeder {
+    public function run() {
+        DB::table('sections')->truncate();
+        $section = Section::create([
+           'name' => config('returbutiken.settings.sections.section1.name'),
+           'desc' => config('returbutiken.settings.sections.section1.desc') 
+        ]);    
+        $section->save();
+    }
+}
+
 class UsersTableSeeder extends Seeder {
     public function run() {
         DB::table('users')->truncate();
@@ -59,6 +71,22 @@ class UsersTableSeeder extends Seeder {
             'password' => Hash::make(config('returbutiken.settings.users.administrator.password'))
         ]);
 
-        $admin->assignRole('admin');
+        $admin->assignRole('admin'); 
+
+        $sectionadmin = User::create([
+            'name'     => config('returbutiken.settings.users.sectionadmin.username'),
+            'email'    => config('returbutiken.settings.users.sectionadmin.email'),
+            'fullname' => config('returbutiken.settings.users.sectionadmin.fullname'),
+            'phone'    => config('returbutiken.settings.users.sectionadmin.phone'),
+            'password' => Hash::make(config('returbutiken.settings.users.sectionadmin.password'))
+        ]);
+
+        $admin->assignRole('admin'); 
+
+        $sectionadmin->assignRole('sectionadmin');
+        $sectionadmin->assignSection('IT-avdelningen');
+
     }
 }
+
+

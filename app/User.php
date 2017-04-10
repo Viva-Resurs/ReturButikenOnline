@@ -99,6 +99,24 @@ class User extends Authenticatable
             return $this->roles()->save($role);
     }
 
+    
+    /**
+     * Assign a given section to the User
+     *
+     * @param $section
+     * @return Model
+     */
+    public function assignSection($section) {
+
+        if (is_string($section))
+            return $this->sections()->save(
+                Section::whereName($section)->firstOrFail()
+            );
+
+        else
+            return $this->sections()->save($section);
+    }
+
     /**
      * Get an array of the Users roles
      *
