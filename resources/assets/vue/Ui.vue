@@ -2,7 +2,7 @@
     div.pusher( v-if="settings.lang" )
         navigation
         semantic-dialog
-        router-view.ui.padded.container.segment
+        router-view.ui.padded.container.segment#rootcontainer
         footer-component( ":lang"="settings.lang" ":language_lib"="language_lib" )
 </template>
 
