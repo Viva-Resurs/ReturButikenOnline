@@ -1,5 +1,7 @@
 <script lang="coffee">
     module.exports =
+        
+        # On insert, do the following
         inserted: (el,binding) ->
 
             # Setup
@@ -42,12 +44,18 @@
 
             # Set active image by determine position in wrapper
             checkActive = ->
+                #Utgår från vänstra kanten + elementets bredd / 2
                 pos = el.scrollLeft + width/2
+                
                 active_image = Math.floor pos/width
+                console.log "Active image"+active_image
+                
+                #Sätt alla unselected 
                 for image, index in images
                     Vue.set image, 'selected', false
                     if index == active_image
                         Vue.set image, 'selected', true
+                
 
             # Swipe/scroll in wrapper
             swipeTo = (offset) ->
@@ -78,10 +86,12 @@
                 e.preventDefault()
                 setPosition e.clientX, e.clientY
                 active = true
+            
             handleUp   = (e) ->
                 e.preventDefault()
                 snapTo()
                 active = false
+            
             handleMove = (e) ->
                 e.preventDefault()
                 if active == false
@@ -89,15 +99,45 @@
                 delta =
                     x: position.x - e.clientX
                     y: position.y - e.clientY
-
+                                
                 swipeTo delta.x * 2
                 setPosition e.clientX, e.clientY
+            
+            #Handle touch-events
+            handleTouchStart = (e) ->
+                e.preventDefault()
+                t = e.touches[0]
+                setPosition t.screenX, t.screenY
+                active = true
+                
+            handleTouchMove = (e) ->
+                e.preventDefault()
+                t = e.touches[0];
+                if active == false
+                    return
+                
+                delta =
+                    x: position.x - t.screenX
+                    y: position.y - t.screenY
+                                
+                swipeTo delta.x * 2
+                setPosition t.screenX, t.screenY
+
+            handleTouchEnd = (e) ->
+                e.preventDefault()
+                snapTo()
+                active = false
 
             # Interact with pointer
             el.addEventListener "mousedown", handleDown
             el.addEventListener "mouseup", handleUp
             el.addEventListener "mouseleave", handleUp
             el.addEventListener "mousemove", handleMove
+            
+            # Interact with touch events
+            el.addEventListener "touchstart", handleTouchStart
+            el.addEventListener "touchmove", handleTouchMove
+            el.addEventListener "touchend", handleTouchEnd
 
             # Interact programmatically
             bus.$on 'snapTo', (index) => snapTo index
