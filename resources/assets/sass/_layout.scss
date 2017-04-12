@@ -16,9 +16,8 @@ html, body, #app {
     //}
 }
 
-#rootcontainer{
-    max-width: 768px !important; 
-    
+#rootcontainer, #footercontainer{
+    max-width: 768px !important;     
 }
 
 .link {
