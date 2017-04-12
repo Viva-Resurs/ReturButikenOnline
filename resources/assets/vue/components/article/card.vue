@@ -30,10 +30,10 @@
 
                 div.ui.grid.equal.width                               
                     div.column.left.aligned                        
-                            div.column.center.aligned.left.floated
-                                h4.ui.sub.header
-                                    | {{ translate('article.amount') }}
-                                p {{ item.amount }} {{ translate('article.pieces')}}
+                        div.column.center.aligned.left.floated
+                            h4.ui.sub.header
+                                | {{ translate('article.amount') }}
+                            p {{ item.amount }} {{ translate('article.pieces')}}
 
                     div.column.right.aligned                        
                         div.column.center.aligned.right.floated
