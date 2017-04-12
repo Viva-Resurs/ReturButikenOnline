@@ -28,15 +28,21 @@
                                 ":src"="image.thumb_path" )
         
 
-                div.ui.grid.equal.width     
-                    div.column.right.aligned                        
-                            div.column.center.aligned.right.floated
+                div.ui.grid.equal.width                               
+                    div.column.left.aligned                        
+                            div.column.center.aligned.left.floated
                                 h4.ui.sub.header
                                     | {{ translate('article.amount') }}
                                 p {{ item.amount }} {{ translate('article.pieces')}}
 
-                div.ui.grid.equal.width            
-                    div.column.bottom.aligned
+                    div.column.right.aligned                        
+                        div.column.center.aligned.right.floated
+                            h4.ui.sub.header
+                                | {{ translate('article_card.price_header') }}
+                            p {{ item.price }} {{ translate('article_card.price_currency') }}
+                
+                br
+                div.column.bottom.aligned
                         i.ui.icon(
                         ":class"="(item.public==1)?'green world':'red industry'"
                         )
@@ -44,14 +50,6 @@
                             | {{ translate('article_card.published_all') }}
                         span( v-if="item.public!=1" )
                             | {{ translate('article_card.published_intra') }}
-
-                    div.column.right.aligned                        
-                        div.column.center.aligned.right.floated
-                            h4.ui.sub.header
-                                | {{ translate('article_card.price_header') }}
-                            p {{ item.price }} {{ translate('article_card.price_currency') }}
-
-       
                     
         div.extra.content
             div.ui.equal.width.grid.stackable
