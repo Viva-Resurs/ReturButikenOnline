@@ -16,26 +16,28 @@
                                 dragable="false"
                                 ":class" = "(image.selected) ? 'active' : 'disabled'")
             div.ui.basic.segment
-                h2.ui.header {{ article.name }}
-                    div.ui.black.horizontal.label(
-                        style="position: relative; top: -2px; left: 15px;"
-                        v-for="category in article.categories"
-                        )
-                            | {{ category.name }}
+                div.ui.grid.equal.width                
+                    
+                    div.ui.left.aligned.column
+                        h2.ui.header {{ article.name }}
+                            div.ui.black.horizontal.label(
+                                style="position: relative; top: -2px; left: 15px;"
+                                v-for="category in article.categories"
+                                )
+                                    | {{ category.name }}
+                    
+                    div.ui.right.aligned.column                        
+                        h3( v-if="article.price" ) {{article.price}} {{ translate('article_preview.price_currency_label') }}
+                
                 div.ui.hidden.divider
 
                 div.description {{ article.desc }}
                 div.ui.hidden.divider
                 
-                div.ui.bottom.aligned.grid
-                    div.left.aligned.column.eight.wide                                                             
-                        i
-                            b(style="font-size: 18px;") {{ translate('article.amount') }}:
-                            | &nbsp;&nbsp;{{ article.amount }} {{ translate('article.pieces')}}
-               
-                    div.right.aligned.column.eight.wide                  
-                        h3( v-if="article.price" ) {{ translate('article_preview.price_label') }} {{article.price}} {{ translate('article_preview.price_currency_label') }}
-                
+                div.ui.grid
+                    div.column.right.aligned
+                        h4.ui.sub.header {{ translate('article.amount') }}:
+                        h3(style="position: relative; top: -20px;") {{ article.amount }} {{ translate('article.pieces')}}
                 
                 div.ui.bottom.aligned.stackable.grid.mobile.reversed
                     div.left.aligned.column.eight.wide

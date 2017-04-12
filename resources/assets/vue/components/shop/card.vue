@@ -26,16 +26,15 @@
                                 v-for="image in item.images"
                                 ":src"="image.thumb_path" )
 
+                div.ui.grid.equal.width
 
-                div.ui.grid.equal.width     
-                    div.column.right.aligned                        
-                            div.column.center.aligned.right.floated
+                    div.column.left.aligned                        
+                            div.column.center.aligned.left.floated
                                 h4.ui.sub.header
                                     | {{ translate('article.amount') }}
                                 p {{ item.amount }} {{ translate('article.pieces')}}
 
 
-                div.ui.grid.equal.width
                     div.column.right.aligned
                         div.column.center.aligned.right.floated
                                 h4.ui.sub.header
