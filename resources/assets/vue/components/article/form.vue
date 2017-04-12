@@ -38,6 +38,14 @@
                     type="number"
                     v-model="article.price"
                     ":placeholder"="translate('article_form.price_placeholder')" )
+            
+            div.field
+                label {{ translate('article.amount') }}:                
+                input#amount(
+                    type="number"
+                    v-model="article.amount"
+                    )
+
             div.field
                 label {{ translate('article_form.images_label') }}
                 image-dropzone( ":images"="article.images" )
@@ -93,13 +101,6 @@
                             v-model="article.public" )
                         label.link( for="publicON" ) {{ translate('article_form.public_all_label') }}
 
-            div.field
-                label {{ translate('article.amount') }}:                
-                input#amount(
-                    type="number"
-                    v-model="article.amount"
-                    )
-
             div.ui.divider
             div.two.fields( v-if="contacts" )
                 div.field
@@ -124,16 +125,15 @@
                                 v-for="contact in contacts"
                                 ":data-value"="contact.id" )
                                 | {{contact.name}}
-            div.sixteen.wide.column
-                div.ui.container
-                    div.ui.hidden.divider
-                    div.ui.container.right.aligned
-                        div.ui.button.secondary( @click="goBack()" ) {{ translate('nav.back') }}
-                        div.ui.button.primary(
-                            type="submit"
-                            @keydown.enter.prevent="previewArticle"
-                            @click="previewArticle" )
-                            | {{ translate('article_form.preview') }}
+            div.ui.divider
+            div.ui.grid
+                div.column.right.aligned
+                    div.ui.button.secondary( @click="goBack()" ) {{ translate('nav.back') }}
+                    div.ui.button.primary(
+                        type="submit"
+                        @keydown.enter.prevent="previewArticle"
+                        @click="previewArticle" )
+                        | {{ translate('article_form.preview') }}
 </template>
 
 <script lang="coffee">

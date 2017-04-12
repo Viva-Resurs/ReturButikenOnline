@@ -1,6 +1,8 @@
 <template lang="pug">
     div#preview
         div.ui.dividing.header( v-if="mode!='show'" ) {{ translate('article_preview.header') }}
+        div( v-if="article==-1" )
+            | {{ translate('article_preview.article_not_found') }}
         div( v-if="article!=-1" )
             div( v-if="article.images && article.images.length>0" )
                 div.ui.basic.segment.center.aligned.preview_header(
@@ -90,19 +92,20 @@
                                 h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
                                 i.ui.icon.red.industry
                                 | {{ translate('article_preview.published_intra') }}
-        div.ui.container
-            div.ui.container.right.aligned
-                div.ui.button.secondary( v-if="mode=='show'"
-                    @click="goBack()"
-                ) {{ translate('nav.back') }}
-                div.ui.button.secondary( v-if="mode!='show'"
-                    @click="modifyArticle"
-                ) {{ translate('article_preview.article_modify') }}
-                div.ui.button.primary( v-if="mode!='show'"
-                    @click="attemptPublish"
-                ) {{ translate('article_preview.article_publish') }}
-        div( v-if="article==-1" )
-            | {{ translate('article_preview.article_not_found') }}
+        
+            div.ui.divider
+            div.ui.grid
+                div.column.right.aligned      
+                    div.ui.button.secondary( v-if="mode=='show'"
+                        @click="goBack()"
+                    ) {{ translate('nav.back') }}
+                    div.ui.button.secondary( v-if="mode!='show'"
+                        @click="modifyArticle"
+                    ) {{ translate('article_preview.article_modify') }}
+                    div.ui.button.primary( v-if="mode!='show'"
+                        @click="attemptPublish"
+                    ) {{ translate('article_preview.article_publish') }}
+    
 </template>
 
 <script lang="coffee">

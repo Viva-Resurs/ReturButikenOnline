@@ -88,18 +88,19 @@
                             type="email"
                             "v-model"="user.email"
                             ":placeholder"="translate('user_form.email_placeholder')" )
-                div.sixteen.wide.column
-                    div.ui.container
-                        div.ui.hidden.divider
-                        div.ui.container.right.aligned
-                            div.ui.button.secondary(
-                                @click="goBack()"
-                            ) {{ translate('nav.back') }}
-                            div.ui.button.primary(
-                                type="submit"
-                                @keydown.enter.prevent="attemptSave"
-                                @click="attemptSave"
-                            ) {{ translate('user_form.user_save') }}
+                
+                
+            div.ui.divider
+            div.ui.grid
+                div.column.right.aligned 
+                    div.ui.button.secondary(
+                        @click="goBack()"
+                    ) {{ translate('nav.back') }}
+                    div.ui.button.primary(
+                        type="submit"
+                        @keydown.enter.prevent="attemptSave"
+                        @click="attemptSave"
+                    ) {{ translate('user_form.user_save') }}
 </template>
 
 <script lang="coffee">
