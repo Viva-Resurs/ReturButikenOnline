@@ -48,7 +48,6 @@
                 pos = el.scrollLeft + width/2
                 
                 active_image = Math.floor pos/width
-                console.log "Active image"+active_image
                 
                 #Sätt alla unselected 
                 for image, index in images
@@ -133,7 +132,7 @@
             el.addEventListener "mouseup", handleUp
             el.addEventListener "mouseleave", handleUp
             el.addEventListener "mousemove", handleMove
-            
+
             # Interact with touch events
             el.addEventListener "touchstart", handleTouchStart
             el.addEventListener "touchmove", handleTouchMove
