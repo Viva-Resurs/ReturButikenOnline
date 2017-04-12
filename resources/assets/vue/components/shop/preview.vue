@@ -17,7 +17,6 @@
                                 ":class" = "(image.selected) ? 'active' : 'disabled'")
             div.ui.basic.segment
                 div.ui.grid.equal.width                
-                    
                     div.ui.left.aligned.column
                         h2.ui.header {{ article.name }}
                             div.ui.black.horizontal.label(
@@ -26,19 +25,25 @@
                                 )
                                     | {{ category.name }}
                     
-                    div.ui.right.aligned.column                        
-                        h3( v-if="article.price" ) {{article.price}} {{ translate('article_preview.price_currency_label') }}
                 
                 div.ui.hidden.divider
 
                 div.description {{ article.desc }}
                 div.ui.hidden.divider
                 
-                div.ui.grid
-                    div.column.right.aligned
-                        h4.ui.sub.header {{ translate('article.amount') }}:
-                        h3(style="position: relative; top: -20px;") {{ article.amount }} {{ translate('article.pieces')}}
-                
+                div.ui.grid.equal.width.stackable                                   
+                    div.column.two.wide.center.aligned.left.floated
+                        div.row
+                            h4.ui.sub.header {{ translate('article.amount') }}:
+                        div.row
+                            h3 {{ article.amount }} {{ translate('article.pieces')}}                    
+
+                    div.column.two.wide.center.aligned.right.floated                                                    
+                        div.row
+                            h4.ui.sub.header {{ translate('article_preview.price_label') }}
+                        div.row
+                            h3 {{ article.price }} {{ translate('article_preview.price_currency_label') }}                    
+        
                 div.ui.bottom.aligned.stackable.grid.mobile.reversed
                     div.left.aligned.column.eight.wide
                         h4.ui.sub.header {{ translate('article_preview.contact_header') }}
