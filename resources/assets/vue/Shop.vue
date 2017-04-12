@@ -1,6 +1,6 @@
 <template lang="pug">
     div.pusher( v-if="settings.lang" )
-        div.ui.padded.container.segment
+        div.ui.padded.container.segment#rootcontainer
             loading( v-if="$root.loading" )
             div.ui.grid.one.column( v-if="!$root.loading" )
                 div.column
@@ -15,7 +15,7 @@
                 shop-mobile-list.column(
                     v-if="!article && (screenType == 'mobile' || screenType == 'tablet')"
                     ":items"="items" )
-        footer-component( ":lang"="settings.lang" ":language_lib"="language_lib" )
+        footer-component#footercontainer( ":lang"="settings.lang" ":language_lib"="language_lib" )
 </template>
 
 <script lang="coffee">
