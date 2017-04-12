@@ -3,7 +3,7 @@
         navigation
         semantic-dialog
         router-view.ui.padded.container.segment#rootcontainer
-        footer-component( ":lang"="settings.lang" ":language_lib"="language_lib" )
+        footer-component#footercontainer( ":lang"="settings.lang" ":language_lib"="language_lib" )
 </template>
 
 <script lang="coffee">
