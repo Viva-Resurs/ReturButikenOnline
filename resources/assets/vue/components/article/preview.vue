@@ -17,85 +17,85 @@
                                 ondrag="false"
                                 dragable="false"
                                 ":class" = "(image.selected) ? 'active' : 'disabled'")
-            div.ui.basic.segment
-                div.ui.grid.equal.width                
-                    div.ui.left.aligned.column
-                        h2.ui.header {{ article.name }}
-                            div.ui.black.horizontal.label(
-                                style="position: relative; top: -2px; left: 15px;"
-                                v-for="category in article.categories"
-                                )
-                                    | {{ category.name }}
-                 
-                div.ui.hidden.divider
 
-                div.description {{ article.desc }}                
-                div.ui.hidden.divider
+            div.ui.grid.equal.width
+                div.ui.left.aligned.column
+                    h2.ui.header {{ article.name }}
+                        div.ui.black.horizontal.label(
+                            style="position: relative; top: -2px; left: 15px;"
+                            v-for="category in article.categories"
+                            )
+                                | {{ category.name }}
 
-                div.ui.grid.equal.width.stackable                                   
-                    div.column.two.wide.center.aligned.left.floated
-                        div.row
-                            h4.ui.sub.header {{ translate('article.amount') }}:
-                        div.row
-                            h3 {{ article.amount }} {{ translate('article.pieces')}}                    
+            div.ui.hidden.divider
 
-                    div.column.two.wide.center.aligned.right.floated                                                    
-                        div.row
-                            h4.ui.sub.header {{ translate('article_preview.price_label') }}
-                        div.row
-                            h3 {{ article.price }} {{ translate('article_preview.price_currency_label') }}                    
-                
-                div.ui.bottom.aligned.stackable.grid.mobile.reversed
-                    div.left.aligned.column.eight.wide
-                        h4.ui.sub.header {{ translate('article_preview.contact_header') }}
-                        template( v-for="contact in article.contacts" )
-                            user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
+            div.description {{ article.desc }}
+            div.ui.hidden.divider
 
-                    
-                div.ui.divider
-                div.ui.grid.padded
-                    span
-                        i( v-if="article.updated_at" )
-                            b {{ translate('article_preview.updated_at_label') }}
-                            | &nbsp;&nbsp;{{ formatDate(article.updated_at.date) }}
-                        i( v-if="!article.updated_at && article.created_at" )
-                            | {{ translate('article_preview.created_at_label') }} {{ formatDate(article.created_at.date) }}
-                        i( v-if="!article.updated_at && !article.created_at" )
-                            | {{ translate('article_preview.created_at_label') }} YYYY-MM-DD HH:MM
-                    span
-                        b {{ translate('article_preview.article_number_label') }}
-                        | &nbsp;&nbsp;{{ $root.displayArtNR(article) }}
-                div.ui.hidden.divider
-                div.ui.segment( v-if="mode!='show'" )
-                    div.ui.top.attached.label( @click="toggleDetails()" )
-                        h4.ui.sub.header {{ translate('article_preview.publish_info_header') }}
-                    div.ui.grid.equal.width.stackable#details
-                        div.row
-                            div.column( v-if="article.publish_interval" )
-                                h4.ui.sub.header {{ translate('article_preview.publish_interval_header') }}
-                                i.ui.icon.time
-                                span {{ formatInterval(article.publish_interval) }}
-                            div.column( v-if="article.bidding_interval" )
-                                h4.ui.sub.header {{ translate('article_preview.bidding_interval_header') }}
-                                i.ui.icon.time
-                                span {{ formatInterval(article.bidding_interval) }}
-                            div.column( v-if="!article.publish_interval && !article.bidding_interval" )
-                                h4.ui.sub.header
-                                i.ui.icon.warning
-                                i {{ translate('article_preview.not_published') }}
-                        div.row
-                            div.column(v-if="article.public==true")
-                                h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
-                                i.ui.icon.green.world
-                                | {{ translate('article_preview.published_all') }}
-                            div.column(v-if="article.public!=true")
-                                h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
-                                i.ui.icon.red.industry
-                                | {{ translate('article_preview.published_intra') }}
-        
+            div.ui.grid.equal.width
+                div.column.eight.wide.left.aligned.left.floated
+                    div.row
+                        h4.ui.sub.header {{ translate('article.amount') }}:
+                    div.row
+                        h3 {{ article.amount }} {{ translate('article.pieces')}}
+
+                div.column.eight.wide.right.aligned.right.floated
+                    div.row
+                        h4.ui.sub.header {{ translate('article_preview.price_label') }}
+                    div.row
+                        h3.right.aligned {{ article.price }} {{ translate('article_preview.price_currency_label') }}
+
+            div.ui.bottom.aligned.stackable.grid.mobile.reversed
+                div.left.aligned.column.eight.wide
+                    h4.ui.sub.header {{ translate('article_preview.contact_header') }}
+                    template( v-for="contact in article.contacts" )
+                        user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
+
+
+            div.ui.divider
+            div.ui.grid.padded
+                span
+                    i( v-if="article.updated_at" )
+                        b {{ translate('article_preview.updated_at_label') }}
+                        | &nbsp;&nbsp;{{ formatDate(article.updated_at.date) }}
+                    i( v-if="!article.updated_at && article.created_at" )
+                        | {{ translate('article_preview.created_at_label') }} {{ formatDate(article.created_at.date) }}
+                    i( v-if="!article.updated_at && !article.created_at" )
+                        | {{ translate('article_preview.created_at_label') }} YYYY-MM-DD HH:MM
+                span
+                    b {{ translate('article_preview.article_number_label') }}
+                    | &nbsp;&nbsp;{{ $root.displayArtNR(article) }}
+            div.ui.hidden.divider
+            div.ui.segment( v-if="mode!='show'" )
+                div.ui.top.attached.label( @click="toggleDetails()" )
+                    h4.ui.sub.header {{ translate('article_preview.publish_info_header') }}
+                div.ui.grid.equal.width.stackable#details
+                    div.row
+                        div.column( v-if="article.publish_interval" )
+                            h4.ui.sub.header {{ translate('article_preview.publish_interval_header') }}
+                            i.ui.icon.time
+                            span {{ formatInterval(article.publish_interval) }}
+                        div.column( v-if="article.bidding_interval" )
+                            h4.ui.sub.header {{ translate('article_preview.bidding_interval_header') }}
+                            i.ui.icon.time
+                            span {{ formatInterval(article.bidding_interval) }}
+                        div.column( v-if="!article.publish_interval && !article.bidding_interval" )
+                            h4.ui.sub.header
+                            i.ui.icon.warning
+                            i {{ translate('article_preview.not_published') }}
+                    div.row
+                        div.column(v-if="article.public==true")
+                            h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
+                            i.ui.icon.green.world
+                            | {{ translate('article_preview.published_all') }}
+                        div.column(v-if="article.public!=true")
+                            h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
+                            i.ui.icon.red.industry
+                            | {{ translate('article_preview.published_intra') }}
+
             div.ui.divider
             div.ui.grid
-                div.column.right.aligned      
+                div.column.right.aligned
                     div.ui.button.secondary( v-if="mode=='show'"
                         @click="goBack()"
                     ) {{ translate('nav.back') }}
@@ -105,7 +105,7 @@
                     div.ui.button.primary( v-if="mode!='show'"
                         @click="attemptPublish"
                     ) {{ translate('article_preview.article_publish') }}
-    
+
 </template>
 
 <script lang="coffee">
