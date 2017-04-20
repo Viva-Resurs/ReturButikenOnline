@@ -38,7 +38,6 @@
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('article.amount') }}
                                         i.icon( ":class" = "(order=='amount') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-
                             
                             th.slim.link( @click="setOrder('public',0)")
                                 div.ui.small.secondary.menu
@@ -51,11 +50,20 @@
                             ":id"="item.id" )
                             td.center.aligned
                                 strong {{(index+1)+offset}}
-                            td.center.aligned.collapsing
-                                img.ui.mini.fluid.rounded.image(
-                                    v-if="item.images.length"
-                                    ":src"="item.images[0].thumb_path"
-                                )
+                            td.center.aligned.no-padding
+                                div.ui.stacked.segment.no-padding(v-if="item.images.length > 1")                                    
+                                    img.ui.image.table_image.multiple_preview(
+                                        v-if="item.images.length"
+                                        ":src"="item.images[0].thumb_path"
+                                    )
+                                
+                                div.ui.segment.no-padding(v-else-if="item.images.length == 1")
+                                    img.ui.image.table_image.preview(                                    
+                                    ":src"="item.images[0].thumb_path")
+                        
+                                div.no_image_icon(v-else="")                                                                        
+                                    i.icon.remove                                     
+
                             td( v-tooltip="" ":data-html"="formatTooltip(item.desc)" )
                                 span {{ item.name }}
                             td

@@ -45,15 +45,20 @@
                         tr(
                             v-for="(item, index) in filterItems"
                             ":id"="item.id" )
-                            td.center.aligned.collapsing
-                                img.ui.mini.fluid.rounded.image(
-                                    v-if="item.images.length"
-                                    ":src"="item.images[0].thumb_path"
-                                )
-                                div(v-else="")
-                                    i.stacked.icons
-                                        i.icon.file.outline
-                                        i.small.icon.remove.centered.attached.black
+                            td.center.aligned.no-padding
+                                div.ui.stacked.segment.no-padding(v-if="item.images.length > 1")                                    
+                                    img.ui.image.table_image.multiple_preview(
+                                        v-if="item.images.length"
+                                        ":src"="item.images[0].thumb_path"
+                                    )
+                                
+                                div.ui.segment.no-padding(v-else-if="item.images.length == 1")
+                                    img.ui.image.table_image.preview(                                    
+                                    ":src"="item.images[0].thumb_path")
+                        
+                                div.no_image_icon(v-else="")                                                                        
+                                    i.icon.remove                                     
+
 
                             td.link( v-tooltip="" ":data-html"="formatTooltip(item.desc)" @click="previewItem(item)")
                                 span {{ item.name }}
