@@ -37,3 +37,37 @@ img.disabled {
         background-color: rgba(0,0,0,0.1);
     }
 }
+
+.table_image {
+    width: 40px !important;
+    height: 40px !important;    
+}
+
+.multiple_preview {
+    background-color: transparent !important;
+    background-size:cover;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    margin-top: 0px;
+    margin-bottom: 3px;
+    margin-left: 0px;
+    margin-right: -7px;
+}
+
+.preview {
+    background-color: transparent !important;
+    background-size:cover;    
+    border-radius: 2px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 0px;
+    margin-right: -6px;
+}
+
+.no_image_icon {        
+    background-position: 50% 50%;
+    background-size:cover; 
+    position: relative;
+    left: 2px;
+    vertical-align: middle; 
+}
