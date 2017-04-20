@@ -13,9 +13,11 @@
                 input#password(
                     type="password"
                     v-model="login.password" )
-            div.field
-                div.ui.container.right.aligned.fluid
+                
+            div.ui.grid
+                div.column.right.aligned
                     button.ui.right.aligned.button.primary( type="submit" @keydown.enter.prevent="attemptLogin" ) {{ translate('login.login') }}
+        
 </template>
 
 <script lang="coffee">
