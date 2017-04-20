@@ -74,9 +74,10 @@
                 )
 
             previewArticle: (article) ->
-                @$router.push @$root.encodeArtNR article
+                @$router.push "ui/"+@$root.encodeArtNR article
 
             attemptRemove: (article) ->
+                console.log "Trying to remove article"
                 bus.$emit 'show_message',
                     title: @$root.translate('article_list.remove_article_title') + "''"+article.name+"''."
                     message: @$root.translate('article_list.remove_article_message')
@@ -120,11 +121,11 @@
             # When User is changed
             bus.$on 'user_changed', @setUser
 
-            bus.$on 'start_item_remove', (item) => @attemptRemove item
-            bus.$on 'start_item_preview', (item) => @previewArticle item
-            bus.$on 'start_item_changed', (item) => @attemptUpdate item
-            bus.$on 'start_item_edit', (item) =>
-                @$router.push path: '/articles/'+item.id
+            bus.$on 'ui_item_remove', (item) => @attemptRemove item
+            bus.$on 'ui_item_preview', (item) => @previewArticle item
+            bus.$on 'ui_item_changed', (item) => @attemptUpdate item
+            bus.$on 'ui_item_edit', (item) =>
+                @$router.push path: '/ui/articles/'+item.id
             bus.$on 'publish_interval_changed', (id, new_value) =>
                 console.log 'changed'
                 item = @getArticleById id
