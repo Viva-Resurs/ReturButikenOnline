@@ -2,8 +2,14 @@
     module.exports =
         name: 'From'
         computed:
-            from: ->
-                if @$route && @$route.path then @$route.path.substring @$route.path.indexOf('ui/')+3 
+            from: ->                
+                if @$route && @$route.path
+                    pathDivided =  @$route.path.split('/')
+                    lastPath = pathDivided[pathDivided.length-1]
+                    if lastPath == ""
+                        lastPath = "ui"
+                    return lastPath
+                 
         methods:
             isAdmin: (level) ->
                 if @user and @user.roles
