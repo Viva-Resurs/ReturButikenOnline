@@ -73,8 +73,8 @@
                         @$root.loading = false
                 )
 
-            previewArticle: (article) ->
-                @$router.push "ui/"+@$root.encodeArtNR article
+            previewArticle: (article) ->               
+                @$router.push @$root.encodeArtNR article
 
             attemptRemove: (article) ->
                 console.log "Trying to remove article"
