@@ -55,7 +55,66 @@
                     if index == active_image
                         Vue.set image, 'selected', true
                 
+            
+            #Overlay buttons
+            addOverlayButtons = () ->
+                leftButton = document.getElementById "leftButton" 
+                rightButton = document.getElementById "rightButton" 
+                
+                if !leftButton                
+                    leftButton = document.createElement 'i'
+                    leftButton.className = "huge chevron left icon"
+                    leftButton.style.zIndex = '1'
+                    leftButton.id = "leftButton"
+                    leftButton.style.position = 'absolute'                
+                    leftButton.style.left = '20px';               
 
+                    rightButton = document.createElement 'i'                
+                    rightButton.id = "rightButton"           
+                    rightButton.className = "huge chevron right icon"                
+                    rightButton.style.position = 'absolute'                
+                    rightButton.style.zIndex = '1'                
+           
+                    el.parentElement.appendChild leftButton
+                    el.parentElement.appendChild rightButton
+                
+                leftButton.style.top = (height/2-6)+'px'
+                rightButton.style.top = (height/2-6)+'px'
+                rightButton.style.left = (width-53)+'px'
+                console.log "offset width: "+el.offsetWidth
+                console.log "width: "+width
+                leftButton.addEventListener "mouseup", leftButtonClicked
+                rightButton.addEventListener "mouseup", rightButtonClicked
+                hideLeftButton()
+                hideRightButton()
+            
+            #Hide buttons if images are missing
+            hideLeftButton = () ->
+                leftButton = document.getElementById "leftButton" 
+                if active_image == 0                    
+                    leftButton.style.visibility = 'hidden';               
+                else 
+                    leftButton.style.visibility = 'visible';                 
+
+            hideRightButton = () ->    
+                rightButton = document.getElementById "rightButton" 
+                if active_image == slides.refs.length-1
+                    rightButton.style.visibility = 'hidden';               
+                else         
+                    rightButton.style.visibility = 'visible';                            
+                    
+            leftButtonClicked = (e) ->               
+                checkActive()
+                if slides.refs[active_image-1]
+                    active_image = active_image - 1
+                    snapTo()
+                               
+            rightButtonClicked = (e) ->
+                checkActive()
+                if slides.refs[active_image+1]
+                    active_image = active_image + 1
+                    snapTo()
+                              
             # Swipe/scroll in wrapper
             swipeTo = (offset) ->
                 el.scrollLeft = el.scrollLeft + offset
@@ -67,6 +126,8 @@
                 $(el).animate
                     scrollLeft: active_image * width
                 , 200, checkActive
+                hideLeftButton()
+                hideRightButton()
 
             # Pointer position
             active = false
@@ -189,10 +250,15 @@
                             # Update css
                             slide.style.backgroundSize = w + 'px ' + h + 'px'
                             slide.style.backgroundPosition = x + 'px ' + y + 'px'
-
+                        
+                        if slides.refs.length > 1
+                            addOverlayButtons()
+                        
                         snapTo()
+
                         timer = false
                     , 200
+                
             # When browser is resized
             window.addEventListener "resize", setDimensions
 

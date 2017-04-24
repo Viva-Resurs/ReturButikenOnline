@@ -7,17 +7,7 @@
             div( v-if="article.images && article.images.length>0" )
                 div.ui.basic.segment.center.aligned.preview_header(
                     v-swipe="article.images")
-                div.ui.basic.segment.center.aligned.preview_thumbs
-                    div.ui.buttons
-                        div.ui.tiny.left.aligned.images
-                            img.ui.image(
-                                ":src"="image.thumb_path"
-                                v-for="(image, index) in article.images"
-                                @click="setActiveImage(index)"
-                                ondrag="false"
-                                dragable="false"
-                                ":class" = "(image.selected) ? 'active' : 'disabled'")
-
+          
             div.ui.grid.equal.width
                 div.ui.left.aligned.column
                     h2.ui.header {{ article.name }}
