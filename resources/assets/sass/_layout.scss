@@ -24,3 +24,7 @@ html, body, #app {
 .link {
     cursor: pointer !important;
 }
+
+.ui.inverted.menu{
+    background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #009248), color-stop(1, #62bb46) ); 
+}
