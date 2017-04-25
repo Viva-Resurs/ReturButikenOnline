@@ -61,28 +61,32 @@
                 leftButton = document.getElementById "leftButton" 
                 rightButton = document.getElementById "rightButton" 
                 
-                if !leftButton                
+                if !leftButton || !rightButton               
                     leftButton = document.createElement 'i'
-                    leftButton.className = "huge chevron left icon"
+                    leftButton.className = "big chevron circle left icon"
                     leftButton.style.zIndex = '1'
                     leftButton.id = "leftButton"
                     leftButton.style.position = 'absolute'                
-                    leftButton.style.left = '20px';               
+                    leftButton.style.left = '0px';               
 
                     rightButton = document.createElement 'i'                
                     rightButton.id = "rightButton"           
-                    rightButton.className = "huge chevron right icon"                
+                    rightButton.className = "big chevron circle right icon"                
                     rightButton.style.position = 'absolute'                
                     rightButton.style.zIndex = '1'                
-           
+                    
+                    console.log el.parentElement
+
                     el.parentElement.appendChild leftButton
                     el.parentElement.appendChild rightButton
                 
-                leftButton.style.top = (height/2-6)+'px'
-                rightButton.style.top = (height/2-6)+'px'
-                rightButton.style.left = (width-53)+'px'
-                console.log "offset width: "+el.offsetWidth
-                console.log "width: "+width
+                leftButton.style.top = (height/2-16.5)+'px'
+                rightButton.style.top = (height/2-16.5)+'px'
+                rightButton.style.left = (width-28-6)+'px'
+                rightButton.style.margin = '0px'
+                
+                console.log "height: "+height                
+                console.log "height :"+height
                 leftButton.addEventListener "mouseup", leftButtonClicked
                 rightButton.addEventListener "mouseup", rightButtonClicked
                 hideLeftButton()
