@@ -2,6 +2,7 @@
 html, body, #app {
     width: 100%;
     height: 100%;
+    background-color: $body-bg !important
 }
 @media screen and (max-width: 768px) {
     .ui.container {
@@ -17,7 +18,7 @@ html, body, #app {
 }
 
 #rootcontainer, #footercontainer {
-    max-width: 880px !important;     
+    max-width: 880px !important;         
 }
 
 .link {
