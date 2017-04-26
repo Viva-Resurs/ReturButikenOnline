@@ -33,3 +33,11 @@ body.pushable>.pusher {
 .ui.inverted.menu{
     background-image: -webkit-gradient( linear, left bottom, left top, color-stop(0, #009248), color-stop(1, #62bb46) ); 
 }
+
+.no-padding {
+    padding: 0px !important;
+}
+
+.ui.card>.extra, .ui.cards>.card>.extra {
+    border-top: 1px solid $laravel-border-color !important;
+}
