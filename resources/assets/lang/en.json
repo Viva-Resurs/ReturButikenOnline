@@ -69,7 +69,7 @@
         "article_publish": "Publish"
     },
     "user_form": {
-        "header": "Users",
+        "header": "User Profile",
         "profile_photo_label": "Profile photo:",
         "user_name_label": "Username:",
         "user_name_placeholder": "Username",

@@ -16,39 +16,29 @@
                 div.item
                     div.ui.container.center.aligned
                         h3.ui.inverted.header {{ $root.settings.title }}
-                div.item( v-if="$root.isAdmin()" )
+                router-link.item( to="/ui/sections" exact v-if="$root.isAdmin()" )
                     i.icon.building
-                    div.header {{ translate('sections') }}
-                    div.menu
-                        router-link.item( to="/ui/sections" exact ) {{ translate('nav.list') }}
-                div.item( v-if="$root.isAdmin(2)" )
+                    |  {{ translate('sections') }}
+                router-link.item( to="/ui/users" exact v-if="$root.isAdmin(2)" )
                     i.icon.users
-                    div.header {{ translate('users') }}
-                    div.menu
-                        router-link.item( to="/ui/users" exact ) {{ translate('nav.list') }}
-                div.item
+                    |  {{ translate('users') }}
+                router-link.item( to="/ui/articles" exact )
                     i.icon.cubes
-                    div.header {{ translate('article.header') }}
-                    div.menu
-                        router-link.item( to="/ui/articles" exact ) {{ translate('nav.list') }}
-                        router-link.item( to="/ui/articles/create" exact ) {{ translate('article.add') }}
-                div.item( v-if="$root.isAdmin()" )
+                    |  {{ translate('article.header') }}
+                router-link.item( to="/ui/categories" exact v-if="$root.isAdmin()" )
                     i.icon.tags
-                    div.header {{ translate('categories') }}
-                    div.menu
-                        router-link.item( to="/ui/categories" exact ) {{ translate('nav.list') }}
-                div.item
-                    div.ui.label.grey {{ user.name }}
-                    div.header
-                        | {{ translate('nav.logged_in_as') }}
-                    div.vertical.menu
-                        router-link.item( to="/ui/users/profile" exact ) {{ translate('user.profile') }}
-                            i.icon.user
-                        a.item( @click="$root.exitUser()" ) {{ translate('user.logout') }}
-                            i.icon.sign.out
+                    |  {{ translate('categories') }}
+
+
+                router-link.item( to="/ui/users/profile" exact )
+                    i.icon.user
+                    |  {{ translate('user.profile') }}
                 a.item( href="docs" )
                     i.icon.help.circle
                     |  {{ translate('nav.help') }}
+                a.item( @click="$root.exitUser()" ) {{ translate('user.logout') }}
+                    i.icon.sign.out
+
         div.ui.grid.fluid.inverted.menu.computer.only.attached
             div.ui.container
                 router-link.item( to="/ui/" exact ) {{ $root.settings.title }}
