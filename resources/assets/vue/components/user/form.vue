@@ -51,7 +51,7 @@
                                         v-for="role in roles"
                                         ":data-value"="role.id" )
                                         | {{ role.name }}
-                        div.field( v-if="roles && $root.isAdmin()" )
+                        div.field( v-if="roles && !$root.isAdmin()" )
                             label {{ translate('user_form.select_section_label') }}
                             div.ui.fluid.selection.dropdown(
                                 v-if="sections"
