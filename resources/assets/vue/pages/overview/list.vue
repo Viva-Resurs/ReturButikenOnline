@@ -5,19 +5,29 @@
                 div.column.eight.wide
                     h2.ui.header
                         div.content {{ translate('overview.welcome') }}
-            div.ui.grid.two.columns.stackable( v-if="user" )
-                div.column.eight.wide
+            div.ui.grid.mobile.reversed.stackable.two.columns( v-if="user" )
+             
+                div.column.eight.wide.computer.tablet.only
                     h2.ui.header
-                        div.content {{ translate('overview.welcome') + ' ' + user.fullname }}
+                        div.content {{ user.fullname }}
                     p {{ translate('overview.welcome_info') }}
                     a( href="docs" ) {{ translate('overview.welcome_help') }}
-                div.column.right.floated.eight.wide
+                
+                div.column.center.aligned.eight.wide.mobile.only
+                    h2.ui.header
+                        div.content {{ user.fullname }}
+                    p {{ translate('overview.welcome_info') }}
+                    a( href="docs" ) {{ translate('overview.welcome_help') }}
+                
+
+                div.column.eight.wide
                     user-card(
                         v-if="user"
                         ":user"="user"
-                        "type" = "horizontal"
-                        "detailed"="true"
-                        picture="true" )
+                        picture = "picture_only"
+                       )
+             
+               
         div.ui.segment( v-if="user" )
             loading( v-if="$root.loading" )
             start-overview(
