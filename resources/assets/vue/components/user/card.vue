@@ -37,10 +37,11 @@
                     div.content
                         h4.ui.header
                             | {{ user.fullname }}
-                        div.meta
-                            div.right.floated.profile_img_right(
+                        
+                        div.right.floated.profile_img_right(
                                 v-if="user.images && user.images[0] && (picture != undefined)"
                                 ":style"="'background-image:url(\"'+user.images[0].path+'\");'" )
+                        div.meta
                             p
                                 i.icon.phone
                                 b &nbsp;{{ user.phone }}
@@ -56,6 +57,17 @@
                                     span
                                         i.icon.building
                                         b {{ section.name }}
+        
+        
+        div.ui.grid.equal.width(v-if="picture == 'picture_only' && user.images && user.images[0]")
+            div.column.tablet.computer.only
+                div.ui.basic.segment.right.floated                                
+                    div.profile_img_right(
+                        ":style"="'background-image:url(\"'+user.images[0].path+'\");'" )                
+            div.column.mobile.only
+                div.profile_img_medium(
+                    ":style"="'background-image:url(\"'+user.images[0].path+'\");'" )
+
 </template>
 <script lang="coffee">
     module.exports =
