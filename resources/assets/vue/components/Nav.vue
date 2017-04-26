@@ -36,7 +36,7 @@
                 a.item( href="docs" )
                     i.icon.help.circle
                     |  {{ translate('nav.help') }}
-                a.item( @click="$root.exitUser()" ) {{ translate('user.logout') }}
+                a.item( @click="attemptLogout()" ) {{ translate('user.logout') }}
                     i.icon.sign.out
 
         div.ui.grid.fluid.inverted.menu.computer.only.attached
@@ -70,7 +70,7 @@
                                 a.item( href="docs" )
                                     i.icon.help.circle
                                     |  {{ translate('nav.help') }}
-                                a.item( @click="$root.exitUser()" )
+                                a.item( @click="attemptLogout()" )
                                     i.icon.sign.out
                                     |  {{ translate('user.logout') }}
 </template>
@@ -81,6 +81,14 @@
         data: () ->
             user: false
         methods:
+            attemptLogout: () ->
+                bus.$emit 'show_message',
+                    title: @$root.translate('nav.logout_header')
+                    message: @$root.translate('nav.logout_msg')
+                    type:'confirm'
+                    cb: => this.$root.exitUser()
+
+
             menuToggle: () ->
                 $('.ui.sidebar').sidebar('toggle')
             navigate: (target) ->

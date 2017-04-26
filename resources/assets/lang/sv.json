@@ -157,7 +157,9 @@
         "list": "Lista",
         "logged_in_as": "Inloggad som",
         "help": "Hjälp",
-        "back": "Tillbaka"
+        "back": "Tillbaka",
+        "logout_header": "Logga ut",
+        "logout_msg": "Är du säker på att du vill logga ut?"
     },
     "login": {
         "header": "Inloggning",

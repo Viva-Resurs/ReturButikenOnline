@@ -16,7 +16,7 @@
     },
     "article": {
         "amount": "Amount",
-        "amount_validate": "Pleace enter amount of items",
+        "amount_validate": "Please enter amount of items",
         "pieces": "pcs",
         "header": "Articles",
         "add": "Add article",
@@ -38,7 +38,7 @@
         "price_validate": "Please enter price",
         "images_label": "Pictures:",
         "choose_date": "Select date",
-        "publish_interval_label": "Publish within dateinterval",
+        "publish_interval_label": "Publish within date interval",
         "publish_interval_header": "Publish interval",
         "bidding_interval_label": "Activate bidding",
         "bidding_interval_header": "Bidding interval",
@@ -60,11 +60,11 @@
         "publish_info_header": "Publish information",
         "publish_interval_header": "Publish interval",
         "bidding_interval_header": "Bidding interval",
-        "not_published": "The Article is missing a publish and bidding interval",
+        "not_published": "The article is missing a publish and bidding interval",
         "published_for_header": "Published for",
         "published_all": "All",
         "published_intra": "Municipal",
-        "article_not_found": "Article could not be found",
+        "article_not_found": "The article could not be found",
         "article_modify": "Modify",
         "article_publish": "Publish"
     },
@@ -108,7 +108,7 @@
         "published_all": "Published for all",
         "published_intra": "Published municipally",
         "remove_article_title": "Remove article: ",
-        "remove_article_message": "Sure you want to remove the article?",
+        "remove_article_message": "Are you sure you want to remove the article?",
         "article_removed": "Article removed",
         "article_updated": "Article updated",
         "success_message": "Success",
@@ -116,14 +116,14 @@
     },
     "user_list": {
         "remove_user_title": "Remove user",
-        "remove_user_message": "Sure you want to remove this user?",
+        "remove_user_message": "Are you sure you want to remove this user?",
         "user_removed": "User removed",
         "user_created": "User created",
         "success_message": "Success"
     },
     "section_list": {
         "remove_section_title": "Remove section",
-        "remove_section_message": "Sure you want to remove this section?",
+        "remove_section_message": "Are you sure you want to remove this section?",
         "section_removed": "Section removed",
         "section_updated": "Section updated",
         "success_message": "Success"
@@ -157,7 +157,9 @@
         "list": "List",
         "logged_in_as": "Logged in as",
         "help": "Help",
-        "back": "Back"
+        "back": "Back",
+        "logout_header": "Log out",
+        "logout_msg": "Are you sure you want to log out?"
     },
     "login": {
         "header": "Login",
