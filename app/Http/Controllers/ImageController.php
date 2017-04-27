@@ -88,15 +88,13 @@ class ImageController extends Controller
     }
 
     public function destroy($id){
-
-        if (!$user || !$user->hasRole('admin'))
-            abort(401,'Not allowed to list images');
+        $user = Auth::user();
 
         if (!$user)
-            abort(401,'Not allowed to remove images');
+            abort(401,'No user is logged in');
 
         $image = Image::find($id);
-
+        
         if (!$image)
             abort(404);
 
