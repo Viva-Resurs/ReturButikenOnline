@@ -4,7 +4,7 @@
             a.item( @click="openFilePicker()" )
                 i.upload.icon
                 | {{ translate('dropzone.upload') }}
-            a.item( @click="toggleDeleting()" ":class"="deleting?'active':''")
+            a.item( @click="toggleDeletion()" ":class"="deletion?'active':''")
                 i.remove.icon
                 | {{ translate('dropzone.remove') }}
         div.ui.segment.bottom.attached#dropZone
@@ -19,8 +19,9 @@
                     img.ui.fluid.rounded.image(
                         ":src"="image.thumb_path"
                         ":class"="(mode=='usefirst' && index==0)?'active':''" )
-                    a.ui.red.bottom.attached.label.center.aligned( v-if="deleting" )
+                    a.ui.red.bottom.attached.label.center.aligned( v-if="deletion" @click="deleteImage(image)")
                         i.remove.icon
+
                 div.ui.fluid.card( v-for="waiting in buffer" )
                     div.ui.loader.centered.inline.active
             div.ui.padded.eight.wide.grid(
@@ -46,10 +47,22 @@
                 return @images.sort (a, b) => a.order-b.order
         data: ->
             buffer: []
-            deleting: false
+            deletion: false
         methods:
-            toggleDeleting: ->
-                @deleting = !@deleting
+            toggleDeletion: ->
+                @deletion = !@deletion
+            
+            deleteImage: (image) ->  
+                console.log "Trigger deletion of image: "+image.id              
+                
+                @$http.delete('api/images/'+image.id).then(
+                    (response) =>
+                        bus.$emit 'image_removed', image
+                        $('#images').trigger 'refresh'
+                    (response) =>
+                        bus.$emit 'error', response.data                
+                )
+                
 
             openFilePicker: ->
                 $('#files').trigger 'click'
