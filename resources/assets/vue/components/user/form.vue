@@ -94,7 +94,7 @@
             div.ui.grid
                 div.column.right.aligned 
                     div.ui.button.secondary(
-                        @click="goBack()"
+                        @click="goBackTwoSteps"
                     ) {{ translate('nav.back') }}
                     div.ui.button.primary(
                         type="submit"
@@ -172,6 +172,11 @@
                         results += ','
                 return results
         methods:
+
+            goBackTwoSteps: ->
+                console.log "clicking back"
+                window.history.go(-2)
+
             updateImageOrder: ->
                 # Apply current order if any
                 @user.images = @user.images.sort (a, b) => a.order-b.order
