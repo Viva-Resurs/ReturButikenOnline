@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.segments
         div.ui.segment
-            div.ui.grid.two.columns.stackable( v-if="!user" )
+            div.ui.grid.equal.width.stackable( v-if="!user" )
                 div.column.eight.wide
                     h2.ui.header
                         div.content {{ translate('overview.welcome') }}
@@ -18,17 +18,15 @@
                         div.content {{ user.fullname }}
                     p {{ translate('overview.welcome_info') }}
                     a( href="docs" ) {{ translate('overview.welcome_help') }}
-                
-
+  
                 div.column.eight.wide
                     user-card(
                         v-if="user"
                         ":user"="user"
                         picture = "picture_only"
                        )
-             
-               
-        div.ui.segment( v-if="user" )
+                            
+        div.ui.segment.no-padding( v-if="user" )
             loading( v-if="$root.loading" )
             start-overview(
                 v-if="!$root.loading"
