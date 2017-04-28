@@ -1,6 +1,6 @@
 <template lang="pug">
     div            
-        div.ui.equal.width.grid.stackable.steps.segment
+        div.ui.equal.width.grid.stackable.steps.padded.segment
             div.column.step(
                 v-if="$root.isAdmin()"
                 ":class"="!section ? 'active' : ''" )
@@ -108,3 +108,8 @@
                 bus.$emit 'article_changed', @article_tree[0]
 
 </script>
+<style>
+    .ui.equal.width.grid.stackable.steps.padded.segment{
+        padding: 0px;
+    }
+</style>
