@@ -175,9 +175,13 @@
             updateImageOrder: ->
                 # Apply current order if any
                 @user.images = @user.images.sort (a, b) => a.order-b.order
+                                
                 # Then set it
                 for image, index in @user.images
                     image.order = index
+
+                @$root.user = @user
+                       
             attemptSave: ->
                 # Skip password?
                 if !@settings.change_password
@@ -212,6 +216,7 @@
                 for index, img of @user.images
                     if Number(img.id) == Number(image.id)
                         @user.images.splice index, 1
+                        
                 @updateImageOrder()
             bus.$on 'image_reorder', =>
                 @updateImageOrder()
