@@ -13,9 +13,10 @@
                                     div.left.aligned.column
                                         p.middle.aligned {{ translate('page') }} {{currentPage}} / {{totalPages}}
                                     div.right.aligned.column
-                                        div.ui.right.basic.compact.button.fluid.dropdown#limit( v-dropdown="" )
-                                            div.default.value {{ limit }}
+                                        div.ui.two.columns.right.basic.compact.button.fluid.dropdown#limit( v-dropdown="" )
+                                            div.left.aligned.column
                                                 i.dropdown.left.icon
+                                            div.default.value.right.aligned.column {{ limit }}
                                             div.left.menu
                                                 div.item(
                                                     v-for="option in limitOptions"
