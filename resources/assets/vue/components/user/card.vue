@@ -28,7 +28,8 @@
                                 p( v-for="section in user.sections")
                                     span
                                         i.icon.building
-                                        b {{ section.name }}
+                                        b(v-if="getLanguage()=='sv'") {{ section.name_sv }}
+                                        b(v-else="") {{ section.name }}
         div.ui.segment( v-if="type == 'horizontal'")
             div.ui.items
                 div.item

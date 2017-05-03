@@ -53,9 +53,9 @@ class SectionTableSeeder extends Seeder {
         DB::table('sections')->truncate();
         $section = Section::create([
            'name' => config('returbutiken.settings.sections.section1.name'),
-           'name_sv' => config('returbutiken.settings.sections.section1.name_sv'),           
-           'desc' => config('returbutiken.settings.sections.section1.desc')            
-        ]);    
+           'name_sv' => config('returbutiken.settings.sections.section1.name_sv'),
+           'desc' => config('returbutiken.settings.sections.section1.desc')
+        ]);
         $section->save();
     }
 }
@@ -72,7 +72,7 @@ class UsersTableSeeder extends Seeder {
             'password' => Hash::make(config('returbutiken.settings.users.administrator.password'))
         ]);
 
-        $admin->assignRole('admin'); 
+        $admin->assignRole('admin');
 
         $sectionadmin = User::create([
             'name'     => config('returbutiken.settings.users.sectionadmin.username'),
@@ -82,12 +82,10 @@ class UsersTableSeeder extends Seeder {
             'password' => Hash::make(config('returbutiken.settings.users.sectionadmin.password'))
         ]);
 
-        $admin->assignRole('admin'); 
+        $admin->assignRole('admin');
 
         $sectionadmin->assignRole('sectionadmin');
-        $sectionadmin->assignSection('IT-avdelningen');
+        $sectionadmin->assignSection('IT-department');
 
     }
 }
-
-
