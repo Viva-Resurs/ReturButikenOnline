@@ -1,16 +1,17 @@
 <template lang="pug">
     div
         div.ui.inverted.menu.tablet.mobile.only.grid.attached.borderless
-            a.item.left.floated
-                router-link( to="/ui/" exact ) {{ $root.settings.title }}
-            a.item.right.floated( v-if="user" @click="menuToggle" )
-                | {{ translate('nav.menu') }} &nbsp;
-                i.icon.content
-                | &nbsp;&nbsp;
-            router-link.item.right.floated( v-if="!user" to="/ui/auth/login" exact )
-                | {{ translate('user.login') }} &nbsp;
-                i.icon.sign.in
-                | &nbsp;&nbsp;
+            div.ui.container.no-padding(style="max-width: 880px")
+                a.item.left.floated
+                    router-link( to="/ui/" exact ) {{ $root.settings.title }}
+                a.item.right.floated( v-if="user" @click="menuToggle" )
+                    | {{ translate('nav.menu') }} &nbsp;
+                    i.icon.content
+                    | &nbsp;&nbsp;
+                router-link.item.right.floated( v-if="!user" to="/ui/auth/login" exact )
+                    | {{ translate('user.login') }} &nbsp;
+                    i.icon.sign.in
+                    | &nbsp;&nbsp;
         div.ui.right.vertical.inverted.sidebar.labeled.menu
             div( v-if="user" @click="menuToggle()" )
                 div.item
@@ -40,7 +41,7 @@
                     i.icon.sign.out
 
         div.ui.grid.fluid.inverted.menu.computer.only.attached
-            div.ui.container
+            div.ui.container.no-padding(style="width: 880px")
                 router-link.item( to="/ui/" exact ) {{ $root.settings.title }}
                 div.ui.right.inverted.menu
                     template( v-if="!user" )
