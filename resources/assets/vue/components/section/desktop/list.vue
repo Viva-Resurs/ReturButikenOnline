@@ -34,7 +34,11 @@
                             td.center.aligned
                             td
                                 div.ui.input.fluid
-                                    input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
+                                    input( v-model="item.name" ":placeholder"="translate('section.name_placeholder')"
+                                    v-focus="" )
+                             
+                                div.ui.input.fluid
+                                    input( v-model="item.name_sv" ":placeholder"="translate('section.name_placeholder_sv')"
                                     v-focus="" )
                             td
                             td.right.aligned
@@ -50,9 +54,17 @@
                             td
                                 div.ui.input.fluid( v-if="item.edit" )
                                     input( v-model="item.name_new"
-                                    ":placeholder"="translate('placeholder.type')+' '+translate('name')"
+                                    ":placeholder"="translate('section.name_placeholder')"
                                     v-focus="" ).collapsing
-                                span( v-if="!item.edit" ) {{ item.name }}
+                                span( v-if="!item.edit && getLang()=='en'" ) {{ item.name }}
+                                
+                                div.ui.input.fluid( v-if="item.edit" )
+                                    input( v-model="item.name_sv_new"
+                                    ":placeholder"="translate('section.name_placeholder_sv')"
+                                    v-focus="" ).collapsing
+                                span( v-if="!item.edit && getLang()=='sv'" ) {{ item.name_sv }}
+                              
+                                
                             td
                                 span( v-for="(user, column_index) in item.users")
                                     span {{ user.name }}
@@ -102,4 +114,8 @@
         methods:
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
+            
+            getLang: () ->
+                console.log @$root.settings.lang 
+                return @$root.settings.lang
 </script>
