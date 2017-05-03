@@ -32,4 +32,7 @@
                     if process.env.NODE_ENV == "development"
                         console.warn 'Missing lang-data for '+label
                     return label
+            getLanguage: () ->
+                #get the language variable for translations
+                return @$root.settings.lang
 </script>
