@@ -53,7 +53,8 @@ class SectionTableSeeder extends Seeder {
         DB::table('sections')->truncate();
         $section = Section::create([
            'name' => config('returbutiken.settings.sections.section1.name'),
-           'desc' => config('returbutiken.settings.sections.section1.desc') 
+           'name_sv' => config('returbutiken.settings.sections.section1.name_sv'),           
+           'desc' => config('returbutiken.settings.sections.section1.desc')            
         ]);    
         $section->save();
     }

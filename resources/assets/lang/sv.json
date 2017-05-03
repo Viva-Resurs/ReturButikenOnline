@@ -1,6 +1,8 @@
 {
-    "section": {
-        "header": "Avdelningar"
+   "section": {
+        "header": "Avdelningar",
+        "name_placeholder": "Engelskt namn",
+        "name_placeholder_sv": "Svenskt namn"
     },
     "user": {
         "header": "Användare",

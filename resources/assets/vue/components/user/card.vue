@@ -12,25 +12,23 @@
                 h4.ui.header(v-else)
                     | {{ user.fullname }}
                 div.description
-                    div.ui.items
-                        div.item
-                            div.content
-                                div.meta
-                                    p
-                                        i.icon.phone
-                                        b &nbsp;{{ user.phone }}
-                                    p
-                                        i.icon.mail
-                                        b {{ user.email }}
-                                    div(v-if="detailed != undefined")
-                                        p( v-for="role in user.roles")
-                                            span
-                                                i.icon.unlock.alternate
-                                                b {{ role.name }}
-                                        p( v-for="section in user.sections")
-                                            span
-                                                i.icon.building
-                                                b {{ section.name }}
+                    div.ui.basic.segment.no-padding
+                        div.content
+                            p
+                                i.icon.phone
+                                b &nbsp;{{ user.phone }}
+                            p
+                                i.icon.mail
+                                b {{ user.email }}
+                            div(v-if="detailed != undefined")
+                                p( v-for="role in user.roles")
+                                    span
+                                        i.icon.unlock.alternate
+                                        b {{ role.name }}
+                                p( v-for="section in user.sections")
+                                    span
+                                        i.icon.building
+                                        b {{ section.name }}
         div.ui.segment( v-if="type == 'horizontal'")
             div.ui.items
                 div.item

@@ -24,7 +24,8 @@ return [
         ],
         'sections' => [
             'section1' => [
-                'name' => 'IT-avdelningen',
+                'name' => 'IT-department',
+                'name_sv' => 'IT-avdelningen',
                 'desc' => 'Returbutikens IT-avdelning'
           ]
         ],

@@ -35,6 +35,7 @@ class SectionController extends Controller
                 array_push( $results, [
                     'id' => $section->id,
                     'name' => $section->name,
+                    'name_sv' => $section->name_sv,
                     'users' => $section->users
                 ]);
             }
@@ -46,6 +47,7 @@ class SectionController extends Controller
                         array_push( $results, [
                             'id' => $section->id,
                             'name' => $section->name,
+                            'name_sv' => $section->name_sv,
                             'users' => $section->users
                         ]);
                 }
@@ -66,7 +68,8 @@ class SectionController extends Controller
             abort(401,'Not allowed to create sections');
 
         $section = new Section([
-            'name' => ($request->has('name')) ? $request['name'] : 'namnlös sektion',
+            'name' => ($request->has('name')) ? $request['name'] : 'nameless section',
+            'name_sv' => ($request->has('name_sv')) ? $request['name_sv'] : 'namnlös sektion',
             'desc' => ($request->has('desc')) ? $request['desc'] : ''
         ]);
 

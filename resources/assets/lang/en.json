@@ -1,6 +1,8 @@
 {
     "section": {
-        "header": "Sections"
+        "header": "Sections",
+        "name_placeholder": "English name",
+        "name_placeholder_sv": "Swedish name"
     },
     "user": {
         "header": "Users",
