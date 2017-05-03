@@ -16,7 +16,7 @@
                     # Try to find a match
                     if lang[c] && lang[c][l] != undefined
                         if process.env.NODE_ENV == "development"
-                            return '⚐ '+lang[c][l]
+                            return lang[c][l]
                         return lang[c][l]
                     else
                         if process.env.NODE_ENV == "development"
@@ -26,7 +26,7 @@
                 # Try to find a match
                 if lang[label] != undefined
                     if process.env.NODE_ENV == "development"
-                        return '⚐ '+lang[label]
+                        return lang[label]
                     return lang[label]
                 else
                     if process.env.NODE_ENV == "development"
