@@ -29,10 +29,10 @@
                     i.icon.tags
                     |  {{ translate('categories') }}
 
+                a.item( @click="goToProfile()" exact) 
+                                i.icon.user
+                                |  {{ translate('user.profile') }}
 
-                router-link.item( to="/ui/users/profile" exact )
-                    i.icon.user
-                    |  {{ translate('user.profile') }}
                 a.item( href="docs" )
                     i.icon.help.circle
                     |  {{ translate('nav.help') }}
@@ -64,9 +64,10 @@
                         div.ui.dropdown.item( v-dropdown="" ) {{ user.name }}
                             i.dropdown.icon
                             div.menu
-                                router-link.item( to="/ui/users/profile" exact )
+                                a.item( @click="goToProfile()" exact) 
                                     i.icon.user
                                     |  {{ translate('user.profile') }}
+                      
                                 a.item( href="docs" )
                                     i.icon.help.circle
                                     |  {{ translate('nav.help') }}
@@ -81,6 +82,9 @@
         data: () ->
             user: false
         methods:
+            goToProfile: () -> 
+                @$router.push path: '/ui/users/'+@$root.user.id
+                
             attemptLogout: () ->
                 bus.$emit 'show_message',
                     title: @$root.translate('nav.logout_header')
