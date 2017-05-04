@@ -25,9 +25,16 @@
                     tbody( v-item="$route.hash.substr(1)" )
                         tr( v-for="(item, index) in itemsNew" )
                             td.slim
+                                p English translation:
                                 div.ui.input.fluid
-                                    input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
-                                    v-focus="" )
+                                    input( v-model="item.name" ":placeholder"="translate('section.name_placeholder')"
+                                    v-focus="" ) 
+
+                                p Swedish translation:                                                                
+                                div.ui.input.fluid
+                                    input( v-model="item.name_sv" ":placeholder"="translate('section.name_placeholder_sv')"
+                                    v-focus="" ) 
+    
                             td.collapsing.bottom.aligned
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
@@ -38,11 +45,19 @@
                                 div.ui.item.fluid(style="margin-left: 5px;")
                                     div.ui.input.fluid( v-if="item.edit" )
                                         input( v-model="item.name_new"
-                                        ":placeholder"="translate('placeholder.type')+' '+translate('name')"
+                                        ":placeholder"="translate('section.name_placeholder')"
                                         v-focus="" ).collapsing
+
+                                    div.ui.input.fluid( v-if="item.edit" )
+                                        input( v-model="item.name_sv_new"
+                                        ":placeholder"="translate('section.name_placeholder_sv')"
+                                        v-focus="" ).collapsing
+                                    
                                     div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name)" )
-                                        h4.ui.sub.header {{ translate('name') }}
-                                        p {{ item.name }}
+                                        h4.ui.sub.header {{ translate('name') }}                                        
+                                        p( v-if="getLanguage()=='sv'" ) {{ item.name_sv }}
+                                        p( v-else="") {{ item.name }}
+
                                     div.ui.vertical.segment.basic( "v-if"="itemHaveData('users', item.users)" )
                                         h4.ui.sub.header {{ translate('users') }}
                                         p
