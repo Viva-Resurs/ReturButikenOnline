@@ -25,12 +25,10 @@
                     tbody( v-item="$route.hash.substr(1)" )
                         tr( v-for="(item, index) in itemsNew" )
                             td.slim
-                                p English translation:
                                 div.ui.input.fluid
                                     input( v-model="item.name" ":placeholder"="translate('section.name_placeholder')"
                                     v-focus="" ) 
 
-                                p Swedish translation:                                                                
                                 div.ui.input.fluid
                                     input( v-model="item.name_sv" ":placeholder"="translate('section.name_placeholder_sv')"
                                     v-focus="" ) 
