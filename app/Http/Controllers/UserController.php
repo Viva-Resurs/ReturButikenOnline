@@ -55,7 +55,8 @@ class UserController extends Controller
             foreach ($user->sections as $section)
                 array_push($u['sections'],[
                     'id' => $section->id,
-                    'name' => $section->name
+                    'name' => $section->name,
+                    'name_sv' => $section->name_sv
                 ]);
 
             foreach ($user->images()->orderBy('order')->get() as $image)

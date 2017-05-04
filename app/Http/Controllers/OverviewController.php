@@ -33,7 +33,7 @@ class overviewController extends Controller
                 'contacts' => []
             ];
             foreach ($section->users as $user){
-                if ($user->hasRole('sectionadmin')){
+                if ($user){
                     $tUser = [
                         'id' => $user->id,
                         'name' => $user->name,
