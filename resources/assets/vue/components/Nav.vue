@@ -30,7 +30,7 @@
                     i.icon.tags
                     |  {{ translate('categories') }}
 
-                a.item( @click="goToProfile()" exact) 
+                a.item( @click="goToProfile()" exact)
                                 i.icon.user
                                 |  {{ translate('user.profile') }}
 
@@ -43,7 +43,7 @@
         div.ui.grid.fluid.inverted.menu.computer.only.attached
             div.ui.container.no-padding(style="width: 880px")
                 router-link.item( to="/ui/" exact ) {{ $root.settings.title }}
-                div.ui.right.inverted.menu
+                div.ui.right.inverted.menu(style="border-right: 1px solid rgba(34,36,38,.1);")
                     template( v-if="!user" )
                         router-link.item( to="/ui/auth/login" exact ) {{ translate('user.login') }}
                     template( v-if="user" )
@@ -65,10 +65,10 @@
                         div.ui.dropdown.item( v-dropdown="" ) {{ user.name }}
                             i.dropdown.icon
                             div.menu
-                                a.item( @click="goToProfile()" exact) 
+                                a.item( @click="goToProfile()" exact)
                                     i.icon.user
                                     |  {{ translate('user.profile') }}
-                      
+
                                 a.item( href="docs" )
                                     i.icon.help.circle
                                     |  {{ translate('nav.help') }}
@@ -83,9 +83,9 @@
         data: () ->
             user: false
         methods:
-            goToProfile: () -> 
+            goToProfile: () ->
                 @$router.push path: '/ui/users/'+@$root.user.id
-                
+
             attemptLogout: () ->
                 bus.$emit 'show_message',
                     title: @$root.translate('nav.logout_header')
