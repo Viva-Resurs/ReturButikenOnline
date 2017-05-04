@@ -70,6 +70,7 @@
                 Vue.set item, 'edit', true
                 for key in @columns
                     Vue.set item, key+'_new', item[key]
+                    Vue.set item, key+'_sv_new', item[key+'_sv']
 
             revertItem: (item) ->
                 Vue.set item, 'edit', false
@@ -77,7 +78,9 @@
             attemptUpdate: (item) ->
                 Vue.set item, 'edit', false
                 for key in @columns
+                    console.log key
                     Vue.set item, key, item[key+'_new']
+                    Vue.set item, key+'_sv', item[key+'_sv_new']
                 @$http.put('api/sections/'+item.id, item).then(
                     (response) =>
                         Vue.set item, 'updated_at', response.data.updated_at
