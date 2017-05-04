@@ -68,7 +68,7 @@
                                         div.item(
                                             v-for="section in sections"
                                             ":data-value"="section.id" )
-                                            | {{ section.name }}
+                                            | {{ getLanguage() == 'sv' ? section.name_sv : section.name }}
                 div.row.stackable
                     div.eight.wide.column
                         div.field

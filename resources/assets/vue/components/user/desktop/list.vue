@@ -48,7 +48,7 @@
                             td {{ item.fullname }}
                             td
                                 span( v-for="(section, column_index) in item.sections")
-                                    span {{ section.name }}
+                                    span {{ getLanguage() == 'sv' ? section.name_sv : section.name }}
                                     span( v-if="(column_index != item.sections.length -1)") ,{{ ' ' }}
                             td
                                 span( v-for="(role, column_index) in item.roles")
