@@ -29,6 +29,7 @@ class overviewController extends Controller
             $tSection = [
                 'id' => $section['id'],
                 'name' => $section['name'],
+                'name_sv' => $section['name_sv'],
                 'contacts' => []
             ];
             foreach ($section->users as $user){

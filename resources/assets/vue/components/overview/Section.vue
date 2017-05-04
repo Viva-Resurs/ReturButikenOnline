@@ -9,7 +9,7 @@
             a.item(
                 v-for="section in sections"
                 ":class"="section.selected ? 'active':''"
-                @click="selectSection(section)" ) {{ section.name }}
+                @click="selectSection(section)" ) {{ getLanguage() == 'sv' ? section.name_sv : section.name }}
                 div.ui.small.label(
                     ":class"="section.contacts.length>0 ? 'black' : 'grey'" )
                     | {{ section.contacts.length }}

@@ -36,6 +36,8 @@
                                 type="password"
                                 "v-model"="user.password"
                                 placeholder="***" )
+                div.row.stackable
+                    div.eight.wide.column
                         div.field( v-if="$root.isAdmin()" )                           
                             label {{ translate('user_form.select_role_label') }}
                             div.ui.fluid.selection.dropdown(
@@ -51,23 +53,23 @@
                                         v-for="role in roles"
                                         ":data-value"="role.id" )
                                         | {{ role.name }}
-
-                        div.field( v-if="roles && !$root.isAdmin()" )
-                            label {{ translate('user_form.select_section_label') }}
-                            div.ui.fluid.selection.dropdown(
-                                v-if="sections"
-                                name="sections"
-                                v-dropdown=""
-                                ":data-selected"="selectedSections" )
-                                input#sections( type="hidden" )
-                                div.default.text {{ translate('user_form.select_section_default_text') }}
-                                i.dropdown.icon
-                                div.menu
-                                    div.item(
-                                        v-for="section in sections"
-                                        ":data-value"="section.id" )
-                                        | {{ section.name }}
-                div.row
+                    div.eight.wide.column                 
+                        div.field( v-if="sections" )
+                                label {{ translate('user_form.select_section_label') }}
+                                div.ui.fluid.selection.dropdown(
+                                    v-if="sections"
+                                    name="sections"
+                                    v-dropdown=""
+                                    ":data-selected"="selectedSections" )
+                                    input#sections( type="hidden" )
+                                    div.default.text {{ translate('user_form.select_section_default_text') }}
+                                    i.dropdown.icon
+                                    div.menu
+                                        div.item(
+                                            v-for="section in sections"
+                                            ":data-value"="section.id" )
+                                            | {{ section.name }}
+                div.row.stackable
                     div.eight.wide.column
                         div.field
                             label {{ translate('user_form.fullname_label') }}
