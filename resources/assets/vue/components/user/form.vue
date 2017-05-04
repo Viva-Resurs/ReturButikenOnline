@@ -36,7 +36,6 @@
                                 type="password"
                                 "v-model"="user.password"
                                 placeholder="***" )
-                        p {{ $root.isAdmin() }}
                         div.field( v-if="$root.isAdmin()" )                           
                             label {{ translate('user_form.select_role_label') }}
                             div.ui.fluid.selection.dropdown(
