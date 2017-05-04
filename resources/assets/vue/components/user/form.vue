@@ -36,7 +36,8 @@
                                 type="password"
                                 "v-model"="user.password"
                                 placeholder="***" )
-                        div.field( v-if="$root.isAdmin()" )
+                        p {{ $root.isAdmin() }}
+                        div.field( v-if="$root.isAdmin()" )                           
                             label {{ translate('user_form.select_role_label') }}
                             div.ui.fluid.selection.dropdown(
                                 v-if="roles"
@@ -51,6 +52,7 @@
                                         v-for="role in roles"
                                         ":data-value"="role.id" )
                                         | {{ role.name }}
+
                         div.field( v-if="roles && !$root.isAdmin()" )
                             label {{ translate('user_form.select_section_label') }}
                             div.ui.fluid.selection.dropdown(
@@ -180,8 +182,9 @@
                 # Then set it
                 for image, index in @user.images
                     image.order = index
-
-                @$root.user = @user
+                
+                if (@$root.user.id == @user.id)
+                    @$root.user = @user   
                        
             attemptSave: ->
                 # Skip password?
