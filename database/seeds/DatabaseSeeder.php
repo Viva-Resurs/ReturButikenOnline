@@ -82,8 +82,6 @@ class UsersTableSeeder extends Seeder {
             'password' => Hash::make(config('returbutiken.settings.users.sectionadmin.password'))
         ]);
 
-        $admin->assignRole('admin');
-
         $sectionadmin->assignRole('sectionadmin');
         $sectionadmin->assignSection('IT-department');
 
