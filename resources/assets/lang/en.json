@@ -145,7 +145,10 @@
     "goto":{
         "sections": "Go to sections",
         "users": "Go to users",
-        "articles": "Go to articles"
+        "articles": "Go to articles",
+        "createArticle": "Create new article",
+        "createUser": "Create new user",
+        "createSection": "Create new section"
     },
     "overview": {
         "overview": "Overview",

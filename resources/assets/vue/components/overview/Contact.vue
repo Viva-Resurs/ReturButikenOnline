@@ -1,11 +1,21 @@
 <template lang="pug">
     div.ui.grid.padded
-        div.ui.vertical.fluid.compact.menu.computer.tablet.only.row
-            router-link.item.header( to="/ui/users" )
-                | {{ translate('contacts') }}
-                i.icon.external.square(
-                    v-tooltip = ""
-                    ":data-html" = "translate('goto.users')" )
+        div.ui.vertical.fluid.compact.menu.computer.tablet.only.row(style="padding-top: 0px !important")
+            div.ui.grid.item.header(
+                style="padding-top: 10px !important; padding-bottom: 4px !important; padding-left: 10px !important; padding-right: 6px !important")
+                div.thirteen.wide.column(style="padding: 0px !important")
+                    | {{ translate('contacts') }}
+                div.ui.container.right.aligned.three.wide.column(style="padding: 0px !important; margin: 0px !important")
+                    router-link( to="/ui/users" )
+                        i.black.icon.external.square(
+                            style="margin: 0px !important"
+                            v-tooltip = ""
+                            ":data-html" = "translate('goto.users')" )
+                    router-link( to="/ui/users/create" )
+                        i.black.plus.icon.square.right.floated(
+                            style="margin: 0px !important"
+                            v-tooltip = ""
+                            ":data-html" = "translate('goto.createUser')" )
             a.item(
                 v-for="contact in contacts"
                 ":class"="contact.selected ? 'active':''"

@@ -145,7 +145,10 @@
     "goto":{
         "sections": "Gå till avdelningar",
         "users": "Gå till användare",
-        "articles": "Gå till artiklar"
+        "articles": "Gå till artiklar",
+        "createArticle": "Skapa ny artikel",
+        "createUser": "Skapa ny användare",
+        "createSection": "Skapa ny avdelning"
     },
     "overview":{
         "overview": "Översikt",
