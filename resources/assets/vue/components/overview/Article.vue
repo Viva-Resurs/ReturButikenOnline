@@ -1,19 +1,16 @@
 <template lang="pug">
-    div.ui.grid.padded
-        div.ui.vertical.fluid.compact.menu.computer.tablet.only.row(style="padding-top: 0px !important")
-            div.ui.grid.item.header(
-                style="padding-top: 10px !important; padding-bottom: 4px !important; padding-left: 10px !important; padding-right: 6px !important")
-                div.thirteen.wide.column(style="padding: 0px !important")
+    div.ui.grid.padded.start-item
+        div.ui.vertical.fluid.compact.menu.computer.tablet.only.row
+            div.ui.grid.item.header               
+                div.twelve.wide.column
                     | {{ translate('article.header') }}
-                div.ui.container.right.aligned.three.wide.column(style="padding: 0px !important; margin: 0px !important")
+                div.ui.container.right.aligned.four.wide.column
                     router-link( to="/ui/articles" )
-                        i.black.icon.external.square(
-                            style="margin: 0px !important"
+                        i.black.icon.external.square(                       
                             v-tooltip = ""
                             ":data-html" = "translate('goto.articles')" )
                     router-link( to="/ui/articles/create" )
-                        i.black.plus.icon.square(
-                            style="margin: 0px !important"
+                        i.black.plus.icon.square.right.floated(                           
                             v-tooltip = ""
                             ":data-html" = "translate('goto.createArticle')" )
             a.item(
