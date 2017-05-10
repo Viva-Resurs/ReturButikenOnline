@@ -6,27 +6,27 @@
                     h2.ui.header
                         div.content {{ translate('overview.welcome') }}
             div.ui.grid.mobile.reversed.stackable.two.columns( v-if="user" )
-             
+
                 div.column.eight.wide.computer.tablet.only
                     h2.ui.header
                         div.content {{ user.fullname }}
                     p {{ translate('overview.welcome_info') }}
                     a( href="docs" ) {{ translate('overview.welcome_help') }}
-                
+
                 div.column.center.aligned.eight.wide.mobile.only
                     h2.ui.header
                         div.content {{ user.fullname }}
                     p {{ translate('overview.welcome_info') }}
                     a( href="docs" ) {{ translate('overview.welcome_help') }}
-  
+
                 div.column.eight.wide
                     user-card(
                         v-if="user"
                         ":user"="user"
                         picture = "picture_only"
                        )
-                            
-        div.ui.segment.no-padding( v-if="user" )
+
+        div.ui.no-padding( v-if="user" )
             loading( v-if="$root.loading" )
             start-overview(
                 v-if="!$root.loading"
@@ -81,7 +81,7 @@
                         @$root.loading = false
                 )
 
-            previewArticle: (article) ->               
+            previewArticle: (article) ->
                 @$router.push @$root.encodeArtNR article
 
             attemptRemove: (article) ->

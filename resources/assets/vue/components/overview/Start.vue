@@ -1,28 +1,32 @@
 <template lang="pug">
-    div            
-        div.ui.equal.width.grid.stackable.steps.padded.segment
-            div.column.step(
-                v-if="$root.isAdmin()"
-                ":class"="!section ? 'active' : ''" )
-                section-overview( ":sections"="getSections" )
-            div.column.step(
-                v-if="$root.isAdmin(2)"
-                ":class"="section && !contact ? 'active' : ''" )
-                contact-overview( ":contacts"="getContacts" )
-            div.column.step(
-                ":class"="contact && !article ? 'active' : ''" )
-                article-overview( ":articles"="getArticles" )
-
-        article-card(
-            ":item"="article"
-            ":tools"=`[
-                $options.components.PublishInterval,
-                $options.components.BiddingInterval,
-                $options.components.Preview,
-                $options.components.Edit,
-                $options.components.Remove ]`
-            "from"="start"
-            )
+    div
+        div.ui.segments
+            div.ui.segment.equal.width.grid.stackable.padded.steps(style="padding: 1px !important")
+                div.column.step(
+                    style="padding: 4px !important; border: 0px !important"
+                    v-if="$root.isAdmin()"
+                    ":class"="!section ? 'active' : ''" )
+                    section-overview( ":sections"="getSections" )
+                div.column.step.right.floated(
+                    style="padding: 4px !important; border: 0px !important"
+                    v-if="$root.isAdmin(2)"
+                    ":class"="section && !contact ? 'active' : ''" )
+                    contact-overview( ":contacts"="getContacts" )
+                div.column.step(
+                    style="padding: 4px !important; border: 0px !important"
+                    ":class"="contact && !article ? 'active' : ''" )
+                    article-overview( ":articles"="getArticles" )
+        div.ui.segments
+            article-card(
+                ":item"="article"
+                ":tools"=`[
+                    $options.components.PublishInterval,
+                    $options.components.BiddingInterval,
+                    $options.components.Preview,
+                    $options.components.Edit,
+                    $options.components.Remove ]`
+                "from"="start"
+                )
 </template>
 
 <script lang="coffee">
