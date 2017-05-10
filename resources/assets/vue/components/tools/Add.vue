@@ -1,10 +1,16 @@
 <template lang="pug">
-    div.ui.icon.button.hover-primary(
+    div.ui.icon.button.hover-default(
+        style="margin-right: 0px"
         v-tooltip = ""
         ":data-html" = "translate('tool.add')"
         @click    = "add()"
     )
-        i.ui.icon.plus
+        i.ui.large.icons( style="margin-left: 3px")
+            i.user.icon(v-if="from=='users'" style="margin-right: 3px")
+            i.cube.icon(v-if="from=='articles'" style="margin-right: 3px")
+            i.building.icon(v-if="from=='sections'" style="margin-right: 3px")
+            i.tag.icon(v-if="from=='categories'" style="margin-right: 3px")
+            i.corner.plus.icon
 </template>
 
 <script lang="coffee">
