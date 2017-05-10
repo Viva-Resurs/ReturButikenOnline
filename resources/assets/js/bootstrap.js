@@ -7,6 +7,18 @@
 
 window.$ = window.jQuery = require('jquery/dist/jquery.js');
 
+
+/**
+ * JQuery UI
+ */
+require('jquery-ui-dist/jquery-ui.min.js');
+
+/**
+ * JQuery UI Touch Punch
+ * Lib used for setting elements draggable on mobile devices.
+ */
+require('jquery-ui-touch-punch/jquery.ui.touch-punch.min.js');
+
 /**
  * Semantic UI
  * Require used components
@@ -32,6 +44,7 @@ window.moment = require('moment');
  * https://github.com/mdehoog/Semantic-UI-Calendar
  */
 require('semantic-ui-calendar/dist/calendar.js');
+
 
 
 /**
