@@ -1,7 +1,7 @@
 <template lang="pug">
     div.ui.small.modal.event-modal           
         div.header {{ title }}
-        div.top.bottom.attached.(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
+        div.top.bottom.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
             i(":class"="[selected_action.icon]") 
             div.header {{ message }}
         
@@ -28,7 +28,7 @@
                     img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
 
         div.ui.grid.segment.bottom.inverted.attached
-            div.center.aligned.column.actions(style="padding-bottom: 0px")
+            div.center.aligned.column.actions(":style"="screenType == 'desktop' ? '' : 'padding-bottom: 0px'  ")
                 div(v-for="button in selected_action.buttons"
                 ":class"="[button.class]") {{button.label}}
 </template>
