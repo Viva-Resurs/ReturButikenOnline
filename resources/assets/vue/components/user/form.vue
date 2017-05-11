@@ -37,8 +37,8 @@
                                 "v-model"="user.password"
                                 placeholder="***" )
                 div.row.stackable.equal.width
-                    div.column
-                        div.field( v-if="$root.isAdmin()" )                           
+                    div.column(v-if="$root.isAdmin()") 
+                        div.field                           
                             label {{ translate('user_form.select_role_label') }}
                             div.ui.fluid.selection.dropdown(
                                 v-if="roles"
@@ -53,7 +53,7 @@
                                         v-for="role in roles"
                                         ":data-value"="role.id" )
                                         | {{ role.name }}
-                    div.column(v-if="user.roles[0].name != 'admin'")                 
+                    div.column(v-if="!userIsAdmin")                 
                         div.field( v-if="sections" )
                                 label {{ translate('user_form.select_section_label') }}
                                 div.ui.fluid.selection.dropdown(
@@ -174,8 +174,15 @@
                     if index < @user.sections.length
                         results += ','
                 return results
+            
+            userIsAdmin: ->
+                isAdmin = false
+                if @user.roles && @user.roles.length > 0
+                    if @user.roles[0].name == 'admin'
+                        isAdmin = true
+                return isAdmin
         methods:
-
+     
             updateImageOrder: ->
                 
                 if @user
@@ -186,10 +193,10 @@
                     if @user.images
                         for image, index in @user.images
                             image.order = index
-                    
-                    if (@$root.user.id == @user.id)
-                        @$root.user = @user   
-                        
+                    if @user.id
+                        if (@$root.user.id == @user.id)
+                            @$root.user = @user   
+                            
             attemptSave: ->
                 # Skip password?
                 if !@settings.change_password
