@@ -1,34 +1,36 @@
 <template lang="pug">
-    div.ui.basic.small.modal.event-modal
-        div.content
-            div(":class"="[selected_action.class]").attached
-                i(":class"="[selected_action.icon]")
-                div.class.content
-                    div.header
-                        h3 {{ title }}
-                        p {{ message }}
-                    div.ui.form( v-show="type=='calendar'" )
-                        div.two.stackable.fields
-                            div.field
-                                h4.ui.sub.header {{ translate('semantic_dialog.start_date_header') }}
-                                div.ui.calendar#interval_start( v-calendar="validateCalendar" )
-                                    div.ui.input.left.icon.bottom.attached
-                                        i.calendar.icon
-                                        input( type="text" placeholder="????-??-??" )
-                            div.field
-                                h4.ui.sub.header {{ translate('semantic_dialog.end_date_header') }}
-                                div.ui.calendar#interval_end( v-calendar="validateCalendar" )
-                                    div.ui.input.left.icon
-                                        i.calendar.icon
-                                        input( type="text" placeholder="????-??-??" )
-                    div.ui.fluid.basic.segment( v-show="type=='image'" )
-                        div.image.content(v-if="image && image.path")
-                            img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
+    div.ui.small.modal.event-modal           
+        div.header {{ title }}
+        div.top.bottom.attached.(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
+            i(":class"="[selected_action.icon]") 
+            div.header {{ message }}
+        
+        div.content(v-show="type =='calendar'")            
+            div.ui.form
+                div.two.stackable.fields
+                    div.field
+                        h4.ui.sub.header {{ translate('semantic_dialog.start_date_header') }}
+                        div.ui.calendar#interval_start( v-calendar="validateCalendar" )
+                            div.ui.input.left.icon.bottom.attached
+                                i.calendar.icon
+                                input( type="text" placeholder="????-??-??" )
+                    div.field
+                        h4.ui.sub.header {{ translate('semantic_dialog.end_date_header') }}
+                        div.ui.calendar#interval_end( v-calendar="validateCalendar" )
+                            div.ui.input.left.icon
+                                i.calendar.icon
+                                input( type="text" placeholder="????-??-??" )
+    
+                
+        div.image.content(v-show="type == 'image'")
+            div.ui.fluid.basic.segment( v-show="type=='image'" )
+                div.image.content(v-if="image && image.path")
+                    img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
 
-            div.ui.grid.segment.bottom.inverted.attached
-                div.center.aligned.column.actions
-                    div(v-for="button in selected_action.buttons"
-                    ":class"="[button.class]") {{button.label}}
+        div.ui.grid.segment.bottom.inverted.attached
+            div.center.aligned.column.actions(style="padding-bottom: 0px")
+                div(v-for="button in selected_action.buttons"
+                ":class"="[button.class]") {{button.label}}
 </template>
 
 <script lang="coffee">
@@ -118,18 +120,21 @@
                 @message = message.message
                 @type = message.type
 
-                if process.env.NODE_ENV == "development"
-                    console.log message
-
                 switch message.type
                     when "error"
                         @selected_action = @actions['error']
                     when "confirm"
+                        
                         @selected_action = @actions['confirm']
                         $('.modal').modal({                            
                             observeChanges: true
                             closable: false
-                            onApprove: ->
+                            onShow: =>
+                                setTimeout (->
+                                    $('.modal').modal('refresh')
+                                ), 100  
+                            onApprove: ->     
+                                console.log "onApprove"      
                                 return message.cb();
 
                         })
@@ -142,7 +147,7 @@
                         $('#interval_end').calendar('set mode','day')
                         @validateCalendar()
 
-                        $('.modal').modal({
+                        $('.long.modal').modal({
                             observeChanges: true
                             closable: true
                             onApprove: ->
@@ -152,7 +157,11 @@
                     when "image"
                         @selected_action = @actions['image']
                         @image = message.image
-                        $('.modal').modal({                            
+                        $('.modal').modal({   
+                            onShow: =>
+                                setTimeout (->
+                                    $('.modal').modal('refresh')
+                                ), 100                           
                             observeChanges: true,
                             closable: true
                         })
@@ -160,18 +169,11 @@
 
                     else
                         @selected_action = @actions['default']
+                
                 Vue.nextTick -> 
-                           
-                    $('.modal').modal({
-                        onShow: =>
-                            setTimeout (->
-                                $('.modal').modal('refresh')
-                                return
-                            ), 100
-                            return
-                        observeChanges: true
-                    }).modal('show')
-
+                                    
+                    $('.modal').modal('show')
+                    
         mounted: ->
             bus.$on('show_message', (message) => @handleMessage(message) );
     }
