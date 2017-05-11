@@ -15,7 +15,7 @@
                         ":columns"="['name']" )
                     div.right.menu
                         div.ui.buttons
-                            add.right.item.large.icon( from="categories" )
+                            add.right.item.large.icon( from="categories" style="padding: 0px" )
         div.ui.padded.grid
             div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message

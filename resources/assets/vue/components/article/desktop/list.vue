@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         div.ui.equal.width.grid
-            div.row.middle.aligned
+            div.row.middle.aligned(style="padding-top: 10px; padding-bottom: 10px")
                 div.column.four.wide
                     search( ":search"="search" ":results"="countItems" )
                 div.column.ten.wide
@@ -10,7 +10,7 @@
                         ":total"="countItems"
                         ":show-pagination"="search==''" )
                 div.column.two.wide.right.floated.right.aligned
-                    add.item.basic.icon( from="articles" )
+                    add.item.basic.icon( from="articles" style="box-shadow: 0 1px 2px 0 rgba(34,36,38,.15); border: 1px solid rgba(34,36,38,.15); padding-top: 9.5px; padding-bottom: 9.5px" )
         div.ui.padded.grid
             div.row( v-if="countItems == 0" )
                 div.ui.column.warning.message
@@ -33,12 +33,12 @@
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('categories') }}
                                         i.icon( ":class" = "(order=='categories') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                            
+
                             th.slim.link( @click="setOrder('amount')")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('article.amount') }}
                                         i.icon( ":class" = "(order=='amount') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                            
+
                             th.slim.link( @click="setOrder('public',0)")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('public') }}
@@ -51,18 +51,18 @@
                             td.center.aligned
                                 strong {{(index+1)+offset}}
                             td.center.aligned.no-padding
-                                div.ui.stacked.segment.no-padding(v-if="item.images.length > 1")                                    
+                                div.ui.stacked.segment.no-padding(v-if="item.images.length > 1")
                                     img.ui.image.table_image.multiple_preview(
                                         v-if="item.images.length"
                                         ":src"="item.images[0].thumb_path"
                                     )
-                                
+
                                 div.ui.segment.no-padding(v-else-if="item.images.length == 1")
-                                    img.ui.image.table_image.preview(                                    
+                                    img.ui.image.table_image.preview(
                                     ":src"="item.images[0].thumb_path")
-                        
-                                div.no_image_icon(v-else="")                                                                        
-                                    i.icon.remove                                     
+
+                                div.no_image_icon(v-else="")
+                                    i.icon.remove
 
                             td( v-tooltip="" ":data-html"="formatTooltip(item.desc)" )
                                 span {{ item.name }}

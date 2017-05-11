@@ -1,7 +1,7 @@
 <template lang="pug">
     div
         div.ui.equal.width.grid
-            div.row.middle.aligned
+            div.row.middle.aligned(style="padding-top: 10px; padding-bottom: 10px")
                 div.column.four.wide
                     search( ":search"="search" ":results"="countItems" )
                 div.column.ten.wide
@@ -10,7 +10,7 @@
                         ":total"="countItems"
                         ":show-pagination"="search==''" )
                 div.column.two.wide.right.floated.right.aligned
-                    add.item.basic.icon( from="categories" )
+                    add.item.basic.icon( from="categories" style="box-shadow: 0 1px 2px 0 rgba(34,36,38,.15); border: 1px solid rgba(34,36,38,.15); padding-top: 9.5px; padding-bottom: 9.5px" )
         div.ui.padded.grid
             div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message

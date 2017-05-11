@@ -15,7 +15,7 @@
                         ":columns"="['name','users']" )
                     div.right.menu
                         div.ui.buttons
-                            add.right.item.large.icon( from="sections" )
+                            add.right.item.large.icon( from="sections" style="padding: 0px")
         div.ui.padded.grid
             div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message
@@ -27,12 +27,12 @@
                             td.slim
                                 div.ui.input.fluid
                                     input( v-model="item.name" ":placeholder"="translate('section.name_placeholder')"
-                                    v-focus="" ) 
+                                    v-focus="" )
 
                                 div.ui.input.fluid
                                     input( v-model="item.name_sv" ":placeholder"="translate('section.name_placeholder_sv')"
-                                    v-focus="" ) 
-    
+                                    v-focus="" )
+
                             td.collapsing.bottom.aligned
                                 div.ui.icon.basic.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
@@ -50,9 +50,9 @@
                                         input( v-model="item.name_sv_new"
                                         ":placeholder"="translate('section.name_placeholder_sv')"
                                         v-focus="" ).collapsing
-                                    
+
                                     div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name)" )
-                                        h4.ui.sub.header {{ translate('name') }}                                        
+                                        h4.ui.sub.header {{ translate('name') }}
                                         p( v-if="getLanguage()=='sv'" ) {{ item.name_sv }}
                                         p( v-else="") {{ item.name }}
 

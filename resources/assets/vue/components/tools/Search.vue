@@ -42,6 +42,7 @@
             div.ui.icon.input
                 i.search.icon
                 input(
+                    style="padding-top: 11.5px; padding-bottom: 11.5px; box-shadow: 0 1px 2px 0 rgba(34,36,38,.15); border: 1px solid rgba(34,36,38,.15)"
                     ":value"="search"
                     ":placeholder"="translate('placeholder.search')"
                     @input="change_search($event.target.value)" )

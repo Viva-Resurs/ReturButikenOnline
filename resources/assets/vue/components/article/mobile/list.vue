@@ -15,7 +15,7 @@
                         ":columns"="['name','updated_at','categories']" )
                     div.right.menu
                         div.ui.buttons
-                            add.right.item.large.icon( from="articles" )
+                            add.right.item.large.icon( from="articles" style="padding: 0px")
         div.ui.padded.grid
             div.row( v-if="countItems == 0" )
                 div.ui.column.warning.message
