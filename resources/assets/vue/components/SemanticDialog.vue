@@ -126,7 +126,7 @@
                         @selected_action = @actions['error']
                     when "confirm"
                         @selected_action = @actions['confirm']
-                        $('.modal').modal({
+                        $('.modal').modal({                            
                             observeChanges: true
                             closable: false
                             onApprove: ->
@@ -152,16 +152,25 @@
                     when "image"
                         @selected_action = @actions['image']
                         @image = message.image
-                        $('.modal').modal({
-                            observeChanges: true
+                        $('.modal').modal({                            
+                            observeChanges: true,
                             closable: true
                         })
 
 
                     else
                         @selected_action = @actions['default']
-
-                $('.modal').modal('show');
+                Vue.nextTick -> 
+                           
+                    $('.modal').modal({
+                        onShow: =>
+                            setTimeout (->
+                                $('.modal').modal('refresh')
+                                return
+                            ), 100
+                            return
+                        observeChanges: true
+                    }).modal('show')
 
         mounted: ->
             bus.$on('show_message', (message) => @handleMessage(message) );
