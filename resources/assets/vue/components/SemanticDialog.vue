@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.small.modal.event-modal           
+    div.ui.small.modal.event-modal(":class"="(type == 'image' ) ? 'basic' : ''" ":style"="(type == 'image') ? 'background-color: black;' : ''")
         div.header {{ title }}
         div.top.bottom.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
             i(":class"="[selected_action.icon]") 
@@ -13,7 +13,7 @@
                         div.ui.calendar#interval_start( v-calendar="validateCalendar" )
                             div.ui.input.left.icon.bottom.attached
                                 i.calendar.icon
-                                input( type="text" placeholder="????-??-??" )
+                                input( type="text" placeholder="????-??-??" )                    
                     div.field
                         h4.ui.sub.header {{ translate('semantic_dialog.end_date_header') }}
                         div.ui.calendar#interval_end( v-calendar="validateCalendar" )
@@ -22,15 +22,20 @@
                                 input( type="text" placeholder="????-??-??" )
     
                 
-        div.image.content(v-show="type == 'image'")
-            div.ui.fluid.basic.segment( v-show="type=='image'" )
-                div.image.content(v-if="image && image.path")
-                    img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
+        div.image.content(v-show="type == 'image'" style="background-color: black")
+            div.image.content.ui.container(v-if="image && image.path")
+                img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
 
-        div.ui.grid.segment.bottom.inverted.attached
-            div.center.aligned.column.actions(":style"="screenType == 'desktop' ? '' : 'padding-bottom: 0px'  ")
-                div(v-for="button in selected_action.buttons"
-                ":class"="[button.class]") {{button.label}}
+        div.ui.grid.bottom.attached.inverted.equal.width(":class"="(type == 'image') ? 'container' : 'segment'"  ":style"="(type == 'image') ? 'background-color: black; border-color: black;' : ''")        
+            div.column.center.aligned.mobile.only("style"="padding-bottom: 0px") 
+                div.center.aligned.column.actions
+                    div(v-for="button in selected_action.buttons"
+                    ":class"="[button.class]") {{button.label}}
+
+            div.column.center.aligned.computer.tablet.only
+                div.center.aligned.column.actions
+                    div(v-for="button in selected_action.buttons"
+                    ":class"="[button.class]") {{button.label}}
 </template>
 
 <script lang="coffee">
@@ -147,10 +152,14 @@
                         $('#interval_end').calendar('set mode','day')
                         @validateCalendar()
 
-                        $('.long.modal').modal({
-                            observeChanges: true
-                            closable: true
-                            onApprove: ->
+                        $('.modal').modal({
+                            observeChanges: true,
+                            closable: true,
+                            onShow: =>
+                                setTimeout (->
+                                    $('.modal').modal('refresh')
+                                ), 200 
+                            onApprove: ->                       
                                 return message.cb( new moment( $('#interval_start').calendar('get date') ), new moment( $('#interval_end').calendar('get date') ) )
                         });
 
@@ -161,7 +170,7 @@
                             onShow: =>
                                 setTimeout (->
                                     $('.modal').modal('refresh')
-                                ), 100                           
+                                ), 120                           
                             observeChanges: true,
                             closable: true
                         })
@@ -170,8 +179,7 @@
                     else
                         @selected_action = @actions['default']
                 
-                Vue.nextTick -> 
-                                    
+                Vue.nextTick ->                 
                     $('.modal').modal('show')
                     
         mounted: ->
