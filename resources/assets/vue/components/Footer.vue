@@ -11,13 +11,13 @@
                         input#lang( type="hidden" )
                         i.dropdown.icon
                         div.default.text
-                            i.icon.translate
+                            i.icon.translate.icon-style
                         div.menu
                             div.item(
                                 v-for="language, key in language_lib"
                                 ":data-value"="key" )
                                 | {{ key }}&nbsp;&nbsp;
-                                i.icon.translate
+                                i.icon.translate.icon-style
 </template>
 
 <script lang="coffee">

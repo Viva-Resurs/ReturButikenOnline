@@ -5,7 +5,7 @@
         ":data-value" = "item.publish_interval"
         @click        = "showRangePicker"
     )
-        i.ui.icon.time( ":class" = `
+        i.ui.icon.time.icon-style( ":class" = `
             (activeInterval(item.publish_interval)) ? 'active-interval':''
         ` )
 </template>

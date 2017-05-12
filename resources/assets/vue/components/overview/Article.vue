@@ -1,16 +1,16 @@
 <template lang="pug">
     div.ui.grid.padded.start-item
         div.ui.vertical.fluid.compact.menu.computer.tablet.only.row
-            div.ui.grid.item.header               
+            div.ui.grid.item.header
                 div.twelve.wide.column
                     | {{ translate('article.header') }}
                 div.ui.container.right.aligned.four.wide.column
                     router-link( to="/ui/articles" )
-                        i.black.icon.external.square(                       
+                        i.icon.external.square.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.articles')" )
                     router-link( to="/ui/articles/create" )
-                        i.black.plus.icon.square.right.floated(                           
+                        i.plus.icon.square.right.floated.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.createArticle')" )
             a.item(

@@ -15,19 +15,19 @@
                     div.ui.basic.segment.no-padding
                         div.content
                             p
-                                i.icon.phone
+                                i.icon.phone.icon-style
                                 b &nbsp;{{ user.phone }}
                             p
-                                i.icon.mail
+                                i.icon.mail.icon-style
                                 b {{ user.email }}
                             div(v-if="detailed != undefined")
                                 p( v-for="role in user.roles")
                                     span
-                                        i.icon.unlock.alternate
+                                        i.icon.unlock.alternate.icon-style
                                         b {{ role.name }}
                                 p( v-for="section in user.sections")
                                     span
-                                        i.icon.building
+                                        i.icon.building.icon-style
                                         b(v-if="getLanguage()=='sv'") {{ section.name_sv }}
                                         b(v-else="") {{ section.name }}
         div.ui.segment( v-if="type == 'horizontal'")
@@ -42,19 +42,19 @@
                                 ":style"="'background-image:url(\"'+user.images[0].path+'\");'" )
                         div.meta
                             p
-                                i.icon.phone
+                                i.icon.phone.icon-style
                                 b &nbsp;{{ user.phone }}
                             p
-                                i.icon.mail
+                                i.icon.mail.icon-style
                                 b {{ user.email }}
                             div(v-if="detailed != undefined")
                                 p( v-for="role in user.roles")
                                     span
-                                        i.icon.unlock.alternate
+                                        i.icon.unlock.alternate.icon-style
                                         b {{ role.name }}
                                 p( v-for="section in user.sections")
                                     span
-                                        i.icon.building
+                                        i.icon.building.icon-style
                                         b(v-if="getLanguage()=='sv'") {{ section.name_sv }}
                                         b(v-else="") {{ section.name }}
 

@@ -4,7 +4,7 @@
         ":data-html" = "translate('tool.preview')"
         @click    = "preview(item)"
     )
-        i.ui.icon.unhide
+        i.ui.icon.unhide.icon-style
 </template>
 
 <script lang="coffee">

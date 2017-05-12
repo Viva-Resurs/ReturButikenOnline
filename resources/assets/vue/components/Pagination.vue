@@ -4,34 +4,34 @@
             div.left.floated.column( v-if="total!=0 && total>limit && showPagination && false" )
                 div.ui.grid.computer.only.pagination.menu
                     a.icon.item( @click="firstPage" )
-                        i.angle.double.left.icon
+                        i.angle.double.left.icon.icon-style
 
                     a.icon.item( @click="prevPage" )
-                        i.angle.left.icon
+                        i.angle.left.icon.icon-style
 
                     a( v-for="n in totalPages" ":class"="'item '+((n==currentPage)?'active':'')" @click="toPage(n)" ) {{n}}
 
                     a.icon.item( @click="nextPage" )
-                        i.angle.right.icon
+                        i.angle.right.icon.icon-style
 
                     a.icon.item( @click="lastPage" )
-                        i.angle.double.right.icon
+                        i.angle.double.right.icon.icon-style
 
                 div.ui.grid.mobile.tablet.only.pagination.menu
                     a.icon.item( @click="firstPage" )
-                        i.angle.double.left.icon
+                        i.angle.double.left.icon.icon-style
 
                     a.icon.item( @click="prevPage" )
-                        i.angle.left.icon
+                        i.angle.left.icon.icon-style
 
                     a.icon.item
                         i {{ translate('page') }} {{currentPage}} ... {{totalPages}}
 
                     a.icon.item( @click="nextPage" )
-                        i.angle.right.icon
+                        i.angle.right.icon.icon-style
 
                     a.icon.item( @click="lastPage" )
-                        i.angle.double.right.icon
+                        i.angle.double.right.icon.icon-style
 
             div.left.floated.column( v-else="" )
                 div.ui.grid

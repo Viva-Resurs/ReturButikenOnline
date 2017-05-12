@@ -7,7 +7,7 @@
             div( v-if="article.images && article.images.length>0" style="position: relative")
                 div.ui.basic.segment.center.aligned.preview_header(
                     v-swipe="article.images")
-          
+
             div.ui.grid.equal.width
                 div.ui.left.aligned.column
                     h2.ui.header {{ article.name }}
@@ -63,11 +63,11 @@
                     div.row
                         div.column( v-if="article.publish_interval" )
                             h4.ui.sub.header {{ translate('article_preview.publish_interval_header') }}
-                            i.ui.icon.time
+                            i.ui.icon.time.icon-style
                             span {{ formatInterval(article.publish_interval) }}
                         div.column( v-if="article.bidding_interval" )
                             h4.ui.sub.header {{ translate('article_preview.bidding_interval_header') }}
-                            i.ui.icon.time
+                            i.ui.icon.time.icon-style
                             span {{ formatInterval(article.bidding_interval) }}
                         div.column( v-if="!article.publish_interval && !article.bidding_interval" )
                             h4.ui.sub.header
@@ -138,7 +138,7 @@
         mounted: ->
             $('body').scrollTop(0)
 </script>
-<style>          
+<style>
     .ui.stackable.grid {
         width: auto;
         margin-left: -15px !important;

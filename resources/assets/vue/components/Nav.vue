@@ -82,7 +82,6 @@
                                 a.item( @click="goToProfile()" exact)
                                     i.icon.user
                                     |  {{ translate('user.profile') }}
-
                                 a.item( href="docs" )
                                     i.icon.help.circle
                                     |  {{ translate('nav.help') }}

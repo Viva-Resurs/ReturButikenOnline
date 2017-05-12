@@ -6,11 +6,11 @@
                     | {{ translate('contacts') }}
                 div.ui.container.right.aligned.four.wide.column
                     router-link( to="/ui/users" )
-                        i.black.icon.external.square(                       
+                        i.icon.external.square.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.users')" )
                     router-link( to="/ui/users/create" )
-                        i.black.plus.icon.square.right.floated(                          
+                        i.plus.icon.square.right.floated.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.createUser')" )
             a.item(

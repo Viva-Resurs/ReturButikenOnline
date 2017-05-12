@@ -5,7 +5,7 @@
         v-show    = "!item.edit && item.id"
         @click    = "edit(item)"
     )
-        i.ui.icon.pencil
+        i.ui.icon.pencil.icon-style
 </template>
 
 <script lang="coffee">

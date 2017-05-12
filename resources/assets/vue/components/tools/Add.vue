@@ -9,11 +9,11 @@
             i.ui.large.icons(
                 style="margin-left: 12px; margin-right: 9px"
                 )
-                i.user.icon(v-if="from=='users'" style="margin-right: 3px")
-                i.cube.icon(v-if="from=='articles'" style="margin-right: 3px")
-                i.building.icon(v-if="from=='sections'" style="margin-right: 3px")
-                i.tag.icon(v-if="from=='categories'" style="margin-right: 3px")
-                i.corner.plus.icon
+                i.user.icon.icon-style(v-if="from=='users'" style="margin-right: 3px")
+                i.cube.icon.icon-style(v-if="from=='articles'" style="margin-right: 3px")
+                i.building.icon.icon-style(v-if="from=='sections'" style="margin-right: 3px")
+                i.tag.icon.icon-style(v-if="from=='categories'" style="margin-right: 3px")
+                i.corner.plus.icon.icon-style
 </template>
 
 <script lang="coffee">

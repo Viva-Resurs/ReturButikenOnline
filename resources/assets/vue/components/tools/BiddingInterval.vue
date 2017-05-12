@@ -5,7 +5,7 @@
         ":data-value" = "item.bidding_interval"
         @click        = "showRangePicker"
     )
-        i.ui.icon.legal( ":class" = `
+        i.ui.icon.legal.icon-style( ":class" = `
             (activeInterval(item.bidding_interval)) ? 'active-interval':''
         ` )
 </template>

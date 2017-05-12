@@ -6,11 +6,11 @@
                     | {{ translate('section.header') }}
                 div.ui.container.right.aligned.four.wide.column
                     router-link( to="/ui/sections" )
-                        i.black.icon.external.square(                            
+                        i.icon.external.square.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.sections')" )
                     router-link( to="/ui/sections/create" )
-                        i.black.plus.icon.square.right.floated(                  
+                        i.plus.icon.square.right.floated.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.createSection')" )
             a.item(

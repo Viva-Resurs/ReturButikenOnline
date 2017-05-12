@@ -4,7 +4,7 @@
             div.fitted.item
                 div.ui.buttons
                     div.ui.button.large.item.icon.top.right.pointing.dropdown#order( v-dropdown="" )
-                        i.sort.icon
+                        i.sort.icon.icon-style
                         div.menu
                             div.header {{ translate('tool.sort') }}
                             div.item(
