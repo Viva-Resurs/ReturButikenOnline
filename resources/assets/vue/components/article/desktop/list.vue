@@ -93,7 +93,7 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'ItemGrid'
+        name: 'ArticleDesktopList'
         props: [
             'items'
             'toolsRow'

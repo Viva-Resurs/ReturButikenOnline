@@ -44,7 +44,7 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'ItemGrid'
+        name: 'ArticleMobileList'
         props: [
             'items'
             'toolsRow'

@@ -33,13 +33,16 @@
                         tr( v-for="(item, index) in itemsNew" )
                             td.center.aligned
                             td
-                                div.ui.input.fluid
-                                    input( v-model="item.name" ":placeholder"="translate('section.name_placeholder')"
-                                    v-focus="" )
-
-                                div.ui.input.fluid
-                                    input( v-model="item.name_sv" ":placeholder"="translate('section.name_placeholder_sv')"
-                                    v-focus="" )
+                                div.field
+                                    label {{ translate('section.name_placeholder') }}:
+                                    div.ui.input.fluid
+                                        input( v-model="item.name" ":placeholder"="translate('section.name_placeholder')"
+                                        v-focus="" )
+                                    
+                                    label {{ translate('section.name_placeholder_sv') }}:
+                                    div.ui.input.fluid
+                                        input( v-model="item.name_sv" ":placeholder"="translate('section.name_placeholder_sv')"
+                                        v-focus="" )
                             td
                             td.right.aligned
                                 div.ui.icon.basic.buttons
@@ -52,19 +55,21 @@
                             td.center.aligned
                                 strong {{(index+1)+offset}}
                             td
-                                div.ui.input.fluid( v-if="item.edit" )
-                                    input( v-model="item.name_new"
-                                    ":placeholder"="translate('section.name_placeholder')"
-                                    v-focus="" ).collapsing
-                                span( v-if="!item.edit && getLanguage()=='en'" ) {{ item.name }}
-
-                                div.ui.input.fluid( v-if="item.edit" )
-                                    input( v-model="item.name_sv_new"
-                                    ":placeholder"="translate('section.name_placeholder_sv')"
-                                    v-focus="" ).collapsing
+                                div.field(v-if="item.edit")
+                                    label {{ translate('section.name_placeholder') }}:
+                                    div.ui.input.fluid
+                                        input( v-model="item.name_new"
+                                        ":placeholder"="translate('section.name_placeholder')"
+                                        v-focus="" ).collapsing
+                             
+                                    label {{ translate('section.name_placeholder_sv') }}:
+                                    div.ui.input.fluid
+                                        input( v-model="item.name_sv_new"
+                                        ":placeholder"="translate('section.name_placeholder_sv')"
+                                        v-focus="" ).collapsing
+                             
+                                span( v-if="!item.edit && getLanguage()=='en'" ) {{ item.name }}    
                                 span( v-if="!item.edit && getLanguage()=='sv'" ) {{ item.name_sv }}
-
-
                             td
                                 span( v-for="(user, column_index) in item.users")
                                     span {{ user.name }}
@@ -81,7 +86,7 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'ItemGrid'
+        name: 'SectionDesktopList'
         props: [
             'items'
             'itemsNew'

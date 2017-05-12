@@ -62,7 +62,7 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'ItemGrid'
+        name: 'UserMobileList'
         props: [
             'items'
             'itemsNew'

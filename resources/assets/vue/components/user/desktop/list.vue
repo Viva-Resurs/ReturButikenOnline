@@ -66,7 +66,7 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'ItemGrid'
+        name: 'UserDesktopList'
         props: [
             'items'
             'toolsRow'
