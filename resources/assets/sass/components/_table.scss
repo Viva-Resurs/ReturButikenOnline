@@ -14,8 +14,8 @@
 }
 
 .active-interval {
-    color: #050;
-    text-shadow: 2px 2px 8px #21ba45;
+    background-color: rgba(0,255,0, .2) !important;
+    //text-shadow: 2px 2px 8px #00dc00;
 }
 
 div.ui.icon.button.hover-default:hover {

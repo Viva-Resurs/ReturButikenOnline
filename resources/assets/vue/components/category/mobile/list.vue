@@ -29,7 +29,7 @@
                                     input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
                                     v-focus="" )
                             td.collapsing.bottom.aligned
-                                div.ui.icon.basic.buttons
+                                div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
                         tr(
                             v-for="(item, filterIndex) in filterItems"
@@ -45,7 +45,7 @@
                                         h4.ui.sub.header {{ translate('name') }}
                                         p {{ item.name }}
                             td.collapsing.bottom.aligned
-                                div.ui.icon.basic.buttons
+                                div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(

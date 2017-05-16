@@ -81,7 +81,7 @@
                                     i( ":class"="'ui icon ' + ((item.public==1) ? 'green checkmark' : 'red remove')"
                                         v-tooltip="" ":data-html"="(item.public==1) ? $root.translate('article_list.published_all') : $root.translate('article_list.published_intra')" )
                             td.right.aligned
-                                div.ui.icon.basic.buttons
+                                div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
         div.row( v-if="countItems > 0 && search!=''" )

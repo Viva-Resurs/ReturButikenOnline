@@ -59,12 +59,12 @@
                         | {{ item.updated_at+' ' }}
 
                 div.column.right.aligned.tablet.computer.only
-                    div.ui.icon.basic.buttons
+                    div.ui.icon.buttons
                         component( v-for="tool in tools" ":is"="tool" ":item"="item" ":from"="from" )
 
 
                 div.column.center.aligned.mobile.only
-                    div.ui.icon.basic.buttons
+                    div.ui.icon.buttons
                         component( v-for="tool in tools" ":is"="tool" ":item"="item" ":from"="from" )
 
                 div.column.center.aligned.mobile.only

@@ -1,5 +1,6 @@
 <template lang="pug">
     div.ui.icon.button.hover-default(
+        style="background-color: #FFF; border-top: 1px solid rgb(212,212,213); border-bottom: 1px solid rgb(212,212,213)"
         v-tooltip = ""
         ":data-html" = "translate('tool.preview')"
         @click    = "preview(item)"

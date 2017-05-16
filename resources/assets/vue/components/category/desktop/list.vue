@@ -33,7 +33,7 @@
                                     input( v-model="item.name" ":placeholder"="translate('placeholder.type')+' '+translate('name')"
                                     v-focus="" )
                             td
-                                div.ui.icon.basic.buttons
+                                div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
                         tr(
@@ -49,7 +49,7 @@
                                     v-focus="" ).collapsing
                                 span( v-if="!item.edit" ) {{ item.name }}
                             td.right.aligned
-                                div.ui.icon.basic.buttons
+                                div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(

@@ -38,14 +38,14 @@
                                     div.ui.input.fluid
                                         input( v-model="item.name" ":placeholder"="translate('section.name_placeholder')"
                                         v-focus="" )
-                                    
+
                                     label {{ translate('section.name_placeholder_sv') }}:
                                     div.ui.input.fluid
                                         input( v-model="item.name_sv" ":placeholder"="translate('section.name_placeholder_sv')"
                                         v-focus="" )
                             td
                             td.right.aligned
-                                div.ui.icon.basic.buttons
+                                div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
 
                         tr(
@@ -61,21 +61,21 @@
                                         input( v-model="item.name_new"
                                         ":placeholder"="translate('section.name_placeholder')"
                                         v-focus="" ).collapsing
-                             
+
                                     label {{ translate('section.name_placeholder_sv') }}:
                                     div.ui.input.fluid
                                         input( v-model="item.name_sv_new"
                                         ":placeholder"="translate('section.name_placeholder_sv')"
                                         v-focus="" ).collapsing
-                             
-                                span( v-if="!item.edit && getLanguage()=='en'" ) {{ item.name }}    
+
+                                span( v-if="!item.edit && getLanguage()=='en'" ) {{ item.name }}
                                 span( v-if="!item.edit && getLanguage()=='sv'" ) {{ item.name_sv }}
                             td
                                 span( v-for="(user, column_index) in item.users")
                                     span {{ user.name }}
                                     span( v-if="(column_index != item.users.length -1)") ,{{ ' ' }}
                             td.right.aligned
-                                div.ui.icon.basic.buttons
+                                div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(

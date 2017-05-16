@@ -1,13 +1,15 @@
 <template lang="pug">
     div.ui.icon.button.hover-default(
+        style="background-color: #FFF; border-top: 1px solid rgb(212,212,213); border-bottom: 1px solid rgb(212,212,213); border-left: 1px solid rgb(212,212,213)"
         v-tooltip     = ""
         ":data-html"  = "displayInterval(item.publish_interval)"
         ":data-value" = "item.publish_interval"
         @click        = "showRangePicker"
+        ":class" = `
+            (activeInterval(item.bidding_interval)) ? 'active-interval':''
+        `
     )
-        i.ui.icon.time.icon-style( ":class" = `
-            (activeInterval(item.publish_interval)) ? 'active-interval':''
-        ` )
+        i.ui.icon.time.icon-style
 </template>
 
 <script lang="coffee">
