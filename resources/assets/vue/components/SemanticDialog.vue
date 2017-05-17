@@ -1,6 +1,6 @@
 <template lang="pug">
     div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic long' : ''" ":style"="(type == 'image') ? 'background-color: black; height: windowHeight !important' : ''")
-        div.header {{ title }}
+        div.header(v-show="type != 'image'") {{ title }}
         div.top.bottom.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
             i(":class"="[selected_action.icon]") 
             div.header {{ message }}
@@ -133,12 +133,14 @@
                 if !(Number(@active_index+1) > Number(@images.length))
                     @active_index = @active_index + 1
                     @active_image = @images[@active_index]
+                    @title = @active_image.name
                     @showOverlayButtons()
         
             showPreviousImage: (evt) ->
                 if !(Number(@active_index-1) < Number(0))
                     @active_index = @active_index - 1
                     @active_image = @images[@active_index]                    
+                    @title = @active_image.name
                     @showOverlayButtons()
             
             showOverlayButtons: () ->
