@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.small.modal.event-modal(":class"="(type == 'image' ) ? 'basic' : ''" ":style"="(type == 'image') ? 'background-color: black;' : ''")
+    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : ''" ":style"="(type == 'image') ? 'background-color: black; height: windowHeight !important' : ''")
         div.header {{ title }}
         div.top.bottom.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
             i(":class"="[selected_action.icon]") 
@@ -22,9 +22,11 @@
                                 input( type="text" placeholder="????-??-??" )
     
                 
-        div.image.content(v-show="type == 'image'" style="background-color: black")
-            div.image.content.ui.container(v-if="image && image.path")
-                img.ui.fluid.rounded.image( ":src"="image.path" ":id"="image.id" )
+        div(v-show="type == 'image'" style="background-color: black")#image_container                        
+            div.image.content.ui.container(v-if="images")
+                img.ui.fluid.rounded.image#selected_image( ":src"="active_image.path" ":id"="active_image.id")
+            i.huge.chevron.circle.left.icon(style="position: absolute; left: 5%; top: 45%" "@click"="showPreviousImage")#left_button
+            i.huge.chevron.circle.right.icon(style="position: absolute; right: 5%; top: 45%;" "@click"="showNextImage")#right_button
 
         div.ui.grid.bottom.attached.inverted.equal.width(":class"="(type == 'image') ? 'container' : 'segment'"  ":style"="(type == 'image') ? 'background-color: black; border-color: black;' : ''")        
             div.column.center.aligned.mobile.only("style"="padding-bottom: 0px") 
@@ -106,7 +108,13 @@
             title: 'Empty'
             message: 'Empty'
             type: 'Empty'
-            image: 'Empty'
+            active_image: 'Empty'
+            active_index: 0
+            images: []
+        computed:
+            windowHeight: ->
+                return window.innerHeight;
+        
         methods:
             validateCalendar: ->
                 setTimeout =>
@@ -120,6 +128,42 @@
                     else
                         @actions.calendar.buttons[1].class = 'ui approve disabled button'
                 , 100
+            
+            showNextImage: (evt) ->                
+                if !(Number(@active_index+1) > Number(@images.length))
+                    @active_index = @active_index + 1
+                    @active_image = @images[@active_index]
+                    @showOverlayButtons()
+        
+            showPreviousImage: (evt) ->
+                if !(Number(@active_index-1) < Number(0))
+                    @active_index = @active_index - 1
+                    @active_image = @images[@active_index]                    
+                    @showOverlayButtons()
+            
+            showOverlayButtons: () ->
+                leftButton = $('#left_button')
+                rightButton = $('#right_button')
+                
+                if images.length == 1
+                   rightButton.hide()
+                   leftButton.hide()
+                   return
+                
+                switch @active_index
+                    when 0
+                        leftButton.hide()
+                        rightButton.show()
+                
+                    when  @images.length-1                    
+                        rightButton.hide()
+                        leftButton.show()
+                        
+                    else
+                        rightButton.show()
+                        leftButton.show()
+
+                
             handleMessage: (message) ->
                 @title = message.title
                 @message = message.message
@@ -165,24 +209,34 @@
 
                     when "image"
                         @selected_action = @actions['image']
-                        @image = message.image
-                        $('.modal').modal({   
+                        @images = message.images                          
+                        @active_index = message.index
+                        @active_image = @images[@active_index]                        
+                       
+                        $('.fullscreen.modal').modal({   
                             onShow: =>
                                 setTimeout (->
-                                    $('.modal').modal('refresh')
-                                ), 120                           
+                                    $('.fullscreen.modal').modal('refresh')
+                                ), 200                                  
                             observeChanges: true,
-                            closable: true
-                        })
-
+                            closable: true,                                            
+                        })                              
+                        @showOverlayButtons()
 
                     else
                         @selected_action = @actions['default']
                 
                 Vue.nextTick ->                 
-                    $('.modal').modal('show')
+                    if @type == 'image'
+                        $('fullscreen.modal').modal('refresh').
+                        modal('show')                  
+                    else
+                        $('.modal').modal('refresh')
+                        .modal('show')
                     
         mounted: ->
-            bus.$on('show_message', (message) => @handleMessage(message) );
+            bus.$on('show_message', (message) => @handleMessage(message) );       
+                   
     }
 </script>
+
