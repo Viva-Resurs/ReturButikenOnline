@@ -12,6 +12,24 @@
 .nowrap {
     white-space: nowrap;
 }
+.trunc-mob {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.trunc-tab {
+    width: 450px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.trunc-comp {
+    width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 .active-interval {
     background-color: rgba(0,255,0, .2) !important;

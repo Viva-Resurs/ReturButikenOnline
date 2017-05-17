@@ -41,9 +41,12 @@
                                         input( v-model="item.name_new"
                                         ":placeholder"="translate('placeholder.type')+' '+translate('name')"
                                         v-focus="" ).collapsing
-                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name)" )
+                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name) && screenType == 'tablet'" )
                                         h4.ui.sub.header {{ translate('name') }}
-                                        p {{ item.name }}
+                                        p.trunc-tab {{ item.name }}
+                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name) && screenType == 'mobile'" )
+                                        h4.ui.sub.header {{ translate('name') }}
+                                        p.trunc-mob {{ item.name }}
                                     div.ui.vertical.segment.basic( "v-if"="itemHaveData('users', item.users)" )
                                         h4.ui.sub.header {{ translate('users') }}
                                         p

@@ -44,7 +44,8 @@
                             ":class"="item.edit ? 'active' : ''" )
                             td.center.aligned
                                 strong {{(index+1)+offset}}
-                            td {{ item.username }}
+                            td
+                                p.trunc-comp {{ item.username }}
                             td {{ item.fullname }}
                             td
                                 span( v-for="(section, column_index) in item.sections")
