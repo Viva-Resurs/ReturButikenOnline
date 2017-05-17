@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : ''" ":style"="(type == 'image') ? 'background-color: black; height: windowHeight !important' : ''")
+    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic long' : ''" ":style"="(type == 'image') ? 'background-color: black; height: windowHeight !important' : ''")
         div.header {{ title }}
         div.top.bottom.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
             i(":class"="[selected_action.icon]") 
@@ -22,9 +22,9 @@
                                 input( type="text" placeholder="????-??-??" )
     
                 
-        div(v-show="type == 'image'" style="background-color: black")#image_container                        
-            div.image.content.ui.container(v-if="images")
-                img.ui.fluid.rounded.image#selected_image( ":src"="active_image.path" ":id"="active_image.id")
+        div.image.content(v-show="type == 'image'" style="background-color: black")#image_container                                    
+            div.ui.container(v-if="images")
+                img.ui.fluid.rounded.image( ":src"="active_image.path" ":id"="active_image.id")
             i.huge.chevron.circle.left.icon(style="position: absolute; left: 5%; top: 45%" "@click"="showPreviousImage")#left_button
             i.huge.chevron.circle.right.icon(style="position: absolute; right: 5%; top: 45%;" "@click"="showNextImage")#right_button
 
@@ -213,13 +213,13 @@
                         @active_index = message.index
                         @active_image = @images[@active_index]                        
                        
-                        $('.fullscreen.modal').modal({   
+                        $('.long.modal').modal({   
                             onShow: =>
                                 setTimeout (->
-                                    $('.fullscreen.modal').modal('refresh')
+                                    $('.long.modal').modal('refresh')
                                 ), 200                                  
                             observeChanges: true,
-                            closable: true,                                            
+                            closable: true                                            
                         })                              
                         @showOverlayButtons()
 
