@@ -14,23 +14,33 @@
                     @longpress = true
                     @card.style.opacity = '0.5'
                 , 200
-
+            
            # If not longpress, treat as normal click  
+            
+            getImages = () ->
+                images = []
+                binded_images = binding.value
+                for image in binded_images
+                    images.push image                
+                return images
+
             shortPress = (evt) ->
                 if !dragged
                     if !@longpress
                         bus.$emit 'show_message',
                             title: evt.target.card.vmData.original_name
                             type: 'image'
-                            image: evt.target.card.vmData
+                            index: evt.target.card.image.position
+                            images: binding.value
+
                 # Reset
                 clearTimeout @longpress_timer
                 @longpress = false
     
             setupCards = ->
-                
+                getImages()
                 # Setup each card
-                for card, index in el.childNodes
+                for card, index in el.childNodes                    
                     # Set references and data-binding
                     card.vmData = binding.value[index] # Reference to the card Vue-data
 
