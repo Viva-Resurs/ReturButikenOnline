@@ -31,9 +31,9 @@
                         newImageWidth = newWidth
                         newImageHeight = expectedHeight                            
 
-                #Image is in landscape mode                 
-                if imageWidth > imageHeight                    
-                    expectedHeight = windowHeight                        
+                #Image is in landscape mode or square            
+                else if imageWidth >= imageHeight                    
+                    expectedHeight = windowHeight                     
                     imageAspectRatio = imageWidth/imageHeight 
                     newWidth = expectedHeight * imageAspectRatio                        
 
