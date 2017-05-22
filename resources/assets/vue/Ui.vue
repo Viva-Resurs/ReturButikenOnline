@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.pusher( v-if="settings.lang" )
+    div.pusher( v-if="settings.lang")
         navigation
         semantic-dialog
         router-view.ui.padded.container.segment#rootcontainer
@@ -22,6 +22,7 @@
     Vue.directive 'images', require './directives/images.vue'
     Vue.directive 'calendar', require './directives/calendar.vue'
     Vue.directive 'swipe', require './directives/swipe.vue'
+    Vue.directive 'image', require './directives/image.vue'
 
     # Define global mixins
     Vue.mixin require './mixins/GoBack.vue'

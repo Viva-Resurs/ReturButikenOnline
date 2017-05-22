@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic long' : ''" ":style"="(type == 'image') ? 'background-color: black; height: windowHeight !important' : ''")
+    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic' : ''" ":style"="(type == 'image') ? 'background-color: black' : 'small'")
         div.header(v-show="type != 'image'") {{ title }}
         div.top.bottom.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
             i(":class"="[selected_action.icon]") 
@@ -22,12 +22,8 @@
                                 input( type="text" placeholder="????-??-??" )
     
                 
-        div.image.content(v-show="type == 'image'" style="background-color: black")#image_container                                    
-            div.ui.container(v-if="images")
-                img.ui.fluid.rounded.image( ":src"="active_image.path" ":id"="active_image.id")
-            i.huge.chevron.circle.left.icon(style="position: absolute; left: 5%; top: 45%" "@click"="showPreviousImage")#left_button
-            i.huge.chevron.circle.right.icon(style="position: absolute; right: 5%; top: 45%;" "@click"="showNextImage")#right_button
-
+        div.image.content(v-show="type == 'image'" style="background-color: black" v-image="active_image")                                                           
+           
         div.ui.grid.bottom.attached.inverted.equal.width(":class"="(type == 'image') ? 'container' : 'segment'"  ":style"="(type == 'image') ? 'background-color: black; border-color: black;' : ''")        
             div.column.center.aligned.mobile.only("style"="padding-bottom: 0px") 
                 div.center.aligned.column.actions
@@ -215,13 +211,13 @@
                         @active_index = message.index
                         @active_image = @images[@active_index]                        
                        
-                        $('.long.modal').modal({   
+                        $('.modal').modal({   
                             onShow: =>
                                 setTimeout (->
-                                    $('.long.modal').modal('refresh')
+                                    $('.modal').modal('refresh')
                                 ), 200                                  
-                            observeChanges: true,
-                            closable: true                                            
+                            
+                            closable: true                                                                    
                         })                              
                         @showOverlayButtons()
 
@@ -229,11 +225,7 @@
                         @selected_action = @actions['default']
                 
                 Vue.nextTick ->                 
-                    if @type == 'image'
-                        $('fullscreen.modal').modal('refresh').
-                        modal('show')                  
-                    else
-                        $('.modal').modal('refresh')
+                    $('.modal').modal('refresh')
                         .modal('show')
                     
         mounted: ->
