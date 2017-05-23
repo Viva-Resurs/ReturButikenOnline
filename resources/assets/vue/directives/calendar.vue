@@ -1,6 +1,7 @@
 <script lang="coffee">
     module.exports =
         inserted: (el, binding) ->
+
             if el.id == "interval_start"
                 $(el).calendar
                     ampm: false
@@ -12,6 +13,8 @@
                         time: (date, settings, forCalendar) ->
                             return moment(date).format 'HH:mm'
                     onChange: binding.value
+                    onShow:  $('.modal').modal('refresh')
+      
             if el.id == "interval_end"
                 $(el).calendar
                     ampm: false
@@ -23,4 +26,9 @@
                         time: (date, settings, forCalendar) ->
                             return moment(date).format 'HH:mm'
                     onChange: binding.value
+                    onShow:  $('.modal').modal('refresh')
+        
+        componentUpdated: (el, binding) ->
+            $('.modal').modal('refresh')
+   
 </script>

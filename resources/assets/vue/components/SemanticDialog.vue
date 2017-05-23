@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic' : ''" ":style"="(type == 'image') ? 'background-color: black' : 'small'")
+    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : ''" ":style"="(type == 'image') ? 'background-color: black' : 'small'")
         div.header(v-show="type != 'image'") {{ title }}
         div.top.bottom.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
             i(":class"="[selected_action.icon]") 
@@ -197,10 +197,7 @@
                         $('.modal').modal({
                             observeChanges: true,
                             closable: true,
-                            onShow: =>
-                                setTimeout (->
-                                    $('.modal').modal('refresh')
-                                ), 200 
+                            duration: 0,
                             onApprove: ->                       
                                 return message.cb( new moment( $('#interval_start').calendar('get date') ), new moment( $('#interval_end').calendar('get date') ) )
                         });
@@ -212,12 +209,9 @@
                         @active_image = @images[@active_index]                        
                        
                         $('.modal').modal({   
-                            onShow: =>
-                                setTimeout (->
-                                    $('.modal').modal('refresh')
-                                ), 200                                  
-                            
-                            closable: true                                                                    
+                            closable: true,
+                            transition: 'pulse',
+                            duration: 500                                                             
                         })                              
                         @showOverlayButtons()
 
@@ -225,7 +219,7 @@
                         @selected_action = @actions['default']
                 
                 Vue.nextTick ->                 
-                    $('.modal').modal('refresh')
+                    $('.modal')
                         .modal('show')
                     
         mounted: ->

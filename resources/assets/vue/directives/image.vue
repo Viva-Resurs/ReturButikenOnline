@@ -62,14 +62,11 @@
             
                     img.style.width = imageWidth-5+'px'
                     img.style.height = imageHeight-5+'px'                      
-                    el.style.width = imageWidth+20+'px'
-                    el.style.height = imageHeight+20+'px'
-                    el.parentElement.style.position = 'relative'                   
-                    el.parentElement.style.width = imageWidth+20+'px' 
+                    el.style.left = windowWidth/2+'px'
                     windowImageDiff = window.innerWidth-(imageWidth+20)
                     console.log windowImageDiff
-                    el.parentElement.style.left = (imageWidth/2)+windowImageDiff+'px'                         
-                    el.style.padding = 0+'px'                                
+                    el.style.padding = 0+'px'  
+                    $('.modal').modal('refresh')                              
                     
                     
 
