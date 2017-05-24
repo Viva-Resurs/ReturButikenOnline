@@ -41,10 +41,12 @@
                                         input( v-model="item.name_new"
                                         ":placeholder"="translate('placeholder.type')+' '+translate('name')"
                                         v-focus="" ).collapsing
-                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name)" )
+                                    div.ui.vertical.segment.basic(
+                                        "v-if"="!item.edit && itemHaveData('name', item.name)"
+                                        style="padding-top: 6px; padding-bottom: 6px" )
                                         h4.ui.sub.header {{ translate('name') }}
                                         p {{ item.name }}
-                            td.collapsing.bottom.aligned
+                            td.collapsing
                                 div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
         div.row( v-if="countItems > 0 && search!=''" )

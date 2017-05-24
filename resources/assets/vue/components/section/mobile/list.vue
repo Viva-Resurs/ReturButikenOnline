@@ -51,12 +51,12 @@
                                         ":placeholder"="translate('section.name_placeholder_sv')"
                                         v-focus="" ).collapsing
 
-                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name)" )
+                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name)" style="padding-top: 6px; padding-bottom: 0px")
                                         h4.ui.sub.header {{ translate('name') }}
                                         p( v-if="getLanguage()=='sv'" ) {{ item.name_sv }}
                                         p( v-else="") {{ item.name }}
 
-                                    div.ui.vertical.segment.basic( "v-if"="itemHaveData('users', item.users)" )
+                                    div.ui.vertical.segment.basic( "v-if"="itemHaveData('users', item.users[0])" style="padding-top: 12px; padding-bottom: 0px")
                                         h4.ui.sub.header {{ translate('users') }}
                                         p
                                             span( v-for="(role, column_index) in item.users")

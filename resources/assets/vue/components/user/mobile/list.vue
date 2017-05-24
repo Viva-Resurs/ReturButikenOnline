@@ -36,15 +36,15 @@
                             v-for="(item, filterIndex) in filterItems"
                             ":id"="item.id" )
                             td.slim
-                                div.ui.item.fluid(style="margin-left: 5px;")
+                                div.ui.item.fluid(style="margin-left: 5px" )
                                     div.ui.input.fluid( v-if="item.edit" )
                                         input( v-model="item.name_new"
                                         ":placeholder"="translate('placeholder.type')+' '+translate('name')"
                                         v-focus="" ).collapsing
-                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name) && screenType == 'tablet'" )
+                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name) && screenType == 'tablet'" style="padding-top: 6px; padding-bottom: 6px" )
                                         h4.ui.sub.header {{ translate('name') }}
                                         p.trunc-tab {{ item.name }}
-                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name) && screenType == 'mobile'" )
+                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name) && screenType == 'mobile'" style="padding-top: 6px; padding-bottom: 6px")
                                         h4.ui.sub.header {{ translate('name') }}
                                         p.trunc-mob {{ item.name }}
                                     div.ui.vertical.segment.basic( "v-if"="itemHaveData('users', item.users)" )
@@ -53,7 +53,7 @@
                                             span( v-for="(role, column_index) in item.users")
                                                 span {{ role.name }}
                                                 span( v-if="(column_index != item.users.length -1)") ,{{ ' ' }}
-                            td.collapsing.bottom.aligned
+                            td.collapsing
                                 div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
         div.row( v-if="countItems > 0 && search!=''" )

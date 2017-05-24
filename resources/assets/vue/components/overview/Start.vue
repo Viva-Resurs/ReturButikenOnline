@@ -16,17 +16,16 @@
                     style="padding: 4px !important; border: 0px !important"
                     ":class"="contact && !article ? 'active' : ''" )
                     article-overview( ":articles"="getArticles" )
-        div.ui.segments
-            article-card(
-                ":item"="article"
-                ":tools"=`[
-                    $options.components.PublishInterval,
-                    $options.components.BiddingInterval,
-                    $options.components.Preview,
-                    $options.components.Edit,
-                    $options.components.Remove ]`
-                "from"="start"
-                )
+        article-card(
+            ":item"="article"
+            ":tools"=`[
+                $options.components.PublishInterval,
+                $options.components.BiddingInterval,
+                $options.components.Preview,
+                $options.components.Edit,
+                $options.components.Remove ]`
+            "from"="start"
+            )
 </template>
 
 <script lang="coffee">
