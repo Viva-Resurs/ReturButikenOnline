@@ -1,7 +1,7 @@
 <template lang="pug">
-    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : ''" ":style"="(type == 'image') ? 'background-color: black' : 'small'")
+    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : 'small'" ":style"="(type == 'image') ? 'background-color: black' : 'small'")
         div.header(v-show="type != 'image'") {{ title }}
-        div.top.bottom.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
+        div.top.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
             i(":class"="[selected_action.icon]") 
             div.header {{ message }}
         
@@ -22,9 +22,9 @@
                                 input( type="text" placeholder="????-??-??" )
     
                 
-        div.image.content(v-show="type == 'image'" style="background-color: black" v-image="active_image")                                                           
-           
-        div.ui.grid.bottom.attached.inverted.equal.width(":class"="(type == 'image') ? 'container' : 'segment'"  ":style"="(type == 'image') ? 'background-color: black; border-color: black;' : ''")        
+        div.image.content.attached(v-show="type == 'image'" style="background-color: black" v-image="{ active_image: active_image, pos: position }")                                                           
+            
+        div.ui.grid.inverted.equal.width.bottom.attached(v-show="type != 'image'" ":class"="'segment'")        
             div.column.center.aligned.mobile.only("style"="padding-bottom: 0px") 
                 div.center.aligned.column.actions
                     div(v-for="button in selected_action.buttons"
@@ -34,6 +34,9 @@
                 div.center.aligned.column.actions
                     div(v-for="button in selected_action.buttons"
                     ":class"="[button.class]") {{button.label}}
+        
+       
+            
 </template>
 
 <script lang="coffee">
@@ -106,6 +109,7 @@
             type: 'Empty'
             active_image: 'Empty'
             active_index: 0
+            position: 0
             images: []
         computed:
             windowHeight: ->
@@ -129,39 +133,29 @@
                 if !(Number(@active_index+1) > Number(@images.length))
                     @active_index = @active_index + 1
                     @active_image = @images[@active_index]
-                    @title = @active_image.name
-                    @showOverlayButtons()
-        
+                    @title = @active_image.name 
+                    @setImagePosition()
+                
             showPreviousImage: (evt) ->
                 if !(Number(@active_index-1) < Number(0))
                     @active_index = @active_index - 1
                     @active_image = @images[@active_index]                    
-                    @title = @active_image.name
-                    @showOverlayButtons()
-            
-            showOverlayButtons: () ->
-                leftButton = $('#left_button')
-                rightButton = $('#right_button')
-                
-                if images.length == 1
-                   rightButton.hide()
-                   leftButton.hide()
-                   return
-                
-                switch @active_index
-                    when 0
-                        leftButton.hide()
-                        rightButton.show()
-                
-                    when  @images.length-1                    
-                        rightButton.hide()
-                        leftButton.show()
-                        
-                    else
-                        rightButton.show()
-                        leftButton.show()
+                    @title = @active_image.name                    
+                    @setImagePosition()
 
-                
+            setImagePosition: () ->
+                left = 0
+                middle = 1
+                right = 2
+               
+                if @active_index == @images.length-1                    
+                    @position = right        
+                    console.log @position
+                if @active_index == 0
+                    @position = left
+                else 
+                    @position = middle
+
             handleMessage: (message) ->
                 @title = message.title
                 @message = message.message
@@ -206,14 +200,14 @@
                         @selected_action = @actions['image']
                         @images = message.images                          
                         @active_index = message.index
-                        @active_image = @images[@active_index]                        
+                        @setImagePosition()  
+                        @active_image = @images[@active_index]                                         
                        
                         $('.modal').modal({   
                             closable: true,
                             transition: 'pulse',
                             duration: 500                                                             
-                        })                              
-                        @showOverlayButtons()
+                        })                                                      
 
                     else
                         @selected_action = @actions['default']
@@ -223,7 +217,12 @@
                         .modal('show')
                     
         mounted: ->
-            bus.$on('show_message', (message) => @handleMessage(message) );       
+            bus.$on('show_message', (message) => @handleMessage(message) );   
+            
+            #Find out if rightmost or leftmost image is shown, pass this to image directive. 
+
+            bus.$on('left_button_clicked', () => @showPreviousImage() );    
+            bus.$on('right_button_clicked', () => @showNextImage() );    
                    
     }
 </script>

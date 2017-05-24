@@ -4,11 +4,52 @@
         # When component is updated, do the following
         componentUpdated: (el, binding) ->           
             #Global properties
+            
             imageHeight = ""
             imageWidth = ""
           
-            windowHeight = window.innerHeight-50
+            windowHeight = window.innerHeight-150
             windowWidth = window.innerWidth-50
+            
+            leftButtonClicked = (e) ->               
+               bus.$emit 'left_button_clicked'                     
+                               
+            rightButtonClicked = (e) ->
+               bus.$emit 'right_button_clicked'                     
+
+            addOverlayButtons = () ->                
+
+                leftButton = document.getElementById "leftButton" 
+                rightButton = document.getElementById "rightButton" 
+                
+                if !leftButton || !rightButton               
+                    leftButton = document.createElement 'i'
+                    leftButton.className = "huge chevron circle left icon"
+                    leftButton.style.zIndex = '1'
+                    leftButton.id = "leftButton"
+                    leftButton.style.position = 'absolute'                
+                    leftButton.style.left = '0px';               
+
+                    rightButton = document.createElement 'i'                
+                    rightButton.id = "rightButton"           
+                    rightButton.className = "huge chevron circle right icon"                
+                    rightButton.style.position = 'absolute'                
+                    rightButton.style.zIndex = '1'                
+                    Vue.nextTick ->  
+                        leftButton.addEventListener "mouseup", leftButtonClicked
+                        rightButton.addEventListener "mouseup", rightButtonClicked      
+
+                    el.parentElement.appendChild leftButton
+                    el.parentElement.appendChild rightButton
+                
+                leftButton.style.top = (windowHeight/2-16.5)+'px'
+                rightButton.style.top = (windowHeight/2-16.5)+'px'
+                rightButton.style.left = (windowWidth-63-6)+'px'
+                rightButton.style.margin = '0px'
+            
+                #hideLeftButton()
+                #hideRightButton()
+
 
             getAdjustedBounds = (imageHeight, imageWidth) ->
                 newImageWidth = ""
@@ -54,7 +95,6 @@
                 img.onload = ->
                     imageHeight = this.height
                     imageWidth = this.width                    
-                    console.log img.height+","+img.width
                     newHeightWidth = getAdjustedBounds(imageHeight, imageWidth)
                     
                     imageHeight = newHeightWidth[0]
@@ -62,17 +102,30 @@
             
                     img.style.width = imageWidth-5+'px'
                     img.style.height = imageHeight-5+'px'                      
-                    el.style.left = windowWidth/2+'px'
-                    windowImageDiff = window.innerWidth-(imageWidth+20)
-                    console.log windowImageDiff
+                    el.style.left = windowWidth/2+'px'                             
                     el.style.padding = 0+'px'  
-                    $('.modal').modal('refresh')                              
                     
+                    button = document.createElement 'div'   
+                    button.className += "ui primary button"          
+                    buttonText = document.createTextNode('Ok')         
+                    button.style.textAlign = 'center' 
+
+                    button.appendChild(buttonText)                    
+                    button.style.position = "absolute"
+                    button.style.width = '60px'                        
+                    button.style.left = (el.parentElement.offsetWidth/2-30)+'px'
+                    button.style.bottom = 20+'px'
+                    button.onclick = () -> $('.modal').modal('hide')
+
+                    el.appendChild(button)
+                    addOverlayButtons()
+                    $('.modal').modal('refresh')                              
+
                     
 
                 return img
             
-            active_image = binding.value            
+            active_image = binding.value.active_image            
             
             image_element = el.getElementsByTagName("img")[0]            
             if image_element
@@ -89,6 +142,7 @@
             image_element.style.right = '0'
             image_element.style.bottom = '0'
 
+            console.log "position: "+binding.value.pos
             #window.addEventListener "resize", setImageProperties(image_element,active_image.path)             
  
 </script>                
