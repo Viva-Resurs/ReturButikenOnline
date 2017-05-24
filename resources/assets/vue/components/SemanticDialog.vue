@@ -22,7 +22,7 @@
                                 input( type="text" placeholder="????-??-??" )
     
                 
-        div.image.content.attached(v-show="type == 'image'" style="background-color: black" v-image="{ active_image: active_image, pos: position }")                                                           
+        div.image.content.attached(v-show="type == 'image'" style="background-color: black" v-image="{ active_image: active_image, position: position }")                                                           
             
         div.ui.grid.inverted.equal.width.bottom.attached(v-show="type != 'image'" ":class"="'segment'")        
             div.column.center.aligned.mobile.only("style"="padding-bottom: 0px") 
@@ -109,7 +109,7 @@
             type: 'Empty'
             active_image: 'Empty'
             active_index: 0
-            position: 0
+            position: ""
             images: []
         computed:
             windowHeight: ->
@@ -147,12 +147,18 @@
                 left = 0
                 middle = 1
                 right = 2
+                single_image = 3
                
-                if @active_index == @images.length-1                    
+                if @images.length == 1
+                    @position = single_image
+
+                else if @active_index == @images.length-1                    
                     @position = right        
                     console.log @position
-                if @active_index == 0
+
+                else if @active_index == 0
                     @position = left
+                
                 else 
                     @position = middle
 

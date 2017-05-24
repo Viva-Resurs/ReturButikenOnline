@@ -1,7 +1,5 @@
 <script lang="coffee">
     module.exports =            
-       
-        # When component is updated, do the following
         componentUpdated: (el, binding) ->           
             #Global properties
             
@@ -18,17 +16,19 @@
                bus.$emit 'right_button_clicked'                     
 
             addOverlayButtons = () ->                
+                # Hide buttons depending on position
 
                 leftButton = document.getElementById "leftButton" 
                 rightButton = document.getElementById "rightButton" 
+                okButton = document.getElementById "okButton" 
                 
-                if !leftButton || !rightButton               
+                if !leftButton || !rightButton  || !okButton             
                     leftButton = document.createElement 'i'
                     leftButton.className = "huge chevron circle left icon"
                     leftButton.style.zIndex = '1'
                     leftButton.id = "leftButton"
                     leftButton.style.position = 'absolute'                
-                    leftButton.style.left = '0px';               
+                    leftButton.style.left = '20px';               
 
                     rightButton = document.createElement 'i'                
                     rightButton.id = "rightButton"           
@@ -39,17 +39,45 @@
                         leftButton.addEventListener "mouseup", leftButtonClicked
                         rightButton.addEventListener "mouseup", rightButtonClicked      
 
-                    el.parentElement.appendChild leftButton
-                    el.parentElement.appendChild rightButton
-                
-                leftButton.style.top = (windowHeight/2-16.5)+'px'
-                rightButton.style.top = (windowHeight/2-16.5)+'px'
-                rightButton.style.left = (windowWidth-63-6)+'px'
-                rightButton.style.margin = '0px'
-            
-                #hideLeftButton()
-                #hideRightButton()
+                    okButton = document.createElement 'div'   
+                    okButton.className += "ui primary button"   
+                    okButton.style.zIndex = '1'        
+                    buttonText = document.createTextNode('Ok')         
+                    okButton.style.textAlign = 'center' 
 
+                    okButton.appendChild(buttonText)                    
+                    okButton.style.position = "absolute"
+                    okButton.style.width = '60px'   
+                    okButton.id = "okButton"                       
+                    okButton.onclick = () -> $('.modal').modal('hide')
+
+                    el.appendChild okButton
+                    el.appendChild leftButton
+                    el.appendChild rightButton
+                                
+                okButton.style.left = (el.parentElement.offsetWidth/2-30)+'px'
+                okButton.style.bottom = 20+'px'
+                leftButton.style.top = ((imageHeight-30)/2)+'px'
+                rightButton.style.top = ((imageHeight-30)/2)+'px'
+                rightButton.style.right = 20+'px'
+                rightButton.style.margin = '0px'
+
+                hideButtons(leftButton, rightButton)
+
+            hideButtons = (leftButton, rightButton) ->                
+                switch binding.value.position
+                    when 0
+                        leftButton.style.visibility = 'hidden'
+                        rightButton.style.visibility = 'visible' 
+                    when 1
+                        leftButton.style.visibility = 'visible' 
+                        rightButton.style.visibility = 'visible'
+                    when 2
+                        leftButton.style.visibility = 'visible' 
+                        rightButton.style.visibility = 'hidden' 
+                    else 
+                        leftButton.style.visibility = 'hidden' 
+                        rightButton.style.visibility = 'hidden'
 
             getAdjustedBounds = (imageHeight, imageWidth) ->
                 newImageWidth = ""
@@ -105,23 +133,8 @@
                     el.style.left = windowWidth/2+'px'                             
                     el.style.padding = 0+'px'  
                     
-                    button = document.createElement 'div'   
-                    button.className += "ui primary button"          
-                    buttonText = document.createTextNode('Ok')         
-                    button.style.textAlign = 'center' 
-
-                    button.appendChild(buttonText)                    
-                    button.style.position = "absolute"
-                    button.style.width = '60px'                        
-                    button.style.left = (el.parentElement.offsetWidth/2-30)+'px'
-                    button.style.bottom = 20+'px'
-                    button.onclick = () -> $('.modal').modal('hide')
-
-                    el.appendChild(button)
                     addOverlayButtons()
                     $('.modal').modal('refresh')                              
-
-                    
 
                 return img
             
