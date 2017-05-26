@@ -57,8 +57,7 @@
                         start: (event, ui) ->                        
                             @card.style.opacity = '0.5'
                             dragged = this
-                            cardIsDragged = true
-                            console.log "dragging card"
+                            cardIsDragged = true                            
                         stop: (event, ui) ->   
                             cardIsDragged = false                         
                             clearStates()

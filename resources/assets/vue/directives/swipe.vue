@@ -170,7 +170,7 @@
             handleDown = (e) ->               
                 e.preventDefault() 
                 moved = false               
-                setPosition e.clientX, e.clientY
+                setPosition e.clientX+50, e.clientY+50
                 active = true
             
             handleUp   = (e) ->
@@ -262,7 +262,7 @@
                         for slide, index in slides.refs
                             # Resize slide
                             slide.style.height = height + 'px';
-                            slide.style.width = width + 'px';
+                            slide.style.width = width + 'px';                            
 
                             # Set initial values for image
                             w = slide.imageWidth

@@ -27,13 +27,15 @@
                     leftButton.className = "huge chevron circle left icon"
                     leftButton.style.zIndex = '1'
                     leftButton.id = "leftButton"
-                    leftButton.style.position = 'absolute'                
-                    leftButton.style.left = '20px';               
+                    leftButton.style.position = 'absolute'   
+                    leftButton.style.filter = 'drop-shadow(5px 5px 5px #222)'
+                    leftButton.style.left = '20px'
 
                     rightButton = document.createElement 'i'                
                     rightButton.id = "rightButton"           
                     rightButton.className = "huge chevron circle right icon"                
-                    rightButton.style.position = 'absolute'                
+                    rightButton.style.position = 'absolute'   
+                    rightButton.style.filter = 'drop-shadow(5px 5px 5px #222)'             
                     rightButton.style.zIndex = '1'                
                     Vue.nextTick ->  
                         leftButton.addEventListener "mouseup", leftButtonClicked
@@ -44,6 +46,7 @@
                     okButton.style.zIndex = '1'        
                     buttonText = document.createTextNode('Ok')         
                     okButton.style.textAlign = 'center' 
+                    okButton.style.filter = 'drop-shadow(5px 5px 5px #222)'
 
                     okButton.appendChild(buttonText)                    
                     okButton.style.position = "absolute"
