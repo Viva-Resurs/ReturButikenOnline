@@ -118,7 +118,7 @@
                 
                 return [newImageHeight, newImageWidth]
       
-            setImageProperties = (img, path) ->            
+            setImageProperties = (img, path) ->                           
                 img.src = path
                 img.onload = ->
                     imageHeight = this.height
@@ -155,7 +155,6 @@
             image_element.style.right = '0'
             image_element.style.bottom = '0'
 
-            console.log "position: "+binding.value.pos
-            #window.addEventListener "resize", setImageProperties(image_element,active_image.path)             
+            window.addEventListener "resize", setImageProperties(image_element,active_image.path)             
  
 </script>                

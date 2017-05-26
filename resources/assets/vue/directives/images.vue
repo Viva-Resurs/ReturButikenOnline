@@ -2,6 +2,8 @@
     module.exports =
         inserted: (el, binding) ->
             dragged = false # Currently dragged element
+            cardIsDragged = false
+
             clearStates = ->
                 for element in el.childNodes
                     element.style.opacity = '1.0'            
@@ -9,13 +11,13 @@
             el.addEventListener 'mouseup', clearStates          
 
             # Set longpress timer to 200ms
-            longPress = ->
-                @longpress_timer = setTimeout =>
-                    @longpress = true
-                    @card.style.opacity = '0.5'
-                , 200
-            
-           # If not longpress, treat as normal click  
+            clickedCard = (evt) ->
+                if !cardIsDragged
+                    bus.$emit 'show_message',
+                        title: evt.target.card.vmData.original_name
+                        type: 'image'
+                        index: evt.target.card.image.position
+                        images: binding.value                                        
             
             getImages = () ->
                 images = []
@@ -24,19 +26,6 @@
                     images.push image                
                 return images
 
-            shortPress = (evt) ->
-                if !dragged
-                    if !@longpress
-                        bus.$emit 'show_message',
-                            title: evt.target.card.vmData.original_name
-                            type: 'image'
-                            index: evt.target.card.image.position
-                            images: binding.value
-
-                # Reset
-                clearTimeout @longpress_timer
-                @longpress = false
-    
             setupCards = ->
                 getImages()
                 # Setup each card
@@ -49,15 +38,8 @@
                             card.image = element # The image of card
                             element.card = card  # The card of image
                             # Clear longpress state
-                            clearTimeout element.longpress_timer
-                            element.longpress = false
-                            
-                            element.addEventListener 'mousedown', longPress                            
-                            #element.addEventListener 'touchstart', longPress                            
-                            
-                            element.addEventListener 'mouseup', shortPress, @card
-                            #element.addEventListener 'touchend', shortPress, @card                            
-        
+                            element.addEventListener 'mouseup', clickedCard, @card                            
+                  
                         if element.tagName == 'A'
                             remover = element # Remove button
                             remover.card = card
@@ -68,14 +50,17 @@
                                 Vue.nextTick -> setupCards()
                     
                     # Set current position
-                    card.image.position = index
+                    card.image.position = index                    
 
                     $(card.image).draggable
                         helper: "clone"
                         start: (event, ui) ->                        
                             @card.style.opacity = '0.5'
                             dragged = this
-                        stop: (event, ui) ->                            
+                            cardIsDragged = true
+                            console.log "dragging card"
+                        stop: (event, ui) ->   
+                            cardIsDragged = false                         
                             clearStates()
 
                     # When element is dropped upon

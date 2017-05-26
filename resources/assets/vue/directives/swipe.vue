@@ -32,15 +32,17 @@
                     slides.refs[this.slideID].imageWidth = this.width
                     slides.refs[this.slideID].ready = true
                     if process.env.NODE_ENV == "development"
-                        console.debug "IMG: #{this.slideID}: #{this.width} #{this.height}"
-                img.src = image.path
+                        console.debug "IMG: #{this.slideID}: #{this.width} #{this.height}"                
+                img.src = image.path         
                 slide.style.backgroundImage = "url('#{image.path}')"
                 slide.style.backgroundSize = 'cover'
                 slides.refs.push slide # Save reference in wrapper
                 slides.appendChild slide # Add slide element into wrapper
+                
 
             # Insert slides
             el.appendChild slides
+            
 
             # Set active image by determine position in wrapper
             checkActive = ->
@@ -58,35 +60,44 @@
             
             #Overlay buttons
             addOverlayButtons = () ->
-                leftButton = document.getElementById "leftButton" 
-                rightButton = document.getElementById "rightButton" 
+                leftButton = document.getElementById "previewLeftButton" 
+                rightButton = document.getElementById "previewRightButton" 
+                numImagesLabel = document.getElementById "numImagesLabel"
                 
                 if !leftButton || !rightButton               
                     leftButton = document.createElement 'i'
-                    leftButton.className = "big chevron circle left icon"
+                    leftButton.className = "huge chevron circle left icon"
                     leftButton.style.zIndex = '1'
-                    leftButton.id = "leftButton"
+                    leftButton.id = "previewLeftButton"
                     leftButton.style.position = 'absolute'                
-                    leftButton.style.left = '0px';               
+                    leftButton.style.left = '10px';               
 
                     rightButton = document.createElement 'i'                
-                    rightButton.id = "rightButton"           
-                    rightButton.className = "big chevron circle right icon"                
+                    rightButton.id = "previewRightButton"           
+                    rightButton.className = "huge chevron circle right icon"                
                     rightButton.style.position = 'absolute'                
                     rightButton.style.zIndex = '1'                
                     
-                    console.log el.parentElement
+                    numImagesLabel = document.createElement 'div'
+                    numImagesLabel.id = "numImagesLabel"
+                    numImagesLabel.className = "ui black label"
+                    numImagesLabel.style.position = 'absolute'
+                    numImagesLabel.style.zIndex = '1'                            
+                    numImagesLabel.style.textAlign = 'center'                       
+                    numImagesLabel.style.right = '20px';  
+                    numImagesLabel.style.top = '20px';     
 
+                    
+                    el.parentElement.appendChild numImagesLabel
                     el.parentElement.appendChild leftButton
                     el.parentElement.appendChild rightButton
                 
-                leftButton.style.top = (height/2-16.5)+'px'
-                rightButton.style.top = (height/2-16.5)+'px'
-                rightButton.style.left = (width-28-6)+'px'
+                leftButton.style.top = (height/2-30)+'px'
+                rightButton.style.top = (height/2-30)+'px'
+                rightButton.style.right = 10+'px'
                 rightButton.style.margin = '0px'
-                
-                console.log "height: "+height                
-                console.log "height :"+height
+                  
+    
                 leftButton.addEventListener "mouseup", leftButtonClicked
                 rightButton.addEventListener "mouseup", rightButtonClicked
                 hideLeftButton()
@@ -94,14 +105,14 @@
             
             #Hide buttons if images are missing
             hideLeftButton = () ->
-                leftButton = document.getElementById "leftButton" 
+                leftButton = document.getElementById "previewLeftButton" 
                 if active_image == 0                    
                     leftButton.style.visibility = 'hidden';               
                 else 
                     leftButton.style.visibility = 'visible';                 
 
             hideRightButton = () ->    
-                rightButton = document.getElementById "rightButton" 
+                rightButton = document.getElementById "previewRightButton" 
                 if active_image == slides.refs.length-1
                     rightButton.style.visibility = 'hidden';               
                 else         
@@ -132,6 +143,13 @@
                 , 200, checkActive
                 hideLeftButton()
                 hideRightButton()
+                
+                numImagesLabel = document.getElementById "numImagesLabel"       
+                if numImagesLabel.childNodes.length > 0
+                    numImagesLabel.childNodes[0].nodeValue = active_image+1+"/"+images.length
+                else 
+                    labelText = document.createTextNode(active_image+1+"/"+images.length)
+                    numImagesLabel.appendChild(labelText)
 
             # Pointer position
             active = false
@@ -141,23 +159,30 @@
             delta =
                 x: 0
                 y: 0
+
+            moved = false       
+
             setPosition = (x, y) ->
                 position.x = x
                 position.y = y
 
             # Handle pointer-events
-            handleDown = (e) ->
-                e.preventDefault()
+            handleDown = (e) ->               
+                e.preventDefault() 
+                moved = false               
                 setPosition e.clientX, e.clientY
                 active = true
             
             handleUp   = (e) ->
-                e.preventDefault()
+                e.preventDefault()     
+                if !moved
+                    openImagePreview()
                 snapTo()
                 active = false
             
             handleMove = (e) ->
-                e.preventDefault()
+                e.preventDefault()  
+                moved = true              
                 if active == false
                     return
                 delta =
@@ -168,14 +193,16 @@
                 setPosition e.clientX, e.clientY
             
             #Handle touch-events
-            handleTouchStart = (e) ->
-                e.preventDefault()
+            handleTouchStart = (e) ->     
+                moved = false           
+                e.preventDefault()                
                 t = e.touches[0]
                 setPosition t.screenX, t.screenY
                 active = true
                 
             handleTouchMove = (e) ->
                 e.preventDefault()
+                moved = true
                 t = e.touches[0];
                 if active == false
                     return
@@ -186,8 +213,17 @@
                                 
                 swipeTo delta.x * 2
                 setPosition t.screenX, t.screenY
+            
+            openImagePreview = () ->
+                bus.$emit 'show_message',                        
+                        type: 'image'
+                        index: active_image
+                        images: images
 
             handleTouchEnd = (e) ->
+                if !moved
+                    openImagePreview()
+     
                 e.preventDefault()
                 snapTo()
                 active = false
@@ -265,6 +301,7 @@
                 
             # When browser is resized
             window.addEventListener "resize", setDimensions
+            addOverlayButtons()
 
             # Wait while loading slides
             loader = setInterval ->
