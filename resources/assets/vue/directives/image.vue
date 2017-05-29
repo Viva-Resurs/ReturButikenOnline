@@ -20,9 +20,9 @@
 
                 leftButton = document.getElementById "leftButton" 
                 rightButton = document.getElementById "rightButton" 
-                okButton = document.getElementById "okButton" 
+                closeButton = document.getElementById "closeButton" 
                 
-                if !leftButton || !rightButton  || !okButton             
+                if !leftButton || !rightButton  || !closeButton             
                     leftButton = document.createElement 'i'
                     leftButton.className = "huge chevron circle left icon"
                     leftButton.style.zIndex = '1'
@@ -41,27 +41,31 @@
                         leftButton.addEventListener "mouseup", leftButtonClicked
                         rightButton.addEventListener "mouseup", rightButtonClicked      
 
-                    okButton = document.createElement 'div'   
-                    okButton.className += "ui red button"   
-                    okButton.style.zIndex = '1'        
-                    buttonText = document.createTextNode('x')                     
-                    okButton.style.leftMargin = 'auto'
-                    okButton.style.rightMargin = 'auto'
-                    okButton.style.textAlign = 'center'                     
+                    closeButton = document.createElement 'div'   
+                    closeButton.className += "ui red button"   
+                    closeButton.style.zIndex = '1'        
+                    closeButtonIcon = document.createElement 'i'
+                    closeButtonIcon.className += "remove icon" 
+                    closeButtonIcon.style.position = 'relative'
+                    closeButtonIcon.style.left = '-6px'
+                    closeButton.style.width = '10px'                     
+                    closeButton.style.leftMargin = '0px'
+                    closeButton.style.rightMargin = '0px'
+                    closeButton.style.textAlign = 'center'                     
 
-                    okButton.appendChild(buttonText)                    
-                    okButton.style.position = "absolute"
-                    okButton.id = "okButton"                       
-                    okButton.onclick = () -> $('.modal').modal('hide')
+                    closeButton.appendChild(closeButtonIcon)                    
+                    closeButton.style.position = "absolute"
+                    closeButton.id = "closeButton"                       
+                    closeButton.onclick = () -> $('.modal').modal('hide')
 
                     el.appendChild leftButton
                     el.appendChild rightButton
-                    el.appendChild okButton
+                    el.appendChild closeButton
                                 
-                #okButton.style.left = (el.parentElement.offsetWidth/2-30)+'px'
-                #okButton.style.bottom = 20+'px'
-                okButton.style.top = '20px'
-                okButton.style.right = '20px'
+                #closeButton.style.left = (el.parentElement.offsetWidth/2-30)+'px'
+                #closeButton.style.bottom = 20+'px'
+                closeButton.style.top = '5px'
+                closeButton.style.right = '5px'
                 leftButton.style.top = ((imageHeight-30)/2)+'px'
                 rightButton.style.top = ((imageHeight-30)/2)+'px'
                 rightButton.style.right = 20+'px'
