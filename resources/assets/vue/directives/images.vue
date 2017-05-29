@@ -50,7 +50,8 @@
                                 Vue.nextTick -> setupCards()
                     
                     # Set current position
-                    card.image.position = index                    
+                    if card.image
+                        card.image.position = index                    
 
                     $(card.image).draggable
                         helper: "clone"

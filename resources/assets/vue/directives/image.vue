@@ -42,24 +42,26 @@
                         rightButton.addEventListener "mouseup", rightButtonClicked      
 
                     okButton = document.createElement 'div'   
-                    okButton.className += "ui primary button"   
+                    okButton.className += "ui red button"   
                     okButton.style.zIndex = '1'        
-                    buttonText = document.createTextNode('Ok')         
-                    okButton.style.textAlign = 'center' 
-                    okButton.style.filter = 'drop-shadow(5px 5px 5px #222)'
+                    buttonText = document.createTextNode('x')                     
+                    okButton.style.leftMargin = 'auto'
+                    okButton.style.rightMargin = 'auto'
+                    okButton.style.textAlign = 'center'                     
 
                     okButton.appendChild(buttonText)                    
                     okButton.style.position = "absolute"
-                    okButton.style.width = '60px'   
                     okButton.id = "okButton"                       
                     okButton.onclick = () -> $('.modal').modal('hide')
 
-                    el.appendChild okButton
                     el.appendChild leftButton
                     el.appendChild rightButton
+                    el.appendChild okButton
                                 
-                okButton.style.left = (el.parentElement.offsetWidth/2-30)+'px'
-                okButton.style.bottom = 20+'px'
+                #okButton.style.left = (el.parentElement.offsetWidth/2-30)+'px'
+                #okButton.style.bottom = 20+'px'
+                okButton.style.top = '20px'
+                okButton.style.right = '20px'
                 leftButton.style.top = ((imageHeight-30)/2)+'px'
                 rightButton.style.top = ((imageHeight-30)/2)+'px'
                 rightButton.style.right = 20+'px'
@@ -121,8 +123,9 @@
                 
                 return [newImageHeight, newImageWidth]
       
-            setImageProperties = (img, path) ->                           
+            setImageProperties = (img, path) ->                                  
                 img.src = path
+                img.style.display = 'none'
                 img.onload = ->
                     imageHeight = this.height
                     imageWidth = this.width                    
@@ -137,7 +140,12 @@
                     el.style.padding = 0+'px'  
                     
                     addOverlayButtons()
+                    img.style.display = 'initial'
                     $('.modal').modal('refresh')                              
+                
+                img.transitionend = ->
+                    console.log 'transitionend'
+                    
 
                 return img
             
@@ -158,6 +166,6 @@
             image_element.style.right = '0'
             image_element.style.bottom = '0'
 
-            window.addEventListener "resize", setImageProperties(image_element,active_image.path)             
+            #window.addEventListener "resize", setImageProperties(image_element,active_image.path)             
  
 </script>                
