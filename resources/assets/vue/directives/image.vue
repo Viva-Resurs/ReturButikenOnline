@@ -28,14 +28,14 @@
                     leftButton.style.zIndex = '1'
                     leftButton.id = "leftButton"
                     leftButton.style.position = 'absolute'   
-                    leftButton.style.filter = 'drop-shadow(5px 5px 5px #222)'
+                    leftButton.style.filter = 'drop-shadow(2px 2px 2px #222)'
                     leftButton.style.left = '20px'
 
                     rightButton = document.createElement 'i'                
                     rightButton.id = "rightButton"           
                     rightButton.className = "huge chevron circle right icon"                
                     rightButton.style.position = 'absolute'   
-                    rightButton.style.filter = 'drop-shadow(5px 5px 5px #222)'             
+                    rightButton.style.filter = 'drop-shadow(2px 2px 2px #222)'             
                     rightButton.style.zIndex = '1'                
                     Vue.nextTick ->  
                         leftButton.addEventListener "mouseup", leftButtonClicked
@@ -44,26 +44,25 @@
                     closeButton = document.createElement 'div'   
                     closeButton.className += "ui red button"   
                     closeButton.style.zIndex = '1'        
-                    closeButtonIcon = document.createElement 'i'
-                    closeButtonIcon.className += "remove icon" 
-                    closeButtonIcon.style.position = 'relative'
-                    closeButtonIcon.style.left = '-6px'
                     closeButton.style.width = '10px'                     
                     closeButton.style.leftMargin = '0px'
                     closeButton.style.rightMargin = '0px'
                     closeButton.style.textAlign = 'center'                     
+                    closeButton.style.position = "absolute"                    
+                    closeButton.id = "closeButton"         
 
-                    closeButton.appendChild(closeButtonIcon)                    
-                    closeButton.style.position = "absolute"
-                    closeButton.id = "closeButton"                       
+                    closeButtonIcon = document.createElement 'i'
+                    closeButtonIcon.className += "remove icon" 
+                    closeButtonIcon.style.position = 'relative'
+                    closeButtonIcon.style.left = '-5px'
+                   
+                    closeButton.appendChild(closeButtonIcon)                                                      
                     closeButton.onclick = () -> $('.modal').modal('hide')
 
                     el.appendChild leftButton
                     el.appendChild rightButton
                     el.appendChild closeButton
-                                
-                #closeButton.style.left = (el.parentElement.offsetWidth/2-30)+'px'
-                #closeButton.style.bottom = 20+'px'
+
                 closeButton.style.top = '5px'
                 closeButton.style.right = '5px'
                 leftButton.style.top = ((imageHeight-30)/2)+'px'
