@@ -130,14 +130,14 @@
                 , 100
             
             showNextImage: (evt) ->                
-                if !(Number(@active_index+1) > Number(@images.length))
+                if !(Number(@active_index+1) > Number(@images.length-1))                   
                     @active_index = @active_index + 1
                     @active_image = @images[@active_index]
                     @title = @active_image.name 
                     @setImagePosition()
                 
             showPreviousImage: (evt) ->
-                if !(Number(@active_index-1) < Number(0))
+                if !(Number(@active_index-1) < Number(0))                    
                     @active_index = @active_index - 1
                     @active_image = @images[@active_index]                    
                     @title = @active_image.name                    
@@ -153,8 +153,7 @@
                     @position = single_image
 
                 else if @active_index == @images.length-1                    
-                    @position = right        
-                    console.log @position
+                    @position = right                
 
                 else if @active_index == 0
                     @position = left
@@ -180,8 +179,7 @@
                                 setTimeout (->
                                     $('.modal').modal('refresh')
                                 ), 100  
-                            onApprove: ->     
-                                console.log "onApprove"      
+                            onApprove: ->                        
                                 return message.cb();
 
                         })
@@ -212,7 +210,7 @@
                         $('.modal').modal({   
                             closable: true,
                             transition: 'pulse',
-                            duration: 500                                                             
+                            duration: 450                                                           
                         })                                                      
 
                     else
@@ -224,9 +222,6 @@
                     
         mounted: ->
             bus.$on('show_message', (message) => @handleMessage(message) );   
-            
-            #Find out if rightmost or leftmost image is shown, pass this to image directive. 
-
             bus.$on('left_button_clicked', () => @showPreviousImage() );    
             bus.$on('right_button_clicked', () => @showNextImage() );    
                    

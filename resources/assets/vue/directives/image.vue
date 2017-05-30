@@ -8,12 +8,15 @@
           
             windowHeight = window.innerHeight-150
             windowWidth = window.innerWidth-50
-            
+            position = 0
+
             leftButtonClicked = (e) ->               
-               bus.$emit 'left_button_clicked'                     
+                e.preventDefault()
+                bus.$emit 'left_button_clicked'                     
                                
             rightButtonClicked = (e) ->
-               bus.$emit 'right_button_clicked'                     
+                e.preventDefault()
+                bus.$emit 'right_button_clicked'                     
 
             addOverlayButtons = () ->                
                 # Hide buttons depending on position
@@ -127,8 +130,9 @@
                 return [newImageHeight, newImageWidth]
       
             setImageProperties = (img, path) ->                                  
-                img.src = path
-                img.style.display = 'none'
+                img.src = path               
+                img.style.display = 'none'   
+                img.id = "img_"+active_image                              
                 img.onload = ->
                     imageHeight = this.height
                     imageWidth = this.width                    
@@ -138,17 +142,35 @@
                     imageWidth = newHeightWidth[1]
             
                     img.style.width = imageWidth-5+'px'
-                    img.style.height = imageHeight-5+'px'                      
+                    img.style.height = imageHeight-5+'px'  
+                    el.style.overflow = 'hidden'                    
                     el.style.left = windowWidth/2+'px'                             
                     el.style.padding = 0+'px'  
                     
                     addOverlayButtons()
                     img.style.display = 'initial'
-                    $('.modal').modal('refresh')                              
+                                                 
+                    imageBox = el.getBoundingClientRect()
+                         
+                    $('.modal').modal('refresh') 
                 
-                img.transitionend = ->
-                    console.log 'transitionend'
+                    $('img').draggable({ 
+                        axis: "x",                         
+                        appendTo: 'parent',                        
+                        scroll: true,
                     
+                        stop: (e) =>
+                            e.preventDefault()                                             
+                            imageRect = img.getBoundingClientRect()
+                            
+                            if (imageRect.right < imageBox.left)
+                                rightButtonClicked()                                
+                                
+                            else if (imageRect.left > imageBox.right)                                                                                                               
+                                leftButtonClicked()                                
+                            
+                            img.style.left = 0+'px'                     
+                    })        
 
                 return img
             
@@ -159,7 +181,7 @@
                 el.removeChild(image_element)
             
             image_element = document.createElement 'img'                                
-            image_element = setImageProperties(image_element,active_image.path)            
+            image_element = setImageProperties(image_element,active_image.path)
             el.appendChild(image_element)
             
             image_element.style.position = 'relative'
