@@ -132,6 +132,7 @@
                 img.style.display = 'none'   
                 img.id = "img_"+active_image                              
                 img.onload = ->
+                    console.log "on load"
                     imageHeight = this.height
                     imageWidth = this.width                    
                     newHeightWidth = getAdjustedBounds(imageHeight, imageWidth)
@@ -161,12 +162,12 @@
                             e.preventDefault()                                             
                             imageRect = img.getBoundingClientRect()
                             
-                            if (imageRect.right < imageBox.left)
+                            if (imageRect.right-e.offsetX < imageBox.left+(imageWidth/4))
                                 rightButtonClicked()                                
                                 
-                            else if (imageRect.left > imageBox.right)                                                                                                               
+                            else if (imageRect.left+e.offsetX > imageBox.right-(imageWidth/4))                                                                                                               
                                 leftButtonClicked()                                
-                            
+                        
                             img.style.left = 0+'px'                     
                     })        
 
