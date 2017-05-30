@@ -22,20 +22,21 @@
         div.column.tablet.only
             div.fitted.item
                 div.ui.buttons( ":class"="search!=''?results==0?'red':'blue':''" )
-                    div.ui.button.large.item.icon.top.left.pointing.dropdown#search( v-dropdown="" style="opacity: 1")
+                    div.ui.button.large.item.icon.top.left.pointing.dropdown#search( v-dropdown="" style="opacity: 1" @click="focusMethod")
                         i.search.icon.icon-style
                         div.menu
                             div.header {{ translate('tool.search') }}
                             div.ui.icon.input(style="opacity: 1")
                                 i.search.icon.icon-style
                                 input(
+                                    id="inputSearch"
                                     ":value"="search"
                                     ":placeholder"="translate('placeholder.search')"
-                                    @input="change_search($event.target.value)" )
+                                    @input="change_search($event.target.value)")
                             div.item
                                 div.ui.container.fluid(
                                     v-if="search!=''"
-                                    @click="change_search('')" )
+                                    @click="change_search('')")
                                     i.delete.icon
                                     | {{ translate('tool.clear_search') }}
         div.column.computer.only
@@ -55,4 +56,9 @@
         methods:
             change_search: (value) ->
                 bus.$emit 'search_changed', value
+
+            focusMethod:() ->
+                document.getElementById('inputSearch').focus()
+                console.log "hello"
+
 </script>
