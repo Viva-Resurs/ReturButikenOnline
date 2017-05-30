@@ -11,11 +11,9 @@
             position = 0
 
             leftButtonClicked = (e) ->               
-                e.preventDefault()
                 bus.$emit 'left_button_clicked'                     
                                
             rightButtonClicked = (e) ->
-                e.preventDefault()
                 bus.$emit 'right_button_clicked'                     
 
             addOverlayButtons = () ->                
