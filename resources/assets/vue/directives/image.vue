@@ -158,8 +158,7 @@
                         appendTo: 'parent',                        
                         scroll: true,
                     
-                        stop: (e) =>
-                            e.preventDefault()                                             
+                        stop: (e) =>                                                                      
                             imageRect = img.getBoundingClientRect()
                             
                             if (imageRect.right-e.offsetX < imageBox.left+(imageWidth/4))
