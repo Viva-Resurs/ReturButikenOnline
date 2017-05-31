@@ -132,7 +132,6 @@
                 img.style.display = 'none'   
                 img.id = "img_"+active_image                              
                 img.onload = ->
-                    console.log "on load"
                     imageHeight = this.height
                     imageWidth = this.width                    
                     newHeightWidth = getAdjustedBounds(imageHeight, imageWidth)
