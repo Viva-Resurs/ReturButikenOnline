@@ -28,7 +28,7 @@
                             div.header {{ translate('tool.search') }}
                             div.ui.icon.input(style="opacity: 1")
                                 i.search.icon.icon-style
-                                input(
+                                input.search(
                                     id="inputSearch"
                                     ":value"="search"
                                     ":placeholder"="translate('placeholder.search')"
