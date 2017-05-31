@@ -9,7 +9,7 @@
                             div.header {{ translate('tool.search') }}
                             div.ui.icon.input(style="opacity: 1")
                                 i.search.icon.icon-style
-                                input(
+                                input.search(
                                     ":value"="search"
                                     ":placeholder"="translate('placeholder.search')"
                                     @input="change_search($event.target.value)" )
@@ -58,7 +58,6 @@
                 bus.$emit 'search_changed', value
 
             focusMethod:() ->
-                document.getElementById('inputSearch').focus()
-                console.log "hello"
+                document.getElementById('inputSearch').focus()                
 
 </script>
