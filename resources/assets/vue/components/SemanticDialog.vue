@@ -208,7 +208,7 @@
                         @active_image = @images[@active_index]                                         
                        
                         $('.modal').modal({   
-                            closable: true,
+                            closable: false,
                             transition: 'pulse',
                             duration: 450                                                           
                         })                                                      
