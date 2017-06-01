@@ -9,7 +9,7 @@
                 | {{ translate('dropzone.remove') }}
         div.ui.segment.bottom.attached#dropZone
             input#files( type='file' name='files[]' hidden multiple)
-            div#images.ui.five.doubling.cards(
+            div#images.ui.seven.doubling.cards(
                 v-show="buffer.length>0 || images.length>0"
                 v-images="sortImages"
                 )

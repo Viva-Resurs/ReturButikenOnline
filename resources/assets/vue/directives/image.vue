@@ -152,7 +152,7 @@
                          
                     $('.modal').modal('refresh') 
                 
-                    $('img').draggable({ 
+                    $(img).draggable({ 
                         axis: "x",                         
                         appendTo: 'parent',                        
                         scroll: true,
