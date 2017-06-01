@@ -6,7 +6,7 @@
             imageHeight = ""
             imageWidth = ""
           
-            windowHeight = window.innerHeight-150
+            windowHeight = window.innerHeight-30
             windowWidth = window.innerWidth-50
             position = 0
 
@@ -139,15 +139,15 @@
                     imageHeight = newHeightWidth[0]
                     imageWidth = newHeightWidth[1]
             
-                    img.style.width = imageWidth-5+'px'
-                    img.style.height = imageHeight-5+'px'  
+                    img.style.width = imageWidth+'px'
+                    img.style.height = imageHeight+'px'  
                     el.style.overflow = 'hidden'                    
                     el.style.left = windowWidth/2+'px'                             
                     el.style.padding = 0+'px'  
                     
-                    addOverlayButtons()
                     img.style.display = 'initial'
-                                                 
+                    addOverlayButtons()
+
                     imageBox = el.getBoundingClientRect()
                          
                     $('.modal').modal('refresh') 
