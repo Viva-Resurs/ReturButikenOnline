@@ -23,6 +23,7 @@
                 desc: ''
                 price: ''
                 public: false
+                active: true
                 publish_interval: ''
                 bidding_interval: ''
                 categories: []

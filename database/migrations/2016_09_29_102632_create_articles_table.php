@@ -19,10 +19,10 @@ class CreateArticlesTable extends Migration
             $table->string('desc');
             $table->string('amount');
             $table->integer('public');
+            $table->integer('active');
             $table->string('price');
             $table->string('publish_interval');
             $table->string('bidding_interval');
-
             $table->timestamps();
         });
 

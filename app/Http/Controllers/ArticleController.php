@@ -41,6 +41,7 @@ class ArticleController extends Controller
                     'categories' => $article->categories,
                     'images' => $article->images,
                     'contacts' => $article->contacts,
+                    'active' => $article->active,
                     'created_by' => $article->creator,
                     'is_active' => $article->isActive()
                 ]);
@@ -63,7 +64,7 @@ class ArticleController extends Controller
 
         if (!$user->hasRole('admin') && !$user->inSection($article->sections))
             abort(401,'Not allowed to view this article');
-
+        
         $result = [
             'id' => $article->id,
             'name' => $article->name,
@@ -76,6 +77,7 @@ class ArticleController extends Controller
             'public' => $article->public,
             'sections' => $article->sections,
             'categories' => $article->categories,
+            'active' => $article->active,
             'contacts' => [],
             'images' => [],
             'is_active' => $article->isActive()
@@ -117,6 +119,7 @@ class ArticleController extends Controller
             'price' => ($request->has('price')) ? $request['price'] : '',
             'amount' => ($request->has('amount')) ? $request['amount'] : '',
             'public' => $request['public'] || false,
+            'active' => $request['active'] || true,
             'publish_interval' => ($request->has('publish_interval')) ? $request['publish_interval'] : '',
             'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : ''
         ]);
@@ -187,6 +190,8 @@ class ArticleController extends Controller
             $article->price = $request['price'];
 
         $article->public = $request['public'] || 0;
+
+        $article->active = $request['active'] || 0;
 
         $article->publish_interval = $request['publish_interval'];
 
