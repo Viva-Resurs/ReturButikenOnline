@@ -188,6 +188,8 @@
     "not_set": "Saknas",
     "tools": "Verktyg",
     "tool": {
+        "active": "Aktiv",
+        "inactive": "Inaktiv",
         "edit": "Redigera",
         "add": "Lägg till",
         "remove": "Ta bort",

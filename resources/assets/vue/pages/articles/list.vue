@@ -7,6 +7,7 @@
             article-desktop-list.column(
                 v-if="screenType == 'desktop'"
                 ":toolsRow"=`[
+                      $options.components.ActiveInactive,
                       $options.components.PublishInterval,
                       $options.components.BiddingInterval,
                       $options.components.Preview,
@@ -17,6 +18,7 @@
             article-mobile-list.column(
                 v-if="(screenType == 'mobile') || (screenType == 'tablet')"
                 ":toolsRow"=`[
+                      $options.components.ActiveInactive,
                       $options.components.PublishInterval,
                       $options.components.BiddingInterval,
                       $options.components.Preview,
@@ -32,6 +34,7 @@
         components:
             ArticleDesktopList: require '../../components/article/desktop/list.vue'
             ArticleMobileList: require '../../components/article/mobile/list.vue'
+            ActiveInactive: require '../../components/tools/Active.vue'
             PublishInterval: require '../../components/tools/PublishInterval.vue'
             BiddingInterval: require '../../components/tools/BiddingInterval.vue'
             Preview: require '../../components/tools/Preview.vue'
@@ -89,7 +92,7 @@
             @getArticles()
             bus.$on 'articles_item_remove', (item) => @attemptRemove item
             bus.$on 'articles_item_preview', (item) => @previewArticle item
-            bus.$on 'articles_item_changed', (payload) => @attemptUpdate payload
+            bus.$on 'articles_item_changed', (item) => @attemptUpdate item
             bus.$on 'articles_item_edit', (item) =>
                 @$router.push path: '/ui/articles/'+item.id
             bus.$on 'articles_item_add', =>

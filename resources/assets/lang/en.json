@@ -188,6 +188,8 @@
     "not_set": "Missing",
     "tools": "Tools",
     "tool": {
+        "active": "Active",
+        "inactive": "Inactive",
         "edit": "Edit",
         "add": "Add",
         "remove": "Remove",

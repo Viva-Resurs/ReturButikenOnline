@@ -6,7 +6,7 @@
         ":data-value" = "item.publish_interval"
         @click        = "showRangePicker"
         ":class" = `
-            (activeInterval(item.bidding_interval)) ? 'active-interval':''
+            (activeInterval(item.publish_interval)) ? 'active-interval':''
         `
     )
         i.ui.icon.time.icon-style
