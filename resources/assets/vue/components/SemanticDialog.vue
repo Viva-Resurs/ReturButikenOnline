@@ -1,7 +1,7 @@
 <template lang="pug">
-    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : 'small'" ":style"="(type == 'image') ? 'background-color: black' : 'small'")
+    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : 'small'" ":style"="(type == 'image') ? 'background-color: black' : ''")
         div.header(v-show="type != 'image'") {{ title }}
-        div.top.attached(v-show="message" ":class"="[selected_action.class]" style="margin-left: 10px; margin-right: 10px") 
+        div.top.attached(v-show="message" ":class"="[selected_action.class]" style="margin: 5px")             
             i(":class"="[selected_action.icon]") 
             div.header {{ message }}
         
@@ -130,17 +130,21 @@
                 , 100
             
             showNextImage: (evt) ->                
-                if !(Number(@active_index+1) > Number(@images.length-1))                   
+                if !(Number(@active_index+1) > Number(@images.length-1))  
+                    Vue.nextTick ->
+                        $('#img_active').transition('fly left')                
                     @active_index = @active_index + 1
-                    @active_image = @images[@active_index]
+                    @active_image = @images[@active_index]                    
                     @title = @active_image.name 
                     @setImagePosition()
                 
             showPreviousImage: (evt) ->
-                if !(Number(@active_index-1) < Number(0))                    
+                if !(Number(@active_index-1) < Number(0))          
+                    Vue.nextTick -> 
+                        $('#img_active').transition('fly right') 
                     @active_index = @active_index - 1
-                    @active_image = @images[@active_index]                    
-                    @title = @active_image.name                    
+                    @active_image = @images[@active_index]                                                  
+                    @title = @active_image.name                                        
                     @setImagePosition()
 
             setImagePosition: () ->
@@ -208,7 +212,7 @@
                         @active_image = @images[@active_index]                                         
                        
                         $('.modal').modal({   
-                            closable: false,
+                            closable: false,                            
                             transition: 'pulse',
                             duration: 450                                                           
                         })                                                      

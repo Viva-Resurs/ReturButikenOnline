@@ -6,11 +6,11 @@
                     | {{ translate('contacts') }}
                 div.ui.container.right.aligned.four.wide.column
                     router-link( to="/ui/users" )
-                        i.icon.external.square.icon-style(
+                        i.icon.external.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.users')" )
                     router-link( to="/ui/users/create" )
-                        i.plus.icon.square.right.floated.icon-style(
+                        i.plus.icon.square.outline.right.floated.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.createUser')" )
             a.item(
@@ -21,17 +21,23 @@
                     ":class"="contact.articles.length>0 ? 'black' : 'grey'" )
                     | {{ contact.articles.length }}
             i.item( v-if="contacts.length==0" ) {{ translate('empty') }}
-        div.ui.row.selection.dropdown.mobile.only#contacts(
-            v-dropdown=""
-            ":class"="contacts.length > 0 ? '' : 'disabled'" )
-            input(type="hidden" name="contact_selection" )
-            i.dropdown.icon
-            div.default.text {{ translate('contacts') }}
-            div.class.menu
-                div.item(
-                    v-for="contact in contacts"
-                    @click="selectContact(contact)"
-                    ":data-value"="contact.id" ) {{contact.name}}
+        
+        div.ui.fluid.row.mobile.only.no-padding
+            div.ui.fluid.label {{ translate('contacts') }}
+            div.ui.fluid.selection.label.dropdown.mobile.only#contacts(    
+                v-dropdown=""
+                ":class"="contacts.length > 0 ? '' : 'disabled'" )
+                input(type="hidden" name="contact_selection" )
+                i.dropdown.icon
+                div.default.text {{ translate('contacts') }}
+                div.class.menu
+                    div.item(
+                        v-for="contact in contacts"
+                        @click="selectContact(contact)"
+                        ":data-value"="contact.id" ) {{contact.name}}
+
+
+
 </template>
 
 <script lang="coffee">

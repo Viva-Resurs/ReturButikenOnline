@@ -14,15 +14,19 @@
             padding: 0px !important;
         }
 
-        .icon.external.square {
+        .icon.external {
             margin: 0px !important
         }
 
-        .plus.icon.square.right.floated {
+        .plus.icon.right.floated {
             margin: 0px !important
         }
 
         .ui.vertical.fluid.compact.menu.computer.tablet.only.row {
             padding-top: 0px !important
+        }
+
+        .ui.small.label {
+           background-color: #009248 !important; 
         }
     }

@@ -6,13 +6,9 @@
                     | {{ translate('section.header') }}
                 div.ui.container.right.aligned.four.wide.column
                     router-link( to="/ui/sections" )
-                        i.icon.external.square.icon-style(
+                        i.icon.external.icon-style(
                             v-tooltip = ""
-                            ":data-html" = "translate('goto.sections')" )
-                    router-link( to="/ui/sections/create" )
-                        i.plus.icon.square.right.floated.icon-style(
-                            v-tooltip = ""
-                            ":data-html" = "translate('goto.createSection')" )
+                            ":data-html" = "translate('goto.sections')" )                    
             a.item(
                 v-for="section in sections"
                 ":class"="section.selected ? 'active':''"
@@ -20,18 +16,21 @@
                 div.ui.small.label(
                     ":class"="section.contacts.length>0 ? 'black' : 'grey'" )
                     | {{ section.contacts.length }}
-            i.item( v-if="sections.length==0" ) {{ translate('empty') }}
-        div.ui.row.selection.dropdown.mobile.only#sections(
-            v-dropdown=""
-            ":class"="sections.length > 0 ? '' : 'disabled'" )
-            input(type="hidden" name="section_selection" )
-            i.dropdown.icon
-            div.default.text {{ translate('sections') }}
-            div.class.menu
-                div.item(
-                    v-for="section in sections"
-                    @click="selectSection(section)"
-                    ":data-value"="section.id" ) {{section.name}}
+            i.item( v-if="sections.length==0" ) {{ translate('empty') }} 
+        
+        div.ui.fluid.row.mobile.only.no-padding
+            div.ui.fluid.label {{ translate('sections') }}
+            div.ui.fluid.selection.label.dropdown.mobile.only#sections(           
+                v-dropdown=""
+                ":class"="sections.length > 0 ? '' : 'disabled'" )
+                input(type="hidden" name="section_selection" )
+                i.dropdown.icon
+                div.default.text {{ translate('sections') }}
+                div.class.menu
+                    div.item(
+                        v-for="section in sections"
+                        @click="selectSection(section)"
+                        ":data-value"="section.id" ) {{section.name}}
 </template>
 
 <script lang="coffee">

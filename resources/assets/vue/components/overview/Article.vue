@@ -6,11 +6,11 @@
                     | {{ translate('article.header') }}
                 div.ui.container.right.aligned.four.wide.column
                     router-link( to="/ui/articles" )
-                        i.icon.external.square.icon-style(
+                        i.icon.external.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.articles')" )
                     router-link( to="/ui/articles/create" )
-                        i.plus.icon.square.right.floated.icon-style(
+                        i.plus.icon.square.outline.right.floated.icon-style(
                             v-tooltip = ""
                             ":data-html" = "translate('goto.createArticle')" )
             a.item(
@@ -18,17 +18,20 @@
                 ":class"="article.selected ? 'active':''"
                 @click="selectArticle(article)" ) {{ article.name }}
             i.item( v-if="articles.length==0" ) {{ translate('article.empty') }}
-        div.ui.row.selection.dropdown.mobile.only#articles(
-            v-dropdown=""
-            ":class"="articles.length > 0 ? '' : 'disabled'" )
-            input(type="hidden" name="article_selection" )
-            i.dropdown.icon
-            div.default.text {{ articles.length > 0 ? translate('article.header') : translate('article.empty') }}
-            div.class.menu
-                div.item(
-                    v-for="article in articles"
-                    @click="selectArticle(article)"
-                    ":data-value"="article.id" ) {{article.name}}
+        
+        div.ui.fluid.row.mobile.only.no-padding
+            div.ui.fluid.label.mobile.only {{ translate('article.header') }}
+            div.ui.fluid.selection.label.dropdown.mobile.only#articles(
+                v-dropdown=""
+                ":class"="articles.length > 0 ? '' : 'disabled'" )
+                input(type="hidden" name="article_selection" )
+                i.dropdown.icon
+                div.default.text {{ articles.length > 0 ? translate('article.header') : translate('article.empty') }}
+                div.class.menu
+                    div.item(
+                        v-for="article in articles"
+                        @click="selectArticle(article)"
+                        ":data-value"="article.id" ) {{article.name}}
 </template>
 
 <script lang="coffee">

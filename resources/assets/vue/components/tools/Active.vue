@@ -10,8 +10,8 @@
                 (item.is_active) ? 'active-interval':''
             `
         )
-            i.ui.icon.check.circle.icon-style(v-if="item.is_active == true")
-            i.ui.icon.minus.circle.icon-style(v-if="item.is_active == false")
+            i.ui.icon.check.circle.icon-style(v-if="item.is_active")
+            i.ui.icon.minus.circle.icon-style(v-else="")
 </template>
 
 <script lang="coffee">
@@ -20,10 +20,10 @@
         props: [ 'item', 'from' ]
         methods:
             update: (item) ->
-                if item.is_active == true ##om artikel är active ska man enkelt deaktivera den
-                    item.is_active = false
-                    bus.$emit @from + '_item_changed', item
-                if item.is_active == false ##om artikel är inactive måste man sätta giltigt publishinterval
+                if item.is_active 
+                    item.is_active = false                    
+                else
                     item.is_active = true
-                    bus.$emit @from + '_item_changed', item
+
+                bus.$emit @from + '_item_changed', item
 </script>

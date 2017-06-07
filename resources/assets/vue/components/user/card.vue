@@ -1,6 +1,6 @@
 <template lang="pug">
     div
-        div.ui.centered.card( v-if="type == 'vertical'")
+        div.ui.centered.green.card( v-if="type == 'vertical'")
             div.content
                 div.center.aligned.profile_img(
                     v-if="user.images && user.images[0] && (picture != undefined)"

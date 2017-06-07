@@ -10,7 +10,7 @@
             windowWidth = window.innerWidth-50
             position = 0
 
-            leftButtonClicked = (e) ->               
+            leftButtonClicked = (e) ->  
                 bus.$emit 'left_button_clicked'                     
                                
             rightButtonClicked = (e) ->
@@ -130,7 +130,7 @@
             setImageProperties = (img, path) ->                                  
                 img.src = path               
                 img.style.display = 'none'   
-                img.id = "img_"+active_image                              
+                img.id = "img_active"                             
                 img.onload = ->
                     imageHeight = this.height
                     imageWidth = this.width                    
@@ -165,8 +165,8 @@
                                 
                             else if (imageRect.left+e.offsetX > imageBox.right-(imageWidth/4))                                                                                                               
                                 leftButtonClicked()                                
-                        
-                            img.style.left = 0+'px'                     
+                            else     
+                                img.style.left = 0+'px'                     
                     })        
 
                 return img

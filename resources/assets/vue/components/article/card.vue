@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.fluid.raised.card( v-if="item")
+    div.ui.fluid.green.raised.card( v-if="item")
         div.content
 
             div.header.left.aligned
@@ -22,10 +22,11 @@
                     h4.ui.sub.header
                         | {{ translate('article_card.images_header') }}
                     p
-                        div.ui.tiny.images
-                            img.ui.rounded.image( style="background-color: lightgrey"
-                                v-for="image in item.images"
-                                ":src"="image.thumb_path" )
+                        div.ui.green.segment
+                            div.ui.tiny.images
+                                img.ui.rounded.image( style="background-color: lightgrey"
+                                    v-for="image in item.images"
+                                    ":src"="image.thumb_path" )
 
 
                 div.ui.grid.equal.width

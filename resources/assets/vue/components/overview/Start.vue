@@ -1,20 +1,20 @@
 <template lang="pug">
     div
         div.ui.segments
-            div.ui.segment.equal.width.grid.stackable.padded.steps(style="padding: 1px !important")
+            div.ui.segment.equal.width.grid.stackable.steps(style="padding: 1px !important")
                 div.column.step(
-                    style="padding: 4px !important; border: 0px !important"
+                    style="padding: 2px !important; border: 0px !important"
                     v-if="$root.isAdmin()"
                     ":class"="!section ? 'active' : ''" )
                     section-overview( ":sections"="getSections" )
                 div.column.step.right.floated(
-                    style="padding: 4px !important; border: 0px !important"
+                    style="padding: 2px !important; border: 0px !important"
                     v-if="$root.isAdmin(2)"
                     ":class"="section && !contact ? 'active' : ''" )
                     contact-overview( ":contacts"="getContacts" )
                 div.column.step(
-                    style="padding: 4px !important; border: 0px !important"
-                    ":class"="contact && !article ? 'active' : ''" )
+                    style="padding: 2px !important; border: 0px !important"
+                    ":class"="contact && !article ? 'active' : ''" )                    
                     article-overview( ":articles"="getArticles" )
         article-card(
             ":item"="article"
