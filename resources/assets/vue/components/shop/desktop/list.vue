@@ -1,5 +1,5 @@
 <template lang="pug">
-    div
+    div.no-top-padding
         div.ui.equal.width.grid
             div.row.middle.aligned
                 div.column.four.wide

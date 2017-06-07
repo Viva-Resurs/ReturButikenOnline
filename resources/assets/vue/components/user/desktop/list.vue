@@ -1,5 +1,5 @@
 <template lang="pug">
-    div
+    div.no-top-padding
         div.ui.equal.width.grid
             div.row.middle.aligned(style="padding-top: 10px; padding-bottom: 10px")
                 div.column.four.wide

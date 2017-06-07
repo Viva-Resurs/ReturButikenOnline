@@ -1,5 +1,5 @@
 <template lang="pug">
-    div
+    div.no-top-padding
         div.ui.segments
             div.ui.segment.equal.width.grid.stackable.steps(style="padding: 1px !important")
                 div.column.step(

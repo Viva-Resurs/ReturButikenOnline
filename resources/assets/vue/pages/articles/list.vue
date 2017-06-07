@@ -5,6 +5,7 @@
             div.column
                 div.ui.dividing.header.fluid {{ translate('article.header') }}
             article-desktop-list.column(
+                style="padding-top: 0px"
                 v-if="screenType == 'desktop'"
                 ":toolsRow"=`[
                       $options.components.ActiveInactive,

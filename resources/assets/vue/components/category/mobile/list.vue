@@ -1,5 +1,5 @@
 <template lang="pug">
-    div
+    div.no-top-padding
         div.ui.top.attached.menu
             div.left.menu
                 search( ":search"="search" ":results"="countItems" )
