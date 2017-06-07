@@ -3,27 +3,22 @@
         div.column.mobile.only
             div.fitted.item
                 div.ui.buttons
-                    div.ui.button.large.item.icon.top.right.pointing.dropdown#pagination( v-dropdown="" )
-                        i.sticky.note.icon.icon-style
-                        div.menu
-                            div.header {{ translate('tool.pagination') }}
-
-                            div.text.ui.item
-                                div.ui.grid.two.columns
-                                    div.left.aligned.column
-                                        p.middle.aligned {{ translate('page') }} {{currentPage}} / {{totalPages}}
+                    div.ui.button.large.item.icon.top.right.pointing.dropdown#pagination( v-dropdown="" )                        
+                        i.sticky.note.outline.icon.icon-style
+                        | &nbsp {{currentPage}}/{{totalPages}}                      
+                        div.menu                           
+                            div.ui.item.fluid
+                                div.ui.fluid.dropdown#limit( v-dropdown="")                                    
                                     div.right.aligned.column
-                                        div.ui.two.columns.right.basic.compact.button.fluid.dropdown#limit( v-dropdown="" )
-                                            div.left.aligned.column
-                                                i.dropdown.left.icon
-                                            div.default.value.right.aligned.column {{ limit }}
-                                            div.left.menu
-                                                div.item(
-                                                    v-for="option in limitOptions"
-                                                    ":class"="(limit==option)?'active':''"
-                                                    @click="change_limit(option)"
-                                                    )
-                                                    | {{ option }}
+                                        i.dropdown.right.icon                                    
+                                    div.default.value.right.aligned.column {{ limit }}
+                                    div.right.menu
+                                        div.item(
+                                            v-for="option in limitOptions"
+                                            ":class"="(limit==option)?'active':''"
+                                            @click="change_limit(option)"
+                                            )
+                                            | {{ option }}
 
                             div.ui.basic.compact.buttons.bottom.attached.fluid
                                 button.ui.button( @click="firstPage" )

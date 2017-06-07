@@ -165,8 +165,8 @@
                                 
                             else if (imageRect.left+e.offsetX > imageBox.right-(imageWidth/4))                                                                                                               
                                 leftButtonClicked()                                
-                            else     
-                                img.style.left = 0+'px'                     
+                            
+                            img.style.left = 0+'px'                     
                     })        
 
                 return img
