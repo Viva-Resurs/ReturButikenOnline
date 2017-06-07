@@ -129,22 +129,19 @@
                         @actions.calendar.buttons[1].class = 'ui approve disabled button'
                 , 100
             
-            showNextImage: (evt) ->                
-                if !(Number(@active_index+1) > Number(@images.length-1))  
-                    Vue.nextTick ->
-                        $('#img_active').transition('fly left')                
-                    @active_index = @active_index + 1
-                    @active_image = @images[@active_index]                    
-                    @title = @active_image.name 
+            showNextImage: (evt) ->                                
+                if !(Number(@active_index+1) > Number(@images.length-1))                                   
+                    @active_index = Number(@active_index) + 1
+                    @active_image = @images[@active_index]
+
+                    #@title = @active_image.name 
                     @setImagePosition()
                 
             showPreviousImage: (evt) ->
                 if !(Number(@active_index-1) < Number(0))          
-                    Vue.nextTick -> 
-                        $('#img_active').transition('fly right') 
                     @active_index = @active_index - 1
                     @active_image = @images[@active_index]                                                  
-                    @title = @active_image.name                                        
+                    #@title = @active_image.name                                        
                     @setImagePosition()
 
             setImagePosition: () ->
