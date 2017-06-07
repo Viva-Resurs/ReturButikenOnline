@@ -20,7 +20,6 @@
                     thead
                         tr
                             th.collapsing #
-                            th.slim
                             th.slim.link( @click="setOrder('name')")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('name') }}
@@ -29,20 +28,24 @@
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('updated') }}
                                         i.icon( ":class" = "(order=='updated_at') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                            th.slim.link( @click="setOrder('categories')")
+                            th.collapsing.slim.link( @click="setOrder('categories')")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('categories') }}
                                         i.icon( ":class" = "(order=='categories') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-
-                            th.slim.link( @click="setOrder('amount')")
+                           
+                            th.collapsing.slim.link( @click="setOrder('amount')")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('article.amount') }}
                                         i.icon( ":class" = "(order=='amount') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
 
-                            th.slim.link( @click="setOrder('public',0)")
+                            th.collapsing.slim.link( @click="setOrder('public',0)")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('public') }}
                                         i.icon( ":class" = "(order=='public') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
+                   
+                            th.slim.center.aligned(style="padding: 5px")
+                                i.ui.image.icon(style="margin: 5px")
+                   
                             th.collapsing {{ translate('tools') }}
                     tbody( v-item="location && location.hash ? location.hash.substr(1) : ''" )
                         tr(
@@ -50,20 +53,7 @@
                             ":id"="item.id" )
                             td.center.aligned
                                 strong {{(index+1)+offset}}
-                            td.center.aligned.no-padding
-                                div.ui.stacked.segment.no-padding(v-if="item.images.length > 1")
-                                    img.ui.image.table_image.multiple_preview(
-                                        v-if="item.images.length"
-                                        ":src"="item.images[0].thumb_path"
-                                    )
-
-                                div.ui.segment.no-padding(v-else-if="item.images.length == 1")
-                                    img.ui.image.table_image.preview(
-                                    ":src"="item.images[0].thumb_path")
-
-                                div.no_image_icon(v-else="")
-                                    i.icon.remove
-
+            
                             td( v-tooltip="" ":data-html"="formatTooltip(item.desc)" )
                                 span {{ item.name }}
                             td
@@ -72,7 +62,7 @@
                                 span( v-for="(post, column_index) in item.categories")
                                     | {{post.name}}
                                     span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
-
+          
                             td.collapsing.center.aligned
                                 span {{ item.amount }}
 
@@ -80,6 +70,10 @@
                                 div.center.aligned
                                     i( ":class"="'ui icon ' + ((item.public==1) ? 'green checkmark' : 'red remove')"
                                         v-tooltip="" ":data-html"="(item.public==1) ? $root.translate('article_list.published_all') : $root.translate('article_list.published_intra')" )
+          
+                            td.center.aligned
+                                p {{ item.images.length }}
+
                             td.right.aligned
                                 div.ui.icon.buttons
                                     component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
