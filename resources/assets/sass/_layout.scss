@@ -15,11 +15,16 @@ body.pushable>.pusher {
         padding-right: 15px !important;
         margin-top: 2px !important;
         margin-bottom: 2px !important;
+    }    
+}
+
+@media screen and (max-width: 425px) {
+    #rootcontainer, #footercontainer {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        padding-left: 5px !important;
+        padding-right: 5px !important;
     }
-    //.ui.attached, .ui.dividing.header {
-    //    margin-left: -6px !important;
-    //    margin-right: -6px !important;
-    //}
 }
 
 #rootcontainer, #footercontainer {
