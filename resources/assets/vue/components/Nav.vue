@@ -73,9 +73,6 @@
                         router-link.item( to="/ui/articles" exact )
                             i.icon.cubes
                             |  {{ translate('article.header') }}
-                        router-link.item( to="/ui/articles/create" exact )
-                            i.icon.write
-                            |  {{ translate('article.add') }}
                         div.ui.dropdown.item( v-dropdown="" ) {{ user.name }}
                             i.dropdown.icon
                             div.menu
