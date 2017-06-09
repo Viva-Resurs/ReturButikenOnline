@@ -32,7 +32,7 @@
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('categories') }}
                                         i.icon( ":class" = "(order=='categories') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                           
+
                             th.collapsing.slim.link( @click="setOrder('amount')")
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('article.amount') }}
@@ -42,10 +42,10 @@
                                 div.ui.small.secondary.menu
                                     div.item {{ translate('public') }}
                                         i.icon( ":class" = "(order=='public') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                   
+
                             th.slim.center.aligned(style="padding: 5px")
-                                i.ui.image.icon(style="margin: 5px")
-                   
+                                i.ui.image.icon.icon-style(style="margin: 5px")
+
                             th.collapsing {{ translate('tools') }}
                     tbody( v-item="location && location.hash ? location.hash.substr(1) : ''" )
                         tr(
@@ -53,7 +53,7 @@
                             ":id"="item.id" )
                             td.center.aligned
                                 strong {{(index+1)+offset}}
-            
+
                             td( v-tooltip="" ":data-html"="formatTooltip(item.desc)" )
                                 span {{ item.name }}
                             td
@@ -62,7 +62,7 @@
                                 span( v-for="(post, column_index) in item.categories")
                                     | {{post.name}}
                                     span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
-          
+
                             td.collapsing.center.aligned
                                 span {{ item.amount }}
 
@@ -70,7 +70,7 @@
                                 div.center.aligned
                                     i( ":class"="'ui icon ' + ((item.public==1) ? 'green checkmark' : 'red remove')"
                                         v-tooltip="" ":data-html"="(item.public==1) ? $root.translate('article_list.published_all') : $root.translate('article_list.published_intra')" )
-          
+
                             td.center.aligned
                                 p {{ item.images.length }}
 

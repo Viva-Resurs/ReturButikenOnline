@@ -29,6 +29,7 @@
     Vue.mixin require './mixins/Translation.vue'
     Vue.mixin require './mixins/ScreenSize.vue'
     Vue.mixin require './mixins/From.vue'
+    Vue.mixin require './mixins/CheckDateInterval.vue'
 
     # Export the root-instance options
     module.exports =

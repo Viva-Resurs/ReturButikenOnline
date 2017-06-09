@@ -19,11 +19,48 @@
         name: 'Active'
         props: [ 'item', 'from' ]
         methods:
-            update: (item) ->
-                if item.is_active 
-                    item.is_active = false                    
-                else
-                    item.is_active = true
+            checkDate: (item) ->
+                #Date checking because user needs a valid publish interval to activate an inactive article
+                dateIsValid = false
+                currentdate = new Date();
+                pIntervalStart = new Date(item.publish_interval.split('|')[0]);
+                pIntervalEnd = new Date(item.publish_interval.split('|')[1]);
 
-                bus.$emit @from + '_item_changed', item
+                if(pIntervalStart < currentdate && pIntervalEnd > currentdate) #Date interval is valid
+                    dateIsValid = true
+                return dateIsValid     ##replace date checking in update with this method
+
+            update: (item) ->
+                if item.is_active
+                    item.is_active = false
+                    bus.$emit @from + '_item_changed', item
+                else
+                    dateIsValid = @checkDateInterval(item)
+                    if(dateIsValid == true)
+                        item.is_active = true
+                        bus.$emit @from + '_item_changed', item
+                    else #User needs to set new publish interval if date interval is not valid
+                        item = @item
+                        bus.$emit 'show_message',
+                            title: @$root.translate('publish_interval.select_date_title'),
+                            message:'',
+                            start: item.publish_interval.split('|')[0],
+                            end: item.publish_interval.split('|')[1]
+                            type:'calendar',
+                            cb: ( start, end ) ->
+                                bus.$emit(
+                                    'publish_interval_changed',
+                                    item.id,
+                                    start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
+                                )
+                                dateIsValid = false  #HITTA ETT SÄTT ATT LÄSA @checkDateInterval FRÅN CB (asynkront)(DETTA FUNKAR TEMPORÄRT)
+                                currentdate = new Date();
+                                pIntervalStart = new Date(item.publish_interval.split('|')[0]);
+                                pIntervalEnd = new Date(item.publish_interval.split('|')[1]);
+
+                                if(pIntervalStart < currentdate && pIntervalEnd > currentdate) #Date interval is valid
+                                    dateIsValid = true
+                                if(dateIsValid == true) #Checks interval again
+                                    item.is_active = true
+                                    bus.$emit @from + '_item_changed', item
 </script>
