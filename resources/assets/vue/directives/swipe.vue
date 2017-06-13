@@ -8,7 +8,7 @@
             height = 0
             width = 0
             active_image = 0
-            images = binding.value
+            images = binding.value.images
 
             el.style.overflowX = 'hidden'
             el.style.overflorY = 'hidden'
@@ -56,28 +56,57 @@
                     Vue.set image, 'selected', false
                     if index == active_image
                         Vue.set image, 'selected', true
-                
+            
+            #Configure overlay button according to screen type
+            configureButton = (button, screenType, dir) ->                
+                button.className = dir+" "+"chevron circle icon"
+                button.style.position = "absolute"
+                button.style.zIndex = '1'                
+         
+                switch screenType
+                    when "mobile"
+                        button.className += " big"
+                        button.style.top = (height/2-16)+'px'                            
+                        if dir == "left"                             
+                            button.style.left = '10px'; 
+                        else                                                        
+                            button.style.right = 10+'px'
+                            button.style.margin = 0+'px' 
+
+                    when "tablet"
+                        button.className += " huge"
+                        button.style.top = (height/2-30)+'px'                            
+                        if dir == "left"                             
+                            button.style.left = '10px'; 
+                        else                                                        
+                            button.style.right = 10+'px'
+                            button.style.margin = 0+'px' 
+
+                    when "desktop"
+                        button.className += " huge"
+                        button.style.top = (height/2-30)+'px'                            
+                        if dir == "left"                             
+                            button.style.left = '10px'; 
+                        else                                                        
+                            button.style.right = 10+'px' 
+                            button.style.margin = 0+'px'                       
+
+                return button    
             
             #Overlay buttons
-            addOverlayButtons = () ->
+            addOverlayButtons = (type) ->
+                console.log "type = "+type                               
                 leftButton = document.getElementById "previewLeftButton" 
                 rightButton = document.getElementById "previewRightButton" 
                 numImagesLabel = document.getElementById "numImagesLabel"
                 
                 if !leftButton || !rightButton               
                     leftButton = document.createElement 'i'
-                    leftButton.className = "huge chevron circle left icon"
-                    leftButton.style.zIndex = '1'
                     leftButton.id = "previewLeftButton"
-                    leftButton.style.position = 'absolute'                
-                    leftButton.style.left = '10px';               
-
+       
                     rightButton = document.createElement 'i'                
                     rightButton.id = "previewRightButton"           
-                    rightButton.className = "huge chevron circle right icon"                
-                    rightButton.style.position = 'absolute'                
-                    rightButton.style.zIndex = '1'                
-                    
+         
                     numImagesLabel = document.createElement 'div'
                     numImagesLabel.id = "numImagesLabel"
                     numImagesLabel.className = "ui black label"
@@ -86,38 +115,38 @@
                     numImagesLabel.style.textAlign = 'center'                       
                     numImagesLabel.style.right = '20px';  
                     numImagesLabel.style.top = '20px';     
-
-                    
+          
                     el.parentElement.appendChild numImagesLabel
                     el.parentElement.appendChild leftButton
                     el.parentElement.appendChild rightButton
-                
-                leftButton.style.top = (height/2-30)+'px'
-                rightButton.style.top = (height/2-30)+'px'
-                rightButton.style.right = 10+'px'
-                rightButton.style.margin = '0px'
-                  
+           
+                leftButton = configureButton(leftButton, type, "left")
+                rightButton = configureButton(rightButton, type, "right")
     
                 leftButton.addEventListener "mouseup", leftButtonClicked
                 rightButton.addEventListener "mouseup", rightButtonClicked
-                hideLeftButton()
-                hideRightButton()
+
+                if slides.refs.length > 1
+                    hideLeftButton()
+                    hideRightButton()
             
             #Hide buttons if images are missing
             hideLeftButton = () ->
                 leftButton = document.getElementById "previewLeftButton" 
-                if active_image == 0                    
-                    leftButton.style.visibility = 'hidden';               
-                else 
-                    leftButton.style.visibility = 'visible';                 
+                if leftButton
+                    if active_image == 0                    
+                        leftButton.style.visibility = 'hidden';               
+                    else 
+                        leftButton.style.visibility = 'visible';                 
 
             hideRightButton = () ->    
-                rightButton = document.getElementById "previewRightButton" 
-                if active_image == slides.refs.length-1
-                    rightButton.style.visibility = 'hidden';               
-                else         
-                    rightButton.style.visibility = 'visible';                            
-                    
+                rightButton = document.getElementById "previewRightButton"
+                if rightButton 
+                    if active_image == slides.refs.length-1
+                        rightButton.style.visibility = 'hidden';               
+                    else         
+                        rightButton.style.visibility = 'visible';                            
+                        
             leftButtonClicked = (e) ->               
                 checkActive()
                 if slides.refs[active_image-1]
@@ -141,15 +170,16 @@
                 $(el).animate
                     scrollLeft: active_image * width
                 , 200, checkActive
-                hideLeftButton()
-                hideRightButton()
                 
-                numImagesLabel = document.getElementById "numImagesLabel"       
-                if numImagesLabel.childNodes.length > 0
-                    numImagesLabel.childNodes[0].nodeValue = active_image+1+"/"+images.length
-                else 
-                    labelText = document.createTextNode(active_image+1+"/"+images.length)
-                    numImagesLabel.appendChild(labelText)
+                if binding.value.images.length > 1
+                    hideLeftButton()
+                    hideRightButton()
+                    numImagesLabel = document.getElementById "numImagesLabel"       
+                    if numImagesLabel.childNodes.length > 0
+                        numImagesLabel.childNodes[0].nodeValue = active_image+1+"/"+images.length
+                    else 
+                        labelText = document.createTextNode(active_image+1+"/"+images.length)
+                        numImagesLabel.appendChild(labelText)
 
             # Pointer position
             active = false
@@ -241,6 +271,8 @@
 
             # Interact programmatically
             bus.$on 'snapTo', (index) => snapTo index
+            bus.$on 'addButtons', (type) => 
+                addOverlayButtons type         
 
             # Resize wrapper and slides
             timer = false
@@ -291,8 +323,8 @@
                             slide.style.backgroundSize = w + 'px ' + h + 'px'
                             slide.style.backgroundPosition = x + 'px ' + y + 'px'
                         
-                        if slides.refs.length > 1
-                            addOverlayButtons()
+                        #if slides.refs.length > 1
+                            #addOverlayButtons()
                         
                         snapTo()
 
@@ -301,7 +333,7 @@
                 
             # When browser is resized
             window.addEventListener "resize", setDimensions
-            addOverlayButtons()
+            #addOverlayButtons()
 
             # Wait while loading slides
             loader = setInterval ->
@@ -312,4 +344,9 @@
                 clearInterval loader
                 setDimensions()
             , 200
+
+        componentUpdated: (el,binding) ->
+            console.log binding.value.images.length
+            if binding.value.images.length > 1    
+                bus.$emit 'addButtons', binding.value.screenType 
 </script>
