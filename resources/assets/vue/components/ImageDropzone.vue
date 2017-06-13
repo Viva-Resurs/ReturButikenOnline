@@ -53,17 +53,9 @@
                 @deletion = !@deletion
             
             deleteImage: (image) ->  
-                console.log "Trigger deletion of image: "+image.id              
-                
-                @$http.delete('api/images/'+image.id).then(
-                    (response) =>
-                        bus.$emit 'image_removed', image
-                        $('#images').trigger 'refresh'
-                    (response) =>
-                        bus.$emit 'error', response.data                
-                )
-                
-
+                @images.splice(image.order, 1)
+                $('#images').trigger 'refresh'
+     
             openFilePicker: ->
                 $('#files').trigger 'click'
 
