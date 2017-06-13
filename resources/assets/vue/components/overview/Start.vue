@@ -19,6 +19,7 @@
         article-card(
             ":item"="article"
             ":tools"=`[
+                $options.components.Active,
                 $options.components.PublishInterval,
                 $options.components.BiddingInterval,
                 $options.components.Preview,
@@ -37,6 +38,7 @@
             ContactOverview: require './Contact.vue'
             ArticleOverview: require './Article.vue'
             ArticleCard: require '../article/card.vue'
+            Active: require '../tools/Active.vue'
             PublishInterval: require '../tools/PublishInterval.vue'
             BiddingInterval: require '../tools/BiddingInterval.vue'
             Preview: require '../tools/Preview.vue'
