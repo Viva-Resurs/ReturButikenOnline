@@ -25,7 +25,7 @@
                         div.ui.green.segment
                             div.ui.tiny.images
                                 img.ui.rounded.image( style="background-color: lightgrey"
-                                    v-for="image in item.images" @click="previewImages(item.images, image)"
+                                    v-for="image in item.images" @click="previewImages(image)"
                                     ":src"="image.thumb_path" )
 
 
@@ -81,12 +81,15 @@
         name: 'ArticleCard'
         props: [ 'item', 'tools', 'from' ]
         methods: 
-            previewImages: (images, image) ->
-                console.log images
-                bus.$emit 'show_message',
-                title: image.original_name
-                type: 'image'
-                index: image.order
-                images: images
+            previewImages: (image) ->      
+                selected_index = 0
+                for img, index in @item.images
+                    if Number(img.id) == Number(image.id)
+                        selected_index = index
+
+                bus.$emit 'show_message',                        
+                    type: 'image'
+                    index: selected_index
+                    images: @item.images
 
 </script>
