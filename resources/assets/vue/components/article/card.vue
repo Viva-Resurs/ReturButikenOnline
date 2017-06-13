@@ -25,7 +25,7 @@
                         div.ui.green.segment
                             div.ui.tiny.images
                                 img.ui.rounded.image( style="background-color: lightgrey"
-                                    v-for="image in item.images"
+                                    v-for="image in item.images" @click="previewImages(item.images, image)"
                                     ":src"="image.thumb_path" )
 
 
@@ -80,4 +80,13 @@
     module.exports =
         name: 'ArticleCard'
         props: [ 'item', 'tools', 'from' ]
+        methods: 
+            previewImages: (images, image) ->
+                console.log images
+                bus.$emit 'show_message',
+                title: image.original_name
+                type: 'image'
+                index: image.order
+                images: images
+
 </script>
