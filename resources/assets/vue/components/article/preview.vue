@@ -6,7 +6,7 @@
         div( v-if="article!=-1")
             div( v-if="article.images && article.images.length>0" style="position: relative")
                 div.ui.basic.segment.center.aligned.preview_header(
-                    v-swipe="article.images")
+                    v-swipe="{images: article.images, screenType: screenType }")
 
             div.ui.grid.equal.width
                 div.ui.left.aligned.column
