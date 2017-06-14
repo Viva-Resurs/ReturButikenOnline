@@ -10,7 +10,7 @@
                 div.two.stackable.fields
                     div.field
                         h4.ui.sub.header {{ translate('semantic_dialog.start_date_header') }}
-                        div.ui.calendar#interval_start( v-calendar="validateCalendar" )
+                        div.ui.calendar#interval_start( v-calendar="validateCalendar, { lang: getLanguage() }" )
                             div.ui.input.left.icon.bottom.attached
                                 i.calendar.icon
                                 input( type="text" placeholder="????-??-??" )                    
@@ -116,6 +116,9 @@
                 return window.innerHeight;
         
         methods:
+            getLanguage: () ->
+                return @$root.settings.lang
+
             validateCalendar: ->
                 setTimeout =>
                     range = [
@@ -126,8 +129,9 @@
                     if range[0] && range[1]
                         @actions.calendar.buttons[1].class = 'ui approve primary button'
                     else
-                        @actions.calendar.buttons[1].class = 'ui approve disabled button'
-                , 100
+                        @actions.calendar.buttons[1].class = 'ui approve disabled button'                                        
+                , 100             
+                
             
             showNextImage: (evt) ->                                
                 if !(Number(@active_index+1) > Number(@images.length-1))                                   
@@ -138,6 +142,11 @@
                     @setImagePosition()
                 
             showPreviousImage: (evt) ->
+                $('.image.content.attached').transition({
+                    animation: 'fade'
+                    duration: "1s"                    
+                    
+                })
                 if !(Number(@active_index-1) < Number(0))          
                     @active_index = @active_index - 1
                     @active_image = @images[@active_index]                                                  
@@ -161,6 +170,8 @@
                 
                 else 
                     @position = middle
+         
+                
 
             handleMessage: (message) ->
                 @title = message.title
@@ -186,6 +197,25 @@
                         })
                     when "calendar"
                         @selected_action = @actions['calendar']
+                        $('#interval_start').calendar
+                            inline: true
+                            text:                                 
+                                months: [
+                                    @$root.translate('month.january'),
+                                    @$root.translate('month.february'),
+                                    @$root.translate('month.mars'),
+                                    @$root.translate('month.april'),
+                                    @$root.translate('month.may'),
+                                    @$root.translate('month.june'),
+                                    @$root.translate('month.july'),
+                                    @$root.translate('month.august'),
+                                    @$root.translate('month.september'),
+                                    @$root.translate('month.october'),
+                                    @$root.translate('month.november'),
+                                    @$root.translate('month.december'),                            
+                                ]
+                            
+
 
                         $('#interval_start').calendar('set date',message.start)
                         $('#interval_start').calendar('set mode','day')
@@ -203,10 +233,11 @@
 
                     when "image"
                         @selected_action = @actions['image']
-                        @images = message.images                          
+                        @images = message.images                                
                         @active_index = message.index
                         @setImagePosition()  
-                        @active_image = @images[@active_index]                                         
+                        @active_image = @images[@active_index]
+                                                  
                        
                         $('.modal').modal({   
                             closable: false,                            

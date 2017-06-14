@@ -127,52 +127,63 @@
                 
                 return [newImageHeight, newImageWidth]
       
-            setImageProperties = (img, path) ->                                  
-                img.src = path               
-                img.style.display = 'none'   
-                img.id = "img_active"                             
-                img.onload = ->
-                    imageHeight = this.height
-                    imageWidth = this.width                    
-                    newHeightWidth = getAdjustedBounds(imageHeight, imageWidth)
-                    
-                    imageHeight = newHeightWidth[0]
-                    imageWidth = newHeightWidth[1]
-            
-                    img.style.width = imageWidth+'px'
-                    img.style.height = imageHeight+'px'  
-                    el.style.overflow = 'hidden'                    
-                    el.style.left = windowWidth/2+'px'                             
-                    el.style.padding = 0+'px'  
-                    
-                    img.style.display = 'initial'
-                    addOverlayButtons()
-
-                    imageBox = el.getBoundingClientRect()
-                         
-                    $('.modal').modal('refresh') 
+            setImageProperties = (img, path) ->  
+                if path                                
+                    img.src = path               
+                    img.style.display = 'none'   
+                    img.id = "img_active"                             
+                    img.onload = ->
+                        imageHeight = this.height
+                        imageWidth = this.width                    
+                        newHeightWidth = getAdjustedBounds(imageHeight, imageWidth)
+                        
+                        imageHeight = newHeightWidth[0]
+                        imageWidth = newHeightWidth[1]
                 
-                    $(img).draggable({ 
-                        axis: "x",                         
-                        appendTo: 'parent',                        
-                        scroll: true,
+                        img.style.width = imageWidth+'px'
+                        img.style.height = imageHeight+'px'  
+                        el.style.overflow = 'hidden'                    
+                        el.style.left = windowWidth/2+'px'                             
+                        el.style.padding = 0+'px'  
+                        
+                        img.style.display = 'initial'
+                        addOverlayButtons()
+
+                        imageBox = el.getBoundingClientRect()
+                            
+                        $('.modal').modal('refresh') 
                     
-                        stop: (e) =>                                                                      
-                            imageRect = img.getBoundingClientRect()
-                            
-                            if (imageRect.right-e.offsetX < imageBox.left+(imageWidth/4))
-                                rightButtonClicked()                                
+                        $(img).draggable({ 
+                            axis: "x",                         
+                            appendTo: 'parent',                        
+                            scroll: true,
+                        
+                            stop: (e) =>                                                                      
+                                imageRect = img.getBoundingClientRect()                                
+                                imageOffset = imageRect.left+imageRect.width/2
+                                imageBoxLeftArea = imageBox.left+(Number(imageRect.width/3))                                
+                                imageBoxRightArea = imageBox.right-(Number(imageRect.width/3))                                 
+                           
+                                if (imageOffset < imageBoxLeftArea)
+                                    $('#img_active').animate
+                                        left: "-="+Number(imageBox.left+imageRect.right)
+                                    , 350, rightButtonClicked                                                        
                                 
-                            else if (imageRect.left+e.offsetX > imageBox.right-(imageWidth/4))                                                                                                               
-                                leftButtonClicked()                                
-                            
-                            img.style.left = 0+'px'                     
-                    })        
+                                else if (imageOffset > imageBoxRightArea)                                                                                                               
+                                    $('#img_active').animate
+                                        left: "+="+Number(imageBox.right+imageRect.left)
+                                    , 350, leftButtonClicked
+                                else
+                                   $('#img_active').animate                                    
+                                        left: 0+'px'
+                                    , 350, null
+                           
+                        })        
 
                 return img
             
-            active_image = binding.value.active_image            
-            
+            active_image = binding.value.active_image 
+
             image_element = el.getElementsByTagName("img")[0]            
             if image_element
                 el.removeChild(image_element)
