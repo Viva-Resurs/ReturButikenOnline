@@ -141,7 +141,5 @@
 <style>
     .ui.stackable.grid {
         width: auto;
-        margin-left: -15px !important;
-        margin-right: -15px !important;
     }
 </style>
