@@ -233,8 +233,8 @@
                         @active_index = message.index
                         @setImagePosition()  
                         @active_image = @images[@active_index]
-                                                  
-                       
+                        @navigated = 0
+                        
                         $('.modal').modal({   
                             closable: false,  
                             detachable: false,                            
