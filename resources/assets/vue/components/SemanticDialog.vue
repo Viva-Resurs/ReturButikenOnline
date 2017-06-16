@@ -22,7 +22,7 @@
                                 input( type="text" placeholder="????-??-??" )
     
                 
-        div.image.content.attached(v-show="type == 'image'" style="background-color: black" v-image="{ active_image: active_image, position: position }")                                                           
+        div.image.content.attached(v-show="type == 'image'" style="background-color: black" v-image="{ active_image: active_image, position: position, navigated: navigated }")                                                           
             
         div.ui.grid.inverted.equal.width.bottom.attached(v-show="type != 'image'" ":class"="'segment'")        
             div.column.center.aligned.mobile.only("style"="padding-bottom: 0px") 
@@ -110,6 +110,7 @@
             active_image: 'Empty'
             active_index: 0
             position: ""
+            navigated: 0
             images: []
         computed:
             windowHeight: ->
@@ -137,21 +138,16 @@
                 if !(Number(@active_index+1) > Number(@images.length-1))                                   
                     @active_index = Number(@active_index) + 1
                     @active_image = @images[@active_index]
-
-                    #@title = @active_image.name 
                     @setImagePosition()
+                    @navigated = 2
                 
-            showPreviousImage: (evt) ->
-                $('.image.content.attached').transition({
-                    animation: 'fade'
-                    duration: "1s"                    
-                    
-                })
+            showPreviousImage: (evt) ->              
                 if !(Number(@active_index-1) < Number(0))          
                     @active_index = @active_index - 1
-                    @active_image = @images[@active_index]                                                  
-                    #@title = @active_image.name                                        
+                    @active_image = @images[@active_index]                                                                                                    
                     @setImagePosition()
+                    @navigated = 1
+            
 
             setImagePosition: () ->
                 left = 0
@@ -240,10 +236,12 @@
                                                   
                        
                         $('.modal').modal({   
-                            closable: false,                            
+                            closable: false,  
+                            detachable: false,                            
+                            observeChanges: true,                         
                             transition: 'pulse',
                             duration: 450                                                           
-                        })                                                      
+                        })
 
                     else
                         @selected_action = @actions['default']
@@ -256,7 +254,19 @@
             bus.$on('show_message', (message) => @handleMessage(message) );   
             bus.$on('left_button_clicked', () => @showPreviousImage() );    
             bus.$on('right_button_clicked', () => @showNextImage() );    
-                   
+
+        beforeDestroy: ->
+            bus.$off 'left_button_clicked'
+            bus.$off 'right_button_clicked'            
     }
 </script>
+<style>
+    .modals.dimmer .ui.scrolling.modal{
+        margin: 0px auto !important;
+    }
+  
+    .scrolling.undetached.dimmable .ui.scrolling.modal{
+        margin: 1rem auto !important;
+    }
+</style>
 
