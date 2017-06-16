@@ -178,6 +178,9 @@
                             canMoveLeft = false
                         if (binding.value.position == 2)
                             canMoveRight = false
+                        if (binding.value.position == 3)
+                            canMoveRight = false
+                            canMoveLeft = false
                         
                         img.moveLeft = canMoveLeft
                         img.moveRight = canMoveRight
@@ -212,7 +215,9 @@
                                 if !this.moveRight
                                     if inArea("left", img)
                                         $( "#img_active" ).draggable( "option", "revert", true );
-                            
+                                
+
+
                             stop: (e) =>                                                                      
                                 if inArea("left", img)
                                     imageRect = img.getBoundingClientRect()  
