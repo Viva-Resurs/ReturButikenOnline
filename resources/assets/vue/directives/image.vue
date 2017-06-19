@@ -7,6 +7,7 @@
             windowWidth = window.innerWidth-50
             position = 0
             navigated = 0
+            dragging_image = false
 
             leftButtonClicked = (e) ->                                      
                 $('#leftButton, #rightButton, #closeButton').css('visibility', 'hidden')                  
@@ -206,37 +207,52 @@
                             axis: "x",                         
                             appendTo: 'parent',                        
                             scroll: true,
-                            
-                            drag: (e) =>
-                                if !this.moveLeft                                                                    
-                                    if inArea("right", img)
+                            create: (e) =>
+                                $( '#rightButton' ).css('display', 'initial')
+                                $(' #leftButton' ).css('display', 'initial')
+
+                            drag: (e) =>                                             
+                                dragging_image = true
+                               
+                                if inArea("right", img)
+                                    if !@moveLeft
                                         $( "#img_active" ).draggable( "option", "revert", true );
-                      
-                                if !this.moveRight
+                     
+                                    $( '#rightButton' ).css('display', 'none')
+                                    
+                                else if inArea("left", img)
+                                    if !@moveRight
+                                        $( "#img_active" ).draggable( "option", "revert", true );
+                         
+                                    $(' #leftButton' ).css('display', 'none')
+                                    
+                                else               
+                                    $( '#rightButton' ).css('display', 'initial')
+                                    $(' #leftButton' ).css('display', 'initial')
+
+                            stop: (e) =>                                                                                                      
+                                if dragging_image
                                     if inArea("left", img)
-                                        $( "#img_active" ).draggable( "option", "revert", true );
-                                
+                                        imageRect = img.getBoundingClientRect()  
+                                        $('#img_active').animate
+                                            left: "-="+Number(imageBox.left+imageRect.right)
+                                        , 350, rightButtonClicked                                                                                        
+                                    
+                                    else if inArea("right", img)                                                                                                               
+                                        imageRect = img.getBoundingClientRect()  
+                                        $('#img_active').animate
+                                            left: "+="+Number(imageBox.right+imageRect.left)
+                                        , 350, leftButtonClicked
 
-
-                            stop: (e) =>                                                                      
-                                if inArea("left", img)
-                                    imageRect = img.getBoundingClientRect()  
-                                    $('#img_active').animate
-                                        left: "-="+Number(imageBox.left+imageRect.right)
-                                    , 350, rightButtonClicked                                                                                        
-                                   
-                                else if inArea("right", img)                                                                                                               
-                                    imageRect = img.getBoundingClientRect()  
-                                    $('#img_active').animate
-                                        left: "+="+Number(imageBox.right+imageRect.left)
-                                    , 350, leftButtonClicked
-
-                                else
-                                   $('#img_active').animate                                    
-                                        left: 0+'px'
-                                    , 350, null
-                                
-                                $( "#img_active" ).draggable( "option", "revert", false );
+                                    else
+                                        $('#img_active').animate                                    
+                                                left: 0+'px'
+                                            , 350, null
+                                        
+                                        $( "#img_active" ).draggable( "option", "revert", false );
+                                        $( '#rightButton' ).css('display', 'initial')
+                                        $(' #leftButton' ).css('display', 'initial')
+                                                               
                         })        
 
                 return img
