@@ -195,23 +195,34 @@
             setPosition = (x, y) ->
                 position.x = x
                 position.y = y
-
+            
+            startedClicking = 0
+            stoppedClicking = 0
+            
             # Handle pointer-events
             handleDown = (e) ->               
                 e.preventDefault() 
+                startedClicking = e.timeStamp
+                el.addEventListener "mousemove", handleMove
                 moved = false               
-                setPosition e.clientX+50, e.clientY+50
+                setPosition e.clientX, e.clientY
                 active = true
             
             handleUp   = (e) ->
                 e.preventDefault()     
-                if !moved
+                stoppedClicking = e.timeStamp
+                difference = stoppedClicking - startedClicking                
+                if (Number(difference) < Number(150))                
                     openImagePreview()
+
                 snapTo()
                 active = false
+                el.removeEventListener("mousemove", handleMove, false); 
             
             handleMove = (e) ->
+
                 e.preventDefault()  
+                console.log "moved"
                 moved = true              
                 if active == false
                     return
@@ -262,7 +273,7 @@
             el.addEventListener "mousedown", handleDown
             el.addEventListener "mouseup", handleUp
             el.addEventListener "mouseleave", handleUp
-            el.addEventListener "mousemove", handleMove
+            
 
             # Interact with touch events
             el.addEventListener "touchstart", handleTouchStart
