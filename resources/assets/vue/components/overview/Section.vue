@@ -19,8 +19,9 @@
             i.item( v-if="sections.length==0" ) {{ translate('empty') }} 
         
         div.ui.fluid.row.mobile.only.no-padding
-            div.ui.fluid.label {{ translate('sections') }}
-            div.ui.fluid.selection.label.dropdown.mobile.only#sections(           
+            div.ui.fluid.label(style="border-radius: 0px; margin-right: 0px") {{ translate('sections') }}
+            div.ui.fluid.selection.label.dropdown#sections(
+                style="border-radius: 0px;background-color: white; margin-left: 0px"           
                 v-dropdown=""
                 ":class"="sections.length > 0 ? '' : 'disabled'" )
                 input(type="hidden" name="section_selection" )

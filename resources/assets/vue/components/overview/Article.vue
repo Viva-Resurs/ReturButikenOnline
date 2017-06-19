@@ -20,15 +20,16 @@
             i.item( v-if="articles.length==0" ) {{ translate('article.empty') }}
         
         div.ui.fluid.row.mobile.only.no-padding
-            div.ui.fluid.label.mobile.only {{ translate('article.header') }}
-            div.ui.fluid.selection.label.dropdown.mobile.only#articles(
+            div.ui.fluid.label(style="border-radius: 0px; margin-right: 0px") {{ translate('article.header') }}
+            div.ui.fluid.selection.label.dropdown#articles(    
+                style="border-radius: 0px;background-color: white; margin-left: 0px"            
                 v-dropdown=""
                 ":class"="articles.length > 0 ? '' : 'disabled'" )
-                input(type="hidden" name="article_selection" )
+                input(type="hidden" name="article_selection")
                 i.dropdown.icon
                 div.default.text {{ articles.length > 0 ? translate('article.header') : translate('article.empty') }}
                 div.class.menu
-                    div.item(
+                    div.item(                        
                         v-for="article in articles"
                         @click="selectArticle(article)"
                         ":data-value"="article.id" ) {{article.name}}

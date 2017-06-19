@@ -23,8 +23,9 @@
             i.item( v-if="contacts.length==0" ) {{ translate('empty') }}
         
         div.ui.fluid.row.mobile.only.no-padding
-            div.ui.fluid.label {{ translate('contacts') }}
-            div.ui.fluid.selection.label.dropdown.mobile.only#contacts(    
+            div.ui.fluid.label(style="border-radius: 0px; margin-right: 0px") {{ translate('contacts') }}
+            div.ui.fluid.selection.label.dropdown#contacts(    
+                style="border-radius: 0px;background-color: white; margin-left: 0px"
                 v-dropdown=""
                 ":class"="contacts.length > 0 ? '' : 'disabled'" )
                 input(type="hidden" name="contact_selection" )
