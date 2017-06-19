@@ -66,24 +66,25 @@
                     # When element is dropped upon
                     $(card.image).droppable
                         drop: (event, ui) ->  
-                            event.preventDefault()                          
-                            
-                            target = event.target
-                            temp = dragged.position
-                                                        
-                            dragged.position = target.position
-                            
-                            target.position = temp
-                            target.card.style.border = ""
-                            
-                            Vue.set target.card.vmData, 'order', target.position
-                            Vue.set dragged.card.vmData, 'order', dragged.position
-                            Vue.nextTick ->
-                                # Clear currently dragged element
-                                dragged = false
-                                # Setup cards again
-                                setupCards()
-                            
+                            if cardIsDragged
+                                event.preventDefault()                          
+                                
+                                target = event.target
+                                temp = dragged.position
+                                                            
+                                dragged.position = target.position
+                                
+                                target.position = temp
+                                target.card.style.border = ""
+                                
+                                Vue.set target.card.vmData, 'order', target.position
+                                Vue.set dragged.card.vmData, 'order', dragged.position
+                                Vue.nextTick ->
+                                    # Clear currently dragged element
+                                    dragged = false
+                                    # Setup cards again
+                                    setupCards()
+                                
                             return
                         out: (event, ui) ->                            
                             @card.style.border = ""
