@@ -63,13 +63,12 @@
                     div.ui.icon.buttons
                         component( v-for="tool in tools" ":is"="tool" ":item"="item" ":from"="from" )
 
-
                 div.column.center.aligned.mobile.only
                     div.ui.icon.buttons
                         component( v-for="tool in tools" ":is"="tool" ":item"="item" ":from"="from" )
-
-                div.column.center.aligned.mobile.only
-                    div.ui.basic.label.bottom.attached
+                        
+                div.column.center.aligned.mobile.only           
+                    div.ui.basic.small.label
                         i.checked.calendar.icon.icon-style
                         | {{ item.updated_at+' ' }}
 
