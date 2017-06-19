@@ -12,7 +12,7 @@
                             return moment(date).format 'YYYY-MM-DD'
                         time: (date, settings, forCalendar) ->
                             return moment(date).format 'HH:mm'
-                    onChange: binding.value
+                    #onChange: binding.value
                     onShow:  $('.modal').modal('refresh')
       
             if el.id == "interval_end"
@@ -25,7 +25,7 @@
                             return moment(date).format 'YYYY-MM-DD'
                         time: (date, settings, forCalendar) ->
                             return moment(date).format 'HH:mm'
-                    onChange: binding.value
+                   # onChange: binding.value
                     onShow:  $('.modal').modal('refresh')
         
         componentUpdated: (el, binding) ->

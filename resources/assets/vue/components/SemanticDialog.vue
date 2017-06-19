@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.modal.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : 'small'" ":style"="(type == 'image') ? 'background-color: black' : ''")
+    div.ui.modal.middle.aligned.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : 'small'" ":style"="(type == 'image') ? 'background-color: black;' : ''" ":id"="(type == 'image') ? 'image_modal' : ''")
         div.header(v-show="type != 'image'") {{ title }}
         div.top.attached(v-show="message" ":class"="[selected_action.class]" style="margin: 5px")             
             i(":class"="[selected_action.icon]") 
@@ -193,26 +193,6 @@
                         })
                     when "calendar"
                         @selected_action = @actions['calendar']
-                        $('#interval_start').calendar
-                            inline: true
-                            text:                                 
-                                months: [
-                                    @$root.translate('month.january'),
-                                    @$root.translate('month.february'),
-                                    @$root.translate('month.mars'),
-                                    @$root.translate('month.april'),
-                                    @$root.translate('month.may'),
-                                    @$root.translate('month.june'),
-                                    @$root.translate('month.july'),
-                                    @$root.translate('month.august'),
-                                    @$root.translate('month.september'),
-                                    @$root.translate('month.october'),
-                                    @$root.translate('month.november'),
-                                    @$root.translate('month.december'),                            
-                                ]
-                            
-
-
                         $('#interval_start').calendar('set date',message.start)
                         $('#interval_start').calendar('set mode','day')
                         $('#interval_end').calendar('set date',message.end)
@@ -234,14 +214,16 @@
                         @setImagePosition()  
                         @active_image = @images[@active_index]
                         @navigated = 0
-                        
                         $('.modal').modal({   
                             closable: false,  
-                            detachable: false,                            
+                            #detachable: false,                            
                             observeChanges: true,                         
                             transition: 'pulse',
                             duration: 450                                                           
                         })
+                        $('.modals.dimmer .ui.scrolling.modal').css('margin', '0px auto !important')
+                        $('.scrolling.dimmable .ui.scrolling.modal').css('margin', '1rem auto !important')
+                       
 
                     else
                         @selected_action = @actions['default']
@@ -261,12 +243,9 @@
     }
 </script>
 <style>
-    .modals.dimmer .ui.scrolling.modal{
-        margin: 0px auto !important;
-    }
-  
-    .scrolling.undetached.dimmable .ui.scrolling.modal{
+    #image_modal {
         margin: 1rem auto !important;
+        top: 5% !important;
     }
 </style>
 
