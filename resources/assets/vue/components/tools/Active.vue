@@ -1,3 +1,6 @@
+    <!-- Active.vue handles the actions of the active/inactive button in the articles toolbar.
+        It changes the binary .is_active state of an article.
+        The toolbar as a whole is defined in pages\articles\list.vue-->
 <template lang="pug">
         div.ui.icon.button.hover-default(
             style="background-color: #FFF; border-top: 1px solid rgb(212,212,213); border-bottom: 1px solid rgb(212,212,213); border-left: 1px solid rgb(212,212,213)"
@@ -9,7 +12,7 @@
             ":class" = `
                 (item.is_active) ? 'active-interval':''
             `
-        )
+        ) //The button gets a state (active-interval, defined in _table.scss) based on its .is_active property
             i.ui.icon.check.circle.icon-style(v-if="item.is_active")
             i.ui.icon.minus.circle.icon-style(v-else="")
 </template>
@@ -36,13 +39,14 @@
                             start: item.publish_interval.split('|')[0],
                             end: item.publish_interval.split('|')[1]
                             type:'calendar',
-                            cb: ( start, end ) ->
+                            cb: ( start, end ) -> #cb (callback) sends an asynchronous emit to corresponding
+                                                    #method in pages\articles\list.vue
                                 bus.$emit(
                                     'publish_interval_changed',
                                     item.id,
                                     start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
                                 )
-                                dateIsValid = false  #HITTA ETT SÄTT ATT LÄSA @checkDateInterval FRÅN CB (asynkront)(DETTA FUNKAR TEMPORÄRT)
+                                dateIsValid = false
                                 currentdate = new Date();
                                 pIntervalStart = new Date(item.publish_interval.split('|')[0]);
                                 pIntervalEnd = new Date(item.publish_interval.split('|')[1]);
