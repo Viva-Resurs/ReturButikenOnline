@@ -94,8 +94,7 @@
                 return button    
             
             #Overlay buttons
-            addOverlayButtons = (type) ->
-                console.log "type = "+type                               
+            addOverlayButtons = (type) ->                             
                 leftButton = document.getElementById "previewLeftButton" 
                 rightButton = document.getElementById "previewRightButton" 
                 numImagesLabel = document.getElementById "numImagesLabel"
@@ -221,8 +220,7 @@
             
             handleMove = (e) ->
 
-                e.preventDefault()  
-                console.log "moved"
+                e.preventDefault()                  
                 moved = true              
                 if active == false
                     return
@@ -356,8 +354,7 @@
                 setDimensions()
             , 200
 
-        componentUpdated: (el,binding) ->
-            console.log binding.value.images.length
+        componentUpdated: (el,binding) ->            
             if binding.value.images.length > 1    
                 bus.$emit 'addButtons', binding.value.screenType 
 </script>

@@ -85,7 +85,6 @@
                 @$router.push @$root.encodeArtNR article
 
             attemptRemove: (article) ->
-                console.log "Trying to remove article"
                 bus.$emit 'show_message',
                     title: @$root.translate('article_list.remove_article_title') + "''"+article.name+"''."
                     message: @$root.translate('article_list.remove_article_message')
@@ -135,16 +134,12 @@
             bus.$on 'ui_item_edit', (item) =>
                 @$router.push path: '/ui/articles/'+item.id
             bus.$on 'publish_interval_changed', (id, new_value) =>
-                console.log 'changed'
                 item = @getArticleById id
-                console.log item
                 if item
                     Vue.set item, 'publish_interval', new_value
                     bus.$emit 'start_item_changed', item
             bus.$on 'bidding_interval_changed', (id, new_value) =>
-                console.log 'changed'
                 item = @getArticleById id
-                console.log item
                 if item
                     Vue.set item, 'bidding_interval', new_value
                     bus.$emit 'start_item_changed', item
