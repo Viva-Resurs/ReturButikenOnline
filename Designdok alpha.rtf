@@ -10,7 +10,8 @@
 7. Kategorier\fs28\par
 \fs22 8. Egenheter och halvf\'e4rdig funktionalitet i projektet (Fixlista)\par
 9. Skillnader mellan shop-l\'e4ge och admin/sektionsadmin/publicerare-l\'e4ge\par
-10. Anv\'e4ndarkonto eller inte anv\'e4ndarkonto\b\fs28\par
+10. Visningsartiklar (art. som inte ska auktioneras ut)\par
+11. Anv\'e4ndarkonto eller inte anv\'e4ndarkonto\b\fs28\par
 \fs22\par
 1. Auktionsfunktionalitet\par
 \b0 Den t\'e4nkta auktionsfunktionaliteten p\'e5 sidan ser ut att vara planerad som en tyst budgivning, d\'e4r artikeln ligger ute f\'f6r budgivning under en viss period. Folk kan d\'e5 l\'e4gga bud f\'f6r vad de vill ge f\'f6r artikeln utan att se alla andras bud. Om de sedan vinner budgivningen f\'e5r de ett mail om att de vunnit samt ett slutdatum f\'f6r att h\'e4mta artikeln p\'e5 Returbutiken. Artikeln \'e4r \'e4ven t\'e4nkt att ha ett reservationspris (L\'e4gsta s\'e4ljpris) som kan synas eller vara dolt (i nul\'e4get oklart vad som \'e4r b\'e4st).\par
@@ -19,31 +20,39 @@ Eventuell problematik\par
 \pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Budgivartroll som vinner men inte t\'e4nker h\'e4mta artikeln. Det \'e4r f\'f6rmodligen inte l\'f6nt att jaga dem, s\'e5 det enklaste vore nog bara att maila dem om att tiden g\'e5tt ut och sedan l\'e4gga ut artikeln f\'f6r ny budgivning. Alternativt kontaktas n\'e4st h\'f6gsta bud.\par
 {\pntext\f1\'B7\tab}Det m\'e5ste finnas ett smidigt s\'e4tt f\'f6r kunden att h\'e4mta artikeln och f\'f6r kassapersonalen att kontrollera artikel, pris, betald eller ej, samt s\'e4ljare.\par
 {\pntext\f1\'B7\tab}F\'f6r att f\'f6rs\'e4kra att artiklar f\'f6r budgivning skapas korrekt b\'f6r man kanske g\'f6ra s\'e5 att alla dessa artiklar m\'e5ste godk\'e4nnas av en avdelningsadministrat\'f6r som kontrollerar och godk\'e4nner, varp\'e5 artikeln publiceras. Detta \'e4r dock inte n\'f6dv\'e4ndigtvis n\'f6dv\'e4ndigt.\par
-\pard\sa200\sl276\slmult1\b 2. Swish som betalningsmetod\b0\par
+\pard\sa200\sl276\slmult1\b\par
+2. Swish som betalningsmetod\b0\par
 Meningen \'e4r att Swish ska inf\'f6ras som betalningsmetod f\'f6r auktionsf\'f6rem\'e5l p\'e5 sidan. Det ska fungera s\'e5 att auktionsprocessen g\'e5r sin g\'e5ng, en budgivare vinner auktionen, meddelas och ges m\'f6jlighet att betala f\'f6r artikeln via Swish. Det \'e4r i nul\'e4get dock inte obligatoriskt; man kan betala n\'e4r man kommer till Returbutiken f\'f6r att h\'e4mta artikeln. Med Swish f\'e5r anv\'e4ndaren en kod p\'e5 artikelsidan n\'e4r de vunnit en budgivning, men Swish m\'e5ste \'e4nd\'e5 anv\'e4ndas via mobilen, s\'e5 processen f\'f6r att bli informerad om att artikeln betalats m\'e5ste tas emot via Swishs API.\par
 Eventuell problematik\par
-\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Anst\'e4llda p\'e5 Returbutiken (antagligen kassapersonalen) m\'e5ste kunna se om en vara \'e4r betald eller inte, och f\'f6rmodligen ocks\'e5 kontrollera att personen som kommer att h\'e4mta artikeln \'e4r samma person som vunnit budgivningen. Eventuellt kanske man b\'f6r skapa en ny anv\'e4ndarroll f\'f6r de som ska hantera h\'e4mtning och betalning d\'e4r dessa anv\'e4ndare kan se artikelstatus och info f\'f6r alla artiklar som \'e4r aktuella f\'f6r h\'e4mtning.\par
-\pard\sa200\sl276\slmult1\b 3. Artiklars livstid och Aktiva/Inaktiva artiklar\b0\par
+\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Anst\'e4llda p\'e5 Returbutiken (antagligen kassapersonalen) m\'e5ste kunna se om en vara \'e4r betald eller inte, och f\'f6rmodligen ocks\'e5 kontrollera att personen som kommer f\'f6r att h\'e4mta artikeln \'e4r samma person som vunnit budgivningen. Eventuellt kanske man b\'f6r skapa en ny anv\'e4ndarroll f\'f6r de som ska hantera h\'e4mtning och betalning d\'e4r dessa anv\'e4ndare kan se artikelstatus och info f\'f6r alla artiklar som \'e4r aktuella f\'f6r h\'e4mtning.\par
+\pard\sa200\sl276\slmult1\b\par
+3. Artiklars livstid och Aktiva/Inaktiva artiklar\b0\par
 En artikel \'e4r t\'e4nkt att ha ett visst livstidsfl\'f6de. N\'e4r artikeln l\'e4ggs upp anges ett intervall d\'e5 den ska ligga uppe. N\'e4r den aktiva tiden upph\'f6r inaktiveras artikeln och kan inte ses av kunderna. Dock finns artiklarna kvar f\'f6r publicerare, som kan reaktivera artiklarna med ett nytt publiceringsdatum, alternativt ta bort artikeln. Detta inaktiva intervall kan vara exempelvis tv\'e5 veckor, och eventuellt kan publicerare ha n\'e5n sorts vy eller dropdown d\'e4r de kan se vilka artiklar som inaktiverats nyligen. N\'e4r det inaktiva intervallet tar slut tas artikeln bort automatiskt. Observera att artiklar som skapas som templates ska inte tas bort.\par
 Publicerare kan s\'e4tta en artikel som inaktiv n\'e4r som helst (i toolbar i artikellistan). Om en artikel s\'e4tts som inaktiv ska den vara inaktiv \'e4ven om den har ett giltigt tidsintervall. I nul\'e4get l\'e4ses en artikel med giltigt intervall alltid som aktiv. Om publiceraren vill s\'e4tta en artikel till aktiv m\'e5ste ett giltigt intervall anges om detta inte finns (redan implementerat).\par
-\b 4. Standardiserade publiceringsdatum\b0\par
+Observera att n\'e4r det g\'e4ller artiklar i auktion, s\'e5 vore det l\'e4mpligt att k\'f6paren kan se sin artikel \'e4ven efter att auktionen tagit slut.\par
+\b\par
+4. Standardiserade publiceringsdatum\b0\par
 Det nuvarande systemet f\'f6r att ange publiceringsdatum \'e4r funktionellt men lite kr\'e5ngligt. Som det \'e4r nu fyller publiceraren i startdatum och slutdatum f\'f6r publicering (och \'e4ven f\'f6r ev. budgivning). En reviderad version skulle kunna fungera s\'e5 att:\par
 \pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Startdatum (publ.) alltid \'e4r den tid d\'e5 man skapar artikeln.\par
 {\pntext\f1\'B7\tab}Slutdatum (publ.) har en standardiserad sluttid, t.ex. tv\'e5 veckor fram\'e5t. Denna kan justeras av publiceraren, och eventuellt kan publicerare ha en egen standardtid som de kan \'e4ndra p\'e5 sin profilsida, som sedan l\'e4ses in n\'e4r man g\'e5r in i 'skapa artikel'-vyn.\par
 {\pntext\f1\'B7\tab}Tidsintervallet f\'f6r budgivning kan vara samma intervall som f\'f6r publicering. Det finns inget egentligt syfte att ha dem separat. Publiceraren anger d\'e5 bara om artikeln ska ligga uppe f\'f6r budgivning eller ej.\par
-\pard\sa200\sl276\slmult1\b 5. Artikel-templates\par
+\pard\sa200\sl276\slmult1\b\par
+5. Artikel-templates\par
 \b0 Det \'e4r t\'e4nkt att det ska finnas templates f\'f6r artiklar f\'f6r publicerare p\'e5 sidan. Dessa templates ska se ut exakt som en artikel men utan publ. datum och artikel ID. Tanken \'e4r att publicerare ska kunna anv\'e4nda dessa f\'f6r att publicera \'e5terkommande artiklar utan att beh\'f6va skapa en artikel fr\'e5n grunden varje g\'e5ng. N\'e4r man d\'e5 g\'e5r in p\'e5 en template s\'e5 kan man skapa X antal artiklar fr\'e5n templaten, varp\'e5 dessa skapas som unika artiklar med separata atiklen ID.\par
 Eventuell Problematik\par
 \pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Det l\'e4r finnas tillf\'e4llen d\'e5 publiceraren vill g\'f6ra mindre justeringar i en template innan de publicerar (t.ex. i artikeltext). D\'e5 b\'f6r man kunna g\'f6ra det innan man publicerar. Dock vill man inte att templaten \'e4ndras hela tiden, s\'e5 justeringar i templaten ska inte sparas om man inte specifikt uppger det.\par
 {\pntext\f1\'B7\tab}En publicerare kan i nul\'e4get bara se sina egna artiklar. Templates b\'f6r ligga separat fr\'e5n riktiga artiklar och b\'f6r kunna anv\'e4ndas av alla publicerare p\'e5 en avdelning.\b\par
-\pard\sa200\sl276\slmult1 6. Publicerares r\'e4ttigheter\par
+\pard\sa200\sl276\slmult1\par
+6. Publicerares r\'e4ttigheter\par
 \b0 I nul\'e4get kan publicerare bara se sina egna artiklar. En alternativ struktur \'e4r att publicerare kan se och \'e4ndra i artiklar tillh\'f6rande alla publicerare p\'e5 den egna avdelningen. Detta kan vara l\'e4mpligt d\'e5 en s\'e4rskild publicerare kan bli fr\'e5nvarande eller beg\'e5 misstag som m\'e5ste \'e5tg\'e4rdas p\'e5 kort varsel.\par
-\b 7. Kategorier\b0\par
+\b\par
+7. Kategorier\b0\par
 Tanken bakom kategorier som funktionalitet \'e4r att de ska kunna anv\'e4ndas av webbes\'f6karna f\'f6r att hitta alla artiklar som tillh\'f6r en viss kategori. Det finns redan st\'f6d f\'f6r att ange ett flertal kategorier till en artikel, och man kan se dem i artikellistan, men man b\'f6r kunna klicka p\'e5 en kategori f\'f6r att f\'e5 fram alla artiklar som tillh\'f6r den, eller kunna s\'f6ka utifr\'e5n kategorier.\par
 Eventuell Problematik\par
 \pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 F\'f6r att kategorier ska fungera ordentligt s\'e5 m\'e5ste man ha ordning och reda. Inte flera ord f\'f6r samma sak (t.ex. skottk\'e4rra och rulleb\'f6r), h\'e5lla samma grupperingsniv\'e5 hela tiden (inte en "Stol" och en "Gr\'f6nrandig kontorsstol") och inga felstavade kategorier (En kat. "Stol" och en "Sotl"). Ibland m\'e5ste dock nya kategorier skapas och man kan inte fr\'e5ga admin varje g\'e5ng. I nul\'e4get kan bara admin skapa kategorier, s\'e5 r\'e4ttigheterna beh\'f6ver ses \'f6ver.\par
 {\pntext\f1\'B7\tab}Kategorisystem \'e4r dryga att f\'e5 ordning p\'e5 n\'e4r de snurrat helt ur kontroll, s\'e5 tydliga riktlinjer f\'f6r publicerare \'e4r nog den b\'e4sta l\'f6sningen f\'f6r att f\'f6rebygga problem.\par
-\pard\sa200\sl276\slmult1\b 8. Egenheter, f\'f6rslag och halvf\'e4rdig funktionalitet i projektet (Fixlista)\par
+\pard\sa200\sl276\slmult1\b\par
+8. Egenheter, f\'f6rslag och halvf\'e4rdig funktionalitet i projektet (Fixlista)\par
 \pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\b0 Inloggningssidan bed\'f6ms som os\'e4ker av webbl\'e4sarna. Beh\'f6ver b\'e4ttre s\'e4kerhet.\par
 {\pntext\f1\'B7\tab}L\'e4gg inloggningssidan direkt p\'e5 startsidan (i dev-l\'e4ge) om man inte \'e4r inloggad.\par
 {\pntext\f1\'B7\tab}"Byta spr\'e5k"-knappen kanske b\'f6r ligga i menyn, inte l\'e4ngst ner p\'e5 sidan.\par
@@ -51,20 +60,38 @@ Eventuell Problematik\par
 {\pntext\f1\'B7\tab}Overview-manyn kan visa ens egna artiklar som pre-selected (f\'f6r publicerare)\par
 {\pntext\f1\'B7\tab}Begr\'e4nsa hur l\'e5nga strings man f\'e5r ange i t.ex. anv\'e4ndarnamn, artikeltitel etc.\par
 {\pntext\f1\'B7\tab}Overview-menyn kan bli v\'e4ldigt stor om man som publicerare har m\'e5nga artiklar. B\'e4ttre med n\'e5gon fast gr\'e4ns f\'f6r elementets h\'f6jd och sedan n\'e5gon sorts scrollfunktion i elementet.\par
-\pard\sa200\sl276\slmult1\b 9. Skillnader mellan shop-l\'e4ge och admin/sektionsadmin/publicerare-l\'e4ge\b0\par
+{\pntext\f1\'B7\tab}I nul\'e4get kan admin \'e4ndra sin egen roll. Det b\'f6r finnas en s\'e4kerhetsmekanism som g\'f6r s\'e5 att admin inte slarvar bort sina egna r\'e4ttigheter.\par
+{\pntext\f1\'B7\tab}Kanske borde d\'f6pa om 'Kontakter' i snabbmenyn p\'e5 startsidan till 'Anv\'e4ndare'?\par
+{\pntext\f1\'B7\tab}Centrera och bold p\'e5 alla kolumntitlar i listvyerna?\par
+{\pntext\f1\'B7\tab}Det g\'e5r inte att s\'e4tta .is_active state till false om artikeln har ett giltigt intervall. Active/Inactive b\'f6r har prio framf\'f6r tidsintervall. Alternativt kan man ta bort tidsintervallet n\'e4r man s\'e4tter en aktiv artikel till inaktiv.\par
+{\pntext\f1\'B7\tab}Man kan potentiellt av\'e4nda long press i mobila enheter f\'f6r att motsvara hover i desktop-l\'e4ge.\par
+{\pntext\f1\'B7\tab}\'c4ndra f\'e4rg p\'e5 rubriker i snabbmenyn p\'e5 startsidan fr\'e5n gr\'e5 till den gr\'f6na tema-f\'e4rgen?\par
+{\pntext\f1\'B7\tab}De visuella elementen av funktionaliteten f\'f6r att ta bort bilder i profil-vyn kan f\'f6rb\'e4ttras.\par
+{\pntext\f1\'B7\tab}Det vore l\'e4mpligt med en s\'e4krare metod f\'f6r att byta l\'f6senord.\par
+{\pntext\f1\'B7\tab}Det vore bra med en alternativ, bildbaserad listvy f\'f6r artiklar i desktop-l\'e4ge, d\'e4r varje artikel tar upp mer h\'f6jd f\'f6r att visa upp den f\'f6rsta bilden i artikeln (f\'f6rstoringsbar) och sedan strukturera upp resten av artikelns info snyggare n\'e4r man har st\'f6rre utrymme.\par
+{\pntext\f1\'B7\tab}Det vore bra om man kunde g\'f6ra s\'e5 att ett article-card i mobil/tablet-l\'e4ge tar upp mindre utrymme (i h\'f6jden). Man kan minska padding och marginal i elementen och spara in en hel del plats. Detta skulle g\'f6ra det mer scroll-v\'e4nligt f\'f6r anv\'e4ndarna n\'e4r man har m\'e5nga artiklar.\par
+\pard\sa200\sl276\slmult1\b\par
+9. Skillnader mellan shop-l\'e4ge och admin/sektionsadmin/publicerare-l\'e4ge\b0\par
 Shop-l\'e4get kommer att vara v\'e4ldigt likt publicerare-l\'e4get. I princip \'e4r det samma site, men med \'e4ndrade r\'e4ttigheter. All funktionalitet och r\'e4ttigheter som finns f\'f6r en vanlig anv\'e4ndare har \'e4ven publicerare. Det som ska begr\'e4nsas \'e4r sidor som "skapa artikel" och liknande som man m\'e5ste ha adminr\'e4ttigheter f\'f6r att se.\par
 De fr\'e4msta skillnaderna \'e4r f\'f6rmodligen att:\par
 \pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Vanliga anv\'e4ndare m\'e5ste inte ha ett anv\'e4ndarkonto f\'f6r att anv\'e4nda sidan. Diskutabelt om man m\'e5ste ha ett konto f\'f6r att l\'e4mna bud.\par
 {\pntext\f1\'B7\tab}Startsidan f\'f6r anv\'e4ndare och admins ska vara helt annorlunda. Medan admins har verktyg f\'f6r att se artiklar och anv\'e4ndare och liknande borde startsidan f\'f6r vanliga anv\'e4ndare visa en inbjudande vy med visningsartiklar, information om Returbutiken, och t.ex. ett kategorimoln f\'f6r att snabbs\'f6ka eller liknande.\par
 {\pntext\f1\'B7\tab}En sida med "vanliga fr\'e5gor"-information vore l\'e4mpligt\par
 \pard\sa200\sl276\slmult1\par
-\b 10. Anv\'e4ndarkonto eller inte anv\'e4ndarkonto\par
+\b 10. Visningsartiklar (art. som inte ska auktioneras ut)\par
+\b0 De artiklar som ska l\'e4ggas upp som visningsartiklar, dvs. artiklar som \'e4ven s\'e4ljs live i butiken, kr\'e4ver n\'e5gon sorts koordinering mellan butikspersonal och publicerare. Dessa artiklar b\'f6r n\'e4mligen inte ligga kvar och visas p\'e5 sidan om de redan s\'e5lts i butiken. De tv\'e5 huvudsakliga alternativ som finns \'e4r:\par
+\pard{\pntext\f0 1.\tab}{\*\pn\pnlvlbody\pnf0\pnindent0\pnstart1\pndec{\pntxta.}}
+\fi-360\li720\sa200\sl276\slmult1 Att publicerare h\'e5ller st\'e4ndig koll p\'e5 status f\'f6r de artiklar de lagt upp.\par
+{\pntext\f0 2.\tab}Att den fysiska varan m\'e4rks med ett ID i samband med att den publiceras p\'e5 webbsidan, varefter kassapersonalen skickar denna kod till tillh\'f6rande publicerare n\'e4r den s\'e4ljs.\par
+{\pntext\f0 3.\tab}Att kassapersonalen scannar en QR-kod som publiceraren f\'e4ster p\'e5 den fysiska varan som representerar dess artikel-ID, varp\'e5 artikeln automatiskt inaktiveras. Lite mer jobb, men annars en snygg, smidig l\'f6sning.\par
+{\pntext\f0 4.\tab}Att, som beskrivs under Swish-rubriken, kassapersonalen l\'e4ggs till som en anv\'e4ndarroll som ger dem auktoritet att direkt ta bort (inaktivera) artiklar fr\'e5n webbsidan. Om gr\'e4nssnittet g\'f6rs ordentligt beh\'f6ver det inte ta mer \'e4n ett par sekunder att hitta och ta bort aktuell artikel. Dock har kassapersonalen s\'e4kert redan mycket att g\'f6ra under hektiska perioder och det \'e4r inte n\'f6dv\'e4ndigtvis l\'e4mpligt att belasta dem mer. \par
+\pard\sa200\sl276\slmult1\b\par
+11. Anv\'e4ndarkonto eller inte anv\'e4ndarkonto\par
 \b0 Sidan ska kunna anv\'e4ndas utan att ha ett anv\'e4ndarkonto (som vilken webshop som helst). Dock finns det vissa potentiella f\'f6rdelar med att ha konton f\'f6r vanliga anv\'e4ndare:\par
 \pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1 Funktionalitet kan finnas f\'f6r anv\'e4ndare med konto att se sin budhistorik.\par
 {\pntext\f1\'B7\tab}Anv\'e4ndaren beh\'f6ver inte fylla i mail varje g\'e5ng, utan deras info kan finnas i profilen, vilket g\'f6r det smidigare att l\'e4gga bud p\'e5 en artikel.\par
 {\pntext\f1\'B7\tab}Om man har kundservice-\'e4renden kan man potentiellt sk\'f6ta dem via ett gr\'e4nssnitt p\'e5 sidan ist\'e4llet f\'f6r via mail.\par
 \pard\sa200\sl276\slmult1\par
-\par
 \par
 \par
 \par

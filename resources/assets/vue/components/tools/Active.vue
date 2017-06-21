@@ -12,7 +12,7 @@
             ":class" = `
                 (item.is_active) ? 'active-interval':''
             `
-        ) //The button gets a state (active-interval, defined in _table.scss) based on its .is_active property
+        )
             i.ui.icon.check.circle.icon-style(v-if="item.is_active")
             i.ui.icon.minus.circle.icon-style(v-else="")
 </template>
