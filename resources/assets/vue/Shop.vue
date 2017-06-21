@@ -1,8 +1,10 @@
 <template lang="pug">
     div.pusher( v-if="settings.lang" )
+        image-preview
+        navigation
         div.ui.padded.container.segment#rootcontainer
             loading( v-if="$root.loading" )
-            div.ui.grid.one.column( v-if="!$root.loading" )
+            div.ui.grid.one.column( v-if="!$root.loading" )                
                 div.column
                     div.ui.dividing.header.fluid {{ translate('shop.header') }}
                 article-preview.column(
@@ -19,7 +21,6 @@
 </template>
 
 <script lang="coffee">
-
     # Create a event-central
     window.bus = new Vue()
 
@@ -32,6 +33,7 @@
     Vue.directive 'focus', require './directives/focus.vue'
     Vue.directive 'item', require './directives/item.vue'
     Vue.directive 'images', require './directives/images.vue'
+    Vue.directive 'image', require './directives/image.vue'
     Vue.directive 'swipe', require './directives/swipe.vue'
 
     # Define global mixins
@@ -44,9 +46,11 @@
         name: 'Shop'
 
         components:
+            Navigation: require './components/NavShop.vue'
             ShopDesktopList: require './components/shop/desktop/list.vue'
             ShopMobileList: require './components/shop/mobile/list.vue'
             ArticlePreview : require './components/shop/preview.vue'
+            ImagePreview: require './components/shop/ImagePreview.vue'            
             FooterComponent: require './components/Footer.vue'
 
         mixins: [

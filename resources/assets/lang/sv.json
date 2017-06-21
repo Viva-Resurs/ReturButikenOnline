@@ -14,7 +14,7 @@
         "header": "Kategorier"
     },
     "shop": {
-        "header": "Returbutiken online"
+        "header": "Budgivningsartiklar"
     },
     "article": {
         "amount": "Antal",
@@ -70,6 +70,20 @@
         "article_modify": "Ändra",
         "article_publish": "Publicera"
     },
+    "month": {
+        "january": "Januari",
+        "february": "Februari",
+        "mars": "Mars",
+        "april": "April",
+        "may": "Maj",
+        "june": "Juni",
+        "july": "Juli",
+        "august": "Augusti",
+        "september": "September",
+        "october": "Oktober",
+        "november": "November",
+        "december": "December"
+    },
     "user_form": {
         "header": "Användarprofil",
         "profile_photo_label": "Profil foto:",
@@ -97,7 +111,8 @@
         "images_header": "Bilder",
         "published_all": "Publicerad för allmänheten",
         "published_intra": "Publicerad på kommunens intranät",
-        "bidding_not_set": "Inget budgivningsintervall är satt"
+        "bidding_not_set": "Inget budgivningsintervall är satt",
+        "make_bidding": "Lägg ett bud"
     },
     "semantic_dialog": {
         "start_date_header": "Startdatum",

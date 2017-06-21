@@ -1,5 +1,5 @@
 <template lang="pug">
-    div
+    div.no-top-padding
         div.ui.top.attached.menu
             div.left.menu
                 search( ":search"="search" ":results"="countItems" )
@@ -13,7 +13,7 @@
                         ":order"="order"
                         ":desc"="desc"
                         ":columns"="['name','updated_at','categories']" )
-
+                    
         div.ui.padded.grid
             div.row( v-if="countItems == 0" )
                 div.ui.column.warning.message
@@ -22,6 +22,7 @@
                 article-card(
                     v-for="(item, index) in filterItems"
                     ":item"="item"
+                    ":tools"="toolsRow"
                     ":from"="from"
                     )
 
@@ -41,7 +42,7 @@
 
 <script lang="coffee">
     module.exports =
-        name: 'Shop'
+        name: 'ShopMobileList'
         props: [
             'items'
             'toolsRow'
@@ -53,7 +54,7 @@
             ArticleCard: require '../card.vue'
             Search: require '../../tools/Search.vue'
             Paginate: require '../../tools/Paginate.vue'
-            Sort: require '../../tools/Sort.vue'
+            Sort: require '../../tools/Sort.vue'       
         data: ->
             order: 'updated_at'
             desc: 1

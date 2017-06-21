@@ -14,7 +14,7 @@
         "header": "Categories"
     },
     "shop": {
-        "header": "Returbutiken online"
+        "header": "Biddable articles"        
     },
     "article": {
         "amount": "Amount",
@@ -70,6 +70,20 @@
         "article_modify": "Modify",
         "article_publish": "Publish"
     },
+    "month": {
+        "january": "January",
+        "february": "February",
+        "mars": "Mars",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+    },
     "user_form": {
         "header": "User Profile",
         "profile_photo_label": "Profile photo:",
@@ -97,7 +111,8 @@
         "images_header": "Pictures",
         "published_all": "Published for all",
         "published_intra": "Published municipally",
-        "bidding_not_set": "No bidding interval is set"
+        "bidding_not_set": "No bidding interval is set",        
+        "make_bidding": "Place bidding"
     },
     "semantic_dialog": {
         "start_date_header": "Start date",
