@@ -46,7 +46,7 @@
                             td
                             td.right.aligned
                                 div.ui.icon.buttons
-                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="getFrom" )
 
                         tr(
                             v-for="(item, index) in filterItems"
@@ -76,7 +76,7 @@
                                     span( v-if="(column_index != item.users.length -1)") ,{{ ' ' }}
                             td.right.aligned
                                 div.ui.icon.buttons
-                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="getFrom" )
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(
                 v-if="limitOffBtn"

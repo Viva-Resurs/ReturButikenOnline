@@ -66,8 +66,8 @@
                 div.column.center.aligned.mobile.only
                     div.ui.icon.buttons
                         component( v-for="tool in tools" ":is"="tool" ":item"="item" ":from"="from" )
-                        
-                div.column.center.aligned.mobile.only           
+
+                div.column.center.aligned.mobile.only
                     div.ui.basic.small.label
                         i.checked.calendar.icon.icon-style
                         | {{ item.updated_at+' ' }}
@@ -79,14 +79,14 @@
     module.exports =
         name: 'ArticleCard'
         props: [ 'item', 'tools', 'from' ]
-        methods: 
-            previewImages: (image) ->      
+        methods:
+            previewImages: (image) ->
                 selected_index = 0
                 for img, index in @item.images
                     if Number(img.id) == Number(image.id)
                         selected_index = index
 
-                bus.$emit 'show_message',                        
+                bus.$emit 'show_message',
                     type: 'image'
                     index: selected_index
                     images: @item.images

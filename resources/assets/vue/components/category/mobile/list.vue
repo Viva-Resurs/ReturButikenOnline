@@ -30,7 +30,7 @@
                                     v-focus="" )
                             td.collapsing.bottom.aligned
                                 div.ui.icon.buttons
-                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="getFrom" )
                         tr(
                             v-for="(item, filterIndex) in filterItems"
                             ":id"="item.id"
@@ -48,7 +48,7 @@
                                         p {{ item.name }}
                             td.collapsing
                                 div.ui.icon.buttons
-                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                                    component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="getFrom" )
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(
                 v-if="limitOffBtn"

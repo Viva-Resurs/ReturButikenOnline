@@ -96,7 +96,7 @@
 
                                 td
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="getFrom" )
 
                             tr(
                                 v-for="(item, index) in filterItems"
@@ -135,14 +135,14 @@
 
                                 td.right.aligned
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="getFrom" )
 
                             tr( v-if="toolsBottom")
                                 td
                                 td( v-for="c in columns" )
                                 td.right.aligned
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
+                                        component( v-for="tool in toolsBottom" ":is"="tool" ":from"="getFrom" )
             //Data, mobile view
             div.ui.padded.grid.mobile.only(v-if="!card")
                 div.row( v-if="countItems==0 && !toolsBottom" )
@@ -160,7 +160,7 @@
                                 td
                                 td
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="getFrom" )
 
                             tr(
                                 v-for="(item, filterIndex) in filterItems"
@@ -183,13 +183,13 @@
 
                                 td.collapsing.bottom.aligned
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="from" )
+                                        component( v-for="tool in toolsRow" ":is"="tool" ":item"="item" ":from"="getFrom" )
 
                             tr( v-if="toolsBottom")
                                 td
                                 td.right.aligned
                                     div.ui.icon.basic.buttons
-                                        component( v-for="tool in toolsBottom" ":is"="tool" ":from"="from" )
+                                        component( v-for="tool in toolsBottom" ":is"="tool" ":from"="getFrom" )
 
             div.mobile.tablet.only.ui.grid.padded.row( v-if="card" )
                 component(
@@ -197,7 +197,7 @@
                     ":is"="card"
                     ":item"="item"
                     ":tools"="toolsRow"
-                    ":from"="from"
+                    ":from"="getFrom"
                     )
 
         pagination.ui.bottom.attached(
@@ -232,8 +232,9 @@
             order: 'updated_at'
 
         computed:
-            from: ->
-                @$route.path.substring 1
+            #getFrom: ->
+            #    @$route.path.substring 1
+
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true

@@ -13,7 +13,7 @@
                         ":order"="order"
                         ":desc"="desc"
                         ":columns"="['name','updated_at','categories']" )
-                    
+
         div.ui.padded.grid
             div.row( v-if="countItems == 0" )
                 div.ui.column.warning.message
@@ -23,7 +23,7 @@
                     v-for="(item, index) in filterItems"
                     ":item"="item"
                     ":tools"="toolsRow"
-                    ":from"="from"
+                    ":from"="getFrom"
                     )
 
         div.row( v-if="countItems > 0 && search!=''" )
@@ -54,7 +54,7 @@
             ArticleCard: require '../card.vue'
             Search: require '../../tools/Search.vue'
             Paginate: require '../../tools/Paginate.vue'
-            Sort: require '../../tools/Sort.vue'       
+            Sort: require '../../tools/Sort.vue'
         data: ->
             order: 'updated_at'
             desc: 1

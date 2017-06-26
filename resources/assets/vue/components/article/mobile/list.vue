@@ -25,7 +25,7 @@
                     v-for="(item, index) in filterItems"
                     ":item"="item"
                     ":tools"="toolsRow"
-                    ":from"="from"
+                    ":from"="getFrom"
                     )
 
         div.row( v-if="countItems > 0 && search!=''" )
