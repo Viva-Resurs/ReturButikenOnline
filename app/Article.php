@@ -52,9 +52,36 @@ class Article extends Model
         $parts = explode('|',$this->publish_interval);
         if (count($parts)<2)
             return false;
+
+        if (!$this->active)
+            return false;
+
         $start = Carbon::createFromFormat('Y-m-d H:i:s', trim($parts[0]));
         $end   = Carbon::createFromFormat('Y-m-d H:i:s', trim($parts[1]));
+
+        //Checks if current date is between start and end date.
         return $today->between($start, $end);
+    }
+
+    public function haveCurrentOrFutureInterval($type){
+        if ($type == 0)
+            $parts = explode('|',$this->publish_interval);
+        
+        if ($type == 1)    
+            $parts = explode('|',$this->bidding_interval);
+        
+        if (count($parts) < 2)
+            return false;
+        
+        if (!$this->active)
+            return false;       
+
+        $start = Carbon::createFromFormat('Y-m-d H:i:s', trim($parts[0]));
+        $end   = Carbon::createFromFormat('Y-m-d H:i:s', trim($parts[1]));
+        
+        $today = Carbon::now();  
+              
+        return ($end->gt($start) && ($today->between($start,$end) || $start->isFuture()));
     }
 
     public function matchAudience($audience)
