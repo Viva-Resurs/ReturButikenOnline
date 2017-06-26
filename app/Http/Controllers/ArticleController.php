@@ -132,10 +132,9 @@ class ArticleController extends Controller
         if ($article->bidding_interval != '')
             if ($article->haveCurrentOrFutureInterval(1) == false)
                 abort(400, 'Incorrect bidding interval');
-            
 
-        $article->save();
-
+        $article->save();            
+        
         // Attach Creator
         $article->creator()->save( User::find($user->id) );
 
@@ -186,18 +185,7 @@ class ArticleController extends Controller
             !$user->sections->find($article->sections->first()->id)
         )
             abort(401,'Not allowed to update article');
-        
-        if ($article->publish_interval != '') 
-            if (!$article->haveCurrentOrFutureInterval(0)){                  
-                abort(400, 'Incorrect publish interval');
-            }
-        
-        if ($article->bidding_interval != '')
-            if (!$article->haveCurrentOrFutureInterval(1)){
-                abort(400, 'Incorrect bidding interval');
-            }
-        
-
+ 
         if ($request->has('name') && $request['name']!='')
             $article->name = $request['name'];
 
@@ -217,6 +205,16 @@ class ArticleController extends Controller
         $article->publish_interval = $request['publish_interval'];
 
         $article->bidding_interval = $request['bidding_interval'];
+       
+        if ($article->publish_interval != '') 
+            if (!$article->haveCurrentOrFutureInterval(0)){                  
+                abort(400, 'Incorrect publish interval');
+            }
+        
+        if ($article->bidding_interval != '')
+            if (!$article->haveCurrentOrFutureInterval(1)){
+                abort(400, 'Incorrect bidding interval');
+            }
 
         // Clear Categories
         if ($article->categories)
