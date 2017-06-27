@@ -10,7 +10,7 @@
                 div.two.stackable.fields
                     div.field
                         h4.ui.sub.header {{ translate('semantic_dialog.start_date_header') }}
-                        div.ui.calendar#interval_start( v-calendar="validateCalendar, { lang: getLanguage() }" )
+                        div.ui.calendar#interval_start( v-calendar="validateCalendar" )
                             div.ui.input.left.icon.bottom.attached
                                 i.calendar.icon
                                 input( type="text" placeholder="????-??-??" )                    
@@ -121,11 +121,14 @@
                 return @$root.settings.lang
 
             validateCalendar: ->
+                console.log "validating calendar"
                 setTimeout =>
                     range = [
                         $('#interval_start').calendar('get date'),
                         $('#interval_end').calendar('get date')
                     ]
+                    console.log range[0]
+                    console.log range[1]
                     # Just check if a date is selected
                     if range[0] && range[1]
                         @actions.calendar.buttons[1].class = 'ui approve primary button'
