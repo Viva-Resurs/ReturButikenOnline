@@ -54,10 +54,15 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Not Found','details' => $exception], 404);
         }
 
-        // Permissions
+        
         if ($exception instanceof \Symfony\Component\HttpKernel\Exception\HttpException) {
+            // Permissions
             if ($exception->getStatusCode() == 401)
                 return response()->json(['error' => 'Unauthorized','details' => $exception->getMessage()], 401);
+            
+            //Incorrect input
+            if ($exception->getStatusCode() == 400)
+                return response()->json(['error' => 'Bad request', 'details' => $exception->getMessage()], 400);
         }
 
         // Tokens

@@ -106,6 +106,21 @@ class ArticleController extends Controller
         return $result;
     }
 
+    //Check if article have correct bidding and publish intervals set
+    private function checkCorrectIntervals(Article $article){
+        if ($article->active == true){
+            if ($article->publish_interval != '') 
+                if (!$article->haveCurrentOrFutureInterval(0)){                
+                    abort(400, 'Please select a current or future publish interval');                    
+                }
+            
+            if ($article->bidding_interval != '')
+                if (!$article->haveCurrentOrFutureInterval(1)){        
+                    abort(400, 'Please select a current or future bidding interval');                    
+                }
+        }       
+    }
+
     public function store(Request $request){
 
         $user = Auth::user();
@@ -118,20 +133,14 @@ class ArticleController extends Controller
             'desc' => ($request->has('desc')) ? $request['desc'] : '',
             'price' => ($request->has('price')) ? $request['price'] : '',
             'amount' => ($request->has('amount')) ? $request['amount'] : '',
-            'public' => $request['public'] || false,
+            'public' => $request['public'] || false,            
             'active' => $request['active'] || true,
             'publish_interval' => ($request->has('publish_interval')) ? $request['publish_interval'] : '',
             'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : ''
         ]);
 
-        if ($article->publish_interval != '') 
-            if ($article->haveCurrentOrFutureInterval(0) == false)                  
-                abort(400, 'Incorrect publish interval');
-            
         
-        if ($article->bidding_interval != '')
-            if ($article->haveCurrentOrFutureInterval(1) == false)
-                abort(400, 'Incorrect bidding interval');
+        $this->checkCorrectIntervals($article);            
 
         $article->save();            
         
@@ -200,22 +209,16 @@ class ArticleController extends Controller
 
         $article->public = $request['public'] || 0;
 
-        $article->active = $request['active'] || 0;
-
         $article->publish_interval = $request['publish_interval'];
 
         $article->bidding_interval = $request['bidding_interval'];
        
-        if ($article->publish_interval != '') 
-            if (!$article->haveCurrentOrFutureInterval(0)){                  
-                abort(400, 'Incorrect publish interval');
-            }
-        
-        if ($article->bidding_interval != '')
-            if (!$article->haveCurrentOrFutureInterval(1)){
-                abort(400, 'Incorrect bidding interval');
-            }
+        $article->active = $request['active'] || 0;
 
+        $this->checkCorrectIntervals($article);
+
+
+        
         // Clear Categories
         if ($article->categories)
             foreach( $article->categories as $c)
