@@ -17,16 +17,19 @@
             div.row( v-if="countItems > 0" )
                 table.ui.very.celled.table.unstackable
                     tbody( v-item="location && location.hash ? location.hash.substr(1) : ''" )
-                        tr.link(  @click="previewItem(item)"                            
+                        tr(                            
                             v-for="(item, index) in filterItems"
                             ":id"="item.id" )
                             td.selectable(style="padding: 10px")
                                 div.ui.grid(style="max-height: 200px")
                                     div.row
                                         div.column.three.wide                                        
-                                            img.ui.rounded.image(":src"="item.images.length > 0 ? item.images[0].thumb_path : 'images/no_image.png'" style="max-height: 130px; background-color: black")                                    
+                                            img.ui.rounded.image(
+                                                ":src"="item.images.length > 0 ? item.images[0].thumb_path : 'images/no_image.png'" 
+                                                style="max-height: 130px; background-color: black"
+                                                @click="previewImages(item.images)")                                    
                                         
-                                        div.column.nine.wide
+                                        div.column.nine.wide.link(@click="previewItem(item)")
                                             div.row.item
                                                 div.content                                            
                                                     div.ui.header {{ item.name }} ( {{ item.amount }} )
@@ -39,8 +42,8 @@
                                         div.column.four.wide
                                             
                                             div.ui.segment.attached.fluid.center.aligned(style="height: 130px")
-                                                h2 {{ item.price }} kr                                                                         
-                                                div.ui.label.primary.button Lägg bud                                                                      
+                                                h2 {{ item.price }} {{ translate('article_card.price_currency') }}                                                                         
+                                                div.ui.label.primary.button {{ translate('article_card.make_bidding') }}                                                                 
                                                 div.ui.basic.bottom.attached.label {{ item.updated_at }}  
                                                 
 
@@ -82,4 +85,12 @@
                 return if info then info.replace /\n/g, '<br>' else ''
             previewItem: (item) ->
                 window.location.href = @$root.encodeArtNR(item)+location.hash
+            
+            previewImages: (images) ->  
+                if (images.length > 0)
+                    selected_index = 0
+                    bus.$emit 'show_message',                        
+                        type: 'image'
+                        index: selected_index
+                        images: images
 </script>
