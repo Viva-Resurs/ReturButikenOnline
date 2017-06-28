@@ -15,54 +15,34 @@
                 div.ui.column.warning.message
                     p {{ (search!='') ? translate('no_results') : translate('empty') }}
             div.row( v-if="countItems > 0" )
-                table.ui.very.compact.celled.table.unstackable
-                    thead
-                        tr
-                            th.collapsing #
-                            th.slim.link( @click="setOrder('name')")
-                                div.ui.small.secondary.menu
-                                    div.item {{ translate('name') }}
-                                        i.icon( ":class" = "(order=='name') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                            th.slim.link( @click="setOrder('updated_at',1)")
-                                div.ui.small.secondary.menu
-                                    div.item {{ translate('updated') }}
-                                        i.icon( ":class" = "(order=='updated_at') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-                            th.collapsing.slim.link( @click="setOrder('categories')")
-                                div.ui.small.secondary.menu
-                                    div.item {{ translate('categories') }}
-                                        i.icon( ":class" = "(order=='categories') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-
-                            th.collapsing.slim.link( @click="setOrder('amount')")
-                                div.ui.small.secondary.menu
-                                    div.item {{ translate('article.amount') }}
-                                        i.icon( ":class" = "(order=='amount') ? (desc==1) ? 'sort ascending' : 'sort descending' : ''" )
-
-                            th.slim.center.aligned(style="padding: 5px")
-                                i.ui.image.icon.icon-style(style="margin: 5px")
-            
+                table.ui.very.celled.table.unstackable
                     tbody( v-item="location && location.hash ? location.hash.substr(1) : ''" )
-                        tr.link(  @click="previewItem(item)"
+                        tr.link(  @click="previewItem(item)"                            
                             v-for="(item, index) in filterItems"
                             ":id"="item.id" )
-                           
-                            td.center.aligned
-                                strong {{(index+1)+offset}}
+                            td.selectable(style="padding: 10px")
+                                div.ui.grid(style="max-height: 200px")
+                                    div.row
+                                        div.column.three.wide                                        
+                                            img.ui.rounded.image(":src"="item.images.length > 0 ? item.images[0].thumb_path : 'images/no_image.png'" style="max-height: 130px; background-color: black")                                    
+                                        
+                                        div.column.nine.wide
+                                            div.row.item
+                                                div.content                                            
+                                                    div.ui.header {{ item.name }} ( {{ item.amount }} )
+                                                span( v-for="(post, column_index) in item.categories")
+                                                    | {{post.name}}
+                                                    span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
+                                            div.row(style="white-space: no-wrap; overflow: hidden; max-height: 80px;")
+                                                p(style="max-height: 80px; text-overflow: ellipse") {{ item.desc }}
 
-                            td( v-tooltip="" ":data-html"="formatTooltip(item.desc)" )
-                                span {{ item.name }}
-                            td
-                                span {{ item.updated_at }}
-                            td
-                                span( v-for="(post, column_index) in item.categories")
-                                    | {{post.name}}
-                                    span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
-
-                            td.collapsing.center.aligned
-                                span {{ item.amount }}
-
-                            td.center.aligned
-                                p {{ item.images.length }}
-                    
+                                        div.column.four.wide
+                                            
+                                            div.ui.segment.attached.fluid.center.aligned(style="height: 130px")
+                                                h2 {{ item.price }} kr                                                                         
+                                                div.ui.label.primary.button Lägg bud                                                                      
+                                                div.ui.basic.bottom.attached.label {{ item.updated_at }}  
+                                                
 
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(
