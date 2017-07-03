@@ -79,7 +79,7 @@
                 $('.modal').modal({   
                     closable: false,  
                     observeChanges: true,                         
-                    transition: 'pulse',
+                    transition: 'fade',
                     duration: 450                                                           
                 })
         

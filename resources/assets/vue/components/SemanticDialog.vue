@@ -218,10 +218,9 @@
                         @active_image = @images[@active_index]
                         @navigated = 0
                         $('.modal').modal({   
-                            closable: false,  
-                            #detachable: false,                            
+                            closable: false,                                           
                             observeChanges: true,                         
-                            transition: 'pulse',
+                            transition: 'fade',
                             duration: 450                                                           
                         })
                         $('.modals.dimmer .ui.scrolling.modal').css('margin', '0px auto !important')
