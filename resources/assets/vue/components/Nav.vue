@@ -47,20 +47,27 @@
                 a.item( @click="goToProfile()" exact)
                                 i.icon.user
                                 |  {{ translate('user.profile') }}
-
                 a.item( href="docs" )
                     i.icon.help.circle
                     |  {{ translate('nav.help') }}
+
                 a.item( @click="attemptLogout()" ) {{ translate('user.logout') }}
                     i.icon.sign.out
+
+                router-link.item( to="/" exact)
+                    i.icon.checkmark
+                    |  {{ translate('ui.published') }}
 
         div.ui.grid.fluid.inverted.menu.computer.only.attached
             div.ui.container.no-padding(style="width: 880px")
                 router-link.item( to="/ui/" exact ) {{ $root.settings.title }}
                 div.ui.right.inverted.menu(style="border-right: 1px solid rgba(34,36,38,.1);")
+                    a.item( href="/" exact)
+                        i.icon.checkmark
+                        |  {{ translate('ui.published') }}
                     template( v-if="!user" )
                         router-link.item( to="/ui/auth/login" exact ) {{ translate('user.login') }}
-                    template( v-if="user" )
+                    template( v-if="user" )                        
                         router-link.item( to="/ui/sections" exact v-if="$root.isAdmin()" )
                             i.icon.building
                             |  {{ translate('sections') }}

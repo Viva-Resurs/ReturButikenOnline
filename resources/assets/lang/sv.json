@@ -13,6 +13,10 @@
     "category": {
         "header": "Kategorier"
     },
+    "ui": {
+        "staff": "Personal",
+        "published": "Publicerade artiklar"
+    },  
     "shop": {
         "header": "Budgivningsartiklar",
         "bidding": "Budgivning",

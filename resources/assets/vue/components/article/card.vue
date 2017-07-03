@@ -13,20 +13,21 @@
                         )
                         | {{ category.name }}
 
-                div.ui.vertical.segment.basic
-                    h4.ui.sub.header
-                        | {{ translate('article_card.description_header') }}
-                    p {{ item.desc }}
 
                 div( v-if="item.images.length>0" ).ui.vertical.segment.basic
                     h4.ui.sub.header
                         | {{ translate('article_card.images_header') }}
                     p
-                        div.ui.green.segment
+                        div.ui.segment
                             div.ui.tiny.images
                                 img.ui.rounded.image( style="background-color: lightgrey"
                                     v-for="image in item.images" @click="previewImages(image)"
                                     ":src"="image.thumb_path" )
+
+                div.ui.vertical.segment.basic
+                    h4.ui.sub.header
+                        | {{ translate('article_card.description_header') }}
+                    p {{ item.desc }}
 
 
                 div.ui.grid.equal.width

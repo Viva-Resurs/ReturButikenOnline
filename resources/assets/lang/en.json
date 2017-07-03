@@ -13,6 +13,10 @@
     "category": {
         "header": "Categories"
     },
+    "ui": {
+        "staff": "Staff",
+        "published": "Published articles"
+    },
     "shop": {
         "header": "Biddable articles",
         "bidding": "Bidding",
