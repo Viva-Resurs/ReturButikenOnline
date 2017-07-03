@@ -1,9 +1,10 @@
 <template lang="pug">
-    div.ui.grid(v-if="item" ":class"="screenType == 'tablet' ? 'container' : ''")
+    div.ui.grid(v-if="item" 
+        ":class"="screenType == 'tablet' ? 'container' : ''" )        
         div.ui.grid.fluid.card.tablet.only
             div.content
                 div.header.left.aligned
-                    div.ui.dividing.header {{item.name}} ( {{ item.amount }} )
+                    div.ui.dividing.header {{item.name}} {{ (item.amount > 1) ? '('+item.amount+')' : '' }}
 
                 div.description(style="position: relative; top: -10px")
                     div.column( v-if="item.categories.length>0" ).ui.vertical.segment.basic
@@ -12,13 +13,13 @@
                             )
                             | {{ category.name }}
                     br
-                    div.no-padding.ui.vertical.segment.basic( v-if="item.images.length > 0" style="position: relative; top: -20px")
-                        div.ui.tiny.images.center.aligned
+                    div.no-padding.ui.vertical.segment.basic( v-if="item.images.length > 0")
+                        div.ui.tiny.images
                             img.ui.rounded.image( style="background-color: lightgrey"
                                 v-for="image in item.images" @click="previewImages(image)"
                                 ":src"="image.thumb_path" )
 
-                    div.ui.vertical.segment.basic(style="position: relative; top: -20px")
+                    div.ui.vertical.segment.basic
                         p {{ item.desc }}
 
                     div.ui.grid.equal.width
@@ -62,7 +63,7 @@
                     v-if="item.desc.length > 150"
                     ":id"="'article_expand_button_'+item.id" 
                     @click="toggleDescription(item.id)" 
-                    style="padding: 10px; top: 40%; right: 15px; position:absolute;")
+                    style="padding: 10px; top: 60%; right: 15px; position:absolute;")
                     i.angle.down.icon(style="margin: 5px")
 
             div.row(style="border-style: dotted; border-width: 1px 0px 0px 0px; border-color: lightgrey")                
@@ -119,7 +120,7 @@
 
                     itemButton = $('#article_expand_button_'+itemId)
                     itemButton.animate(
-                        "top": 40+'%',
+                        "top": 60+'%',
                     , 200 )
                                        
                 else 
@@ -133,7 +134,7 @@
                     
                     itemButton = $('#article_expand_button_'+itemId)
                     itemButton.animate(
-                        "top": clicked_desc[0].scrollHeight-20+'px',                        
+                        "top": clicked_desc[0].scrollHeight+'px',                        
                     , 200 )
                   
 
