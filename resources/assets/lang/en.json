@@ -14,7 +14,10 @@
         "header": "Categories"
     },
     "shop": {
-        "header": "Biddable articles"        
+        "header": "Biddable articles",
+        "bidding": "Bidding",
+        "bidding_dates": "Bidding interval",
+        "buy": "Buy"
     },
     "article": {
         "amount": "Amount",
@@ -22,7 +25,7 @@
         "pieces": "pcs",
         "header": "Articles",
         "add": "Add article",
-        "empty": "No articles"
+        "empty": "No articles"        
     },
     "article_form": {
         "header": "Article",
@@ -112,7 +115,9 @@
         "published_all": "Published for all",
         "published_intra": "Published municipally",
         "bidding_not_set": "No bidding interval is set",        
-        "make_bidding": "Place bidding"
+        "make_bidding": "Place bidding",
+        "more": "More",
+        "less": "Less"
     },
     "semantic_dialog": {
         "start_date_header": "Start date",

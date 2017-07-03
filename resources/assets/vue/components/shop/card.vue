@@ -1,61 +1,85 @@
 <template lang="pug">
-    div.ui.fluid.raised.card(v-if="item")
-        div.content
+    div.ui.grid(v-if="item" ":class"="screenType == 'tablet' ? 'container' : ''")
+        div.ui.grid.fluid.card.tablet.only
+            div.content
+                div.header.left.aligned
+                    div.ui.dividing.header {{item.name}} ( {{ item.amount }} )
 
-            div.header.left.aligned
-                div.ui.dividing.header {{item.name}}
+                div.description(style="position: relative; top: -10px")
+                    div.column( v-if="item.categories.length>0" ).ui.vertical.segment.basic
+                        div.ui.black.horizontal.label.stackable(
+                            v-for="category in item.categories"
+                            )
+                            | {{ category.name }}
+                    br
+                    div.no-padding.ui.vertical.segment.basic( v-if="item.images.length > 0" style="position: relative; top: -20px")
+                        div.ui.tiny.images.center.aligned
+                            img.ui.rounded.image( style="background-color: lightgrey"
+                                v-for="image in item.images" @click="previewImages(image)"
+                                ":src"="image.thumb_path" )
 
-            div.description(style="position: relative; top: -10px")
-                div.column( v-if="item.categories.length>0" ).ui.vertical.segment.basic
-                    h4.ui.sub.header {{ translate('article_card.categories_header') }}
-                    div.ui.black.horizontal.label.stackable(
-                        v-for="category in item.categories"
-                        )
-                        | {{ category.name }}
+                    div.ui.vertical.segment.basic(style="position: relative; top: -20px")
+                        p {{ item.desc }}
 
-                div.ui.vertical.segment.basic
-                    h4.ui.sub.header
-                        | {{ translate('article_card.description_header') }}
-                    p {{ item.desc }}
+                    div.ui.grid.equal.width
+                        div.column.right.aligned
+                            div.column.center.aligned.right.floated                            
+                                div.ui.segment
+                                    h2 {{ item.price }} {{ translate('article_card.price_currency') }}
 
-                div( v-if="item.images.length>0" ).ui.vertical.segment.basic
-                    h4.ui.sub.header
-                        | {{ translate('article_card.images_header') }}
-                    p
-                        div.ui.green.segment
-                            div.ui.tiny.images
-                                img.ui.rounded.image( style="background-color: lightgrey"
-                                    v-for="image in item.images" @click="previewImages(image)"
-                                    ":src"="image.thumb_path" )
-
-
+            
+            div.extra.content(style="height: 50px")
                 div.ui.grid.equal.width
-                    div.column.left.aligned
-                        div.column.center.aligned.left.floated
-                            h4.ui.sub.header
-                                | {{ translate('article.amount') }}
-                            p {{ item.amount }} {{ translate('article.pieces')}}
+                    div.column.left.middle.aligned
+                        div.ui.grid.center.aligned.left.floated.equal.width
+                            div.column
+                                div.ui.labeled.button.label()
+                                    div.ui.label {{translate('shop.bidding')}}
+                                    div.ui.basic.label {{ getDates(item.bidding_interval,0) }} &#8594 {{ getDates(item.bidding_interval,1) }}
 
                     div.column.right.aligned
                         div.column.center.aligned.right.floated
-                            h4.ui.sub.header
-                                | {{ translate('article_card.price_header') }}
-                            p {{ item.price }} {{ translate('article_card.price_currency') }}
+                            div.ui.primary.label.button( @click="previewItem(item)") {{ translate('shop.buy') }}
+        
+        div.ui.grid.segment.mobile.only(style="margin-left: 13px; margin-right: 13px; padding: 0px;")
+       
+            div.column.four.wide.top.aligned(style="padding-left: 15px;")
+                img.ui.rounded.image.centered(
+                    ":src"="item.images.length > 0 ? item.images[0].thumb_path : 'images/no_image.png'" 
+                    style="background-color: black;"
+                    @click="previewImages(item.images)") 
+                div.ui.top.right.attached.circular.white.label(v-if="item.images.length > 0" style="margin-left: 0px; margin-top: 0px") {{ item.images.length }}
+            
 
-          
-        div.extra.content
-            div.ui.grid.equal.width
-                div.column.left.middle.aligned
-                    div.column.center.aligned.left.floated
-                        div.ui.basic.label
-                            i.checked.calendar.icon.icon-style
-                            | {{ item.updated_at+' ' }}
+            div.column.twelve.wide                               
+                div.no-padding
+                    div.ui.sub.header {{item.name}} ( {{ item.amount }} )
 
-                div.column.right.aligned
+                div.no-padding
+                    p(style="height: 60px; overflow: hidden" ":id"="'article_desc_'+item.id") {{ item.desc }}
+                
+                div.ui.basic.circular.label.button.right.floated(
+                    v-if="item.desc.length > 150"
+                    ":id"="'article_expand_button_'+item.id" 
+                    @click="toggleDescription(item.id)" 
+                    style="padding: 10px; top: 40%; right: 15px; position:absolute;")
+                    i.angle.down.icon(style="margin: 5px")
+
+            div.row(style="border-style: dotted; border-width: 1px 0px 0px 0px; border-color: lightgrey")                
+                div.column.four.wide.middle.center.aligned
                     div.column.center.aligned.right.floated
-                        div.ui.green.button( @click="previewItem(item)") {{ translate('article_card.make_bidding') }}
+                        div.ui.segment.no-padding                            
+                            h3 {{ item.price }} {{ translate('article_card.price_currency') }}
+                   
+                div.column.twelve.wide.right.aligned
+                    div.ui.labeled.button.label()                        
+                        div.ui.basic.label {{ getDates(item.bidding_interval,0) }} &#8594 {{ getDates(item.bidding_interval,1) }}
+                        div.ui.primary.label.button( @click="previewItem(item)") {{ translate('shop.buy') }}
 
-        </template>
+
+
+
+</template>
 
 <script lang="coffee">
     module.exports =
@@ -75,5 +99,45 @@
             
             previewItem: (item) ->
                 window.location.href = @$root.encodeArtNR(item)+location.hash
+            
+            getDates: (interval, type) ->
+                divided = interval.split("| ")
+                return divided[type].split(" ")[0]   
+            
+            toggleDescription: (itemId) ->         
+                clicked_desc = $('#article_desc_'+itemId)
+                
+                if (clicked_desc.attr('class') == 'expanded')
+                    clicked_desc.removeClass("expanded")  
+                    clicked_desc.animate(
+                        "height": "40px",                        
+                    ,200 )
+                    itemIcon = $('#article_expand_button_'+itemId).find("i")
+                    itemIcon.removeClass("up")
+                    itemIcon.addClass("down")
+
+                    itemButton = $('#article_expand_button_'+itemId)
+                    itemButton.animate(
+                        "top": 40+'%',
+                    , 200 )
+                                       
+                else 
+                    clicked_desc.addClass("expanded")
+                    clicked_desc.animate(
+                        "height": clicked_desc[0].scrollHeight+'px',                        
+                    , 200 )
+                    itemIcon = $('#article_expand_button_'+itemId).find("i")
+                    itemIcon.removeClass("down")
+                    itemIcon.addClass("up")
+                    
+                    itemButton = $('#article_expand_button_'+itemId)
+                    itemButton.animate(
+                        "top": clicked_desc[0].scrollHeight-20+'px',                        
+                    , 200 )
+                  
+
+                
+                
+                
 
 </script>

@@ -14,7 +14,10 @@
         "header": "Kategorier"
     },
     "shop": {
-        "header": "Budgivningsartiklar"
+        "header": "Budgivningsartiklar",
+        "bidding": "Budgivning",
+        "bidding_dates": "Budgivningsdatum",
+        "buy": "Köp"
     },
     "article": {
         "amount": "Antal",
@@ -112,7 +115,9 @@
         "published_all": "Publicerad för allmänheten",
         "published_intra": "Publicerad på kommunens intranät",
         "bidding_not_set": "Inget budgivningsintervall är satt",
-        "make_bidding": "Lägg ett bud"
+        "make_bidding": "Lägg ett bud",
+        "more": "Expandera",
+        "less": "Minimera"
     },
     "semantic_dialog": {
         "start_date_header": "Startdatum",

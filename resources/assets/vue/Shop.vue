@@ -4,9 +4,7 @@
         navigation
         div.ui.padded.container.segment#rootcontainer
             loading( v-if="$root.loading" )
-            div.ui.grid.one.column( v-if="!$root.loading" )                
-                div.column
-                    div.ui.dividing.header.fluid {{ translate('shop.header') }}
+            div.ui.grid.one.column( v-if="!$root.loading" )                                
                 article-preview.column(
                     v-if="article"
                     ":article" = "article"

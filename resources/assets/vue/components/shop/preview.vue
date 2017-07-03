@@ -1,6 +1,5 @@
 <template lang="pug">
     div#preview
-        div.ui.dividing.header( v-if="mode!='show'" ) {{ translate('article_preview.header') }}
         div( v-if="article==-1" )
             | {{ translate('article_preview.article_not_found') }}
         div( v-if="article!=-1")

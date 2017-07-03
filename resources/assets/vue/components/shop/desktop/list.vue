@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.no-top-padding
+    div.no-top-padding(style="margin-top: 10px")        
         div.ui.equal.width.grid
             div.row.middle.aligned(style="padding-top: 10px; padding-bottom: 10px")
                 div.column.four.wide
@@ -26,9 +26,11 @@
                                         div.column.three.wide                                        
                                             img.ui.rounded.image(
                                                 ":src"="item.images.length > 0 ? item.images[0].thumb_path : 'images/no_image.png'" 
-                                                style="max-height: 130px; background-color: black"
-                                                @click="previewImages(item.images)")                                    
-                                        
+                                                style="max-height: 130px; background-color: black;"
+                                                @click="previewImages(item.images)") 
+                                            div.ui.top.right.attached.circular.white.label(v-if="item.images.length > 0" 
+                                                style="margin-left: 0px; margin-top: -5px") {{ item.images.length }}                                 
+                                            
                                         div.column.nine.wide.link(@click="previewItem(item)")
                                             div.row.item
                                                 div.content                                            
@@ -36,15 +38,17 @@
                                                 span( v-for="(post, column_index) in item.categories")
                                                     | {{post.name}}
                                                     span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
-                                            div.row(style="white-space: no-wrap; overflow: hidden; max-height: 80px;")
+                                            div.row(style="white-space: no-wrap; overflow: hidden; max-height: 60px;")
                                                 p(style="max-height: 80px; text-overflow: ellipse") {{ item.desc }}
+                                            div.row(v-if="item.desc.length > 200") ...
+                                            
 
                                         div.column.four.wide
                                             
-                                            div.ui.segment.attached.fluid.center.aligned(style="height: 130px")
+                                            div.ui.segment.attached.fluid.center.aligned(style="height: 130px; border-radius: 5px")
                                                 h2 {{ item.price }} {{ translate('article_card.price_currency') }}                                                                         
-                                                div.ui.label.primary.button {{ translate('article_card.make_bidding') }}                                                                 
-                                                div.ui.basic.bottom.attached.label {{ item.updated_at }}  
+                                                div.ui.label.primary.button {{ translate('shop.buy') }}                                                               
+                                                div.ui.bottom.attached.small.black.label(style="border-radius: 5px") {{ getDates(item.bidding_interval,0) }} &#8594 {{ getDates(item.bidding_interval,1) }}
                                                 
 
         div.row( v-if="countItems > 0 && search!=''" )
@@ -86,6 +90,12 @@
             previewItem: (item) ->
                 window.location.href = @$root.encodeArtNR(item)+location.hash
             
+            getDates: (interval, type) ->
+                console.log interval
+                divided = interval.split("| ")
+                return divided[type].split(" ")[0]   
+
+
             previewImages: (images) ->  
                 if (images.length > 0)
                     selected_index = 0
