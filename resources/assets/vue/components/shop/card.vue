@@ -92,11 +92,12 @@
                     if Number(img.id) == Number(image.id)
                         selected_index = index
 
-                bus.$emit 'show_message',                        
-                    type: 'image'
-                    index: selected_index
-                    images: @item.images
-            
+                if @item.images.length > 0
+                    bus.$emit 'show_message',                        
+                        type: 'image'
+                        index: selected_index
+                        images: @item.images
+                
             previewItem: (item) ->
                 window.location.href = @$root.encodeArtNR(item)+location.hash
             
