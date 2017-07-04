@@ -27,7 +27,7 @@
                 div.ui.vertical.segment.basic
                     h4.ui.sub.header
                         | {{ translate('article_card.description_header') }}
-                    p {{ item.desc }}
+                    p(style="white-space: pre-wrap") {{ item.desc }}
 
 
                 div.ui.grid.equal.width

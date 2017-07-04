@@ -20,7 +20,7 @@
                                 ":src"="image.thumb_path" )
 
                     div.ui.vertical.segment.basic
-                        p {{ item.desc }}
+                        p(style="white-space: pre-wrap") {{ item.desc }}
 
                     div.ui.grid.equal.width
                         div.column.right.aligned
@@ -57,7 +57,7 @@
                     div.ui.sub.header {{item.name}} ( {{ item.amount }} )
 
                 div.no-padding
-                    p(style="height: 60px; overflow: hidden" ":id"="'article_desc_'+item.id") {{ item.desc }}
+                    p(style="height: 60px; overflow: hidden; white-space: pre-wrap;" ":id"="'article_desc_'+item.id") {{ item.desc }}
                 
                 div.ui.basic.circular.label.button.right.floated(
                     v-if="item.desc.length > 150"
@@ -98,7 +98,7 @@
                         type: 'image'
                         index: selected_index
                         images: @item.images
-                
+            
             previewItem: (item) ->
                 window.location.href = @$root.encodeArtNR(item)+location.hash
             
