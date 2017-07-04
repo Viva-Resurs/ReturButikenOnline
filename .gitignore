@@ -13,6 +13,7 @@ npm-debug.log
 /public/js
 /public/fonts
 /public/docs
+/public/images
 
 # Uploads
 /public/uploads/*.*
