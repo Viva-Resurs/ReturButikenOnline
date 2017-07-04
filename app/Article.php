@@ -66,21 +66,21 @@ class Article extends Model
     public function haveCurrentOrFutureInterval($type){
         if ($type == 0)
             $parts = explode('|',$this->publish_interval);
-        
-        if ($type == 1)    
+
+        if ($type == 1)
             $parts = explode('|',$this->bidding_interval);
-        
+
         if (count($parts) < 2)
             return false;
-        
+
         if (!$this->active)
-            return false;       
+            return false;
 
         $start = Carbon::createFromFormat('Y-m-d H:i:s', trim($parts[0]));
         $end   = Carbon::createFromFormat('Y-m-d H:i:s', trim($parts[1]));
-        
-        $today = Carbon::now();  
-              
+
+        $today = Carbon::now();
+
         return ($end->gt($start) && ($today->between($start,$end) || $start->isFuture()));
     }
 
@@ -91,6 +91,34 @@ class Article extends Model
         if ($this->public==0 && $audience=='internal')
             return true;
         return false;
+    }
+
+    public function getArticleNR()
+    {
+        // SectionID - ArticleID
+        // 00 - 000.000
+
+        $sn = "00";
+        $sectionID = strval($this->sections[0]->id);
+        if (strlen($sectionID) == 1) $sn = "0" . $sectionID;
+        if (strlen($sectionID) == 2) $sn = $sectionID;
+
+        $an = "000.000";
+        $articleID = strval($this->id);
+        if ($articleID < 999999 && $articleID >= 100000)
+            $an = floor($articleID/1000) . '.' . ($articleID%1000);
+        if ($articleID < 100000 && $articleID >= 10000)
+            $an = '0'+floor($articleID/1000) . '.' . ($articleID%1000);
+        if ($articleID < 10000 && $articleID >= 1000)
+            $an = '00' . floor($articleID/1000) . '.' . ($articleID%1000);
+        if ($articleID < 1000 && $articleID >= 100)
+            $an = '000.' . $articleID;
+        if ($articleID < 100 && $articleID >= 10)
+            $an = '000.0' . nr;
+        if ($articleID < 10)
+            $an = '000.00' . $articleID;
+
+        return $sn . '-' . $an;
     }
 
 }

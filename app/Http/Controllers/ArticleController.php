@@ -29,6 +29,7 @@ class ArticleController extends Controller
             if ($user->hasRole('admin') || $user->inSection($article->sections))
                 array_push($result,[
                     'id' => $article->id,
+                    'article_nr' => $article->getArticleNR(),
                     'name' => $article->name,
                     'desc' => $article->desc,
                     'price' => $article->price,
@@ -64,9 +65,10 @@ class ArticleController extends Controller
 
         if (!$user->hasRole('admin') && !$user->inSection($article->sections))
             abort(401,'Not allowed to view this article');
-        
+
         $result = [
             'id' => $article->id,
+            'article_nr' => $article->getArticleNR(),
             'name' => $article->name,
             'desc' => $article->desc,
             'price' => $article->price,
@@ -109,16 +111,16 @@ class ArticleController extends Controller
     //Check if article have correct bidding and publish intervals set
     private function checkCorrectIntervals(Article $article){
         if ($article->active == true){
-            if ($article->publish_interval != '') 
-                if (!$article->haveCurrentOrFutureInterval(0)){                
-                    abort(400, 'Please select a current or future publish interval');                    
+            if ($article->publish_interval != '')
+                if (!$article->haveCurrentOrFutureInterval(0)){
+                    abort(400, 'Please select a current or future publish interval');
                 }
-            
+
             if ($article->bidding_interval != '')
-                if (!$article->haveCurrentOrFutureInterval(1)){        
-                    abort(400, 'Please select a current or future bidding interval');                    
+                if (!$article->haveCurrentOrFutureInterval(1)){
+                    abort(400, 'Please select a current or future bidding interval');
                 }
-        }       
+        }
     }
 
     public function store(Request $request){
@@ -133,17 +135,17 @@ class ArticleController extends Controller
             'desc' => ($request->has('desc')) ? $request['desc'] : '',
             'price' => ($request->has('price')) ? $request['price'] : '',
             'amount' => ($request->has('amount')) ? $request['amount'] : '',
-            'public' => $request['public'] || false,            
+            'public' => $request['public'] || false,
             'active' => $request['active'] || true,
             'publish_interval' => ($request->has('publish_interval')) ? $request['publish_interval'] : '',
             'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : ''
         ]);
 
-        
-        $this->checkCorrectIntervals($article);            
 
-        $article->save();            
-        
+        $this->checkCorrectIntervals($article);
+
+        $article->save();
+
         // Attach Creator
         $article->creator()->save( User::find($user->id) );
 
@@ -194,7 +196,7 @@ class ArticleController extends Controller
             !$user->sections->find($article->sections->first()->id)
         )
             abort(401,'Not allowed to update article');
- 
+
         if ($request->has('name') && $request['name']!='')
             $article->name = $request['name'];
 
@@ -212,13 +214,13 @@ class ArticleController extends Controller
         $article->publish_interval = $request['publish_interval'];
 
         $article->bidding_interval = $request['bidding_interval'];
-       
+
         $article->active = $request['active'] || 0;
 
         $this->checkCorrectIntervals($article);
 
 
-        
+
         // Clear Categories
         if ($article->categories)
             foreach( $article->categories as $c)
