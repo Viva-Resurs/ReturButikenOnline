@@ -65,13 +65,13 @@
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
-                    .filter (item) => @filterArrayBy item, @search, ['name','description','categories']
+                    .filter (item) => @filterArrayBy item, @search, ['name','description','categories','article_nr']
                     .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
-                    .filter (item) => @filterArrayBy item, @search, ['name','description','categories']
+                    .filter (item) => @filterArrayBy item, @search, ['name','description','categories','article_nr']
                     .length
         methods:
             prevPage: ->
