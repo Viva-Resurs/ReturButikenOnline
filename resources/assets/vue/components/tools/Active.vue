@@ -7,10 +7,10 @@
             `
             @click    = "update(item)"
             ":class" = `
-                (item.active) ? 'active-interval':''
+                (item.active == 1) ? 'active-interval':''
             `
         )
-            i.ui.icon.check.circle.icon-style(v-if="item.active")
+            i.ui.icon.check.circle.icon-style(v-if="item.active == 1")
             i.ui.icon.minus.circle.icon-style(v-else="")
 </template>
 
@@ -20,9 +20,10 @@
         props: [ 'item', 'from' ]
         methods:
             update: (item) ->
-                if item.active
-                    item.active = false                    
+                if item.active == 1
+                    item.active = 0                    
                 else
-                    item.active = true                    
+                    item.active = 1   
+              
                 bus.$emit @from + '_item_changed', item
 </script>

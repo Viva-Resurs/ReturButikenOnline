@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.fluid.green.raised.card( v-if="item")
+    div.ui.fluid.card( v-if="item" ":class"="item.active == '1' ? 'green':''")
         div.content
 
             div.header.left.aligned

@@ -108,16 +108,13 @@ class ArticleController extends Controller
 
     //Check if article have correct bidding and publish intervals set
     private function checkCorrectIntervals(Article $article){
-        if ($article->active == true){
-            if ($article->publish_interval != '') 
-                if (!$article->haveCurrentOrFutureInterval(0)){                
-                    abort(400, 'Please select a current or future publish interval');                    
-                }
-            
-            if ($article->bidding_interval != '')
-                if (!$article->haveCurrentOrFutureInterval(1)){        
-                    abort(400, 'Please select a current or future bidding interval');                    
-                }
+        if ($article->active == true){            
+            if (!$article->haveCurrentOrFutureInterval(0)){ 
+                abort(400, 'Please select a current or future publish interval');                    
+            }
+            if (!$article->haveCurrentOrFutureInterval(1)){        
+                abort(400, 'Please select a current or future bidding interval');                    
+            }
         }       
     }
 
@@ -134,12 +131,11 @@ class ArticleController extends Controller
             'price' => ($request->has('price')) ? $request['price'] : '',
             'amount' => ($request->has('amount')) ? $request['amount'] : '',
             'public' => $request['public'] || false,            
-            'active' => $request['active'] || true,
+            'active' => $request['active'] || false,
             'publish_interval' => ($request->has('publish_interval')) ? $request['publish_interval'] : '',
             'bidding_interval' => ($request->has('bidding_interval')) ? $request['bidding_interval'] : ''
         ]);
 
-        
         $this->checkCorrectIntervals($article);            
 
         $article->save();            
@@ -213,10 +209,9 @@ class ArticleController extends Controller
 
         $article->bidding_interval = $request['bidding_interval'];
        
-        $article->active = $request['active'] || 0;
+        $article->active = $request['active'] || false;
 
         $this->checkCorrectIntervals($article);
-
 
         
         // Clear Categories
