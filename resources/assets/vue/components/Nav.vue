@@ -54,7 +54,7 @@
                 a.item( @click="attemptLogout()" ) {{ translate('user.logout') }}
                     i.icon.sign.out
 
-                router-link.item( to="/" exact)
+                a.item( href="/" exact)
                     i.icon.checkmark
                     |  {{ translate('ui.published') }}
 

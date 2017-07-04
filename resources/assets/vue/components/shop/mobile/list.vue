@@ -18,7 +18,7 @@
             div.row( v-if="countItems == 0" )
                 div.ui.column.warning.message
                     p {{ (search!='') ? translate('no_results') : translate('empty') }}
-            div.row( v-if="countItems > 0" ":style"="screenType == 'tablet' ? 'padding-top: 15px' : ''")
+            div.row( v-if="countItems > 0" ":style"="screenType == 'tablet' ? 'padding-top: 30px' : ''")
                 article-card(
                     v-for="(item, index) in filterItems"
                     ":item"="item"

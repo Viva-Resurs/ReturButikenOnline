@@ -23,7 +23,7 @@
                 desc: ''
                 price: ''
                 public: false
-                active: true
+                active: false
                 publish_interval: ''
                 bidding_interval: ''
                 categories: []
@@ -52,7 +52,7 @@
                 @$http.post('api/articles', article).then(
                     (response) =>
                         @$router.push path: '/ui/articles'
-                    (response) =>
+                    (response) =>                        
                         bus.$emit 'error', response.data
                 )
         created: ->

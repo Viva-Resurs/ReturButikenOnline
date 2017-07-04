@@ -14,7 +14,7 @@
         created: ->
             # Set default language
             if !sessionStorage or !sessionStorage.lang
-                return @setLang 'en'
+                return @setLang 'sv'
             # Check if language is available
             for key, l of @language_lib
                 if key == sessionStorage.lang

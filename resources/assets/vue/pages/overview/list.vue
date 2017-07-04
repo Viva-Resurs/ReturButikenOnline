@@ -133,6 +133,12 @@
             bus.$on 'ui_item_changed', (item) => @attemptUpdate item
             bus.$on 'ui_item_edit', (item) =>
                 @$router.push path: '/ui/articles/'+item.id
+            
+            bus.$on 'start_item_edit', (item) =>
+                @$router.push path: '/ui/articles/'+item.id
+            bus.$on 'start_item_remove', (item) => @attemptRemove item
+            bus.$on 'start_item_preview', (item) => @previewArticle item
+           
             bus.$on 'publish_interval_changed', (id, new_value) =>
                 item = @getArticleById id
                 if item

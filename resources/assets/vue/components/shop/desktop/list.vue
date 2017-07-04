@@ -39,7 +39,7 @@
                                                     | {{post.name}}
                                                     span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
                                             div.row(style="white-space: no-wrap; overflow: hidden; max-height: 60px;")
-                                                p(style="max-height: 80px; text-overflow: ellipse") {{ item.desc }}
+                                                p(style="max-height: 80px; text-overflow: ellipse; white-space: pre-wrap") {{ item.desc }}
                                             div.row(v-if="item.desc.length > 200") ...
                                             
 

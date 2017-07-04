@@ -72,7 +72,9 @@
                         bus.$emit 'success',
                             title: @$root.translate('article_list.success_message')
                             details: @$root.translate('article_list.article_updated')
-                    (response) => bus.$emit 'error', response.data
+                    (response) => 
+                        article.active = "0"
+                        bus.$emit 'error', response.data
                 )
 
             previewArticle: (article) ->

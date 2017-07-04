@@ -18,7 +18,7 @@
 
             div.ui.hidden.divider
 
-            div.description {{ article.desc }}
+            div.description(style="white-space: pre-wrap") {{ article.desc }}
             div.ui.hidden.divider
 
             div.ui.grid.equal.width

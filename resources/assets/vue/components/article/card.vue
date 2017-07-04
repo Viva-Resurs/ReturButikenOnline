@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.ui.fluid.green.raised.card( v-if="item")
+    div.ui.fluid.card( v-if="item" ":class"="item.active == '1' ? 'green':''")
         div.content
 
             div.header.left.aligned
@@ -27,7 +27,7 @@
                 div.ui.vertical.segment.basic
                     h4.ui.sub.header
                         | {{ translate('article_card.description_header') }}
-                    p {{ item.desc }}
+                    p(style="white-space: pre-wrap") {{ item.desc }}
 
 
                 div.ui.grid.equal.width
