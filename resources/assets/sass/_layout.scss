@@ -11,11 +11,18 @@ body.pushable>.pusher {
 
 @media screen and (max-width: 768px) {
     .ui.container {
-        padding-left: 15px !important;
-        padding-right: 15px !important;
         margin-top: 2px !important;
         margin-bottom: 2px !important;
     }    
+
+    #rootcontainer, #footercontainer {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
 }
 
 @media screen and (max-width: 425px) {
@@ -24,13 +31,12 @@ body.pushable>.pusher {
         margin-right: 0px !important;
         margin-top: 0px !important;
         margin-bottom: 0px !important;
-        padding-left: 5px !important;
-        padding-right: 5px !important;
     }
 }
 
 #rootcontainer, #footercontainer {
-    max-width: 880px !important;         
+    max-width: 880px !important;  
+    width: 100%;       
 }
 
 .link {
