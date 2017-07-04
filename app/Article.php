@@ -114,7 +114,7 @@ class Article extends Model
         if ($articleID < 1000 && $articleID >= 100)
             $an = '000.' . $articleID;
         if ($articleID < 100 && $articleID >= 10)
-            $an = '000.0' . nr;
+            $an = '000.0' . $articleID;
         if ($articleID < 10)
             $an = '000.00' . $articleID;
 
