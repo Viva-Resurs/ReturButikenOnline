@@ -34,7 +34,7 @@
                                         div.column.nine.wide.link(@click="previewItem(item)")
                                             div.row.item
                                                 div.content                                            
-                                                    div.ui.header {{ item.name }} ( {{ item.amount }} )
+                                                    div.ui.header {{ item.name }} {{ (item.amount > 1) ? '('+item.amount+')' : '' }}
                                                 span( v-for="(post, column_index) in item.categories")
                                                     | {{post.name}}
                                                     span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}

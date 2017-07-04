@@ -54,7 +54,7 @@
 
             div.column.twelve.wide                               
                 div.no-padding
-                    div.ui.sub.header {{item.name}} ( {{ item.amount }} )
+                    div.ui.sub.header {{item.name}} {{ (item.amount > 1) ? '('+item.amount+')' : '' }}
 
                 div.no-padding
                     p(style="height: 60px; overflow: hidden; white-space: pre-wrap;" ":id"="'article_desc_'+item.id") {{ item.desc }}

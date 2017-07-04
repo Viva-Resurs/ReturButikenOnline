@@ -3,9 +3,6 @@
         div( v-if="article==-1" )
             | {{ translate('article_preview.article_not_found') }}
         div( v-if="article!=-1")
-            div( v-if="article.images && article.images.length>0" style="position: relative")
-                div.ui.basic.segment.center.aligned.preview_header(
-                    v-swipe="{images: article.images, screenType: screenType }")
 
             div.ui.grid.equal.width
                 div.ui.left.aligned.column
@@ -16,9 +13,11 @@
                             )
                                 | {{ category.name }}
 
-            div.ui.hidden.divider
+            div( v-if="article.images && article.images.length>0" style="position: relative; padding-top: 10px")
+                div.ui.basic.segment.center.aligned.preview_header(
+                    v-swipe="{images: article.images, screenType: screenType }")
 
-            div.description(style="white-space: pre-wrap") {{ article.desc }}
+            div.description(style="white-space: pre-wrap; padding-top: 10px") {{ article.desc }}
             div.ui.hidden.divider
 
             div.ui.grid.equal.width
