@@ -111,15 +111,13 @@ class ArticleController extends Controller
     //Check if article have correct bidding and publish intervals set
     private function checkCorrectIntervals(Article $article){
         if ($article->active == true){
-            if ($article->publish_interval != '')
-                if (!$article->haveCurrentOrFutureInterval(0)){
-                    abort(400, 'Please select a current or future publish interval');
-                }
+            if (!$article->haveCurrentOrFutureInterval(0)){
+                abort(400, 'wrong_publish_interval');
+            }
 
-            if ($article->bidding_interval != '')
-                if (!$article->haveCurrentOrFutureInterval(1)){
-                    abort(400, 'Please select a current or future bidding interval');
-                }
+            if (!$article->haveCurrentOrFutureInterval(1)){
+                abort(400, 'wrong_bidding_interval');
+            }
         }
     }
 
