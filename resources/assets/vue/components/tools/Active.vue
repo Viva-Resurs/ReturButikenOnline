@@ -20,10 +20,10 @@
         props: [ 'item', 'from' ]
         methods:
             update: (item) ->
-                if item.active == 1
-                    item.active = 0                    
+                if item.active == "1"
+                    item.active = "0"                    
                 else
-                    item.active = 1   
+                    item.active = "1"
               
                 bus.$emit @from + '_item_changed', item
 </script>
