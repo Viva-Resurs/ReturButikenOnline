@@ -19,7 +19,7 @@
 
             div.ui.hidden.divider
 
-            div.description(style="white-space: pre-wrap") {{ article.desc }}
+            div.description(style="white-space: pre-wrap") {{ article.desc }}            
             div.ui.hidden.divider
 
             div.ui.grid.equal.width
@@ -41,7 +41,7 @@
                     template( v-for="contact in article.contacts" )
                         user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
 
-
+            
             div.ui.divider
             div.ui.grid.padded
                 span
@@ -56,6 +56,7 @@
                     b {{ translate('article_preview.article_number_label') }}
                     | &nbsp;&nbsp;{{ $root.displayArtNR(article) }}
             div.ui.hidden.divider
+            
             div.ui.segment( v-if="mode!='show'" )
                 div.ui.top.attached.label( @click="toggleDetails()" )
                     h4.ui.sub.header {{ translate('article_preview.publish_info_header') }}
@@ -82,13 +83,24 @@
                             h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
                             i.ui.icon.red.industry
                             | {{ translate('article_preview.published_intra') }}
-
+                        
             div.ui.divider
             div.ui.grid
-                div.column.right.aligned
+                div.column.middle.aligned.six.wide(v-if="mode!='show'" style="padding-left: 20px")            
+                    div.ui.green.toggle.checkbox                            
+                        input#activeOn(
+                            type="checkbox"
+                            name="active"
+                            value="1"
+                            v-model="article.active"
+                        )
+                        label( for="activeOn" ) {{ translate('article_preview.publish_article') }}
+        
+                div.column.right.aligned.ten.wide(style="padding-right: 0px !important")
                     div.ui.button.secondary( v-if="mode=='show'"
                         @click="goBack()"
                     ) {{ translate('nav.back') }}
+                    
                     div.ui.button.secondary( v-if="mode!='show'"
                         @click="modifyArticle"
                     ) {{ translate('article_preview.article_modify') }}
