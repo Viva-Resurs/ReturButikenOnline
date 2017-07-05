@@ -32,19 +32,23 @@
                     rows="4"
                     v-model="article.desc"
                     ":placeholder"="translate('article_form.desc_placeholder')" )
-            div.field
-                label {{ translate('article_form.price_label') }}( {{ translate('article_form.price_currency_label') }} ):                
-                input#price(
-                    type="number"
-                    v-model="article.price"
-                    ":placeholder"="translate('article_form.price_placeholder')" )
             
-            div.field
-                label {{ translate('article.amount') }}:                
-                input#amount(
-                    type="number"
-                    v-model="article.amount"
-                    )
+            div.fields.equal.width
+                div.field
+                    label {{ translate('article.amount') }}:                
+                    input#amount(
+                        type="number"
+                        v-model="article.amount"
+                        ":placeholder"="translate('article_form.amount_placeholder')"
+                        )
+
+                div.field
+                    label {{ translate('article_form.price_label') }}( {{ translate('article_form.price_currency_label') }} ):                
+                    input#price(
+                        type="number"
+                        v-model="article.price"
+                        ":placeholder"="translate('article_form.price_placeholder')" )
+                
 
             div.field
                 label {{ translate('article_form.images_label') }}
@@ -100,7 +104,7 @@
                             value="1"
                             v-model="article.public" )
                         label.link( for="publicON" ) {{ translate('article_form.public_all_label') }}
-
+            
             div.ui.divider
             div.two.fields( v-if="contacts" )
                 div.field
@@ -125,6 +129,7 @@
                                 v-for="contact in contacts"
                                 ":data-value"="contact.id" )
                                 | {{contact.name}}
+            
             div.ui.divider
             div.ui.grid
                 div.column.right.aligned
@@ -134,6 +139,8 @@
                         @keydown.enter.prevent="previewArticle"
                         @click="previewArticle" )
                         | {{ translate('article_form.preview') }}
+        
+                
 </template>
 
 <script lang="coffee">
