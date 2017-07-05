@@ -31,6 +31,11 @@
         "add": "Lägg till vara",
         "empty": "Artiklar saknas"
     },
+    "errors": {
+        "wrong_publish_interval": "Välj ett nuvarande eller framtida publiceringsintervall",
+        "wrong_bidding_interval": "Välj ett nuvarande eller framtida budgivningsintervall"
+    },
+
     "article_form": {
         "header": "Artikel",
         "name_label": "Varunamn:",
@@ -41,6 +46,7 @@
         "desc_label": "Beskrivning av varan:",
         "desc_placeholder": "Ge din beskrivning här",
         "desc_validate": "Ange din beskrivning",
+        "amount_placeholder": "Ange antal artiklar här",
         "price_label": "Pris",
         "price_currency_label": "Kr",
         "price_placeholder": "Ange ditt pris här",
@@ -75,7 +81,8 @@
         "published_intra": "Kommunens intranät",
         "article_not_found": "Artikeln hittades inte",
         "article_modify": "Ändra",
-        "article_publish": "Publicera"
+        "article_publish": "Skapa",
+        "publish_article": "Publicera artikel"
     },
     "month": {
         "january": "Januari",
