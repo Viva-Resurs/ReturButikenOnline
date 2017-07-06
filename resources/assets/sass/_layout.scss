@@ -1,4 +1,3 @@
-
 html, body, #app {
     width: 100%;
     height: 100%;
@@ -9,35 +8,138 @@ body.pushable>.pusher {
     background-color: $body-bg !important
 }
 
-@media screen and (max-width: 768px) {
-    .ui.container {
-        margin-top: 2px !important;
-        margin-bottom: 2px !important;
-    }    
-
-    #rootcontainer, #footercontainer {
+//Root and footer containers
+#rootcontainer, #footercontainer {    
+    width: 100%;
+   
+   //Up until desktop layout
+    @media screen and (max-width: 991px) {
         margin-left: 0px !important;
         margin-right: 0px !important;
         margin-top: 0px !important;
         margin-bottom: 0px !important;
+    }
+    
+    //Up until: ; mobile layout
+    @media screen and (max-width: 425px) {
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
-}
 
-@media screen and (max-width: 425px) {
-    #rootcontainer, #footercontainer {
-        margin-left: 0px !important;
-        margin-right: 0px !important;
-        margin-top: 0px !important;
-        margin-bottom: 0px !important;
+    //Between mobile and tablet layout
+    @media screen and (min-width: 426px) and (max-width: 768px){
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+    }
+
+    //Between tablet and desktop layout
+    @media screen and (min-width: 768px) and (max-width: 991px){
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        
+        .ui.grid.container {
+            width: 100% !important;
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+        }
+    }
+
+    //Desktop layout
+    @media screen and (min-width: 992px){
+        max-width: 880px !important; 
     }
 }
 
-#rootcontainer, #footercontainer {
-    max-width: 880px !important;  
-    width: 100%;       
+#navbarcontainer {
+    
+    //Up until tablet layout
+    @media screen and (max-width: 768px) {
+        .ui.container {
+            margin-left: 0px !important;
+            margin-right: 0px !important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+        }
+    }
+
+    // Mobile layout
+    @media screen and (max-width: 425px) {
+        
+        //UI layout
+        .item.right.floated {
+            margin-right: 0px !important;
+            padding-right: 10px !important;
+        }
+        .item.left.floated {
+            margin-left: 0px !important;
+            padding-left: 10px !important;
+        }
+
+        //Shop layout
+        .section.item {
+            padding-left: 10px !important;
+        }
+        .section.right.item {
+            padding-right: 10px !important;
+        }
+    }
+
+    // Mobile and tablet layout settings
+    @media screen and (min-width: 426px) and (max-width: 991px) {
+        .item.left.floated {
+            margin-left: 0px !important;
+            padding-left: 10px !important;
+            margin-right: 0px !important;
+        }
+        .item.right.floated {
+            padding-right: 10px !important;
+            margin-right: 0px !important;
+        }
+
+        //Shop layout
+        .section.item {
+            padding-left: 20px !important;
+        }
+        .section.right.item {
+            padding-right: 20px !important;
+        }
+    }
+
+    // Between mobile and tablet layout
+    @media screen and (min-width: 426px) and (max-width: 768px) {
+        .item.right.floated {
+            margin-right: 0px !important;
+            padding-right: 20px !important;
+        }
+        .item.left.floated {
+            margin-left: 0px !important;
+            padding-left: 20px !important;
+        }
+    }
+
+    //Between tablet and desktop layout
+    @media screen and (min-width: 768px) and (max-width: 991px){
+        .ui.container {
+            width: 100% !important;
+        }
+    }
 }
+
+#contactcards {
+
+    @media screen and (max-width: 425px) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    @media screen and (min-width: 426px) and (max-width: 768px) {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+    @media screen and (min-width: 768px) {
+        padding-left: 14px !important;
+    }
+}
+
 
 .link {
     cursor: pointer !important;
