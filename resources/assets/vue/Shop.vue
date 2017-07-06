@@ -1,18 +1,18 @@
 <template lang="pug">
     div.pusher( v-if="settings.lang" )
         image-preview
-        navigation
-        div.ui.padded.container.segment#rootcontainer
+        navigation#navbarcontainer
+        div.ui.container.segment#rootcontainer
             loading( v-if="$root.loading" )
-            div.ui.grid.one.column( v-if="!$root.loading" )                                
-                article-preview.column(
+            div( v-if="!$root.loading" )                                
+                article-preview(
                     v-if="article"
                     ":article" = "article"
                     "mode" = "show" )
-                shop-desktop-list.column(
+                shop-desktop-list(
                     v-if="!article && screenType == 'desktop'"
                     ":items"="items" )
-                shop-mobile-list.column(
+                shop-mobile-list(
                     v-if="!article && (screenType == 'mobile' || screenType == 'tablet')"
                     ":items"="items" )
         footer-component#footercontainer( ":lang"="settings.lang" ":language_lib"="language_lib" )

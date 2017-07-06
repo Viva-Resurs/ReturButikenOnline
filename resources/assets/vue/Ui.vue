@@ -1,6 +1,6 @@
 <template lang="pug">
     div.pusher( v-if="settings.lang")
-        navigation
+        navigation#navbarcontainer
         semantic-dialog
         router-view.ui.container.segment#rootcontainer
         footer-component#footercontainer( ":lang"="settings.lang" ":language_lib"="language_lib" )

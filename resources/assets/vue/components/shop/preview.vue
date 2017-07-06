@@ -32,9 +32,9 @@
                         h4.ui.sub.header {{ translate('article_preview.price_label') }}
                     div.row
                         h3.right.aligned {{ article.price }} {{ translate('article_preview.price_currency_label') }}
-
+ 
             div.ui.bottom.aligned.stackable.grid.mobile.reversed
-                div.left.aligned.column.eight.wide
+                div.left.aligned.column.eight.wide#contactcards
                     h4.ui.sub.header {{ translate('article_preview.contact_header') }}
                     template( v-for="contact in article.contacts" )
                         user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )

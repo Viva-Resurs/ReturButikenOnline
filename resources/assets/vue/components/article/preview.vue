@@ -4,10 +4,7 @@
         div( v-if="article==-1" )
             | {{ translate('article_preview.article_not_found') }}
         div( v-if="article!=-1")
-            div( v-if="article.images && article.images.length>0" style="position: relative")
-                div.ui.basic.segment.center.aligned.preview_header(
-                    v-swipe="{images: article.images, screenType: screenType }")
-
+           
             div.ui.grid.equal.width
                 div.ui.left.aligned.column
                     h2.ui.header {{ article.name }}
@@ -17,7 +14,9 @@
                             )
                                 | {{ category.name }}
 
-            div.ui.hidden.divider
+            div( v-if="article.images && article.images.length>0" style="position: relative; padding-top: 10px")
+                div.ui.basic.segment.center.aligned.preview_header(
+                    v-swipe="{images: article.images, screenType: screenType }")
 
             div.description(style="white-space: pre-wrap") {{ article.desc }}            
             div.ui.hidden.divider
@@ -36,7 +35,7 @@
                         h3.right.aligned {{ article.price }} {{ translate('article_preview.price_currency_label') }}
 
             div.ui.bottom.aligned.stackable.grid.mobile.reversed
-                div.left.aligned.column.eight.wide
+                div.left.aligned.column.eight.wide#contactcards
                     h4.ui.sub.header {{ translate('article_preview.contact_header') }}
                     template( v-for="contact in article.contacts" )
                         user-card( ":user"="contact" "picture"="true" "type" = "horizontal" )
@@ -96,7 +95,7 @@
                         )
                         label( for="activeOn" ) {{ translate('article_preview.publish_article') }}
         
-                div.column.right.aligned.ten.wide(style="padding-right: 0px !important")
+                div.column.right.aligned(style="padding-right: 0px !important" ":class"="mode == show ? 'ten wide': ''")
                     div.ui.button.secondary( v-if="mode=='show'"
                         @click="goBack()"
                     ) {{ translate('nav.back') }}

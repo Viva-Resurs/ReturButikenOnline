@@ -4,6 +4,7 @@
             div.ui.container(style="width: 100% !important; padding: 0px !important; margin: 0px !important")
                 a.item.left.floated
                     router-link( to="/ui/" exact ) {{ $root.settings.title }}
+                
                 a.item.right.floated( v-if="user" @click="menuToggle" )
                     | {{ translate('nav.menu') }} &nbsp;
                     i.icon.content(style="margin-right: -5px")
@@ -15,8 +16,13 @@
 
         div.ui.inverted.menu.tablet.only.grid.attached.borderless
             div.ui.container(style="width: 100% !important; padding: 0px !important; margin: 0px !important")
-                a.item.left.floated
+                a.item.left.fitted.floated(style="margin-right: 0px !important")
                     router-link( to="/ui/" exact ) {{ $root.settings.title }}
+                
+                a.item.left.fitted.floated( href="/" exact)
+                    i.icon.checkmark
+                    |  {{ translate('ui.published') }}
+
                 a.item.right.floated( v-if="user" @click="menuToggle" )
                     | {{ translate('nav.menu') }} &nbsp;
                     i.icon.content(style="margin-right: -5px")
@@ -54,7 +60,7 @@
                 a.item( @click="attemptLogout()" ) {{ translate('user.logout') }}
                     i.icon.sign.out
 
-                a.item( href="/" exact)
+                a.item( v-if="screenType == 'mobile'" href="/" exact)
                     i.icon.checkmark
                     |  {{ translate('ui.published') }}
 
