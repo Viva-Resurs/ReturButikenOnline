@@ -8,11 +8,10 @@ body.pushable>.pusher {
     background-color: $body-bg !important
 }
 
-//Root and footer containers
 #rootcontainer, #footercontainer {    
     width: 100%;
    
-   //Up until desktop layout
+   // -> desktop layout
     @media screen and (max-width: 991px) {
         margin-left: 0px !important;
         margin-right: 0px !important;
@@ -20,19 +19,19 @@ body.pushable>.pusher {
         margin-bottom: 0px !important;
     }
     
-    //Up until: ; mobile layout
+    // -> mobile layout
     @media screen and (max-width: 425px) {
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
 
-    //Between mobile and tablet layout
+    // Mobile <- -> tablet layout
     @media screen and (min-width: 426px) and (max-width: 768px){
         padding-left: 20px !important;
         padding-right: 20px !important;
     }
 
-    //Between tablet and desktop layout
+    // Tablet <- -> desktop layout
     @media screen and (min-width: 768px) and (max-width: 991px){
         padding-left: 20px !important;
         padding-right: 20px !important;
@@ -44,7 +43,7 @@ body.pushable>.pusher {
         }
     }
 
-    //Desktop layout
+    // Desktop layout ->
     @media screen and (min-width: 992px){
         max-width: 880px !important; 
     }
@@ -52,7 +51,7 @@ body.pushable>.pusher {
 
 #navbarcontainer {
     
-    //Up until tablet layout
+    // -> tablet layout
     @media screen and (max-width: 768px) {
         .ui.container {
             margin-left: 0px !important;
@@ -62,7 +61,7 @@ body.pushable>.pusher {
         }
     }
 
-    // Mobile layout
+    // -> mobile layout
     @media screen and (max-width: 425px) {
         
         //UI layout
@@ -84,7 +83,7 @@ body.pushable>.pusher {
         }
     }
 
-    // Mobile and tablet layout settings
+    // mobile <- -> desktop layout
     @media screen and (min-width: 426px) and (max-width: 991px) {
         .item.left.floated {
             margin-left: 0px !important;
@@ -105,7 +104,7 @@ body.pushable>.pusher {
         }
     }
 
-    // Between mobile and tablet layout
+    // mobile <- -> tablet layout
     @media screen and (min-width: 426px) and (max-width: 768px) {
         .item.right.floated {
             margin-right: 0px !important;
@@ -117,7 +116,7 @@ body.pushable>.pusher {
         }
     }
 
-    //Between tablet and desktop layout
+    // tablet <- -> desktop layout
     @media screen and (min-width: 768px) and (max-width: 991px){
         .ui.container {
             width: 100% !important;
@@ -126,15 +125,17 @@ body.pushable>.pusher {
 }
 
 #contactcards {
-
+    // -> mobile layout
     @media screen and (max-width: 425px) {
         padding-left: 0px !important;
         padding-right: 0px !important;
     }
+    // mobile <- -> tablet
     @media screen and (min-width: 426px) and (max-width: 768px) {
         padding-left: 0px !important;
         padding-right: 0px !important;
     }
+    // tablet ->
     @media screen and (min-width: 768px) {
         padding-left: 14px !important;
     }
