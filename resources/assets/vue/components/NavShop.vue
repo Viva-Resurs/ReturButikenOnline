@@ -5,6 +5,8 @@
             i.right.angle.icon.divider(style="margin-top: 10px")
             a.section.active.item( href="/" exact ) {{ translate('shop.bidding') }}
             a.section.right.item( href="/ui" exact ) {{ translate('ui.staff') }}
+            div.navbar-nav
+                div.divider-thin
                 
           
 </template>
