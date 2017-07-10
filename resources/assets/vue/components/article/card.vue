@@ -12,19 +12,20 @@
                         v-for="category in item.categories"
                         )
                         | {{ category.name }}
+                
+                div.ui.hidden.divider.no-padding#card_header_divider(v-else="")
 
-
-                div( v-if="item.images.length>0" ).ui.vertical.segment.basic
+                div( v-if="item.images.length>0" ).ui.vertical.segment.basic.no-padding
                     h4.ui.sub.header
                         | {{ translate('article_card.images_header') }}
                     p
-                        div.ui.segment
+                        div.ui.basic.segment.no-padding
                             div.ui.tiny.images
-                                img.ui.rounded.image#card_images(
+                                img.ui.rounded.image#card_image(
                                     v-for="image in item.images" @click="previewImages(image)"
                                     ":src"="image.thumb_path" )
 
-                div.ui.vertical.segment.basic
+                div.ui.vertical.segment.basic#card_item_description
                     h4.ui.sub.header
                         | {{ translate('article_card.description_header') }}
                     p.wrap-lines {{ item.desc }}
@@ -105,12 +106,21 @@
 
 </script>
 <style>
+
+    #card_header_divider {
+        margin-top: 0px;
+    }
+
     #card_description {
         position: relative; 
         top: -10px;
     }
 
-    #card_images{
+    #card_item_description {
+        padding-top: 5px !important;
+    }
+
+    #card_image{
         background-color: lightgrey;
     }
 
