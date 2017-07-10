@@ -5,6 +5,10 @@
                 a.item.left.floated
                     router-link( to="/ui/" exact ) {{ $root.settings.title }}
                 
+                a.item.fitted.left( v-if="screenType == 'mobile' && !user" href="/" exact)
+                    i.icon.checkmark
+                    |  {{ translate('ui.published') }}
+                
                 a.item.right.floated( v-if="user" @click="menuToggle" )
                     | {{ translate('nav.menu') }} &nbsp;
                     i.icon.content(style="margin-right: -5px")
@@ -67,10 +71,11 @@
         div.ui.grid.fluid.inverted.menu.computer.only.attached
             div.ui.container.no-padding(style="width: 880px")
                 router-link.item( to="/ui/" exact ) {{ $root.settings.title }}
-                div.ui.right.inverted.menu(style="border-right: 1px solid rgba(34,36,38,.1);")
-                    a.item( href="/" exact)
+                a.item( href="/" exact)
                         i.icon.checkmark
                         |  {{ translate('ui.published') }}
+                    
+                div.ui.right.inverted.menu(style="border-right: 1px solid rgba(34,36,38,.1);")
                     template( v-if="!user" )
                         router-link.item( to="/ui/auth/login" exact ) {{ translate('user.login') }}
                     template( v-if="user" )                        
