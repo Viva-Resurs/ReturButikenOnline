@@ -15,7 +15,7 @@
                         ":columns"="['name']" )
                     div.right.menu
                         div.ui.buttons
-                            add.right.item.large.icon( from="categories" style="padding: 0px" )
+                            add.right.item.large.icon.no-padding( from="categories")
         div.ui.padded.grid
             div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message
@@ -76,6 +76,10 @@
             order: 'name'
             desc: 1
         computed:
+            ###*
+            #   Search/Filters items by name
+            #   @return {item} matched items
+            ###
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
@@ -83,16 +87,34 @@
                     .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
 
+            ###*
+            #   Returns number of matched results.
+            #   @return {number} number of filtered items
+            ###
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name']
                     .length
+            
+            ###*
+            #   Returns the first column.
+            #   @return {column} first column 
+            ###
             firstColumn: ->
                 @columns[Object.keys(@columns)[0]]
         methods:
+            ###*
+            #   Returns a formatted tooltip replacing newline(\n) with <br>.
+            #    @return {string} formatted text
+            ###
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
+            
+            ###*
+            #   Checks if item at a specific column have data.
+            #    @return {boolean} true if it have data, otherwise false.
+            ###
             itemHaveData: (column, item) ->
                 if item
                     if (column.type == 'array')
