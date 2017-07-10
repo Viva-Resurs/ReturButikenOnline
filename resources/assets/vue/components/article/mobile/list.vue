@@ -15,7 +15,7 @@
                         ":columns"="['name','updated_at','categories']" )
                     div.right.menu
                         div.ui.buttons
-                            add.right.item.large.icon( from="articles" style="padding: 0px")
+                            add.right.item.large.icon.no-padding( from="articles" )
         div.ui.padded.grid
             div.row( v-if="countItems == 0" )
                 div.ui.column.warning.message
@@ -62,28 +62,48 @@
             order: 'updated_at'
             desc: 1
         computed:
+            ###*
+            #   Search/Filters items by name, desc, categories and article_nr.
+            #   @return {item} matched items
+            ###
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','description','categories','article_nr']
                     .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
+            
+            ###*
+            #   Returns number of matched results.
+            #   @return {number} number of filtered items
+            ###
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','description','categories','article_nr']
                     .length
         methods:
+            ###*
+            # Triggers position change to previous page.
+            ###
             prevPage: ->
                 if @offset-@maxItems < 0
                     return @firstPage()
                 bus.$emit 'offset_changed', @offset - @maxItems
+            
+            ###*
+            # Triggers position change to next page.
+            ###
             nextPage: ->
                 window.scrollTo 0, 0
                 if @offset >= @total-@maxItems
                     return @lastPage()
                 bus.$emit 'offset_changed', @offset + @maxItems
 
+            ###*
+            #   Returns a formatted tooltip replacing newline(\n) with <br>.
+            #    @return {string} formatted text
+            ###
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
 </script>

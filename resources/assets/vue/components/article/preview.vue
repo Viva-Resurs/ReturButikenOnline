@@ -8,17 +8,18 @@
             div.ui.grid.equal.width
                 div.ui.left.aligned.column
                     h2.ui.header {{ article.name }}
-                        div.ui.black.horizontal.label(
-                            style="position: relative; top: -2px; left: 15px;"
+                        div.ui.black.horizontal.label#preview_labels(                          
                             v-for="category in article.categories"
                             )
                                 | {{ category.name }}
 
-            div( v-if="article.images && article.images.length>0" style="position: relative; padding-top: 10px")
+            div#previewed_images( v-if="article.images && article.images.length>0")
                 div.ui.basic.segment.center.aligned.preview_header(
                     v-swipe="{images: article.images, screenType: screenType }")
-
-            div.description(style="white-space: pre-wrap") {{ article.desc }}            
+            
+            div.ui.hidden.divider#preview_header_divider(v-else="")
+            
+            div.description.wrap-lines {{ article.desc }}            
             div.ui.hidden.divider
 
             div.ui.grid.equal.width
@@ -34,7 +35,7 @@
                     div.row
                         h3.right.aligned {{ article.price }} {{ translate('article_preview.price_currency_label') }}
 
-            div.ui.bottom.aligned.stackable.grid.mobile.reversed
+            div.ui.bottom.aligned.stackable.grid.mobile.reversed#preview_contacts_list
                 div.left.aligned.column.eight.wide#contactcards
                     h4.ui.sub.header {{ translate('article_preview.contact_header') }}
                     template( v-for="contact in article.contacts" )
@@ -85,7 +86,7 @@
                         
             div.ui.divider
             div.ui.grid
-                div.column.middle.aligned.six.wide(v-if="mode!='show'" style="padding-left: 20px")            
+                div.column.middle.aligned.six.wide#preview_checkbox_publish(v-if="mode!='show'")            
                     div.ui.green.toggle.checkbox                            
                         input#activeOn(
                             type="checkbox"
@@ -95,7 +96,7 @@
                         )
                         label( for="activeOn" ) {{ translate('article_preview.publish_article') }}
         
-                div.column.right.aligned(style="padding-right: 0px !important" ":class"="mode == show ? 'ten wide': ''")
+                div.column.right.aligned#preview_navigation_buttons(":class"="mode == show ? 'ten wide': ''")
                     div.ui.button.secondary( v-if="mode=='show'"
                         @click="goBack()"
                     ) {{ translate('nav.back') }}
@@ -119,6 +120,9 @@
             UserCard: require '../user/card.vue'
 
         methods:
+            ###*
+            #   Toggles the details window. 
+            ###
             toggleDetails: ->
                 $('#details').transition
                     animation  : 'slide down'
@@ -127,22 +131,40 @@
                     onHide : =>
                         @expandDetails = false
 
+            ###*
+            #   Returns a formatted date string: 
+            #   start-date - end-date
+            #   @return {string} dates
+            ### 
             formatInterval: (interval) ->
                 dates = String(interval).split '|'
                 dates[0] = dates[0].substr 0, dates[0].lastIndexOf ':'
                 dates[1] = dates[1].substr 0, dates[1].lastIndexOf ':'
                 return "#{dates[0]} - #{dates[1]}"
 
+            ###*
+            #   Returns dates splitted by ':'. 
+            #   @return {dates} start date and end date
+            ###
             formatDate: (d) ->
                 date = String d
                 return date.substr 0, date.lastIndexOf ':'
 
+            ###*
+            #   Emits update of article.
+            ###
             attemptPublish: ->
                 bus.$emit( 'article_form_update', this.article )
 
+            ###*
+            #   Emits modification of article.
+            ###
             modifyArticle: ->
                 bus.$emit( 'article_form_modify' )
 
+            ###*
+            #   Emits snap to index (image preview).
+            ###
             setActiveImage: (index) ->
                 bus.$emit('snapTo', index );
 
@@ -150,7 +172,29 @@
             $('body').scrollTop(0)
 </script>
 <style>
-    .ui.stackable.grid {
+    #preview_contacts_grid {
         width: auto;
+    }
+
+    #preview_labels {
+        position: relative; 
+        top: -2px; 
+        left: 15px;
+    }
+
+    #previewed_images {
+        position: relative; 
+        padding-top: 5px;
+    }
+
+    #preview_header_divider {
+        margin-top: 0px;
+    }
+    #preview_checkbox_publish {
+        padding-left: 20px;
+    }
+
+    #preview_navigation_buttons {
+        padding-right: 10px;
     }
 </style>

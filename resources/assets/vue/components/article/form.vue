@@ -186,6 +186,11 @@
                                 prompt: @$root.translate 'article.amount_validate'
                             ]
         computed:
+            
+            ###*
+            #  Returns the list of selected contacts.
+            #  @return {contacts} Selected contacts
+            ###
             selectedContacts: ->
                 results = ''
                 for contact, index in @article.contacts
@@ -193,6 +198,11 @@
                     if index < @article.contacts.length
                         results += ','
                 return results
+            
+            ###*
+            #   Returns the list of selected categories.
+            #   @return {categories} selected categories.
+            ###
             selectedCategories: ->
                 results = ''
                 for category, index in @article.categories
@@ -201,6 +211,11 @@
                         results += ','
                 return results
         methods:
+            
+            ###*
+            #   Validates and generates a preview of the article using 
+            #   the forms inserted information. 
+            ###
             previewArticle: ->
                 # Skip intervals not set
                 if @settings.publish_interval == false
@@ -209,6 +224,10 @@
                     @article.bidding_interval = ''
                 # Validate form
                 $('#article_form').form(@settings.form).form 'validate form'
+            
+            ###*
+            #  Activates a calendar with selectable ranges of dates. 
+            ###
             showRangePicker: (e) ->
                 # Get the container where onClick exists
                 inputDIV = if e.target.nodeName != 'DIV' then e.target.parentNode else e.target
@@ -225,12 +244,17 @@
                     type: 'calendar'
                     cb: ( start, end ) =>
                         @article[key] = start.format('YYYY-MM-DD HH:mm:ss') + ' | ' + end.format('YYYY-MM-DD HH:mm:ss')
+            
+            ###*
+            #   Updates the images order using their individual order property.
+            ###
             updateImageOrder: ->
                 # Apply current order if any
                 @article.images = @article.images.sort (a, b) => a.order-b.order
                 # Then set it
                 for image, index in @article.images
                     image.order = index
+        
         created: ->
             # Get the form ready
             @article = @draft
