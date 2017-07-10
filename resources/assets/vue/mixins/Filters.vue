@@ -27,8 +27,9 @@
 
                 # Check targets
                 for target of targets
-                    key = targets[target].key
-                    if typeof item[key] == 'string' || typeof item[key] == 'number'
+                    key = targets[target]
+                    
+                    if typeof item[key] == 'string' || typeof item[key] == 'number'                        
                         if s.test item[key]
                             return true
                     if typeof item[key] == 'object'
