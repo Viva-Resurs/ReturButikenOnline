@@ -1,7 +1,7 @@
 <template lang="pug">
     div.no-top-padding
         div.ui.equal.width.grid
-            div.row.middle.aligned(style="padding-top: 10px; padding-bottom: 10px")
+            div.row.middle.aligned.no-top-bottom-padding
                 div.column.four.wide
                     search( ":search"="search" ":results"="countItems" )
                 div.column.ten.wide
@@ -10,7 +10,7 @@
                         ":total"="countItems"
                         ":show-pagination"="search==''" )
                 div.column.two.wide.right.floated.right.aligned
-                    add.item.basic.icon( from="sections" style="box-shadow: 0 1px 2px 0 rgba(34,36,38,.15); border: 1px solid rgba(34,36,38,.15); padding-top: 9.5px; padding-bottom: 9.5px" )
+                    add.item.basic.icon#add_desktop( from="sections")
         div.ui.padded.grid
             div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message
@@ -104,19 +104,32 @@
             order: 'name'
             desc: 1
         computed:
+            ###*
+            #   Search/Filters items by name and users.
+            #   @return {item} matched items
+            ###
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','users']
                     .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
-
+            
+            ###*
+            #   Returns number of matched results.
+            #   @return {number} number of filtered items
+            ###
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','users']
                     .length
         methods:
+            ###*
+            #   Returns a formatted tooltip replacing newline(\n) with <br>.
+            #    @param {string} original text 
+            #    @return {string} formatted text
+            ###
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
 </script>

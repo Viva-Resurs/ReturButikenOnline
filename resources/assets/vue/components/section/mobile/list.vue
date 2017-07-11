@@ -15,7 +15,7 @@
                         ":columns"="['name','users']" )
                     div.right.menu
                         div.ui.buttons
-                            add.right.item.large.icon( from="sections" style="padding: 0px")
+                            add.right.item.large.icon.no-padding( from="sections")
         div.ui.padded.grid
             div.row( v-if="countItems == 0 && itemsNew.length == 0" )
                 div.ui.column.warning.message
@@ -40,7 +40,7 @@
                             v-for="(item, filterIndex) in filterItems"
                             ":id"="item.id" )
                             td.slim
-                                div.ui.item.fluid(style="margin-left: 5px;")
+                                div.ui.item.fluid#section_mobile_form
                                     div.ui.input.fluid( v-if="item.edit" )
                                         input( v-model="item.name_new"
                                         ":placeholder"="translate('section.name_placeholder')"
@@ -51,12 +51,12 @@
                                         ":placeholder"="translate('section.name_placeholder_sv')"
                                         v-focus="" ).collapsing
 
-                                    div.ui.vertical.segment.basic( "v-if"="!item.edit && itemHaveData('name', item.name)" style="padding-top: 6px; padding-bottom: 0px")
+                                    div.ui.vertical.segment.basic#section_mobile_name_sv( "v-if"="!item.edit && itemHaveData('name', item.name)")
                                         h4.ui.sub.header {{ translate('name') }}
                                         p( v-if="getLanguage()=='sv'" ) {{ item.name_sv }}
                                         p( v-else="") {{ item.name }}
 
-                                    div.ui.vertical.segment.basic( "v-if"="itemHaveData('users', item.users[0])" style="padding-top: 12px; padding-bottom: 0px")
+                                    div.ui.vertical.segment.basic#section_mobile_name_en( "v-if"="itemHaveData('users', item.users[0])")
                                         h4.ui.sub.header {{ translate('users') }}
                                         p
                                             span( v-for="(role, column_index) in item.users")
@@ -92,6 +92,10 @@
             order: 'name'
             desc: 1
         computed:
+            ###*
+            #   Search/Filters items by name, users
+            #   @return {item} matched items
+            ###
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
@@ -99,16 +103,38 @@
                     .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
 
+            ###*
+            #   Returns number of matched results.
+            #   @return {number} number of filtered items
+            ###
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','users']
                     .length
+            
+            ###*
+            #   Returns the first column.
+            #   @return {column} first column 
+            ###
             firstColumn: ->
                 @columns[Object.keys(@columns)[0]]
-        methods:
+        methods:            
+            ###*
+            #   Returns a formatted tooltip replacing newline(\n) with <br>.
+            #    @param {string} original text 
+            #    @return {string} formatted text
+            ###
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
+            
+                    
+            ###*
+            #   Checks if item at a specific column have data.
+            #    @param {column} column to check
+            #    @param {item} item to check
+            #    @return {boolean} true if it have data, otherwise false
+            ###
             itemHaveData: (column, item) ->
                 if item
                     if (column.type == 'array')
@@ -116,3 +142,13 @@
                     return true
                 return false
 </script>
+<style>
+    #section_mobile_form {
+        margin-left: 5px;
+    }
+
+    #section_mobile_name_sv, #section_mobile_name_en {
+        padding-top: 6px; 
+        padding-bottom: 0px;
+    }
+</style>
