@@ -36,14 +36,13 @@
                             ":id"="item.id"
                             ":class"="item.edit ? 'active' : ''" )
                             td.slim
-                                div.ui.item.fluid(style="margin-left: 5px;")
+                                div.ui.item.fluid#category_mobile_form
                                     div.ui.input.fluid( v-if="item.edit" )
                                         input( v-model="item.name_new"
                                         ":placeholder"="translate('placeholder.type')+' '+translate('name')"
                                         v-focus="" ).collapsing
-                                    div.ui.vertical.segment.basic(
-                                        "v-if"="!item.edit && itemHaveData('name', item.name)"
-                                        style="padding-top: 6px; padding-bottom: 6px" )
+                                    div.ui.vertical.segment.basic#category_mobile_name(
+                                        "v-if"="!item.edit && itemHaveData('name', item.name)" )                                        
                                         h4.ui.sub.header {{ translate('name') }}
                                         p {{ item.name }}
                             td.collapsing
@@ -106,6 +105,7 @@
         methods:
             ###*
             #   Returns a formatted tooltip replacing newline(\n) with <br>.
+            #    @param {string} original text 
             #    @return {string} formatted text
             ###
             formatTooltip: (info) ->
@@ -113,7 +113,9 @@
             
             ###*
             #   Checks if item at a specific column have data.
-            #    @return {boolean} true if it have data, otherwise false.
+            #    @param {column} column to check
+            #    @param {item} item to check
+            #    @return {boolean} true if it have data, otherwise false
             ###
             itemHaveData: (column, item) ->
                 if item
@@ -122,3 +124,13 @@
                     return true
                 return false
 </script>
+<style>
+    #category_mobile_form {
+        margin-left: 5px;
+    }
+
+    #category_mobile_name {
+        padding-top: 6px; 
+        padding-bottom: 6px;
+    }
+</style>

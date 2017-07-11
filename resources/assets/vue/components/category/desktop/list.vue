@@ -102,7 +102,8 @@
         methods:
             ###*
             #   Returns a formatted tooltip replacing newline(\n) with <br>.
-            #    @return {string} formatted text
+            #   @param {info} original text 
+            #   @return {string} formatted text
             ###
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
