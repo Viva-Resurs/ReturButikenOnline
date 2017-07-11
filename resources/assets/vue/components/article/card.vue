@@ -92,6 +92,7 @@
         
             ###*
             #   Triggers preview of a clicked image.
+            #   @param {image} image to preview
             ###
             previewImages: (image) ->
                 selected_index = 0

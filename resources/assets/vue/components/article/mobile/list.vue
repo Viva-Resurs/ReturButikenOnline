@@ -84,7 +84,7 @@
                     .length
         methods:
             ###*
-            # Triggers position change to previous page.
+            #   Triggers position change to previous page.
             ###
             prevPage: ->
                 if @offset-@maxItems < 0
@@ -92,7 +92,7 @@
                 bus.$emit 'offset_changed', @offset - @maxItems
             
             ###*
-            # Triggers position change to next page.
+            #   Triggers position change to next page.
             ###
             nextPage: ->
                 window.scrollTo 0, 0
@@ -102,7 +102,8 @@
 
             ###*
             #   Returns a formatted tooltip replacing newline(\n) with <br>.
-            #    @return {string} formatted text
+            #   @param {string} original text
+            #   @return {string} formatted text
             ###
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''

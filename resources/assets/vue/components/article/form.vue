@@ -227,6 +227,7 @@
             
             ###*
             #  Activates a calendar with selectable ranges of dates. 
+            #  @param {e} trigger event
             ###
             showRangePicker: (e) ->
                 # Get the container where onClick exists

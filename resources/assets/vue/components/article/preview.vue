@@ -134,7 +134,8 @@
             ###*
             #   Returns a formatted date string: 
             #   start-date - end-date
-            #   @return {string} dates
+            #   @param {interval} original date string separated with "|"
+            #   @return {string} formatted date string separated with "-"
             ### 
             formatInterval: (interval) ->
                 dates = String(interval).split '|'
@@ -144,6 +145,7 @@
 
             ###*
             #   Returns dates splitted by ':'. 
+            #   @param {d} date string 
             #   @return {dates} start date and end date
             ###
             formatDate: (d) ->
@@ -164,6 +166,7 @@
 
             ###*
             #   Emits snap to index (image preview).
+            #   @param {index} index of image
             ###
             setActiveImage: (index) ->
                 bus.$emit('snapTo', index );
