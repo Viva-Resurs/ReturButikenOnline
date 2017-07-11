@@ -160,6 +160,10 @@
                             prompt: 'Please enter your email-adress'
                         ]
         computed:
+            ###*
+            #   Returns the list of selected roles
+            #   @return {roles} selected roles
+            ###
             selectedRoles: ->
                 results = ''
                 for role, index in @user.roles
@@ -167,6 +171,11 @@
                     if index < @user.roles.length
                         results += ','
                 return results
+            
+            ###*
+            #   Returns the list of selected sections
+            #   @return {sections} selected sections
+            ###
             selectedSections: ->
                 results = ''
                 for section, index in @user.sections
@@ -175,16 +184,22 @@
                         results += ','
                 return results
             
+            ###*
+            #   Checks if user have the admin role
+            #   @return {boolean} true if user have the admin role, otherwise false.
+            ###
             userIsAdmin: ->
                 isAdmin = false
                 if @user.roles && @user.roles.length > 0
                     if @user.roles[0].name == 'admin'
                         isAdmin = true
                 return isAdmin
+
         methods:
-     
-            updateImageOrder: ->
-                
+            ###*
+            #  Checks and updates the order of the profile images.
+            ###
+            updateImageOrder: ->          
                 if @user
                     # Apply current order if any
                     @user.images = @user.images.sort (a, b) => a.order-b.order
@@ -197,12 +212,17 @@
                         if (@$root.user.id == @user.id)
                             @$root.user = @user   
                             
+            
+            ###*
+            #   Validates the form and attempts to save.
+            ###
             attemptSave: ->
                 # Skip password?
                 if !@settings.change_password
                     @user.password = false
                 # Validate form
                 $('#user_form').form(@form_settings).form 'validate form'
+                
         created: ->
             # Get the form ready
             @user = @draft
@@ -235,6 +255,7 @@
                 @updateImageOrder()
             bus.$on 'image_reorder', =>
                 @updateImageOrder()
+        
         beforeDestroy: ->
             bus.$off 'roles_changed'
             bus.$off 'sections_changed'
