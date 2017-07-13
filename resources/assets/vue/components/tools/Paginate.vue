@@ -36,14 +36,14 @@
                     i.angle.double.left.icon.icon-style
                 button.ui.large.icon.right.item.button( @click="prevPage" )
                     i.angle.left.icon.icon-style
-                button.ui.large.icon.right.item.button.disabled( style="line-height: 12px;" )
+                button.ui.large.icon.right.item.button.disabled#tool_paginate_right_item
                     i {{ translate('page') }} {{currentPage}} / {{totalPages}}
                 button.ui.large.icon.right.item.button( @click="nextPage" )
                     i.angle.right.icon.icon-style
                 button.ui.large.icon.right.item.button( @click="lastPage" )
                     i.angle.double.right.icon.icon-style
                 div.ui.button.large.right.item.icon.top.left.pointing.dropdown#limit( v-dropdown="" )
-                    div.default.value( style="line-height: 12px;" )
+                    div.default.value#tool_paginate_limit
                         | {{ limit }} &nbsp;
                     i.dropdown.icon
                     div.menu
@@ -91,6 +91,10 @@
             limitOptions: [ 10, 50, 100, 500 ]
 
         computed:
+            ###*
+            #   Returns the current page.
+            #   @return {currentPage} current page
+            ###
             currentPage: ->
                 p = 1
                 c = 0
@@ -105,6 +109,10 @@
                     c++
                 return p
 
+            ###*
+            #   Returns total number of pages.
+            #   @return {totalPages} total number of pages
+            ###
             totalPages: ->
                 p = 1
                 c = 0
@@ -118,26 +126,46 @@
                 return p
 
         methods:
+            ###*
+            #   Changes limit to a new value.
+            #   @param {value} new limit value
+            ###
             change_limit: (value) ->
                 Vue.set this, 'limit', value
                 bus.$emit 'limit_changed', value
 
+            ###*
+            #   Moves to first page.
+            ###
             firstPage: ->
                 bus.$emit 'offset_changed', 0
 
+            ###*
+            #   Moves to previous page.
+            ###
             prevPage: ->
                 if @offset-@limit < 0
                     return @firstPage()
                 bus.$emit 'offset_changed', @offset - @limit
 
+            ###*
+            #   Moves to a selected page.
+            #   @param {p} page to select
+            ###
             toPage: (p) ->
                 bus.$emit 'offset_changed', (p-1) * @limit
 
+            ###*
+            #   Moves to next page.
+            ###
             nextPage: ->
                 if @offset >= @total-@limit
                     return @lastPage()
                 bus.$emit 'offset_changed', @offset + @limit
 
+            ###*
+            #   Moves to last page.
+            ###
             lastPage: ->
                 bus.$emit 'offset_changed', @total-(((@total-1)%@limit)+1)
 
@@ -151,3 +179,9 @@
         beforeDestroy: ->
             window.onkey = false
 </script>
+
+<style>
+    #tool_paginate_right_item, #tool_paginate_limit {
+        line-height: 12px;
+    }
+</style>

@@ -13,6 +13,10 @@
         name: 'Undo'
         props: [ 'item', 'from' ]
         methods:
+            ###*
+            #   Undo item change.
+            #   @param {item} item to revert
+            ###
             undo: (item) ->
                 bus.$emit @from + '_item_revert', item
 </script>

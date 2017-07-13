@@ -89,6 +89,10 @@
         name: 'Sort'
         props: ['order', 'desc', 'columns']
         methods:
+            ###*
+            #   Changes sort order.
+            #   @input {value} order to use
+            ###
             change_order: (value) ->
                 bus.$emit 'order_changed', value
 </script>

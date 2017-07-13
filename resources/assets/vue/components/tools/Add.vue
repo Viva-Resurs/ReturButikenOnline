@@ -1,18 +1,14 @@
 <template lang="pug">
-
-        div.ui.icon.button.hover-default(
-            style="margin-right: 0px"
+        div.ui.icon.button.hover-default#tool_add_button(
             v-tooltip = ""
             ":data-html" = "translate('tool.add')"
             @click    = "add()"
             )
-            i.ui.large.icons(
-                style="margin-left: 12px; margin-right: 9px"
-                )
-                i.user.icon.icon-style(v-if="from=='users'" style="margin-right: 3px")
-                i.cube.icon.icon-style(v-if="from=='articles'" style="margin-right: 3px")
-                i.building.icon.icon-style(v-if="from=='sections'" style="margin-right: 3px")
-                i.tag.icon.icon-style(v-if="from=='categories'" style="margin-right: 3px")
+            i.ui.large.icons#tool_add_icons
+                i.user.icon.icon-style#tool_add_icons_users(v-if="from=='users'")
+                i.cube.icon.icon-style#tool_add_icons_articles(v-if="from=='articles'")
+                i.building.icon.icon-style#tool_add_icons_sections(v-if="from=='sections'")
+                i.tag.icon.icon-style#tool_add_icons_categories(v-if="from=='categories'")
                 i.corner.plus.icon.icon-style
 </template>
 
@@ -21,6 +17,26 @@
         name: 'Add'
         props: [ 'from' ]
         methods:
+            ###*
+            #   Emits item add.
+            ###
             add: ->
                 bus.$emit @from + '_item_add'
 </script>
+
+<style>
+    #tool_add_button {
+        margin-right: 0px;
+    }
+
+    #tool_add_icons {
+        margin-left: 12px; 
+        margin-right: 9px;
+    }
+
+    #tool_add_icons_users, #tool_add_icons_articles, 
+    #tool_add_icons_sections, #tool_add_icons_categories {
+        margin-right: 3px;        
+    }
+
+</style>

@@ -1,6 +1,5 @@
 <template lang="pug">
-        div.ui.icon.button.hover-default(
-            style="background-color: #FFF; border-top: 1px solid rgb(212,212,213); border-bottom: 1px solid rgb(212,212,213); border-left: 1px solid rgb(212,212,213)"
+        div.ui.icon.button.hover-default#tool_active_button(
             v-tooltip = ""
             ":data-html" = `
                 (item.active) ? translate('tool.active') : translate('tool.inactive')
@@ -19,6 +18,10 @@
         name: 'Active'
         props: [ 'item', 'from' ]
         methods:
+            ###*
+            #   Toggles items active state.
+            #   @param {item} item to toggle
+            ###
             update: (item) ->
                 if item.active == "1"
                     item.active = "0"                    
@@ -27,3 +30,12 @@
               
                 bus.$emit @from + '_item_changed', item
 </script>
+
+<style>
+    #tool_active_button {
+        background-color: #FFF; 
+        border-top: 1px solid rgb(212,212,213); 
+        border-bottom: 1px solid rgb(212,212,213); 
+        border-left: 1px solid rgb(212,212,213)
+    }
+</style>

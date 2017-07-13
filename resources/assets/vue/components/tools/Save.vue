@@ -13,6 +13,9 @@
         name: 'Save'
         props: [ 'item', 'from' ]
         methods:
+            ###*
+            #   Emits item save if item is changed or created.
+            ###
             save: (item) ->
                 if (item.id)
                     bus.$emit @from + '_item_changed', item
