@@ -1,23 +1,25 @@
 <template lang="pug">
     div.ui.segments
-        div.ui.segment
+        div.ui.segment.no-padding
             div.ui.grid.equal.width.stackable( v-show="!user" )
                 div.column.eight.wide
                     h2.ui.header
                         div.content {{ translate('overview.welcome') }}
             div.ui.grid.mobile.reversed.stackable.equal.width( v-if="user" style="margin-top: 0px")
 
-                div.column.eight.wide.computer.tablet.only
+                div.column.eight.wide.computer.tablet.only(style="position: relative; top: -10px;")
                     h2.ui.header
                         div.content {{ user.fullname }}
-                    p {{ translate('overview.welcome_info') }}
-                    a( href="docs" ) {{ translate('overview.welcome_help') }}
+                    div.ui.message
+                        p {{ translate('overview.welcome_info') }}
+                        a( href="docs" ) {{ translate('overview.welcome_help') }}
 
-                div.column.center.aligned.eight.wide.mobile.only
+                div.column.center.aligned.eight.wide.mobile.only(style="position: relative; top: -10px;")
                     h2.ui.header
                         div.content {{ user.fullname }}
-                    p {{ translate('overview.welcome_info') }}
-                    a( href="docs" ) {{ translate('overview.welcome_help') }}
+                    div.ui.message
+                        p {{ translate('overview.welcome_info') }}
+                        a( href="docs" ) {{ translate('overview.welcome_help') }}
 
                 div.column.right.floated.tablet.computer.only
                     user-card(
