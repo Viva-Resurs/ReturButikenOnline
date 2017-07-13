@@ -1,19 +1,19 @@
 <template lang="pug">
     div.no-top-padding
         div.ui.segments
-            div.ui.segment.equal.width.grid.stackable.steps(style="padding: 1px !important")
+            div.ui.segment.equal.width.grid.stackable.steps#overview_start_steps
                 div.column.step(
-                    style="padding: 2px !important; border: 0px !important"
+                    ":id"="screenType == 'mobile' ? 'overview_section_step_mobile' : 'overview_section_step'"
                     v-if="$root.isAdmin()"
                     ":class"="!section ? 'active' : ''" )
                     section-overview( ":sections"="getSections" )
                 div.column.step.right.floated(
-                    style="padding: 2px !important; border: 0px !important"
+                    ":id"="screenType == 'mobile' ? 'overview_contact_step_mobile' : 'overview_contact_step'"
                     v-if="$root.isAdmin(2)"
                     ":class"="section && !contact ? 'active' : ''" )
                     contact-overview( ":contacts"="getContacts" )
                 div.column.step(
-                    style="padding: 2px !important; border: 0px !important"
+                    ":id"="screenType == 'mobile' ? 'overview_article_step_mobile' : 'overview_article_step'"
                     ":class"="contact && !article ? 'active' : ''" )                    
                     article-overview( ":articles"="getArticles" )
         article-card(
@@ -48,12 +48,25 @@
         props: [ 'article_tree' ]
 
         computed:
-            getSections: ->
-                # ArticleTree is a list of sections
+            ###*
+            #   Returns a tree with sections as base (sections->contacts->articles)
+            #   @return {article_tree} article tree
+            ###
+            getSections: ->               
                 return @article_tree
-            getContacts: ->
-                # Return section contacts or empty array
+            
+            ###*
+            #   Returns the contact list from the selected section
+            #   @return {contacts} sections contact list
+            ###
+            getContacts: ->                
                 return if @section and @section.contacts then @section.contacts else []
+            
+            ###*
+            #   Returns either a article tree if user is a admin 
+            #   or the articles belonging to a logged in user 
+            #   @return {article_tree} articles from a contact or from article_tree
+            ###
             getArticles: ->
                 # If not any form of admin, article_tree is just articles
                 if !@$root.isAdmin(2)
@@ -113,8 +126,37 @@
                 bus.$emit 'article_changed', @article_tree[0]
 
 </script>
-<style>
-    .ui.equal.width.grid.stackable.steps.padded.segment{
+
+<style>    
+    #overview_start_steps {
         padding: 0px;
     }
+
+    #overview_section_step, #overview_contact_step, #overview_article_step {
+        height: 160px;
+        overflow: hidden;
+        padding: 2px !important; 
+        
+    }
+
+    #overview_section_step_mobile, #overview_contact_step_mobile, #overview_article_step_mobile {        
+        padding: 5px !important;         
+    }
+
+    #overview_section_step.column.step::after, #overview_contact_step.column.step::after{
+        display: none;        
+    }
+   
+    #overview_contact_step.column.step {
+        border-right: 2px solid !important; 
+        border-right-color: rgba(34,36,38,.15) !important;
+        
+    }
+
+    #overview_section_step.column.step {
+        border-right: 2px solid !important; 
+        border-right-color: rgba(34,36,38,.15) !important;
+        
+    }
+    
 </style>
