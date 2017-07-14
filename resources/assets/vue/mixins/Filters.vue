@@ -155,9 +155,6 @@
             maxItems: (val, oldVal) ->
                 @offset = 0
 
-        components:
-            Pagination: require '../components/Pagination.vue'
-
         created: ->
             bus.$on 'offset_changed', (new_offset) => @offset = new_offset
             bus.$on 'limit_changed', (new_limit) => @maxItems = new_limit
