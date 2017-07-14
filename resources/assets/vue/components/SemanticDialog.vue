@@ -1,7 +1,7 @@
 <template lang="pug">
-    div.ui.modal.middle.aligned.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : 'small'" ":style"="(type == 'image') ? 'background-color: black;' : ''" ":id"="(type == 'image') ? 'image_modal' : ''")
+    div.ui.modal.middle.aligned.event-modal(":class"="(type == 'image' ) ? 'basic fullscreen' : 'small'" ":id"="(type == 'image') ? 'image_modal' : ''")
         div.header(v-show="type != 'image'") {{ title }}
-        div.top.attached(v-show="message" ":class"="[selected_action.class]" style="margin: 5px")             
+        div.top.attached#semantic_dialog_topattached(v-show="message" ":class"="[selected_action.class]")             
             i(":class"="[selected_action.icon]") 
             div.header {{ message }}
         
@@ -22,10 +22,10 @@
                                 input( type="text" placeholder="????-??-??" )
     
                 
-        div.image.content.attached(v-show="type == 'image'" style="background-color: black" v-image="{ active_image: active_image, position: position, navigated: navigated }")                                                           
+        div.image.content.attached#semantic_dialog_image_content(v-show="type == 'image'" v-image="{ active_image: active_image, position: position, navigated: navigated }")                                                           
             
         div.ui.grid.inverted.equal.width.bottom.attached(v-show="type != 'image'" ":class"="'segment'")        
-            div.column.center.aligned.mobile.only("style"="padding-bottom: 0px") 
+            div.column.center.aligned.mobile.only#semantic_dialog_mobile_actions 
                 div.center.aligned.column.actions
                     div(v-for="button in selected_action.buttons"
                     ":class"="[button.class]") {{button.label}}
@@ -113,13 +113,22 @@
             navigated: 0
             images: []
         computed:
+            ###*
+            #   Get window height.
+            ###
             windowHeight: ->
                 return window.innerHeight;
         
         methods:
+            ###*
+            #   Get language setting.
+            ###
             getLanguage: () ->
                 return @$root.settings.lang
 
+            ###*
+            #   Validates the calendar and displays buttons accordingly.
+            ###
             validateCalendar: ->
                 console.log "validating calendar"
                 setTimeout =>
@@ -136,7 +145,10 @@
                         @actions.calendar.buttons[1].class = 'ui approve disabled button'                                        
                 , 100             
                 
-            
+            ###*
+            #   Shows next image (if exist).
+            #   @param {evt} event (not used)
+            ###
             showNextImage: (evt) ->                                
                 if !(Number(@active_index+1) > Number(@images.length-1))                                   
                     @active_index = Number(@active_index) + 1
@@ -144,6 +156,10 @@
                     @setImagePosition()
                     @navigated = 2
                 
+            ###*
+            #   Shows previous image (if exist).
+            #   @param {evt} event (not used)
+            ###
             showPreviousImage: (evt) ->              
                 if !(Number(@active_index-1) < Number(0))          
                     @active_index = @active_index - 1
@@ -151,7 +167,10 @@
                     @setImagePosition()
                     @navigated = 1
             
-
+            ###*
+            #   Updates position in order to check if the user have navigated 
+            #   all to the left, right, in between or if there is a single image available.
+            ###
             setImagePosition: () ->
                 left = 0
                 middle = 1
@@ -171,7 +190,10 @@
                     @position = middle
          
                 
-
+            ###*
+            #   Shows a dialog according to a message type (image, calendar, error, ..).
+            #   @param {message} message to handle
+            ###
             handleMessage: (message) ->
                 @title = message.title
                 @message = message.message
@@ -240,6 +262,7 @@
             bus.$on('right_button_clicked', () => @showNextImage() );    
 
         beforeDestroy: ->
+            bus.$off 'show_message'  
             bus.$off 'left_button_clicked'
             bus.$off 'right_button_clicked'            
     }
@@ -248,6 +271,19 @@
     #image_modal {
         margin: 1rem auto !important;
         top: 5% !important;
+        background-color: black;
+    }
+    
+    #semantic_dialog_topattached {
+        margin: 5px;
+    }
+    
+    #semantic_dialog_image_content {
+        background-color: black;
+    }
+
+    #semantic_dialog_mobile_actions {
+        padding-bottom: 0px;
     }
 </style>
 
