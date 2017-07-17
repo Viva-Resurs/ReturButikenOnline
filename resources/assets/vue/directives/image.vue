@@ -9,16 +9,25 @@
             navigated = 0
             dragging_image = false
 
+            ###*
+            #   Handles left button click in overlay.             
+            ###
             leftButtonClicked = (e) ->                                      
                 $('#leftButton, #rightButton, #closeButton').css('visibility', 'hidden')                  
                 $('#leftButton, #rightButton, #closeButton').css('opacity', '0')  
                 bus.$emit 'left_button_clicked'   
 
+            ###*
+            #   Handles right button click in overlay.
+            ###
             rightButtonClicked = (e) ->                                
                 $('#leftButton, #rightButton, #closeButton').css('visibility', 'hidden')                                                  
                 $('#leftButton, #rightButton, #closeButton').css('opacity', '0')  
                 bus.$emit 'right_button_clicked' 
 
+            ###*
+            #   Initializes and add overlay buttons if they are not setup yet.           
+            ###
             addOverlayButtons = () ->                
                 leftButton = document.getElementById "leftButton" 
                 rightButton = document.getElementById "rightButton" 
@@ -78,6 +87,10 @@
             
                 hideButtons(leftButton, rightButton)
 
+            ###*
+            #   Hides or show overlay buttons depending on current position.
+            #   (to the left or to the right). 
+            ###
             hideButtons = (leftButton, rightButton) ->                
                 switch binding.value.position
                     when 0
@@ -93,6 +106,13 @@
                         leftButton.style.visibility = 'hidden' 
                         rightButton.style.visibility = 'hidden'
 
+            ###*
+            #   Uses images width and height in order to find the
+            #   most suitable width and height to fill the viewport.
+            #   @param {imageHeight} images height
+            #   @param {imageWidth} images width
+            #   @return {array} with adjusted height and width
+            ###
             getAdjustedBounds = (imageHeight, imageWidth) ->
                 newImageWidth = ""
                 newImageHeight = ""
@@ -132,6 +152,13 @@
                 
                 return [newImageHeight, newImageWidth]
       
+            ###*
+            #   Finds out images original width and height and makes image adjustments 
+            #   according to screen size. It also handles navigation using buttons or swiping to 
+            #   the right or left. 
+            #   @param {img} image to use
+            #   @param {path} path of image to use
+            ###
             setImageProperties = (img, path) ->  
                 if path   
                     img.src = path               
@@ -188,6 +215,10 @@
                         
                         imageBox = el.getBoundingClientRect()
 
+                        ###*
+                        #   Checks if image is dragged within the right or left area and 
+                        #   switches to next image in corresponding direction (if exist).
+                        ###
                         inArea = (position, img) ->
                             imageRect = img.getBoundingClientRect()                                
                             imageOffset = imageRect.left+imageRect.width/2
@@ -206,7 +237,7 @@
                         $(img).draggable({ 
                             axis: "x",                         
                             appendTo: 'parent',                        
-                            scroll: true,
+                            scroll: true,                            
                             create: (e) =>
                                 $( '#rightButton' ).css('display', 'initial')
                                 $(' #leftButton' ).css('display', 'initial')

@@ -1,7 +1,7 @@
 <script lang="coffee">
     module.exports =
         inserted: (el, binding) ->
-
+            # Initializes start calendar.
             if el.id == "interval_start"
                 $(el).calendar
                     ampm: false
@@ -14,7 +14,8 @@
                             return moment(date).format 'HH:mm'
                     onChange: binding.value
                     onShow:  $('.modal').modal('refresh')
-      
+            
+            # Initializes end calendar.
             if el.id == "interval_end"
                 $(el).calendar
                     ampm: false

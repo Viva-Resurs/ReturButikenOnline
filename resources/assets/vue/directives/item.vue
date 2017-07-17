@@ -1,6 +1,7 @@
 <script lang="coffee">
     module.exports =
         inserted: (el, binding) ->
+            # Sets up a pulse and fade transition effect when a item is added, removed or updated.
             if binding.value
                 $('#'+binding.value).transition(
                     animation : 'pulse'

@@ -43,8 +43,9 @@
             # Insert slides
             el.appendChild slides
             
-
-            # Set active image by determine position in wrapper
+            ###*
+            #   Set active image by determine position in wrapper
+            ###
             checkActive = ->
                 #Utgår från vänstra kanten + elementets bredd / 2
                 pos = el.scrollLeft + width/2
@@ -57,7 +58,9 @@
                     if index == active_image
                         Vue.set image, 'selected', true
             
-            #Configure overlay button according to screen type
+            ###*
+            #   Configure overlay button according to screen type
+            ###
             configureButton = (button, screenType, dir) ->                
                 button.className = dir+" "+"chevron circle icon"
                 button.style.position = "absolute"
@@ -93,7 +96,9 @@
 
                 return button    
             
-            #Overlay buttons
+            ###*
+            #   Adds overlay buttons (image count, left and right navigation)
+            ###
             addOverlayButtons = (type) ->                             
                 leftButton = document.getElementById "previewLeftButton" 
                 rightButton = document.getElementById "previewRightButton" 
@@ -129,7 +134,9 @@
                     hideLeftButton()
                     hideRightButton()
             
-            #Hide buttons if images are missing
+            ###*
+            #   Hides the left navigation button.
+            ###
             hideLeftButton = () ->
                 leftButton = document.getElementById "previewLeftButton" 
                 if leftButton
@@ -137,7 +144,9 @@
                         leftButton.style.visibility = 'hidden';               
                     else 
                         leftButton.style.visibility = 'visible';                 
-
+            ###*
+            #   Hides the right navigation button.
+            ###
             hideRightButton = () ->    
                 rightButton = document.getElementById "previewRightButton"
                 if rightButton 
@@ -146,23 +155,35 @@
                     else         
                         rightButton.style.visibility = 'visible';                            
                         
+            
+            ###*
+            #   Handles left navigation button click.
+            ###
             leftButtonClicked = (e) ->               
                 checkActive()
                 if slides.refs[active_image-1]
                     active_image = active_image - 1
                     snapTo()
-                               
+
+            ###*
+            #   Handles right navigation button click.
+            ###                   
             rightButtonClicked = (e) ->
                 checkActive()
                 if slides.refs[active_image+1]
                     active_image = active_image + 1
                     snapTo()
-                              
-            # Swipe/scroll in wrapper
+
+            ###*                              
+            #   Handles swipe left and right using scroll and offset.
+            ###
             swipeTo = (offset) ->
                 el.scrollLeft = el.scrollLeft + offset
                 checkActive()
-
+            
+            ###*
+            #  Snaps image into view using its index number.
+            ###
             snapTo = (index) ->
                 if typeof index == 'number'
                     active_image = index
@@ -179,7 +200,7 @@
                     else 
                         labelText = document.createTextNode(active_image+1+"/"+images.length)
                         numImagesLabel.appendChild(labelText)
-
+            
             # Pointer position
             active = false
             position =
@@ -198,7 +219,10 @@
             startedClicking = 0
             stoppedClicking = 0
             
-            # Handle pointer-events
+            ###*
+            #   Handles down (mouse button-down) event.
+            #   @param {e} event on mouse button down
+            ###
             handleDown = (e) ->               
                 e.preventDefault() 
                 startedClicking = e.timeStamp
@@ -206,7 +230,11 @@
                 moved = false               
                 setPosition e.clientX, e.clientY
                 active = true
-            
+
+            ###*
+            #   Handles up (mouse button-up) event.
+            #   @param {e} event on mouse button up
+            ###            
             handleUp   = (e) ->
                 e.preventDefault()     
                 stoppedClicking = e.timeStamp
@@ -217,7 +245,11 @@
                 snapTo()
                 active = false
                 el.removeEventListener("mousemove", handleMove, false); 
-            
+                        
+            ###*
+            #   Handles move (mouse button-move) event.
+            #   @param {e} event on mouse move
+            ###
             handleMove = (e) ->
 
                 e.preventDefault()                  
@@ -231,14 +263,21 @@
                 swipeTo delta.x * 2
                 setPosition e.clientX, e.clientY
             
-            #Handle touch-events
+            ###
+            #   Handles touch start event. 
+            #   @param {e} touch start event
+            ###
             handleTouchStart = (e) ->     
                 moved = false           
                 e.preventDefault()                
                 t = e.touches[0]
                 setPosition t.screenX, t.screenY
                 active = true
-                
+
+            ###
+            #   Handles touch down/move event.
+            #   @param {e} touch move event
+            ###                            
             handleTouchMove = (e) ->
                 e.preventDefault()
                 moved = true
@@ -253,12 +292,19 @@
                 swipeTo delta.x * 2
                 setPosition t.screenX, t.screenY
             
+            ###*
+            #   Opens a image preview of active image.
+            ###
             openImagePreview = () ->
                 bus.$emit 'show_message',                        
                         type: 'image'
                         index: active_image
                         images: images
 
+            ###
+            #   Handles end/release event.
+            #   @param {e} touch end event
+            ###                            
             handleTouchEnd = (e) ->
                 if !moved
                     openImagePreview()
@@ -285,6 +331,10 @@
 
             # Resize wrapper and slides
             timer = false
+            
+            ###*
+            #  Sets image dimenstions in order to fit screen image area.
+            ###
             setDimensions = ->
                 # Give browser some time in the event storm
                 if timer
@@ -342,8 +392,7 @@
                 
             # When browser is resized
             window.addEventListener "resize", setDimensions
-            #addOverlayButtons()
-
+  
             # Wait while loading slides
             loader = setInterval ->
                 for slide in slides.refs

@@ -4,13 +4,20 @@
             dragged = false # Currently dragged element
             cardIsDragged = false
 
+            ###*
+            #   Clears the states of each childnode. 
+            #   (Makes each node visible again).
+            ###
             clearStates = ->
                 for element in el.childNodes
                     element.style.opacity = '1.0'            
             
             el.addEventListener 'mouseup', clearStates          
 
-            # Set longpress timer to 200ms
+            ###*
+            #   Handles card click event while its not dragged.
+            #   Triggers image preview on click.
+            ###
             clickedCard = (evt) ->
                 if !cardIsDragged
                     bus.$emit 'show_message',
@@ -19,6 +26,11 @@
                         index: evt.target.card.image.position
                         images: binding.value                                        
             
+            ###*
+            #   Creates a new array of images from passed 
+            #   on binding value. 
+            #   @return {images} list of images
+            ###
             getImages = () ->
                 images = []
                 binded_images = binding.value
@@ -26,6 +38,10 @@
                     images.push image                
                 return images
 
+            ###*
+            #   Sets up all image cards. 
+            #   Handles moving around and removing cards/images.
+            ###
             setupCards = ->
                 getImages()
                 # Setup each card
