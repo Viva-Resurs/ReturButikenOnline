@@ -102,7 +102,7 @@
 
             ###*
             #   Returns a formatted tooltip replacing newline(\n) with <br>.
-            #   @param {string} original text
+            #   @param {info} original text
             #   @return {string} formatted text
             ###
             formatTooltip: (info) ->

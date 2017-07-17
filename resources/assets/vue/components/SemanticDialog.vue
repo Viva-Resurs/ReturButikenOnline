@@ -135,9 +135,7 @@
                     range = [
                         $('#interval_start').calendar('get date'),
                         $('#interval_end').calendar('get date')
-                    ]
-                    console.log range[0]
-                    console.log range[1]
+                    ]     
                     # Just check if a date is selected
                     if range[0] && range[1]
                         @actions.calendar.buttons[1].class = 'ui approve primary button'
