@@ -7,17 +7,16 @@
             div.ui.grid.equal.width
                 div.ui.left.aligned.column
                     h2.ui.header {{ article.name }}
-                        div.ui.black.horizontal.label(
-                            style="position: relative; top: -2px; left: 15px;"
+                        div.ui.black.horizontal.label#shop_preview_category_label(                    
                             v-for="category in article.categories"
                             )
                                 | {{ category.name }}
 
-            div( v-if="article.images && article.images.length>0" style="position: relative; padding-top: 10px")
+            div#shop_preview_images( v-if="article.images && article.images.length>0")
                 div.ui.basic.segment.center.aligned.preview_header(
                     v-swipe="{images: article.images, screenType: screenType }")
 
-            div.description(style="white-space: pre-wrap; padding-top: 10px") {{ article.desc }}
+            div.description#shop_preview_description {{ article.desc }}
             div.ui.hidden.divider
 
             div.ui.grid.equal.width
@@ -33,7 +32,7 @@
                     div.row
                         h3.right.aligned {{ article.price }} {{ translate('article_preview.price_currency_label') }}
  
-            div.ui.bottom.aligned.stackable.grid.mobile.reversed
+            div.ui.bottom.aligned.stackable.grid.mobile.reversed#shop_preview_contacts
                 div.left.aligned.column.eight.wide#contactcards
                     h4.ui.sub.header {{ translate('article_preview.contact_header') }}
                     template( v-for="contact in article.contacts" )
@@ -53,47 +52,12 @@
                 span
                     b {{ translate('article_preview.article_number_label') }}
                     | &nbsp;&nbsp;{{ $root.displayArtNR(article) }}
-            div.ui.hidden.divider
-            div.ui.segment( v-if="mode!='show'" )
-                div.ui.top.attached.label( @click="toggleDetails()" )
-                    h4.ui.sub.header {{ translate('article_preview.publish_info_header') }}
-                div.ui.grid.equal.width.stackable#details
-                    div.row
-                        div.column( v-if="article.publish_interval" )
-                            h4.ui.sub.header {{ translate('article_preview.publish_interval_header') }}
-                            i.ui.icon.time.icon-style
-                            span {{ formatInterval(article.publish_interval) }}
-                        div.column( v-if="article.bidding_interval" )
-                            h4.ui.sub.header {{ translate('article_preview.bidding_interval_header') }}
-                            i.ui.icon.time.icon-style
-                            span {{ formatInterval(article.bidding_interval) }}
-                        div.column( v-if="!article.publish_interval && !article.bidding_interval" )
-                            h4.ui.sub.header
-                            i.ui.icon.warning
-                            i {{ translate('article_preview.not_published') }}
-                    div.row
-                        div.column(v-if="article.public==true")
-                            h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
-                            i.ui.icon.green.world
-                            | {{ translate('article_preview.published_all') }}
-                        div.column(v-if="article.public!=true")
-                            h4.ui.sub.header {{ translate('article_preview.published_for_header') }}
-                            i.ui.icon.red.industry
-                            | {{ translate('article_preview.published_intra') }}
-
             div.ui.divider
             div.ui.grid
                 div.column.right.aligned
-                    div.ui.button.secondary( v-if="mode=='show'"
+                    div.ui.button.secondary(
                         @click="goBack()"
                     ) {{ translate('nav.back') }}
-                    div.ui.button.secondary( v-if="mode!='show'"
-                        @click="modifyArticle"
-                    ) {{ translate('article_preview.article_modify') }}
-                    div.ui.button.primary( v-if="mode!='show'"
-                        @click="attemptPublish"
-                    ) {{ translate('article_preview.article_publish') }}
-
 </template>
 
 <script lang="coffee">
@@ -106,20 +70,11 @@
             UserCard: require '../user/card.vue'
 
         methods:
-            toggleDetails: ->
-                $('#details').transition
-                    animation  : 'slide down'
-                    onShow : =>
-                        @expandDetails = true
-                    onHide : =>
-                        @expandDetails = false
-
-            formatInterval: (interval) ->
-                dates = String(interval).split '|'
-                dates[0] = dates[0].substr 0, dates[0].lastIndexOf ':'
-                dates[1] = dates[1].substr 0, dates[1].lastIndexOf ':'
-                return "#{dates[0]} - #{dates[1]}"
-
+            ###*
+            #   Returns dates splitted by ':'. 
+            #   @param {d} date string 
+            #   @return {dates} start date and end date
+            ###
             formatDate: (d) ->
                 date = String d
                 return date.substr 0, date.lastIndexOf ':'
@@ -129,7 +84,23 @@
             $('body').scrollTop(0)
 </script>
 <style>
-    .ui.stackable.grid {
+    #shop_preview_category_label {
+        position: relative; 
+        top: -2px; 
+        left: 15px;
+    }
+    
+    #shop_preview_images {
+        position: relative; 
+        padding-top: 10px;
+    }
+
+    #shop_preview_description {
+        white-space: pre-wrap; 
+        padding-top: 10px;
+    }
+
+    #shop_preview_contacts {
         width: auto;
     }
 </style>

@@ -1,7 +1,7 @@
 <template lang="pug">
-    div.no-top-padding(style="margin-top: 10px")        
+    div.no-top-padding#shop_desktop_list        
         div.ui.equal.width.grid
-            div.row.middle.aligned(style="padding-top: 10px; padding-bottom: 10px")
+            div.row.middle.aligned#shop_desktop_topmenu
                 div.column.four.wide
                     search( ":search"="search" ":results"="countItems" )
                 div.column.twelve.wide
@@ -15,40 +15,43 @@
                 div.ui.column.warning.message
                     p {{ (search!='') ? translate('no_results') : translate('empty') }}
             div.row( v-if="countItems > 0" )
-                table.ui.very.celled.table.unstackable
+                table.ui.very.basic.table.unstackable
                     tbody( v-item="location && location.hash ? location.hash.substr(1) : ''" )
                         tr(                            
                             v-for="(item, index) in filterItems"
                             ":id"="item.id" )
-                            td.selectable(style="padding: 10px")
-                                div.ui.grid(style="max-height: 200px")
+                            td.selectable.no-padding#shop_desktop_row
+                                div.ui.celled.grid.no-padding#shop_desktop_row_grid
                                     div.row
-                                        div.column.three.wide                                        
-                                            img.ui.rounded.image(
+                                        div.column.two.wide.no-padding                                        
+                                            img.ui.image#shop_desktop_row_image(
                                                 ":src"="item.images.length > 0 ? item.images[0].thumb_path : 'images/no_image.png'" 
-                                                style="max-height: 130px; background-color: black;"
                                                 @click="previewImages(item.images)") 
-                                            div.ui.top.right.attached.circular.white.label(v-if="item.images.length > 0" 
-                                                style="margin-left: 0px; margin-top: -5px") {{ item.images.length }}                                 
+                                            div.ui.top.right.attached.circular.white.label#shop_desktop_row_image_label(v-if="item.images.length > 1" 
+                                                ) {{ item.images.length }}                                 
                                             
-                                        div.column.nine.wide.link(@click="previewItem(item)")
+                                        div.column.eleven.wide.link#shop_desktop_row_column(@click="previewItem(item)")
                                             div.row.item
                                                 div.content                                            
-                                                    div.ui.header {{ item.name }} {{ (item.amount > 1) ? '('+item.amount+')' : '' }}
-                                                span( v-for="(post, column_index) in item.categories")
-                                                    | {{post.name}}
-                                                    span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}
-                                            div.row(style="white-space: no-wrap; overflow: hidden; max-height: 60px;")
-                                                p(style="max-height: 80px; text-overflow: ellipse; white-space: pre-wrap") {{ item.desc }}
+                                                    h3.ui.header {{ item.name }} 
+                                                        div.ui.tiny.label#shop_desktop_amount_label {{ (item.amount > 1) ? item.amount : '' }} {{ translate('article.pieces') }} 
+                                                    
+                                            div.row#shop_desktop_row_desc
+                                                p#shop_desktop_row_desc_p {{ item.desc }}
                                             div.row(v-if="item.desc.length > 200") ...
                                             
-
-                                        div.column.four.wide
+                                            div.ui.red.bottom.right.attached.tiny.label#shop_desktop_category_label(v-for="(post, column_index) in item.categories")
+                                                | {{post.name}}
+                                                span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}                                            
+                                    
+                                        div.column.three.wide.center.aligned                                            
+                                            div.ui.small.label#shop_desktop_segment_bid_interval_label {{ getDates(item.bidding_interval,0) }} - {{ getDates(item.bidding_interval,1) }}
                                             
-                                            div.ui.segment.attached.fluid.center.aligned(style="height: 130px; border-radius: 5px")
-                                                h2 {{ item.price }} {{ translate('article_card.price_currency') }}                                                                         
-                                                div.ui.label.primary.button {{ translate('shop.buy') }}                                                               
-                                                div.ui.bottom.attached.small.black.label(style="border-radius: 5px") {{ getDates(item.bidding_interval,0) }} &#8594 {{ getDates(item.bidding_interval,1) }}
+                                            div.ui.compact.tiny.message#shop_desktop_segment_message
+                                                h3 {{ item.price }} {{ translate('article_card.price_currency') }}                                                                         
+                                            
+                                            div.ui.small.label.primary.button#shop_desktop_segment_button {{ translate('shop.buy') }}                                                               
+                                        
                                                 
 
         div.row( v-if="countItems > 0 && search!=''" )
@@ -73,29 +76,56 @@
             Paginate: require '../../tools/Paginate.vue'
             Sort: require '../../tools/Sort.vue'
         computed:
+            ###*
+            #   Search/Filters items by name
+            #   @return {item} matched items
+            ###
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','desc','categories']
                     .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
+            
+            ###*
+            #   Returns number of matched results.
+            #   @return {number} number of filtered items
+            ###
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','desc','categories']
                     .length
         methods:
+            ###*
+            #   Returns a formatted tooltip replacing newline(\n) with <br>.
+            #   @param {info} original text 
+            #   @return {string} formatted text
+            ###
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
+            
+            ###*
+            #   Preview article.
+            #   @param {item} item to preview
+            ###
+            
             previewItem: (item) ->
                 window.location.href = @$root.encodeArtNR(item)+location.hash
             
+            ###*
+            #   Return a the start or the end of a interval.
+            #   @param {interval} interval to check
+            #   @param {type} 0 or 1 (start or end)
+            ###
             getDates: (interval, type) ->
-                console.log interval
                 divided = interval.split("| ")
                 return divided[type].split(" ")[0]   
 
-
+            ###*
+            #   Preview images. 
+            #   @param {images} images to preview
+            ###
             previewImages: (images) ->  
                 if (images.length > 0)
                     selected_index = 0
@@ -104,3 +134,96 @@
                         index: selected_index
                         images: images
 </script>
+
+<style>
+    #shop_desktop_list {
+        margin-top: 10px;
+    }
+
+    #shop_desktop_topmenu {
+        padding-top: 10px; 
+        padding-bottom: 10px;
+    }
+    #shop_desktop_row {
+        margin-top: 0px !important;
+    }
+
+    #shop_desktop_row_column {
+        padding: 6px;
+    }
+    
+    #shop_desktop_row_grid {
+        max-height: 200px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    #shop_desktop_row_image {        
+        max-height: 130px;         
+        background-color: black;
+    }
+
+    #shop_desktop_row_image_label {
+        position: absolute;
+        right: 5px;        
+        top: 5px;
+        
+    }
+
+    #shop_desktop_amount_label {
+        position: absolute; 
+        right: 5px; 
+        margin-top: 2px;
+    }
+
+    #shop_desktop_row_desc { 
+        overflow: hidden; 
+        max-height: 60px;
+        position: absolute;
+        top: 25px;
+    }
+
+    #shop_desktop_row_desc_p {
+        max-height: 80px;  
+        white-space: pre-wrap;
+    }
+
+    #shop_desktop_category_label {
+        margin-right: 5px; 
+        margin-bottom: 5px; 
+        border-radius: 0px;
+    }
+
+    #shop_desktop_segment_bid {
+        height: 130px; 
+        border-radius: 5px;                
+        margin: 0px;
+    }
+
+    #shop_desktop_segment_bid_interval_label {
+        position: absolute; 
+        top: 5px; 
+        right: 3px; 
+        left: 5px; 
+        border-radius: 0px
+        
+    }
+
+    #shop_desktop_segment_message {
+        position: absolute; 
+        top: 20px; 
+        bottom: 20px; 
+        left: 5px; 
+        right: 5px; 
+        border-radius: 0px
+    }
+
+    #shop_desktop_segment_button {
+        position: absolute; 
+        bottom: 5px; 
+        right: 5px; 
+        left: 4px; 
+        border-radius: 0px
+    }
+
+</style>

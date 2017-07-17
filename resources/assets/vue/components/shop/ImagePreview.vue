@@ -1,6 +1,6 @@
 <template lang="pug">
-    div.ui.modal.middle.aligned.event-modal#image_modal("class"="basic fullscreen" "style"="background-color: black")                
-        div.image.content.attached(style="background-color: black" v-image="{ active_image: active_image, position: position, navigated: navigated }")                                                              
+    div.ui.modal.middle.aligned.event-modal#image_modal("class"="basic fullscreen")                
+        div.image.content.attached#shop_image_preview_content(v-image="{ active_image: active_image, position: position, navigated: navigated }")                                                              
 </template>
 
 <script lang="coffee">
@@ -28,11 +28,12 @@
             position: ""
             navigated: 0
             images: []
-        computed:
-            windowHeight: ->
-                return window.innerHeight;
         
-        methods:           
+        methods:         
+            ###*
+            #   Shows next image (if exist).
+            #   @param {evt} event (not used)
+            ###
             showNextImage: (evt) ->                                
                 if !(Number(@active_index+1) > Number(@images.length-1))                                   
                     @active_index = Number(@active_index) + 1
@@ -40,6 +41,10 @@
                     @setImagePosition()
                     @navigated = 2
                 
+            ###*
+            #   Shows previous image (if exist).
+            #   @param {evt} event (not used)
+            ###
             showPreviousImage: (evt) ->              
                 if !(Number(@active_index-1) < Number(0))          
                     @active_index = @active_index - 1
@@ -47,6 +52,10 @@
                     @setImagePosition()
                     @navigated = 1
 
+            ###*
+            #   Updates position in order to check if the user have navigated 
+            #   all to the left, right, in between or if there is a single image available.
+            ###
             setImagePosition: () ->
                 left = 0
                 middle = 1
@@ -65,6 +74,10 @@
                 else 
                     @position = middle
 
+            ###*
+            #   Displays a image (from message) inside a modal.
+            #   @param {message} message with image to show
+            ###
             showImage: (message) ->
                 @title = message.title
                 @message = message.message
@@ -93,6 +106,7 @@
             bus.$on('right_button_clicked', () => @showNextImage() );    
 
         beforeDestroy: ->
+            bus.$off 'show_message'
             bus.$off 'left_button_clicked'
             bus.$off 'right_button_clicked'            
     }
@@ -100,7 +114,11 @@
 <style>
     #image_modal {
         margin: 1rem auto !important;
-        top: 5% !important;
+        top: 5% !important;        
+    }
+
+    #image_modal, #shop_image_preview_content {
+        background-color: black
     }
 </style>
 

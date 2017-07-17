@@ -1,5 +1,5 @@
 <template lang="pug">
-    div.no-top-padding(style="margin-top: 10px")        
+    div.no-top-padding#shop_mobile_root_element        
         div.ui.top.attached.menu
             div.left.menu
                 search( ":search"="search" ":results"="countItems" )
@@ -18,7 +18,7 @@
             div.row( v-if="countItems == 0" )
                 div.ui.column.warning.message
                     p {{ (search!='') ? translate('no_results') : translate('empty') }}
-            div.row( v-if="countItems > 0" ":style"="screenType == 'tablet' ? 'padding-top: 30px' : ''")
+            div.row( v-if="countItems > 0" ":id"="screenType == 'tablet' ? 'shop_mobile_tablet_row' : ''")
                 article-card(
                     v-for="(item, index) in filterItems"
                     ":item"="item"
@@ -59,28 +59,60 @@
             order: 'updated_at'
             desc: 1
         computed:
+            ###*
+            #   Search/Filters items by name
+            #   @return {item} matched items
+            ###
             filterItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','description','categories']
                     .sort (a, b) => @deepSort a, b, @order, @desc
                     .filter (item, index) => @rangeFilter item, index, this
+            
+            ###*
+            #   Returns number of matched results.
+            #   @return {number} number of filtered items
+            ###
             countItems: ->
                 @items
                     .filter (item) => item.removed != true
                     .filter (item) => @filterArrayBy item, @search, ['name','description','categories']
                     .length
         methods:
+            ###*
+            #   Triggers position change to previous page.
+            ###
             prevPage: ->
                 if @offset-@maxItems < 0
                     return @firstPage()
                 bus.$emit 'offset_changed', @offset - @maxItems
+            
+            ###*
+            #   Triggers position change to next page.
+            ###
             nextPage: ->
                 window.scrollTo 0, 0
                 if @offset >= @total-@maxItems
                     return @lastPage()
                 bus.$emit 'offset_changed', @offset + @maxItems
 
+            ###*
+            #   Returns a formatted tooltip replacing newline(\n) with <br>.
+            #   @param {info} original text
+            #   @return {string} formatted text
+            ###
             formatTooltip: (info) ->
                 return if info then info.replace /\n/g, '<br>' else ''
 </script>
+
+<style>
+    #shop_mobile_tablet_row {
+        padding-top: 25px !important;
+    }
+
+    #shop_mobile_root_element {
+        margin-top: 10px;
+    }
+</style>
+
