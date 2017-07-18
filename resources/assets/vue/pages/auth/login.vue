@@ -30,6 +30,10 @@
                 password: ''
             myform: []
         methods:
+            ###*
+            #   Attempt to login to the backend.            
+            #   @param {tries} number of attempts
+            ###
             attemptLogin: (tries) ->
                 @$http.post('login',@login).then(
                     (response) =>
