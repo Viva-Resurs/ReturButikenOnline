@@ -41,11 +41,9 @@
         components:
             UserCard: require '../../components/user/card.vue'
             StartOverview: require '../../components/overview/Start.vue'
-
         data: ->
             user: false
             article_tree: false
-
         methods:
             ###*
             #   Get a article by using its id. 
@@ -65,7 +63,7 @@
                                 if Number(article.id) == Number(id)
                                     return article
                 return 0
-
+            
             ###*
             #   Gets a overview article tree from backend.
             ###
@@ -79,7 +77,7 @@
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
-
+            
             ###*
             #   Get users own articles from backend. 
             ###
@@ -93,16 +91,15 @@
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
-
-        
+                        
             ###*
             #   Redirect user to article preview.
             #   @param {article} article to preview
             ###
             previewArticle: (article) ->
                 @$router.push @$root.encodeArtNR article
-
-              ###*
+            
+            ###*
             #   Asks the user if it want to remove a article.
             #   @param {article} article to remove
             ###
@@ -112,7 +109,7 @@
                     message: @$root.translate('article_list.remove_article_message')
                     type:'confirm'
                     cb: => @removeArticle article
-
+                        
             ###*
             #   Removes a article from the backend. 
             #   @param {article} article to remove  
@@ -126,7 +123,7 @@
                         Vue.set article, 'removed', true
                     (response) => bus.$emit 'error', response.data
                 )
-
+            
             ###*
             #   Attempt to update a article in the backend.
             #   @param {article} article to update
@@ -134,7 +131,7 @@
             attemptUpdate: (article) ->
                 # Validation
                 @updateArticle article
-
+            
             ###*
             #   Updates a article in the backend.
             #   @param {article} article to update
@@ -147,7 +144,7 @@
                             details: @$root.translate('article_list.article_updated')
                     (response) => bus.$emit 'error', response.data
                 )
-
+            
             ###*
             #   Sets users overview.
             ###
@@ -157,14 +154,12 @@
                     @getOverview()
                 else
                     @getArticleOverview()
-
         created: ->
             # Check if User is ready
             if @$root.user
                 @setUser()
             # When User is changed
             bus.$on 'user_changed', @setUser
-
             bus.$on 'ui_item_remove', (item) => @attemptRemove item
             bus.$on 'ui_item_preview', (item) => @previewArticle item
             bus.$on 'ui_item_changed', (item) => @attemptUpdate item
@@ -186,7 +181,6 @@
                 if item
                     Vue.set item, 'bidding_interval', new_value
                     bus.$emit 'start_item_changed', item
-
         beforeDestroy: ->
             bus.$off 'user_changed', @setUser
             bus.$off 'start_item_remove'
@@ -198,11 +192,12 @@
 </script>
 
 <style>
-    #overview_pages_grid {
+    #overview_pages_grid{
         margin-top: 0px;
     }
-
     #overview_pages_tablet_column, #overview_pages_mobile_column {
-        position: relative; top: -10px;
-    }    
+        position: relative; 
+        top: -10px;
+    }
+    
 </style>
