@@ -23,7 +23,9 @@
             columns: [ 'token' ]
 
         methods:
-        
+            ###*
+            #   Sends a token create request to backend.             
+            ###
             createToken: () ->
                 @$http.post('api/tokens').then(
                     (response) =>                        
@@ -34,9 +36,17 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Attempt to remove a token. 
+            #   @param {token} token to remove
+            ###
             attemptRemove: (token) ->
                 @removeToken token
 
+            ###*
+            #   Removes a token from the backend. 
+            #   @param {token} token to remove  
+            ###
             removeToken: (token) ->
                 @$http.delete('api/tokens/'+token.id).then(
                     (response) =>
@@ -45,6 +55,9 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Gets a list of tokens from backend.
+            ###
             getTokens: ->
                 @$root.loading = true;
                 @$http.get('api/tokens').then(
