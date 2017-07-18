@@ -35,12 +35,11 @@
         "wrong_publish_interval": "Välj ett nuvarande eller framtida publiceringsintervall",
         "wrong_bidding_interval": "Välj ett nuvarande eller framtida budgivningsintervall"
     },
-
     "article_form": {
         "header": "Artikel",
         "name_label": "Varunamn:",
         "name_placeholder": "Varunamn",
-        "name_validate": "Ange artikel namn",
+        "name_validate": "Ange artikelns namn",
         "category_select_label": "Välj varukategori:",
         "category_default_text": "Välj kategori",
         "desc_label": "Beskrivning av varan:",
@@ -49,8 +48,8 @@
         "amount_placeholder": "Ange antal artiklar här",
         "price_label": "Pris",
         "price_currency_label": "Kr",
-        "price_placeholder": "Ange ditt pris här",
-        "price_validate": "Ange ditt pris",
+        "price_placeholder": "Ange föremålets pris här",
+        "price_validate": "Ange föremålets pris",
         "images_label": "Bilder:",
         "choose_date": "Välj datum",
         "publish_interval_label": "Publicera inom datumintervall",
