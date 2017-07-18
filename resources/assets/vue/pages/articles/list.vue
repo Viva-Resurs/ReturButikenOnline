@@ -45,6 +45,10 @@
             items: []
 
         methods:
+            ###*
+            #   Asks the user if it want to remove the article.
+            #   @param {article} article to remove
+            ###
             attemptRemove: (article) ->
                 bus.$emit 'show_message',
                     title: @$root.translate('article_list.remove_article_title') + " \""+article.name+"\""
@@ -52,6 +56,10 @@
                     type:'confirm'
                     cb: => @removeArticle article
 
+            ###*
+            #   Removes a article from the backend. 
+            #   @param {article} article to remove  
+            ###
             removeArticle: (article) ->
                 @$http.delete('api/articles/'+article.id).then(
                     (response) =>
@@ -62,10 +70,18 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #  Attempt to update a article in the backend.
+            #  @param {article} article to update
+            ###
             attemptUpdate: (article) ->
                 # Validation
                 @updateArticle article
 
+            ###*
+            #  Updates a article in the backend.
+            #  @param {article} article to update
+            ###
             updateArticle: (article) ->
                 @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
@@ -77,9 +93,16 @@
                         bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Redirect user to article preview.
+            #   @param {article} article to preview
+            ###
             previewArticle: (article) ->
                 @$router.push @$root.encodeArtNR article
 
+            ###*
+            #   Returns a list of articles from backend.
+            ###
             getArticles: ->
                 @$root.loading = true
                 @$http.get('api/articles').then(

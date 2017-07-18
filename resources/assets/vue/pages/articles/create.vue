@@ -32,6 +32,9 @@
             categories: null
             contacts: null
         methods:
+            ###*
+            #   Returns a list of categores from backend.
+            ###
             getCategoryList: ->
                 @$http.get('api/categories').then(
                     (response) =>
@@ -39,6 +42,10 @@
                     (response) =>
                         bus.$emit 'error', response.data
                 )
+            
+            ###*
+            #   Returns a list of contacts from backend.
+            ###
             getContactList: ->
                 @$http.get('api/contacts').then(
                     (response) =>
@@ -48,6 +55,11 @@
                     (response) =>
                         bus.$emit 'error', response.data
                 )
+            
+            ###*
+            #   Sends a article create request to backend. 
+            #   @param {article} article to create
+            ###
             createArticle: (article) ->
                 @$http.post('api/articles', article).then(
                     (response) =>

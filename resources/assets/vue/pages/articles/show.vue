@@ -15,8 +15,17 @@
         data: ->
             article: null
         methods:
+            ###*
+            #   Get a article by using its article nr. 
+            #   @param {articleNr} article number to use
+            ###
             getArticleByArtNR: (articleNR) ->
                 @getArticle @$root.decodeArtNR articleNR
+            
+            ###*
+            #   Get a article from backend using its article id. 
+            #   @param {id} id of article
+            ###
             getArticle: (id) ->
                 @$root.loading = true
                 @$http.get('api/articles/'+id).then(

@@ -24,6 +24,10 @@
             categories: null
             contacts: null
         methods:
+            ###*
+            #   Get a article from backend using its article id. 
+            #   @param {id} id of article
+            ###
             getArticle: (id) ->
                 @$root.loading = true
                 @$http.get('api/articles/'+id).then(
@@ -36,6 +40,10 @@
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
+            
+            ###*
+            #   Returns a list of categores from backend.
+            ###
             getCategoryList: ->
                 @$http.get('api/categories').then(
                     (response) =>
@@ -43,6 +51,10 @@
                     (response) =>
                         bus.$emit 'error', response.data
                 )
+            
+            ###*
+            #   Returns a list of contacts from backend.
+            ###
             getContactList: ->
                 @$http.get('api/contacts').then(
                     (response) =>
@@ -53,6 +65,12 @@
                     (response) =>
                         bus.$emit 'error', response.data
                 )
+            
+  
+            ###*
+            #   Updates a article in the backend.
+            #   @param {article} article to update
+            ###
             updateArticle: (article) ->
                 @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
