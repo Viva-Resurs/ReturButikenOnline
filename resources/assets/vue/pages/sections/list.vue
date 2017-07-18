@@ -41,21 +41,27 @@
             itemsNew: []
             columns: ['name']
         methods:
+            ###*
+            #   Adds a item to the new items array.
+            ###
             addItem: ->
                 @itemsNew.push id_new: @itemsNew.length
 
+            ###*
+            #   Attempt to create a section.
+            #   @param {section} section to use
+            ###
             attemptCreate: (section) ->
                 # Validation
                 @createSection(section)
 
+            ###*
+            #   Sends a section create request to backend. 
+            #   @param {new_section} section to create
+            ###
             createSection: (new_section) ->
                 @$http.post('api/sections', new_section).then(
                     (response) =>
-                        # Remove new items that are not yet created
-                        #if !section.id
-
-                        #    return false
-                        #@removeSection new_section
                         for index, ob of @itemsNew
                             if Number(ob.id_new) == Number(new_section.id_new)
                                 @itemsNew.splice index, 1
@@ -66,15 +72,27 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Edit a item in the section list.
+            #   @param {item} item to edit
+            ###
             editItem: (item) ->
                 Vue.set item, 'edit', true
                 for key in @columns
                     Vue.set item, key+'_new', item[key]
                     Vue.set item, key+'_sv_new', item[key+'_sv']
 
+            ###*
+            #   Revert changes of item. 
+            #   @param {item} item to revert.
+            ###
             revertItem: (item) ->
                 Vue.set item, 'edit', false
 
+            ###*
+            #   Attempt to updates a section in the backend.
+            #   @param {item} section to update
+            ###
             attemptUpdate: (item) ->
                 Vue.set item, 'edit', false
                 for key in @columns
@@ -88,6 +106,10 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Attempt to remove a section. 
+            #   @param {section} section to remove
+            ###
             attemptRemove: (section) ->
                 bus.$emit 'show_message',
                     title: @$root.translate('section_list.remove_section_title') + " \""+section.name+"\""
@@ -95,6 +117,10 @@
                     type:'confirm'
                     cb: => @removeSection section
 
+            ###*
+            #   Removes a section from the backend. 
+            #   @param {section} section to remove  
+            ###
             removeSection: (section) ->
                 @$http.delete('api/sections/'+section.id).then(
                     (response) =>
@@ -106,6 +132,9 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Gets a list of sections from backend.
+            ###
             getSections: ->
                 @$root.loading = true
                 @$http.get('api/sections').then(
