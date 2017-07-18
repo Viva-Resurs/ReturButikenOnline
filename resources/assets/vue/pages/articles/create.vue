@@ -33,7 +33,7 @@
             contacts: null
         methods:
             ###*
-            #   Returns a list of categores from backend.
+            #   Gets a list of categores from backend.
             ###
             getCategoryList: ->
                 @$http.get('api/categories').then(
@@ -44,7 +44,7 @@
                 )
             
             ###*
-            #   Returns a list of contacts from backend.
+            #   Gets a list of contacts from backend.
             ###
             getContactList: ->
                 @$http.get('api/contacts').then(

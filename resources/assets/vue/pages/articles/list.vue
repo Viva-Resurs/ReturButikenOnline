@@ -46,7 +46,7 @@
 
         methods:
             ###*
-            #   Asks the user if it want to remove the article.
+            #   Asks the user if it want to remove a article.
             #   @param {article} article to remove
             ###
             attemptRemove: (article) ->
@@ -71,16 +71,16 @@
                 )
 
             ###*
-            #  Attempt to update a article in the backend.
-            #  @param {article} article to update
+            #   Attempt to update a article in the backend.
+            #   @param {article} article to update
             ###
             attemptUpdate: (article) ->
                 # Validation
                 @updateArticle article
 
             ###*
-            #  Updates a article in the backend.
-            #  @param {article} article to update
+            #   Updates a article in the backend.
+            #   @param {article} article to update
             ###
             updateArticle: (article) ->
                 @$http.put('api/articles/'+article.id, article).then(
@@ -101,7 +101,7 @@
                 @$router.push @$root.encodeArtNR article
 
             ###*
-            #   Returns a list of articles from backend.
+            #   Gets a list of articles from backend.
             ###
             getArticles: ->
                 @$root.loading = true
