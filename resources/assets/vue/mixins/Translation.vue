@@ -2,6 +2,11 @@
     module.exports =
         name: 'Translation'
         methods:
+            ###*
+            #   Translates a label using a defined language and returns it.
+            #   @param {label} original label
+            #   @return {label} translation from label 
+            ###
             translate: (label) ->
                 # Use this data
                 lang = @$root.language_lib[@$root.settings.lang]
@@ -32,7 +37,11 @@
                     if process.env.NODE_ENV == "development"
                         console.warn 'Missing lang-data for '+label
                     return label
-            getLanguage: () ->
-                #get the language variable for translations
+            
+            ###*
+            #   Get the language variable for translations.
+            #   @return {lang} language variable
+            ###
+            getLanguage: () ->            
                 return @$root.settings.lang
 </script>

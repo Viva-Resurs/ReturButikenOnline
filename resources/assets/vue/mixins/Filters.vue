@@ -1,7 +1,15 @@
 <script lang="coffee">
     module.exports =
         methods:
-            # Pagination
+            
+            ###*
+            #   Pagination.
+            #   
+            #   @param {ob} -
+            #   @param {index} index to start from
+            #   @param {scope} number of items in scope
+            #   @return {boolean} if within scope
+            ###
             rangeFilter: (ob, index, scope) ->
                 scope.limitOffBtn = false
 
@@ -17,8 +25,14 @@
 
                 # Show contents in range
                 return index >= scope.offset && index < scope.offset+scope.maxItems
-
-            # Case insensitive filter
+            
+            ###*
+            #   Case insensitive filter.
+            #
+            #   @param {item} item to test
+            #   @param {search} value to match
+            #   @param {targets} targets to use
+            ###
             filterBy: (item, search, targets) ->
                 if search == ''
                     return true
@@ -38,7 +52,13 @@
                                 return true
                 return false
 
-            # Case insensitive filter
+            ###*
+            #   Case insensitive filter.
+            #
+            #   @param {item} item to test
+            #   @param {search} value to match
+            #   @param {targets} targets to use
+            ###
             filterArrayBy: (item, search, targets) ->
                 if search == ''
                     return true
@@ -57,7 +77,14 @@
                                 return true
                 return false
 
-            # Sort objects by targeting a deeper property
+            ###*
+            #   Sort objects by targeting a deeper property.
+            #   @param {a} first item
+            #   @param {b} second item
+            #   @param {order} sort order
+            #   @param {desc} desc to use
+            #   @return {desc} desc ordered, otherwise 0.  
+            ###
             deepSort: (a, b, order, desc) ->
                 checkA = a
                 checkB = b
@@ -123,12 +150,19 @@
                                 return 1 * desc
                         return 0
 
-            # Set order & toggle desc
+            ###*            
+            #   Set order & toggle desc.
+            #   @param {what} what to use
+            #   @param {desc} desc to toggle
+            ###
             setOrder: (what, desc) ->
                 @desc = if @order == what then @desc*=-1 else if desc then -1 else 1
                 @order = what || 'updated_at'
 
-            # Force rerender
+            ###*
+            #   Force rerender.
+            #   @param {list} list to rerender
+            ###
             updateList: (list) ->
                 list.reverse()
                 list.reverse()

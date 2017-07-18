@@ -6,6 +6,10 @@
                 sv: require './../../lang/sv.json'
                 en: require './../../lang/en.json'
         methods:
+            ###*
+            #  Changes the language setting.
+            #  @param {lang} to change to (if it exist)
+            ###
             setLang: (lang) ->
                 for key, l of @language_lib
                     if key == lang
