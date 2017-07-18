@@ -42,13 +42,24 @@
             columns: [ 'name' ]
 
         methods:
+            ###*
+            #   Adds a item to the new items array.
+            ###
             addItem: ->
                 @itemsNew.push id_new: @itemsNew.length
 
+            ###*
+            #   Attempt to create a category.
+            #   @param {category} category to use
+            ###
             attemptCreate: (category) ->
                 # Validation
                 @createCategory category
 
+            ###*
+            #   Sends a category create request to backend. 
+            #   @param {new_category} category to create
+            ###
             createCategory: (new_category) ->
                 @$http.post('api/categories', new_category).then(
                     (response) =>
@@ -60,14 +71,26 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Edit a item in the category list.
+            #   @param {item} item to edit
+            ###
             editItem: (item) ->
                 Vue.set item, 'edit', true
                 for key in @columns
                     Vue.set item, key+'_new', item[key]
 
+            ###*
+            #   Revert changes of item. 
+            #   @param {item} item to revert.
+            ###
             revertItem: (item) ->
                 Vue.set item, 'edit', false
 
+            ###*
+            #   Attempt to updates a category in the backend.
+            #   @param {item} category to update
+            ###
             attemptUpdate: (item) ->
                 Vue.set item, 'edit', false
                 for key in @columns
@@ -81,6 +104,10 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Attempt to remove a category. 
+            #   @param {category} category to remove
+            ###
             attemptRemove: (category) ->
                 # Remove new items that are not yet created
                 if !category.id
@@ -91,6 +118,10 @@
                 # Are you sure?
                 @removeCategory category
 
+            ###*
+            #   Removes a category from the backend. 
+            #   @param {category} category to remove  
+            ###
             removeCategory: (category) ->
                 @$http.delete('api/categories/'+category.id).then(
                     (response) =>
@@ -99,6 +130,9 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Gets a list of categories from backend.
+            ###
             getCategories: ->
                 @$root.loading = true;
                 @$http.get('api/categories').then(
