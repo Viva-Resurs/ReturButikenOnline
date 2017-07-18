@@ -22,7 +22,10 @@
                 images: []
             roles: false
             sections: false
-        methods:
+        methods:            
+            ###*
+            #   Gets a list of roles from backend.
+            ###
             getRoleList: ->
                 @$http.get('api/roles').then(
                     (response) =>
@@ -31,6 +34,10 @@
                         bus.$emit 'error', response
                         @roles = []
                 )
+            
+            ###*
+            #   Gets a list of sections from backend.
+            ###
             getSectionList: ->
                 @$http.get('api/sections').then(
                     (response) =>
@@ -39,6 +46,11 @@
                         bus.$emit 'error', response
                         @sections = []
                 )
+            
+            ###*
+            #   Sends a user create request to backend. 
+            #   @param {user} user to create
+            ###
             createUser: (user) ->
                 @$http.post('api/users', user).then(
                     (response) =>

@@ -18,6 +18,10 @@
             roles: false
             sections: false
         methods:
+            ###*
+            #   Get a user from backend using its user id. 
+            #   @param {id} id of user
+            ###
             getUser: (id) ->
                 @$root.loading = true
                 @$http.get('api/users/'+id).then(
@@ -30,6 +34,10 @@
                         bus.$emit 'error', response.data
                         @$root.loading = false
                 )
+            
+            ###*
+            #   Returns a list of roles from backend.
+            ###
             getRoleList: ->
                 @$http.get('api/roles').then(
                     (response) =>
@@ -37,6 +45,10 @@
                     (response) =>
                         bus.$emit 'error', response
                 )
+            
+            ###*
+            #   Returns a list of sections from backend.
+            ###
             getSectionList: ->
                 @$http.get('api/sections').then(
                     (response) =>
@@ -44,6 +56,12 @@
                     (response) =>
                         bus.$emit 'error', response
                 )
+            
+          
+            ###*
+            #   Updates a user in the backend.
+            #   @param {user} user to update
+            ###
             updateUser: (user) ->
                 @$http.put('api/users/'+user.id,user).then(
                     (response) =>

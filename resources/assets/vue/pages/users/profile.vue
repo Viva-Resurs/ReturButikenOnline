@@ -6,6 +6,9 @@
     module.exports =
         name: 'ProfileRedirect'
         methods:
+            ###*
+            #   Go to users profile page.
+            ###
             goToUpdate: ->
                 @$router.push path: '/ui/users/'+@$root.user.id
         created: ->

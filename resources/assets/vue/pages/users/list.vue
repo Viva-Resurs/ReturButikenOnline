@@ -31,12 +31,21 @@
         data: ->
             items: []
         methods:
+            ###*
+            #   Asks the user if it want to remove a user.
+            #   @param {user} user to remove
+            ###
             attemptRemove: (user) ->
                 bus.$emit 'show_message',
                     title: @$root.translate('user_list.remove_user_title') + " \""+user.name+"\""
                     message: @$root.translate('user_list.remove_user_message')
                     type: 'confirm'
                     cb: => @removeUser user
+            
+            ###*
+            #   Removes a user from the backend. 
+            #   @param {article} article to remove  
+            ###
             removeUser: (user) ->
                 @$http.delete('api/users/'+user.id).then(
                     (response) =>
@@ -46,6 +55,11 @@
                         Vue.set user, 'removed', true
                     (response) => bus.$emit 'error', response.data
                 )
+            
+        
+            ###*
+            #   Gets a list of users from backend.
+            ###
             getUsers: ->
                 @$root.loading = true
                 @$http.get('api/users').then(
