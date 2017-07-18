@@ -67,8 +67,17 @@
                 lang: false
 
         methods:
+            ###*
+            #   Gets a article by using a article number.
+            #   @param {articleNR} article number
+            ### 
             getArticleByArtNR: (articleNR) ->
                 @getArticle @decodeArtNR articleNR
+            
+            ###*
+            #  Get a article from the backend by id
+            #  @param {id} articles id
+            ###
             getArticle: (id) ->
                 @$root.loading = true
                 @$http.get('api/shop/'+id).then(
@@ -79,6 +88,10 @@
                         @article = -1
                         @$root.loading = false
                 )
+            
+            ###*
+            #   Gets a list of articles from backend.
+            ###
             getArticles: ->
                 @$root.loading = true
                 @$http.get('api/shop').then(
