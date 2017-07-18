@@ -5,16 +5,16 @@
                 div.column.eight.wide
                     h2.ui.header
                         div.content {{ translate('overview.welcome') }}
-            div.ui.grid.mobile.reversed.stackable.equal.width( v-if="user" style="margin-top: 0px")
+            div.ui.grid.mobile.reversed.stackable.equal.width#overview_pages_grid( v-if="user")
 
-                div.column.eight.wide.computer.tablet.only(style="position: relative; top: -10px;")
+                div.column.eight.wide.computer.tablet.only#overview_pages_tablet_column
                     h2.ui.header
                         div.content {{ user.fullname }}
                     div.ui.message
                         p {{ translate('overview.welcome_info') }}
                         a( href="docs" ) {{ translate('overview.welcome_help') }}
 
-                div.column.center.aligned.eight.wide.mobile.only(style="position: relative; top: -10px;")
+                div.column.center.aligned.eight.wide.mobile.only#overview_pages_mobile_column
                     h2.ui.header
                         div.content {{ user.fullname }}
                     div.ui.message
@@ -47,6 +47,11 @@
             article_tree: false
 
         methods:
+            ###*
+            #   Get a article by using its id. 
+            #   @param {id} articles id
+            #   @return {article} if exist, otherwise 0.
+            ###
             getArticleById: (id) ->
                 # If not any form of admin, article_tree is just articles
                 if !@$root.isAdmin(2)
@@ -61,6 +66,9 @@
                                     return article
                 return 0
 
+            ###*
+            #   Gets a overview article tree from backend.
+            ###
             getOverview: ->
                 @$root.loading = true
                 @$http.get('api/overview').then(
@@ -72,6 +80,9 @@
                         @$root.loading = false
                 )
 
+            ###*
+            #   Get users own articles from backend. 
+            ###
             getArticleOverview: ->
                 @$root.loading = true
                 @$http.get('api/overview/my').then(
@@ -83,9 +94,18 @@
                         @$root.loading = false
                 )
 
+        
+            ###*
+            #   Redirect user to article preview.
+            #   @param {article} article to preview
+            ###
             previewArticle: (article) ->
                 @$router.push @$root.encodeArtNR article
 
+              ###*
+            #   Asks the user if it want to remove a article.
+            #   @param {article} article to remove
+            ###
             attemptRemove: (article) ->
                 bus.$emit 'show_message',
                     title: @$root.translate('article_list.remove_article_title') + "''"+article.name+"''."
@@ -93,6 +113,10 @@
                     type:'confirm'
                     cb: => @removeArticle article
 
+            ###*
+            #   Removes a article from the backend. 
+            #   @param {article} article to remove  
+            ###
             removeArticle: (article) ->
                 @$http.delete('api/articles/'+article.id).then(
                     (response) =>
@@ -103,10 +127,18 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Attempt to update a article in the backend.
+            #   @param {article} article to update
+            ###
             attemptUpdate: (article) ->
                 # Validation
                 @updateArticle article
 
+            ###*
+            #   Updates a article in the backend.
+            #   @param {article} article to update
+            ###
             updateArticle: (article) ->
                 @$http.put('api/articles/'+article.id, article).then(
                     (response) =>
@@ -116,6 +148,9 @@
                     (response) => bus.$emit 'error', response.data
                 )
 
+            ###*
+            #   Sets users overview.
+            ###
             setUser: ->
                 @user = @$root.user
                 if @$root.isAdmin() || @$root.isAdmin(2)
@@ -161,3 +196,13 @@
             bus.$off 'publish_interval_changed'
             bus.$off 'bidding_interval_changed'
 </script>
+
+<style>
+    #overview_pages_grid {
+        margin-top: 0px;
+    }
+
+    #overview_pages_tablet_column, #overview_pages_mobile_column {
+        position: relative; top: -10px;
+    }    
+</style>
