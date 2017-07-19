@@ -7,7 +7,7 @@
                     div.ui.dividing.header {{item.name}} {{ (item.amount > 1) ? '('+item.amount+')' : '' }}
 
                 div.description#shop_card_tablet_description
-                    div.column( v-if="item.categories.length>0" ).ui.vertical.segment.basic
+                    div.column#shop_card_tablet_categories( v-if="item.categories.length>0")
                         div.ui.black.horizontal.label.stackable(
                             v-for="category in item.categories"
                             )
@@ -18,14 +18,14 @@
                             img.ui.rounded.image#shop_card_tablet_image( 
                                 v-for="image in item.images" @click="previewImages(image)"
                                 ":src"="image.thumb_path" )
-
+                    
                     div.ui.vertical.segment.basic
                         p#shop_card_tablet_p {{ item.desc }}
 
                     div.ui.grid.equal.width
                         div.column.right.aligned
                             div.column.center.aligned.right.floated                            
-                                div.ui.segment
+                                div.ui.basic.segment
                                     h2 {{ item.price }} {{ translate('article_card.price_currency') }}
 
             
@@ -36,7 +36,7 @@
                             div.column
                                 div.ui.labeled.button.label()
                                     div.ui.label {{translate('shop.bidding')}}
-                                    div.ui.basic.label {{ getDates(item.bidding_interval,0) }} &#8594 {{ getDates(item.bidding_interval,1) }}
+                                    div.ui.basic.label {{ getDates(item.bidding_interval,0) }} - {{ getDates(item.bidding_interval,1) }}
 
                     div.column.right.aligned
                         div.column.center.aligned.right.floated
@@ -157,12 +157,18 @@
         top: -10px;
     }
 
+    #shop_card_tablet_categories {
+        padding-top: 6px;
+    }
+
     #shop_card_tablet_image {
         background-color: lightgrey;
     }
 
     #shop_card_tablet_p {
         white-space: pre-wrap;
+        position: absolute;
+        top: -0px;
     }
 
     #shop_card_tablet_extra_content {

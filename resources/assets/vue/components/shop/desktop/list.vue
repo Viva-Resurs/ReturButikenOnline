@@ -34,7 +34,7 @@
                                             div.row.item
                                                 div.content                                            
                                                     h3.ui.header {{ item.name }} 
-                                                        div.ui.tiny.label#shop_desktop_amount_label {{ (item.amount > 1) ? item.amount : '' }} {{ translate('article.pieces') }} 
+                                                        div.ui.tiny.label#shop_desktop_amount_label(v-if="item.amount > 1") {{ (item.amount > 1) ? item.amount : '' }} {{ translate('article.pieces') }} 
                                                     
                                             div.row#shop_desktop_row_desc
                                                 p#shop_desktop_row_desc_p {{ item.desc }}
