@@ -129,8 +129,7 @@
             ###*
             #   Validates the calendar and displays buttons accordingly.
             ###
-            validateCalendar: ->
-                console.log "validating calendar"
+            validateCalendar: ->       
                 setTimeout =>
                     range = [
                         $('#interval_start').calendar('get date'),
