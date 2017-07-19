@@ -14,11 +14,21 @@ class Section extends Model
         'desc',
     ];
 
+    /**
+     * Get users related to the section.
+     *
+     * @return users    
+     */
     public function users()
     {
         return $this->belongsToMany(User::class, 'sections_user');
     }
 
+    /**
+     * Get articles related to the section.
+     *
+     * @return articles    
+     */
     public function articles()
     {
         return $this->belongsToMany(Article::class, 'articles_section');

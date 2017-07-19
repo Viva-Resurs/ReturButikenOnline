@@ -21,29 +21,59 @@ class Article extends Model
         'bidding_interval'
     ];
 
+   /**
+     * Get articles creator.
+     *
+     * @return user    
+     */
     public function creator()
     {
         return $this->belongsToMany(User::class, 'articles_creator');
     }
 
+    /**
+     * Get contacts related to the article.
+     *
+     * @return users    
+     */
     public function contacts()
     {
         return $this->belongsToMany(User::class, 'articles_contact');
     }
 
+    /**
+     * Get sections related to the article.
+     *
+     * @return sections    
+     */
     public function sections() {
         return $this->belongsToMany(Section::class,'articles_section');
     }
 
+    /**
+     * Get categories related to the article.
+     *
+     * @return categories    
+     */
     public function categories()
     {
         return $this->belongsToMany(Category::class, 'articles_category');
     }
 
+    /**
+     * Get images related to the article.
+     *
+     * @return images    
+     */
     public function images() {
         return $this->belongsToMany(Image::class, 'articles_image');
     }
 
+    /**
+     * Returns if article is active.
+     *
+     * @return boolean true or false    
+     */
     public function isActive()
     {
         $today = Carbon::now();
@@ -63,6 +93,12 @@ class Article extends Model
         return $today->between($start, $end);
     }
 
+    /**
+     * Returns if article have a current or future 
+     * publish and bidding interval.
+     *
+     * @return boolean true or false    
+     */
     public function haveCurrentOrFutureInterval($type){
         if ($type == 0)
             $parts = explode('|',$this->publish_interval);
@@ -84,6 +120,12 @@ class Article extends Model
         return ($end->gt($start) && ($today->between($start,$end) || $start->isFuture()));
     }
 
+
+    /**
+     * Returns if article matches a specific audience.
+     *
+     * @return boolean true or false    
+     */
     public function matchAudience($audience)
     {
         if ($this->public==1 && $audience=='public')
@@ -93,6 +135,12 @@ class Article extends Model
         return false;
     }
 
+
+    /**
+     * Returns articles serial number.
+     *
+     * @return string articlenr    
+     */
     public function getArticleNR()
     {
         // SectionID - ArticleID

@@ -12,6 +12,11 @@ class Category extends Model
         'name'
     ];
 
+   /**
+     * Get articles related to the category.
+     *
+     * @return articles  
+     */
     public function articles()
     {
         return $this->belongsToMany(Article::class, 'articles_category');

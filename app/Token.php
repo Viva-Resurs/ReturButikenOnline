@@ -14,11 +14,19 @@ class Token extends Model
         'token'
     ];
 
+    /**
+     * Verifies token.
+     *
+     * @return boolean true or false    
+     */
     public function verify()
     {
         return true;
     }
 
+    /**
+     * Generates a token string for the token.   
+     */
     public function generate($length = 32)
     {
         if (!isset($length) || intval($length) <= 32 ){

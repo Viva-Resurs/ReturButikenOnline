@@ -15,6 +15,11 @@ class Image extends Model
         'thumb_path'
     ];
 
+   /**
+     * Get articles related to the image.
+     *
+     * @return articles   
+     */
     public function articles()
     {
         return $this->belongsToMany(Article::class, 'articles_image');
