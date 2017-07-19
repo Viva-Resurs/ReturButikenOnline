@@ -16,6 +16,13 @@ use App\Http\Requests;
 
 class overviewController extends Controller
 {
+    /**
+     * Get a article tree. 
+     * Structured with sections, contacts and articles.
+     *
+     * @param  Request $request
+     * @return array $articleTree
+     */
     public function getArticleTree(Request $request){
 
         $me = Auth::user();
@@ -78,6 +85,12 @@ class overviewController extends Controller
         return $articleTree;
     }
 
+    /**
+     * Get a list of articles belonging to the articles creator.
+     *
+     * @param  Request $request
+     * @return array $articles
+     */
     public function getMyArticles(Request $request){
 
         $me = Auth::user();

@@ -16,6 +16,12 @@ use App\Http\Requests;
 
 class ImageController extends Controller
 {
+    /**
+     * Get a list of images
+     *
+     * @param  Request $request
+     * @return array $result
+     */
     public function index(Request $request){
 
         $user = Auth::user();
@@ -40,6 +46,11 @@ class ImageController extends Controller
         return $result;
     }
 
+    /**
+     * Creates a new image
+     * @param  request $request
+     * @return articleid
+     */
     public function store(Request $request){
 
         $user = Auth::user();
@@ -82,11 +93,20 @@ class ImageController extends Controller
         }
 
     }
-
+   
+   /**
+     * Updates a existing image using image id.
+     * @param  request $request
+     * @param $id     
+     */
     public function update(Request $request, $id){
 
     }
 
+    /**
+     * Removes a image using image id. 
+     * @param  $id     
+     */
     public function destroy($id){
         $user = Auth::user();
 

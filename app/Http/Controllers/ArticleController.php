@@ -17,6 +17,12 @@ use App\Http\Requests;
 
 class ArticleController extends Controller
 {
+    /**
+     * Get a list of articles.
+     *
+     * @param  Request $request
+     * @return array $result
+     */
     public function index(Request $request){
 
         $user = Auth::user();
@@ -51,6 +57,12 @@ class ArticleController extends Controller
         return $result;
     }
 
+   /**
+     * Get a article by id.
+     *
+     * @param  $id
+     * @return $result
+     */
     public function show($id){
 
         $user = Auth::user();
@@ -108,7 +120,12 @@ class ArticleController extends Controller
         return $result;
     }
 
-    //Check if article have correct bidding and publish intervals set
+    
+    /**
+     * Checks if the article have correct bidding and publish intervals.
+     *
+     * @param  article $article     
+     */
     private function checkCorrectIntervals(Article $article){
         if ($article->active == true){
             if (!$article->haveCurrentOrFutureInterval(0)){
@@ -121,6 +138,12 @@ class ArticleController extends Controller
         }
     }
 
+    /**
+     * Creates a new article.
+     *
+     * @param  request $request
+     * @return articleid
+     */
     public function store(Request $request){
 
         $user = Auth::user();
@@ -174,6 +197,14 @@ class ArticleController extends Controller
         return $this->show($article->id);
     }
 
+
+    /**
+     * Updates a existing article using article id.
+     *
+     * @param  request $request
+     * @param $id
+     * @return articleid
+     */
     public function update(Request $request, $id){
 
         $user = Auth::user();
@@ -295,6 +326,12 @@ class ArticleController extends Controller
         return $this->show($article->id);
     }
 
+
+    /**
+     * Removes a article using article id. 
+     *
+     * @param $id     
+     */
     public function destroy($id){
 
         $user = Auth::user();

@@ -12,15 +12,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-/**
- * List sections.
- *
- * Admin can list and edit all sections
- * Section-admin & Publisher can only view their sections
- */
-
 class SectionController extends Controller
 {
+    /**
+     * Get a list of sections.
+     *
+     * @param  Request $request
+     * @return array $result
+     */
     public function index(Request $request){
 
         $me = Auth::user();
@@ -57,6 +56,12 @@ class SectionController extends Controller
         return $results;
     }
 
+    /**
+     * Creates a new section.
+     *
+     * @param  request $request
+     * @return $section
+     */
     public function store(Request $request){
 
         $me = Auth::user();
@@ -78,6 +83,13 @@ class SectionController extends Controller
         return $section;
     }
 
+    /**
+     * Updates a existing section using section id.
+     *
+     * @param  request $request
+     * @param $id
+     * @return articleid
+     */
     public function update(Request $request, $id){
 
         $me = Auth::user();
@@ -101,6 +113,11 @@ class SectionController extends Controller
         return $section;
     }
 
+    /**
+     * Removes a section using section id. 
+     *
+     * @param  $id     
+     */
     public function destroy($id){
 
         $me = Auth::user();

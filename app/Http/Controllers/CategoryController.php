@@ -14,6 +14,12 @@ use App\Http\Requests;
 
 class CategoryController extends Controller
 {
+    /**
+     * Get a list of categories.
+     *
+     * @param  Request $request
+     * @return array $result
+     */
     public function index(Request $request){
 
 		$user = Auth::user();
@@ -24,6 +30,13 @@ class CategoryController extends Controller
         return Category::all();
     }
 
+
+    /**
+     * Creates a new category.
+     *
+     * @param  request $request
+     * @return $category
+     */
     public function store(Request $request){
 
 		$user = Auth::user();
@@ -40,6 +53,13 @@ class CategoryController extends Controller
         return $category;
     }
 
+    /**
+     * Updates a existing category using category id.
+     *
+     * @param  request $request
+     * @param $id
+     * @return $category
+     */
     public function update(Request $request, $id){
 
 		$user = Auth::user();
@@ -59,7 +79,12 @@ class CategoryController extends Controller
 
         return $category;
     }
-
+    
+    /**
+     * Removes a category using category id.
+     * 
+     * @param  $id     
+     */
     public function destroy($id){
 
 		$user = Auth::user();

@@ -17,7 +17,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class ShopController extends Controller
-{
+{   
+    /**
+     * Get a list of published articles.
+     * A token is required (as part of the request) 
+     * in order to watch municipal published articles.
+     *
+     * @param  Request $request
+     * @return array $result
+     */
     public function index(Request $request){
 
         $token = Token::where('token', $request->header('INTERNAL-TOKEN'))->first();
@@ -53,6 +61,15 @@ class ShopController extends Controller
         return $result;
     }
 
+    /**
+     * Get a article by id.
+     * A token is required as part of the request to get a municipal
+     * published article.
+     *
+     * @param  request $request
+     * @param  $id
+     * @return $result
+     */
     public function show(Request $request, $id){
 
         $article = Article::find($id);

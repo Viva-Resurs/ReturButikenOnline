@@ -14,6 +14,12 @@ use App\Http\Requests;
 
 class TokenController extends Controller
 {
+    /**
+     * Get a list of tokens.
+     *
+     * @param  Request $request
+     * @return array $result
+     */
     public function index(Request $request){
 
 		$user = Auth::user();
@@ -23,6 +29,12 @@ class TokenController extends Controller
         return Token::all();
     }
 
+    /**
+     * Creates a new randomly generated token. 
+     *
+     * @param  request $request
+     * @return $token
+     */
     public function store(Request $request){
 
 		$user = Auth::user();
@@ -38,6 +50,11 @@ class TokenController extends Controller
         return $token;
     }
 
+    /**
+     * Removes a token using token id. 
+     *
+     * @param $id     
+     */
     public function destroy($id){
 
 		$user = Auth::user();
