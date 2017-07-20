@@ -4,43 +4,40 @@
         div.ui.grid.fluid.card.tablet.only
             div.content
                 div.header.left.aligned
-                    div.ui.dividing.header {{item.name}} {{ (item.amount > 1) ? '('+item.amount+')' : '' }}
-
+                    div.ui.dividing.header {{item.name}}
+                        
                 div.description#shop_card_tablet_description
                     div.column#shop_card_tablet_categories( v-if="item.categories.length>0")
                         div.ui.black.horizontal.label.stackable(
                             v-for="category in item.categories"
                             )
                             | {{ category.name }}
-                    br
+                    div.column(v-else="" style="padding-top: 6px")
                     div.no-padding.ui.vertical.segment.basic( v-if="item.images.length > 0")
-                        div.ui.tiny.images
+                        div.ui.tiny.images#shop_card_tablet_tiny_images
                             img.ui.rounded.image#shop_card_tablet_image( 
                                 v-for="image in item.images" @click="previewImages(image)"
                                 ":src"="image.thumb_path" )
                     
                     div.ui.vertical.segment.basic
                         p#shop_card_tablet_p {{ item.desc }}
-
-                    div.ui.grid.equal.width
-                        div.column.right.aligned
-                            div.column.center.aligned.right.floated                            
-                                div.ui.basic.segment
-                                    h2 {{ item.price }} {{ translate('article_card.price_currency') }}
-
-            
+                    
             div.extra.content#shop_card_tablet_extra_content
                 div.ui.grid.equal.width
                     div.column.left.middle.aligned
                         div.ui.grid.center.aligned.left.floated.equal.width
                             div.column
-                                div.ui.labeled.button.label()
-                                    div.ui.label {{translate('shop.bidding')}}
-                                    div.ui.basic.label {{ getDates(item.bidding_interval,0) }} - {{ getDates(item.bidding_interval,1) }}
+                                div.ui.labeled.large.button.label                                    
+                                    div.ui.label(v-if="item.amount > 1") {{ item.amount }} {{ translate('article.pieces')}} 
+                                    div.ui.basic.label {{ item.price }} {{ translate('article_card.price_currency') }}
+
 
                     div.column.right.aligned
                         div.column.center.aligned.right.floated
-                            div.ui.primary.label.button( @click="previewItem(item)") {{ translate('shop.buy') }}
+                            div.ui.labeled.large.button.label
+                              
+                                div.ui.basic.label {{ getDates(item.bidding_interval,0) }} - {{ getDates(item.bidding_interval,1) }}
+                                div.ui.large.primary.label.button( @click="previewItem(item)") {{ translate('shop.buy') }}
         
         div.ui.grid.segment.mobile.only#shop_card_mobile_segment
        
@@ -54,12 +51,12 @@
 
             div.column.twelve.wide                               
                 div.no-padding
-                    div.ui.sub.header {{item.name}} {{ (item.amount > 1) ? '('+item.amount+')' : '' }}
+                    div.ui.sub.header {{item.name}} 
 
                 div.no-padding
                     p(":id"="'article_desc_'+item.id") {{ item.desc }}
                 
-                div.ui.basic.circular.label.button.right.floated(
+                div.ui.circular.label.button.right.floated(
                     v-if="item.desc.length > 150"
                     ":id"="'article_expand_button_'+item.id" 
                     @click="toggleDescription(item.id)" 
@@ -67,12 +64,15 @@
                     i.angle.down.icon#shop_card_mobile_angle_icon
 
             div.row#shop_card_mobile_bottom_tool_row                
-                div.column.four.wide.middle.center.aligned
-                    div.column.center.aligned.right.floated                                                   
-                        h4 {{ item.price }} {{ translate('article_card.price_currency') }}
+                div.column.six.wide.middle.left.aligned
+                    div.column
+                        div.ui.labeled.button.label
+                            div.ui.label {{ (item.amount > 1) ? item.amount : '' }} {{ translate('article.pieces') }}
+                            div.ui.basic.label {{ item.price }} {{ translate('article_card.price_currency') }}
+                            
                    
-                div.column.twelve.wide.right.aligned
-                    div.ui.labeled.button.label()                        
+                div.column.ten.wide.right.aligned
+                    div.ui.labeled.button.label                      
                         div.ui.basic.label {{ getDates(item.bidding_interval,0) }} - {{ getDates(item.bidding_interval,1) }}
                         div.ui.primary.label.button( @click="previewItem(item)") {{ translate('shop.buy') }}
 
@@ -158,21 +158,33 @@
     }
 
     #shop_card_tablet_categories {
-        padding-top: 6px;
+        background-color: rgba(211, 211, 211, .1);        
+        padding-top: 10px;
+        padding-bottom: 6px;
+        padding-left: 8px;
+        margin-bottom: 0px;
+        margin-left: -3px;
+    }
+
+    #shop_card_tablet_tiny_images {
+        background-color: rgba(211, 211, 211, 0.1); 
+        margin-right: 1px;
+        padding-left: 5px;
+        padding-top: 5px
     }
 
     #shop_card_tablet_image {
-        background-color: lightgrey;
+        background-color: rgba(211, 211, 211, .5); 
     }
 
     #shop_card_tablet_p {
-        white-space: pre-wrap;
-        position: absolute;
-        top: -0px;
+        white-space: pre-wrap;    
+        padding-left: 5px;
+        padding-right: 5px;    
     }
 
     #shop_card_tablet_extra_content {
-        height: 50px;
+        height: 55px;
     }
 
     #shop_card_mobile_segment {
@@ -198,10 +210,10 @@
     *[id^="article_desc_"]{
         height: 60px; 
         overflow: hidden; 
-        white-space: pre-wrap;
+        white-space: pre-wrap;          
     }
     
-    *[id^="article_expand_button_"]{
+    *[id^="article_expand_button_"]{        
         padding: 10px; 
         top: 60%; 
         right: 15px; 
@@ -209,7 +221,7 @@
     }
     
     #shop_card_mobile_angle_icon {
-        margin: 5px;
+        margin: 5px;        
     }
 
     #shop_card_mobile_bottom_tool_row {

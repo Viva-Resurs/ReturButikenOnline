@@ -23,8 +23,9 @@
                             td.selectable.no-padding#shop_desktop_row
                                 div.ui.celled.grid.no-padding#shop_desktop_row_grid
                                     div.row
-                                        div.column.two.wide.no-padding                                        
-                                            img.ui.image#shop_desktop_row_image(
+
+                                        div.column.two.wide#shop_desktop_image_column                                      
+                                            img.ui.image.centered#shop_desktop_row_image(
                                                 ":src"="item.images.length > 0 ? item.images[0].thumb_path : 'images/no_image.png'" 
                                                 @click="previewImages(item.images)") 
                                             div.ui.top.right.attached.circular.white.label#shop_desktop_row_image_label(v-if="item.images.length > 1" 
@@ -34,26 +35,30 @@
                                             div.row.item
                                                 div.content                                            
                                                     h3.ui.header {{ item.name }} 
-                                                        div.ui.tiny.label#shop_desktop_amount_label(v-if="item.amount > 1") {{ (item.amount > 1) ? item.amount : '' }} {{ translate('article.pieces') }} 
                                                     
                                             div.row#shop_desktop_row_desc
-                                                p#shop_desktop_row_desc_p {{ item.desc }}
-                                            div.row(v-if="item.desc.length > 200") ...
+                                                p#shop_desktop_row_desc_p {{ item.desc }}  
+                                            
+                                            div.column.fluid#shop_desktop_row_desc_dots(v-if="item.desc.length > 200") ...
                                             
                                             div.ui.red.bottom.right.attached.tiny.label#shop_desktop_category_label(v-for="(post, column_index) in item.categories")
                                                 | {{post.name}}
                                                 span( v-if="(column_index != item.categories.length -1)") ,{{ ' ' }}                                            
                                     
-                                        div.column.three.wide.center.aligned                                            
-                                            div.ui.small.label#shop_desktop_segment_bid_interval_label {{ getDates(item.bidding_interval,0) }} - {{ getDates(item.bidding_interval,1) }}
-                                            
-                                            div.ui.compact.tiny.message#shop_desktop_segment_message
-                                                h3 {{ item.price }} {{ translate('article_card.price_currency') }}                                                                         
-                                            
-                                            div.ui.small.label.primary.button#shop_desktop_segment_button {{ translate('shop.buy') }}                                                               
                                         
+                                        div.column.three.wide.center.aligned                                            
+                                            div.ui.grid.center.aligned#shop_desktop_bidding_grid
+                                                div.row#shop_desktop_bidding_interval_row
+                                                    div.ui.small.label.top.attached#shop_desktop_bidding_interval_label {{ getDates(item.bidding_interval,0) }} - {{ getDates(item.bidding_interval,1) }}
                                                 
-
+                                                div.row.no-padding#shop_desktop_bidding_price_row
+                                                    div.ui.labeled.button.label.equal.width.grid#shop_desktop_bidding_price_row_labels
+                                                        div.ui.label.eight.wide.column#shop_desktop_bidding_price_row_amount(v-if="item.amount > 1") {{ (item.amount > 1) ? item.amount : '' }} {{ translate('article.pieces') }}
+                                                        div.ui.basic.label.column.eight.wide#shop_desktop_bidding_price_row_price {{ item.price }} {{ translate('article_card.price_currency') }}                                                                         
+                                                
+                                                div.row#shop_desktop_bidding_buy_row
+                                                    div.ui.small.label.primary.button.bottom.attached#shop_desktop_bidding_buy_row_button {{ translate('shop.buy') }}                                                               
+ 
         div.row( v-if="countItems > 0 && search!=''" )
             button.ui.button.searchresults_expander(
                 v-if="limitOffBtn"
@@ -148,8 +153,15 @@
         margin-top: 0px !important;
     }
 
+    #shop_desktop_image_column{
+        padding-left: 5px; padding-top: 5px; padding-bottom: 5px; padding-right: 5px;
+    }
+
     #shop_desktop_row_column {
-        padding: 6px;
+        padding-left: 10px;
+        padding-right: 6px;
+        padding-bottom: 6px;
+        padding-top: 6px;
     }
     
     #shop_desktop_row_grid {
@@ -159,21 +171,16 @@
     }
 
     #shop_desktop_row_image {        
-        max-height: 130px;         
+        max-height: 30px;         
         background-color: black;
+        background-size: cover;        
+        zoom: 4;        
     }
 
     #shop_desktop_row_image_label {
         position: absolute;
         right: 5px;        
-        top: 5px;
-        
-    }
-
-    #shop_desktop_amount_label {
-        position: absolute; 
-        right: 5px; 
-        margin-top: 2px;
+        top: 5px;        
     }
 
     #shop_desktop_row_desc { 
@@ -188,42 +195,59 @@
         white-space: pre-wrap;
     }
 
+    #shop_desktop_row_desc_dots {
+        position: absolute; 
+        bottom: 5px;
+    }
+    
     #shop_desktop_category_label {
         margin-right: 5px; 
         margin-bottom: 5px; 
+        border-radius: 2px;
+    }
+
+    #shop_desktop_bidding_grid {
+        height: 106px;
+    }
+
+    #shop_desktop_bidding_interval_row {
+        margin-top: 5px; 
+        margin-left: 5px; 
+        margin-right: 5px;
+    }
+
+    #shop_desktop_bidding_interval_label {
         border-radius: 0px;
     }
 
-    #shop_desktop_segment_bid {
-        height: 130px; 
-        border-radius: 5px;                
-        margin: 0px;
+    #shop_desktop_bidding_price_row {
+        margin-left: 6px; margin-right: 3px;
     }
 
-    #shop_desktop_segment_bid_interval_label {
-        position: absolute; 
-        top: 5px; 
-        right: 3px; 
-        left: 5px; 
-        border-radius: 0px
-        
+    #shop_desktop_bidding_price_row_labels {
+        width: 100%; 
+        height: 30px; 
+        margin-top: 3px; 
+        margin-bottom: 2px;
     }
 
-    #shop_desktop_segment_message {
-        position: absolute; 
-        top: 20px; 
-        bottom: 20px; 
-        left: 5px; 
-        right: 5px; 
-        border-radius: 0px
+    #shop_desktop_bidding_price_row_amount {
+        border-radius: 4px 0px 0px 4px; 
+        padding-top: 8px;
     }
 
-    #shop_desktop_segment_button {
-        position: absolute; 
-        bottom: 5px; 
-        right: 5px; 
-        left: 4px; 
-        border-radius: 0px
+    #shop_desktop_bidding_price_row_price {
+        padding-top: 8px;
+    }
+
+    #shop_desktop_bidding_buy_row {
+        margin-bottom: 5px; 
+        margin-left: 5px; 
+        margin-right: 5px;
+    }
+
+    #shop_desktop_bidding_buy_row_button {
+        border-radius: 2px;
     }
 
 </style>
