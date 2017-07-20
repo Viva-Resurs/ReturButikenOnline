@@ -53,7 +53,7 @@
                                                 
                                                 div.row.no-padding#shop_desktop_bidding_price_row
                                                     div.ui.labeled.button.label.equal.width.grid#shop_desktop_bidding_price_row_labels
-                                                        div.ui.label.eight.wide.column#shop_desktop_bidding_price_row_amount(v-if="item.amount > 1") {{ (item.amount > 1) ? item.amount : '' }} {{ translate('article.pieces') }}
+                                                        div.ui.label.eight.wide.column#shop_desktop_bidding_price_row_amount {{ item.amount }} {{ translate('article.pieces') }}
                                                         div.ui.basic.label.column.eight.wide#shop_desktop_bidding_price_row_price {{ item.price }} {{ translate('article_card.price_currency') }}                                                                         
                                                 
                                                 div.row#shop_desktop_bidding_buy_row

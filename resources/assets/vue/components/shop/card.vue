@@ -28,7 +28,7 @@
                         div.ui.grid.center.aligned.left.floated.equal.width
                             div.column
                                 div.ui.labeled.large.button.label                                    
-                                    div.ui.label(v-if="item.amount > 1") {{ item.amount }} {{ translate('article.pieces')}} 
+                                    div.ui.label {{ item.amount }} {{ translate('article.pieces')}} 
                                     div.ui.basic.label {{ item.price }} {{ translate('article_card.price_currency') }}
 
 
@@ -67,7 +67,7 @@
                 div.column.six.wide.middle.left.aligned
                     div.column
                         div.ui.labeled.button.label
-                            div.ui.label {{ (item.amount > 1) ? item.amount : '' }} {{ translate('article.pieces') }}
+                            div.ui.label {{ item.amount }} {{ translate('article.pieces') }}
                             div.ui.basic.label {{ item.price }} {{ translate('article_card.price_currency') }}
                             
                    
